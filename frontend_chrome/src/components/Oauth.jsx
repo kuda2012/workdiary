@@ -15,7 +15,7 @@ function Oauth() {
   useEffect(() => {
     async function callBackend() {
       if (code || credential) {
-        const response = await axios.post("http://localhost:3000", {
+        const response = await axios.post("http://localhost:3000/users/login", {
           token: code || credential,
         });
         console.log(response);
