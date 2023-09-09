@@ -4,11 +4,10 @@ const PORT = process.env.PORT || 3000;
 // let NODE_ENV = "test"
 
 let DB_URI;
-
 if (process.env.NODE_ENV === "test") {
   DB_URI = "worksnap_test";
 } else {
-  DB_URI = process.env.DATABASE_URL || "worksnap";
+  DB_URI = process.env.DATABASE_URL || "postgres://localhost/worksnap";
 }
 
 const CLIENT_ID = process.env.CLIENT_ID;

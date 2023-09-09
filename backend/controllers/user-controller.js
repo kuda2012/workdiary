@@ -1,6 +1,7 @@
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client();
 const { CLIENT_ID, SECRET_KEY } = require("../config");
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 exports.login = async (req, res) => {
@@ -8,6 +9,10 @@ exports.login = async (req, res) => {
     console.error
   );
   const token = generateWorksnapAccessToken(payload);
+  const doesUserExist = await User.getUser(payload.sub);
+  if (!doesUserExist) {
+    const newUser = await User.create(payload);
+  }
   res.send({ worksnap_token: token });
 };
 
@@ -21,7 +26,7 @@ async function verifyGoogleToken(google_access_token) {
 
 function generateWorksnapAccessToken(payload) {
   const token = jwt.sign(
-    { sub: payload.sub, email: payload.email },
+    { sub: payload.sub, email: payload.email, name: payload.name },
     SECRET_KEY,
     {
       expiresIn: "2w",
