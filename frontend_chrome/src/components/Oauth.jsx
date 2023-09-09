@@ -4,7 +4,7 @@ import axios from "axios";
 
 function Oauth() {
   const [code, setCode] = useState();
-  const [credential, setCredential] = useState();
+  const [googleAccessToken, setGoogleAccessToken] = useState();
   // const login = useGoogleLogin({
   //   onSuccess: (codeResponse) => {
   //     setCode(codeResponse.code);
@@ -14,21 +14,21 @@ function Oauth() {
 
   useEffect(() => {
     async function callBackend() {
-      if (code || credential) {
+      if (googleAccessToken) {
         const response = await axios.post("http://localhost:3000/users/login", {
-          token: code || credential,
+          google_access_token: googleAccessToken,
         });
         console.log(response);
+        return response;
       }
     }
     callBackend();
-  }, [code, credential]);
+  }, [code, googleAccessToken]);
   return (
     <>
       <GoogleLogin
-        onSuccess={(credentialResponse) => {
-          console.log(credentialResponse.credential);
-          setCredential(credentialResponse.credential);
+        onSuccess={(response) => {
+          setGoogleAccessToken(response.credential);
         }}
         onError={() => {
           console.log("Login Failed");
