@@ -16,7 +16,6 @@ CREATE TABLE "tabs" (
 
 CREATE TABLE "users" (
   "id" varchar PRIMARY KEY,
-  "google_id" varchar,
   "email" varchar,
   "name" varchar,
   "created_at" timestamp DEFAULT (CURRENT_TIMESTAMP)

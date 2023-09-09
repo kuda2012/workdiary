@@ -26,7 +26,7 @@ async function verifyGoogleToken(google_access_token) {
 
 function generateWorksnapAccessToken(payload) {
   const token = jwt.sign(
-    { sub: payload.sub, email: payload.email, name: payload.name },
+    { id: payload.sub, email: payload.email, name: payload.name },
     SECRET_KEY,
     {
       expiresIn: "2w",
