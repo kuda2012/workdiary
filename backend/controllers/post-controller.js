@@ -8,6 +8,12 @@ exports.create = async (req, res) => {
   res.send({ post: getOrCreatePostForDay });
 };
 
+exports.getPost = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const post = await Post.getPost(id, req.params.date);
+  res.send({ post });
+};
+
 exports.update = async (req, res) => {
   const getOrCreatePostForDay = await Post.update(req.body);
   res.send({ post: getOrCreatePostForDay });

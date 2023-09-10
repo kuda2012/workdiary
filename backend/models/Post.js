@@ -9,6 +9,13 @@ class Post {
     );
     return createdPost.rows[0];
   }
+  static async getPost(user_id, date) {
+    const post = await db.query(
+      `SELECT * FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
+      [user_id, date]
+    );
+    return post.rows[0];
+  }
   static async update(body) {
     let queryText = "UPDATE posts SET";
     const queryValues = [];
