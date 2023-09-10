@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 let { SECRET_KEY } = require("../config");
 function tokenIsCurrent(req, res, next) {
   try {
-    const { worksnap_token } = req.headers;
-    const verified = jwt.verify(worksnap_token, SECRET_KEY);
+    const { authorization } = req.headers;
+    const verified = jwt.verify(authorization.substring(7), SECRET_KEY);
     if (verified) {
       return next();
     } else {
