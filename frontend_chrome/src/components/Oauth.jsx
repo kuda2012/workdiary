@@ -39,7 +39,6 @@ function Oauth() {
       {/* <button onClick={() => login()}>Sign in with Google 🚀 </button> */}
       <button
         onClick={() => {
-          console.log("hello");
           chrome.identity.getAuthToken({ interactive: true }, function (token) {
             setGoogleAccessToken(token);
           });
@@ -47,6 +46,18 @@ function Oauth() {
       >
         {" "}
         Identity button{" "}
+      </button>
+      <button
+        onClick={() => {
+          chrome.identity.removeCachedAuthToken(
+            { token: googleAccessToken },
+            function (response) {
+              console.log(response);
+            }
+          );
+        }}
+      >
+        Reset token
       </button>
     </>
   );

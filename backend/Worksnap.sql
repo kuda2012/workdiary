@@ -50,14 +50,14 @@ COMMENT ON COLUMN "tabs"."comment" IS 'your little opinions about the tab';
 
 COMMENT ON COLUMN "posts"."summary_text" IS 'This should be your EOD notes. What happened today.';
 
-ALTER TABLE "posts" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "posts" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "access_control" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "access_control" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "access_control" ADD FOREIGN KEY ("post_id") REFERENCES "posts" ("id");
+ALTER TABLE "access_control" ADD FOREIGN KEY ("post_id") REFERENCES "posts" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "tabs" ADD FOREIGN KEY ("post_id") REFERENCES "posts" ("id");
+ALTER TABLE "tabs" ADD FOREIGN KEY ("post_id") REFERENCES "posts" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "shared_posts" ADD FOREIGN KEY ("post_id") REFERENCES "posts" ("id");
+ALTER TABLE "shared_posts" ADD FOREIGN KEY ("post_id") REFERENCES "posts" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "tags" ADD FOREIGN KEY ("post_id") REFERENCES "posts" ("id");
+ALTER TABLE "tags" ADD FOREIGN KEY ("post_id") REFERENCES "posts" ("id") ON DELETE CASCADE;

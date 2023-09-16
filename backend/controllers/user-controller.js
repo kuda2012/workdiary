@@ -1,27 +1,30 @@
-const { OAuth2Client } = require("google-auth-library");
-const client = new OAuth2Client();
-const { CLIENT_ID, SECRET_KEY } = require("../config");
+const axios = require("axios");
+const { SECRET_KEY } = require("../config");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 exports.login = async (req, res) => {
-  const payload = await verifyGoogleToken(req.body.google_access_token).catch(
-    console.error
-  );
+  const payload = await verifyGoogleToken(req.body.google_access_token);
   const token = generateWorksnapAccessToken(payload);
   const doesUserExist = await User.getUser(payload.sub);
   if (!doesUserExist) {
-    const newUser = await User.create(payload);
+    await User.create(payload);
+    console.log("hey");
   }
   res.send({ worksnap_token: token });
 };
 
 async function verifyGoogleToken(google_access_token) {
-  const { payload } = await client.verifyIdToken({
-    idToken: google_access_token,
-    audience: CLIENT_ID,
-  });
-  return payload;
+  // Verifies the access token
+  const { data } = await axios.get(
+    `https://oauth2.googleapis.com/tokeninfo?access_token=${google_access_token}`
+  );
+  // adding a name to the payload
+  const getInfo = await axios.get(
+    `https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses&access_token=${google_access_token}`
+  );
+  data.name = getInfo.data.names[0].displayName;
+  return data;
 }
 
 function generateWorksnapAccessToken(payload) {
