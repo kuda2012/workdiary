@@ -37,6 +37,17 @@ function Oauth() {
         useOneTap
       />
       {/* <button onClick={() => login()}>Sign in with Google 🚀 </button> */}
+      <button
+        onClick={() => {
+          console.log("hello");
+          chrome.identity.getAuthToken({ interactive: true }, function (token) {
+            setGoogleAccessToken(token);
+          });
+        }}
+      >
+        {" "}
+        Identity button{" "}
+      </button>
     </>
   );
 }
