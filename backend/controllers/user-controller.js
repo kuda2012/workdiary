@@ -9,7 +9,6 @@ exports.login = async (req, res) => {
   const doesUserExist = await User.getUser(payload.sub);
   if (!doesUserExist) {
     await User.create(payload);
-    console.log("hey");
   }
   res.send({ worksnap_token: token });
 };

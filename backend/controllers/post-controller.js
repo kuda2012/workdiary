@@ -1,9 +1,14 @@
 const Post = require("../models/Post");
 const jwt = require("jsonwebtoken");
 const { decodeJwt } = require("../helpers/decodeJwt");
+const { response } = require("express");
 
 exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
+  // if (req.body.is_new_voice_note) {
+  //const response = await axios.post("http://deepgram", {voice:req.body.summary_voice});
+  //req.body = { ...req.body, summary_text: response.data.text };
+  // }
   const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
   res.send({ post: getOrCreatePostForDay });
 };
