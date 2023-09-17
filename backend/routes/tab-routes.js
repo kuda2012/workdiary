@@ -5,6 +5,6 @@ const { tokenIsCurrent } = require("../middleware/userMiddleware");
 
 router.get("/:date", tokenIsCurrent, tabController.getTabs);
 router.post("/create", tokenIsCurrent, tabController.create);
-router.get("/update", tokenIsCurrent, tabController.update);
+router.patch("/update", tokenIsCurrent, tabController.update);
 
 module.exports = router;
