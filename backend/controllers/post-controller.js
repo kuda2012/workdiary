@@ -22,6 +22,10 @@ exports.getPost = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const getOrCreatePostForDay = await Post.update(req.body);
-  res.send({ post: getOrCreatePostForDay });
+  // if (req.body.is_new_voice_note) {
+  //const response = await axios.post("http://deepgram", {voice:req.body.summary_voice});
+  //req.body = { ...req.body, summary_text: response.data.text };
+  // }
+  const updatePost = await Post.update(req.body);
+  res.send({ post: updatePost });
 };
