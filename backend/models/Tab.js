@@ -21,8 +21,6 @@ class Tab {
       comment: tab.comment,
       order: tab.order,
     }));
-    console.log(tabs);
-
     try {
       const insertingTabs = await dbConnection.tx(async (t) => {
         const insert = pgp.helpers.insert(
@@ -38,12 +36,16 @@ class Tab {
       throw error;
     }
   }
-  static async getPost(user_id, date) {
-    const post = await db.query(
-      `SELECT * FROM tabs WHERE user_id = $1 AND DATE(date)=$2 `,
+  static async getTabs(user_id, date) {
+    const tabs = await db.query(
+      `SELECT tabs.id as tab_id, post_id, title, url, comment, tabs.order FROM tabs
+      JOIN posts ON posts.id = tabs.post_id
+      WHERE posts.user_id = $1 AND DATE(date)=$2
+      ORDER BY tabs.order
+      `,
       [user_id, date]
     );
-    return post.rows[0];
+    return tabs.rows;
   }
   static async update(body) {
     let queryText = "UPDATE posts SET";

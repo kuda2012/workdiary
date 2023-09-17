@@ -11,7 +11,7 @@ CREATE TABLE "tabs" (
   "title" varchar,
   "url" text,
   "comment" varchar,
-  "order" varchar
+  "order" integer
 );
 
 CREATE TABLE "users" (

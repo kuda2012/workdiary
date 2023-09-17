@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const Tab = require("../models/Tab");
 const jwt = require("jsonwebtoken");
 const { decodeJwt } = require("../helpers/decodeJwt");
 const { response } = require("express");
@@ -16,7 +17,8 @@ exports.create = async (req, res) => {
 exports.getPost = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.params.date);
-  res.send({ post });
+  const tabs = await Tab.getTabs(id, req.params.date);
+  res.send({ post: { ...post, tabs: tabs } });
 };
 
 exports.update = async (req, res) => {

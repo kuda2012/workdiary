@@ -14,8 +14,8 @@ exports.create = async (req, res) => {
 
 exports.getTabs = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  const post = await Tab.getTabs(id, req.params.date);
-  res.send({ post });
+  const tabs = await Tab.getTabs(id, req.params.date);
+  res.send({ tabs });
 };
 
 exports.update = async (req, res) => {
