@@ -15,7 +15,7 @@ exports.create = async (req, res) => {
 exports.getTabs = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const tabs = await Tab.getTabs(id, req.params.date);
-  res.send({ tabs });
+  res.send({ date: req.params.date, tabs });
 };
 
 exports.update = async (req, res) => {
@@ -25,6 +25,13 @@ exports.update = async (req, res) => {
   //   updateTabs.push(updatedTab);
   // }
   // res.send({ tabs: updateTabs });
-  const updatedTabs = await Tab.bulkUpdate(req.body.tabs);
-  res.send({ tabs: updatedTabs });
+  const { id } = decodeJwt(req.headers.authorization);
+  const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
+  const updatedTabs = await Tab.bulkUpdate(
+    req.body.tabs,
+    id,
+    getOrCreatePostForDay.id,
+    req.body.date
+  );
+  res.send({ date: req.body.date, tabs: updatedTabs });
 };

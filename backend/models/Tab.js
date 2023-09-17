@@ -22,7 +22,7 @@ class Tab {
       tab_order: tab.tab_order,
     }));
     try {
-      const insertingTabs = await dbConnection.tx(async (t) => {
+      await dbConnection.tx(async (t) => {
         const insert = pgp.helpers.insert(
           tabs,
           ["post_id", "title", "url", "comment", "tab_order"],
@@ -30,50 +30,49 @@ class Tab {
         );
         return t.manyOrNone(insert + " RETURNING *");
       });
-
-      return insertingTabs;
+      return this.getTabs(post.user_id, post.date);
     } catch (error) {
       throw error;
     }
   }
   static async getTabs(user_id, date) {
     const tabs = await db.query(
-      `SELECT tabs.id as tab_id, post_id, title, url, comment, tabs.tab_order FROM tabs
+      `SELECT tabs.id as tab_id, post_id, title, url, comment, tab_order FROM tabs
       JOIN posts ON posts.id = tabs.post_id
       WHERE posts.user_id = $1 AND DATE(date)=$2
-      tab_order BY tabs.tab_order
+      ORDER BY tab_order
       `,
       [user_id, date]
     );
     return tabs.rows;
   }
-  static async update(tab) {
-    // let queryText = "UPDATE TABS SET";
-    // const queryValues = [];
-    // if (tab.title !== undefined) {
-    //   queryText += " title = $1,"; // Add the column to the query
-    //   queryValues.push(tab.title); // Add the value to the parameter array
-    // }
-    // if (tab.url !== undefined) {
-    //   queryText += " url = $2,"; // Add the column to the query
-    //   queryValues.push(tab.url); // Add the value to the parameter array
-    // }
-    // if (tab.comment !== undefined) {
-    //   queryText += " comment = $3,"; // Add the column to the query
-    //   queryValues.push(tab.comment); // Add the value to the parameter array
-    // }
-    // if (tab.tab_order !== undefined) {
-    //   queryText += " tab_order = $4,"; // Add the column to the query
-    //   queryValues.push(tab.tab_order); // Add the value to the parameter array
-    // }
-    // queryText = queryText.slice(0, -1);
-    // queryValues.push(tab.tab_id);
-    // queryText += ` WHERE id = $${queryValues.length} RETURNING *`;
-    // const result = await db.query(queryText, queryValues);
-    // return result.rows[0];
-  }
+  // static async update(tab) {
+  // let queryText = "UPDATE TABS SET";
+  // const queryValues = [];
+  // if (tab.title !== undefined) {
+  //   queryText += " title = $1,"; // Add the column to the query
+  //   queryValues.push(tab.title); // Add the value to the parameter array
+  // }
+  // if (tab.url !== undefined) {
+  //   queryText += " url = $2,"; // Add the column to the query
+  //   queryValues.push(tab.url); // Add the value to the parameter array
+  // }
+  // if (tab.comment !== undefined) {
+  //   queryText += " comment = $3,"; // Add the column to the query
+  //   queryValues.push(tab.comment); // Add the value to the parameter array
+  // }
+  // if (tab.tab_order !== undefined) {
+  //   queryText += " tab_order = $4,"; // Add the column to the query
+  //   queryValues.push(tab.tab_order); // Add the value to the parameter array
+  // }
+  // queryText = queryText.slice(0, -1);
+  // queryValues.push(tab.tab_id);
+  // queryText += ` WHERE id = $${queryValues.length} RETURNING *`;
+  // const result = await db.query(queryText, queryValues);
+  // return result.rows[0];
+  // }
 
-  static async bulkUpdate(tabs) {
+  static async bulkUpdate(tabs, user_id, post_id, date) {
     const queryText = `
     UPDATE tabs AS t
     SET
@@ -91,10 +90,9 @@ class Tab {
         )
         .join(",")}
     ) AS u(tab_id, title, url, comment, tab_order)
-    WHERE t.id = u.tab_id::integer
+    WHERE t.id = u.tab_id::integer AND t.post_id =${post_id}
     RETURNING t.*;
   `;
-
     const queryValues = tabs.flatMap((tab) => [
       tab.tab_id,
       tab.title,
@@ -102,9 +100,8 @@ class Tab {
       tab.comment,
       tab.tab_order,
     ]);
-
-    const result = await db.query(queryText, queryValues);
-    return result.rows;
+    await db.query(queryText, queryValues);
+    return this.getTabs(user_id, date);
   }
 
   static async getOrCreatePostForDay(user_id, body) {

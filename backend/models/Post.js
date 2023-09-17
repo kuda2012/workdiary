@@ -16,7 +16,7 @@ class Post {
     );
     return post.rows[0];
   }
-  static async update(body) {
+  static async update(body, post_id) {
     let queryText = "UPDATE posts SET";
     const queryValues = [];
     if (body.summary_text !== undefined) {
@@ -28,7 +28,7 @@ class Post {
       queryValues.push(body.summary_voice); // Add the value to the parameter array
     }
     queryText = queryText.slice(0, -1);
-    queryValues.push(body.id);
+    queryValues.push(post_id);
     queryText += ` WHERE id = $${queryValues.length} RETURNING *`;
     const result = await db.query(queryText, queryValues);
     return result.rows[0];
