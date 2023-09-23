@@ -7,9 +7,11 @@ app.use(express.json());
 const userRoutes = require("./routes/user-routes");
 const postRoutes = require("./routes/post-routes");
 const tabRoutes = require("./routes/tab-routes");
+const tagRoutes = require("./routes/tag-routes");
 
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/tabs", tabRoutes);
+app.use("/tags", tagRoutes);
 
 module.exports = { app };
