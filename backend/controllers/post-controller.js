@@ -31,3 +31,10 @@ exports.update = async (req, res) => {
   const updatePost = await Post.update(req.body, getOrCreatePostForDay.id);
   res.send({ post: updatePost });
 };
+
+exports.delete = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const post = await Post.getPost(id, req.params.date);
+  await Post.delete(post.id);
+  res.send({ message: `Your post for ${req.params.date} has been deleted` });
+};
