@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { SECRET_KEY } = require("../config");
+const { decodeJwt } = require("../helpers/decodeJwt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
@@ -11,6 +12,15 @@ exports.login = async (req, res) => {
     await User.create(payload);
   }
   res.send({ worksnap_token: token });
+};
+
+exports.delete = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const doesUserExist = await User.getUser(id);
+  if (doesUserExist) {
+    await User.delete(id);
+  }
+  res.send({ message: "Your account has been deleted!" });
 };
 
 async function verifyGoogleToken(google_access_token) {

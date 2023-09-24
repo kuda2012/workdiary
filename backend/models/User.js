@@ -9,11 +9,19 @@ class User {
     );
     return getUser[0];
   }
-  static async getUser(google_id) {
-    const getUser = await db.query(`SELECT * FROM users WHERE id = $1`, [
-      google_id,
+  static async delete(user_id) {
+    const getUser = await db.query(
+      `DELETE FROM USERS
+       WHERE id=$1`,
+      [user_id]
+    );
+    return getUser;
+  }
+  static async getUser(id) {
+    const getUser = await db.oneOrNone(`SELECT * FROM users WHERE id = $1`, [
+      id,
     ]);
-    return getUser[0];
+    return getUser;
   }
 }
 
