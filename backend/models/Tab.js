@@ -71,7 +71,7 @@ class Tab {
   // const result = await db.query(queryText, queryValues);
   // return result[0];
   // }
-  static async delete(post_id, tab_id) {
+  static async delete(user_id, post_id, tab_id, date) {
     const tab = await db.oneOrNone(
       `SELECT * FROM tabs
       WHERE post_id = $1 AND id = $2
@@ -87,7 +87,7 @@ class Tab {
       );
     }
 
-    return "You tab has been deleted";
+    return this.getTabs(user_id, date);
   }
 
   static async bulkUpdate(tabs, user_id, post_id, date) {

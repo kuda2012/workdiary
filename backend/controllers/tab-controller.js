@@ -39,6 +39,11 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
-  await Tab.delete(getOrCreatePostForDay.id, req.body.tab_id);
-  res.send({ message: "Your tab has been deleted" });
+  const updatedTabs = await Tab.delete(
+    id,
+    getOrCreatePostForDay.id,
+    req.body.tab_id,
+    req.body.date
+  );
+  res.send({ message: "Your tab has been deleted", tabs: updatedTabs });
 };
