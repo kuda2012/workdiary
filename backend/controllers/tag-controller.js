@@ -21,6 +21,11 @@ exports.getTags = async (req, res) => {
 exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
-  await Tag.delete(getOrCreatePostForDay.id, req.body.tag_id);
-  res.send({ message: "You tag has been deleted" });
+  const updatedTags = await Tag.delete(
+    id,
+    getOrCreatePostForDay.id,
+    req.body.tag_id,
+    req.body.date
+  );
+  res.send({ message: "You tag has been deleted", tags: updatedTags });
 };

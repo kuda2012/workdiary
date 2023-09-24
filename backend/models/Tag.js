@@ -33,19 +33,19 @@ class Tag {
       throw error;
     }
   }
-  static async getTabs(user_id, date) {
+  static async getTags(user_id, date) {
     const tags = await db.query(
-      `SELECT tags.id as tag_id, post_id, title, url, comment, tag_order FROM tags
+      `SELECT tags.id as tag_id, post_id, text FROM tags
       JOIN posts ON posts.id = tags.post_id
       WHERE posts.user_id = $1 AND DATE(date)=$2
-      ORDER BY tag_order
+      ORDER BY tag_id
       `,
       [user_id, date]
     );
     return tags;
   }
 
-  static async delete(post_id, tag_id) {
+  static async delete(user_id, post_id, tag_id, date) {
     const tag = await db.oneOrNone(
       `SELECT * FROM tags
       WHERE post_id = $1 AND id = $2
@@ -61,7 +61,7 @@ class Tag {
       );
     }
 
-    return "You tag has been deleted";
+    return this.getTags(user_id, date);
   }
 }
 

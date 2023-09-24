@@ -34,7 +34,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  const post = await Post.getPost(id, req.params.date);
+  const post = await Post.getPost(id, req.body.date);
   await Post.delete(post.id);
-  res.send({ message: `Your post for ${req.params.date} has been deleted` });
+  res.send({ message: `Your post for ${req.body.date} has been deleted` });
 };
