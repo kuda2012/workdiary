@@ -35,3 +35,10 @@ exports.update = async (req, res) => {
   );
   res.send({ date: req.body.date, tabs: updatedTabs });
 };
+
+exports.delete = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
+  await Tab.delete(getOrCreatePostForDay.id, req.body.tab_id);
+  res.send({ message: "Your tab has been deleted" });
+};
