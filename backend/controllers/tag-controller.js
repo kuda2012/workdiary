@@ -12,13 +12,13 @@ exports.create = async (req, res) => {
   res.send({ tags: addtags });
 };
 
-exports.gettags = async (req, res) => {
+exports.getTags = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  const tags = await Tag.gettags(id, req.params.date);
+  const tags = await Tag.getTags(id, req.params.date);
   res.send({ date: req.params.date, tags });
 };
 
-exports.update = async (req, res) => {
+exports.delete = async (req, res) => {
   // const updatetags = [];
   // for (let tag of req.body.tags) {
   //   let updatedtag = await tag.update(tag);
@@ -27,11 +27,9 @@ exports.update = async (req, res) => {
   // res.send({ tags: updatetags });
   const { id } = decodeJwt(req.headers.authorization);
   const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
-  const updatedtags = await Tag.bulkUpdate(
-    req.body.tags,
-    id,
+  const updatedtags = await Tag.delete(
     getOrCreatePostForDay.id,
-    req.body.date
+    req.body.tag_id
   );
   res.send({ date: req.body.date, tags: updatedtags });
 };

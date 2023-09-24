@@ -31,7 +31,7 @@ function generateWorksnapAccessToken(payload) {
     { id: payload.sub, email: payload.email, name: payload.name },
     SECRET_KEY,
     {
-      expiresIn: "2w",
+      expiresIn: "1y",
     }
   );
   return token;

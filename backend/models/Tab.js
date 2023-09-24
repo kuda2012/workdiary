@@ -1,6 +1,6 @@
 const db = require("../db");
 const pgp = require("pg-promise")();
-const dbConnection = pgp("postgres://localhost/worksnap");
+// const dbConnection = pgp("postgres://localhost/worksnap");
 
 class Tab {
   static async create(post, body) {
@@ -11,7 +11,7 @@ class Tab {
     //    VALUES ($1, $2, $3, $4, $5) RETURNING *`,
     //     [post.id, tab.title, tab.url, tab.comment, tab.tab_tab_order]
     //   );
-    //   createdTabs.push(insertingTab.rows[0]);
+    //   createdTabs.push(insertingTab[0]);
     // }
     // return createdTabs;
     const tabs = body.tabs.map((tab) => ({
@@ -22,7 +22,7 @@ class Tab {
       tab_order: tab.tab_order,
     }));
     try {
-      await dbConnection.tx(async (t) => {
+      await db.tx(async (t) => {
         const insert = pgp.helpers.insert(
           tabs,
           ["post_id", "title", "url", "comment", "tab_order"],
@@ -44,7 +44,7 @@ class Tab {
       `,
       [user_id, date]
     );
-    return tabs.rows;
+    return tabs;
   }
   // static async update(tab) {
   // let queryText = "UPDATE TABS SET";
@@ -69,7 +69,7 @@ class Tab {
   // queryValues.push(tab.tab_id);
   // queryText += ` WHERE id = $${queryValues.length} RETURNING *`;
   // const result = await db.query(queryText, queryValues);
-  // return result.rows[0];
+  // return result[0];
   // }
 
   static async bulkUpdate(tabs, user_id, post_id, date) {
@@ -102,18 +102,6 @@ class Tab {
     ]);
     await db.query(queryText, queryValues);
     return this.getTabs(user_id, date);
-  }
-
-  static async getOrCreatePostForDay(user_id, body) {
-    const getPost = await db.query(
-      `SELECT * FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
-      [user_id, body.date]
-    );
-    if (!getPost.rows[0]) {
-      const createdPost = await this.create(user_id, body);
-      return createdPost;
-    }
-    return getPost.rows[0];
   }
 }
 

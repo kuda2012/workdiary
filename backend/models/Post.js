@@ -7,14 +7,14 @@ class Post {
        VALUES ($1, $2, $3) RETURNING *`,
       [user_id, body.date, body.summary_text]
     );
-    return createdPost.rows[0];
+    return createdPost[0];
   }
   static async getPost(user_id, date) {
     const post = await db.query(
       `SELECT * FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
       [user_id, date]
     );
-    return post.rows[0];
+    return post[0];
   }
   static async update(body, post_id) {
     let queryText = "UPDATE posts SET";
@@ -31,18 +31,19 @@ class Post {
     queryValues.push(post_id);
     queryText += ` WHERE id = $${queryValues.length} RETURNING *`;
     const result = await db.query(queryText, queryValues);
-    return result.rows[0];
+    return result[0];
   }
   static async getOrCreatePostForDay(user_id, body) {
     const getPost = await db.query(
       `SELECT * FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
       [user_id, body.date]
     );
-    if (!getPost.rows[0]) {
+    console.log(getPost);
+    if (!getPost[0]) {
       const createdPost = await this.create(user_id, body);
       return createdPost;
     }
-    return getPost.rows[0];
+    return getPost[0];
   }
 }
 

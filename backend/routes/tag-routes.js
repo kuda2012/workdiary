@@ -5,6 +5,6 @@ const { tokenIsCurrent } = require("../middleware/userMiddleware");
 
 router.get("/:date", tokenIsCurrent, tagController.getTags);
 router.post("/create", tokenIsCurrent, tagController.create);
-router.patch("/update", tokenIsCurrent, tagController.update);
+router.delete("/delete/:date", tokenIsCurrent, tagController.delete);
 
 module.exports = router;
