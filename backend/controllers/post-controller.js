@@ -10,7 +10,14 @@ exports.create = async (req, res) => {
   //const response = await axios.post("http://deepgram", {voice:req.body.summary_voice});
   //req.body = { ...req.body, summary_text: response.data.text };
   // }
-  const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
+  const summaryVoice = req.file
+    ? Buffer.from(req.file.buffer, "binary")
+    : undefined;
+  const getOrCreatePostForDay = await Post.getOrCreatePostForDay(
+    id,
+    req.body,
+    summaryVoice
+  );
   res.send({ post: getOrCreatePostForDay });
 };
 
@@ -28,7 +35,14 @@ exports.update = async (req, res) => {
   // }
   const { id } = decodeJwt(req.headers.authorization);
   const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
-  const updatePost = await Post.update(req.body, getOrCreatePostForDay.id);
+  const summaryVoice = req.file
+    ? Buffer.from(req.file.buffer, "binary")
+    : undefined;
+  const updatePost = await Post.update(
+    getOrCreatePostForDay.id,
+    req.body,
+    summaryVoice
+  );
   res.send({ post: updatePost });
 };
 
