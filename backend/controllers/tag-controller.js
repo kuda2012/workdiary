@@ -8,8 +8,8 @@ exports.create = async (req, res) => {
   // if post does not exist for the day, create post for the day, and then add tags
   const { id } = decodeJwt(req.headers.authorization);
   const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
-  const addtags = await Tag.create(getOrCreatePostForDay, req.body);
-  res.send({ tags: addtags });
+  const allTags = await Tag.create(getOrCreatePostForDay, req.body);
+  res.send({ date: req.body.date, tags: allTags });
 };
 
 exports.getTags = async (req, res) => {
@@ -27,5 +27,9 @@ exports.delete = async (req, res) => {
     req.body.tag_id,
     req.body.date
   );
-  res.send({ message: "You tag has been deleted", tags: updatedTags });
+  res.send({
+    date: req.body.date,
+    message: "You tag has been deleted",
+    tags: updatedTags,
+  });
 };

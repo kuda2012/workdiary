@@ -1,4 +1,5 @@
 const db = require("../db");
+const pgp = require("pg-promise")();
 
 class Tag {
   static async create(post, body) {
@@ -14,21 +15,14 @@ class Tag {
     // return createdTabs;
     const tags = body.tags.map((tag) => ({
       post_id: post.id,
-      title: tag.title,
-      url: tag.url,
-      comment: tag.comment,
-      tag_order: tag.tag_order,
+      text: tag.text,
     }));
     try {
-      await dbConnection.tx(async (t) => {
-        const insert = pgp.helpers.insert(
-          tags,
-          ["post_id", "title", "url", "comment", "tag_order"],
-          "tags"
-        );
+      await db.tx(async (t) => {
+        const insert = pgp.helpers.insert(tags, ["post_id", "text"], "tags");
         return t.manyOrNone(insert + " RETURNING *");
       });
-      return this.getTabs(post.user_id, post.date);
+      return this.getTags(post.user_id, body.date);
     } catch (error) {
       throw error;
     }
