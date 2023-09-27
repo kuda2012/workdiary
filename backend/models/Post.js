@@ -4,9 +4,9 @@ class Post {
   static async create(user_id, body, summary_voice) {
     /// add optional summary_voice
     const createdPost = await db.query(
-      `INSERT INTO posts (user_id, date, summary_text)
-       VALUES ($1, $2, $3) RETURNING id, user_id, summary_text, date`,
-      [user_id, body.date, body.summary_text]
+      `INSERT INTO posts (user_id, date, summary_text, summary_voice)
+       VALUES ($1, $2, $3, $4) RETURNING id, user_id, summary_text, date`,
+      [user_id, body.date, body.summary_text, summary_voice]
     );
     return createdPost[0];
   }

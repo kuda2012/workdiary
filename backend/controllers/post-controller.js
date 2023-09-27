@@ -1,8 +1,6 @@
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
-const jwt = require("jsonwebtoken");
 const { decodeJwt } = require("../helpers/decodeJwt");
-const { response } = require("express");
 
 exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
@@ -10,9 +8,7 @@ exports.create = async (req, res) => {
   //const response = await axios.post("http://deepgram", {voice:req.body.summary_voice});
   //req.body = { ...req.body, summary_text: response.data.text };
   // }
-  const summaryVoice = req.file
-    ? Buffer.from(req.file.buffer, "binary")
-    : undefined;
+  const summaryVoice = req.file ? Buffer.from(req.file.buffer, "binary") : null;
   const getOrCreatePostForDay = await Post.getOrCreatePostForDay(
     id,
     req.body,
