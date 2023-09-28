@@ -38,14 +38,14 @@ class Post {
     const result = await db.query(queryText, queryValues);
     return result[0];
   }
-  static async getOrCreatePostForDay(user_id, body) {
-    const getPost = await this.getPost(user_id, body.date);
-    if (!getPost) {
-      const createdPost = await this.create(user_id, body);
-      return createdPost;
-    }
-    return getPost;
-  }
+  // static async getOrCreatePostForDay(user_id, body) {
+  //   const getPost = await this.getPost(user_id, body.date);
+  //   const createdPost = await this.create(user_id, body);
+  //   if (!getPost) {
+  //     return createdPost;
+  //   }
+  //   return getPost;
+  // }
 }
 
 module.exports = Post;

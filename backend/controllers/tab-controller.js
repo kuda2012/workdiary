@@ -7,8 +7,11 @@ exports.create = async (req, res) => {
   // if posts exist for the day, add tabs to the day
   // if post does not exist for the day, create post for the day, and then add tabs
   const { id } = decodeJwt(req.headers.authorization);
-  const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
-  const addTabs = await Tab.create(getOrCreatePostForDay, req.body);
+  let post = await Post.getPost(id, req.body.date);
+  if (!post) {
+    post = Post.create(id, body, summaryVoice);
+  }
+  const addTabs = await Tab.create(post, req.body);
   res.send({ tabs: addTabs });
 };
 
@@ -26,11 +29,11 @@ exports.update = async (req, res) => {
   // }
   // res.send({ tabs: updateTabs });
   const { id } = decodeJwt(req.headers.authorization);
-  const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
+  const post = await Post.getPost(id, req.body.date);
   const updatedTabs = await Tab.bulkUpdate(
     req.body.tabs,
     id,
-    getOrCreatePostForDay.id,
+    post.id,
     req.body.date
   );
   res.send({ date: req.body.date, tabs: updatedTabs });
@@ -38,10 +41,10 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  const getOrCreatePostForDay = await Post.getOrCreatePostForDay(id, req.body);
+  const post = await Post.getPost(id, req.body.date);
   const updatedTabs = await Tab.delete(
     id,
-    getOrCreatePostForDay.id,
+    post.id,
     req.body.tab_id,
     req.body.date
   );
