@@ -1,9 +1,24 @@
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
 const { decodeJwt } = require("../helpers/decodeJwt");
+const { Deepgram } = require("@deepgram/sdk");
+const { DEEPGRAM_API_KEY } = require("../config");
 
 exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
+  const deepgram = new Deepgram(DEEPGRAM_API_KEY);
+  const source = {
+    buffer: req.file.buffer,
+    mimetype: "audio/wav",
+  };
+  const response = await deepgram.transcription.preRecorded(source, {
+    smart_format: true,
+    model: "nova",
+    summarize: "v2",
+  });
+  req.body.summary_text =
+    response.results.channels[0].alternatives[0].transcript;
+  console.log(response.results.summary);
   // if (req.body.is_new_voice_note) {
   //const response = await axios.post("http://deepgram", {voice:req.body.summary_voice});
   //req.body = { ...req.body, summary_text: response.data.text };

@@ -15,10 +15,13 @@ const CLIENT_ID = process.env.CLIENT_ID;
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
+const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY;
+
 console.log("Using database", DB_URI);
 module.exports = {
   PORT,
   DB_URI,
   CLIENT_ID,
   SECRET_KEY,
+  DEEPGRAM_API_KEY,
 };
