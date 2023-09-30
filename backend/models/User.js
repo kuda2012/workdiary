@@ -1,5 +1,4 @@
 const db = require("../db");
-const { v4: uuid } = require("uuid");
 class User {
   static async create(payload) {
     const getUser = await db.query(

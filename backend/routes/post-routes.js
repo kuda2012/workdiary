@@ -16,6 +16,16 @@ router.post(
   upload.single("summary_voice"),
   postController.create
 );
+router.post(
+  "/generate-share-link",
+  tokenIsCurrent,
+  postController.generateShareLink
+);
+router.post(
+  "/deactivate-share-link",
+  tokenIsCurrent,
+  postController.deactivateShareLink
+);
 router.patch(
   "/update",
   tokenIsCurrent,

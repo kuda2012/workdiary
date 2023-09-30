@@ -23,6 +23,23 @@ exports.getPost = async (req, res) => {
   res.send({ post: { ...post, tabs: tabs } });
 };
 
+exports.generateShareLink = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const post = await Post.getPost(id, req.body.date);
+  const shareLinkInfo = await Post.generateShareLink(post.id);
+  res.send({ link: shareLinkInfo });
+};
+
+exports.deactivateShareLink = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const post = await Post.getPost(id, req.body.date);
+  await Post.deactivateShareLink(post.id);
+  res.send({
+    post_id: post.id,
+    message: "Access to your post has now been revoked from other users",
+  });
+};
+
 exports.search = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const searchResults = await Post.search(id, req.query.query);

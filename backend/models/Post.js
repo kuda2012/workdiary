@@ -1,4 +1,5 @@
 const db = require("../db");
+const { v4: uuid } = require("uuid");
 
 class Post {
   static async create(user_id, body, summary_voice) {
@@ -76,6 +77,20 @@ WHERE
         tabs.text_search::text ILIKE '%' || $2 || '%'
     );`,
       [user_id, query]
+    );
+  }
+  static async generateShareLink(post_id) {
+    return db.query(
+      `INSERT INTO shared_posts (pointer_id, post_id)
+       VALUES ($1, $2) RETURNING pointer_id, post_id`,
+      [uuid(), post_id]
+    );
+  }
+  static async deactivateShareLink(post_id) {
+    return db.query(
+      `DELETE FROM shared_posts
+       WHERE post_id=$1`,
+      [post_id]
     );
   }
 }
