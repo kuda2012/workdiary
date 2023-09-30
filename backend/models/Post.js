@@ -46,6 +46,38 @@ class Post {
   //   }
   //   return getPost;
   // }
+
+  // p.text_search @@ plainto_tsquery('english', $2) -- Search using ts_query
+  // OR
+  // tabs.text_search @@ plainto_tsquery('english', $2) -- Search using ts_query
+  // OR
+  static async search(user_id, query) {
+    return db.query(
+      `SELECT
+    p.date,
+    p.summary_text,
+    tabs.url,
+    tabs.title,
+    tabs.comment,
+    tags.text
+FROM
+    posts AS p
+LEFT JOIN
+    tags ON p.id = tags.post_id
+LEFT JOIN
+    tabs ON p.id = tabs.post_id
+WHERE
+    p.user_id = $1
+    AND (
+        tags.text ILIKE '%' || $2 || '%' -- Search tags by text
+        OR
+        p.text_search::text ILIKE '%' || $2 || '%'
+        OR
+        tabs.text_search::text ILIKE '%' || $2 || '%'
+    );`,
+      [user_id, query]
+    );
+  }
 }
 
 module.exports = Post;

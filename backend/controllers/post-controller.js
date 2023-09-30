@@ -23,11 +23,21 @@ exports.getPost = async (req, res) => {
   res.send({ post: { ...post, tabs: tabs } });
 };
 
+exports.search = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const searchResults = await Post.search(id, req.query.query);
+  res.send({ results: searchResults });
+};
+
 exports.update = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.body.date);
   if (req.file) {
-    req.body.summary_text = await speechToText(req);
+    req.body.summary_text = req.body.summary_text.concat(`E'\\n'`);
+    const summaryText = await speechToText(req.file.buffer);
+    req.body.summary_text = req.body.summary_text
+      .concat(`E'\\n'`)
+      .concat(summaryText);
   }
   const summaryVoice = req.file ? Buffer.from(req.file.buffer, "binary") : null;
   const updatePost = await Post.update(post.id, req.body, summaryVoice);

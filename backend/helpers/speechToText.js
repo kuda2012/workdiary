@@ -1,9 +1,9 @@
 const { Deepgram } = require("@deepgram/sdk");
 const { DEEPGRAM_API_KEY } = require("../config");
-exports.speechToText = async (req) => {
+exports.speechToText = async (buffer) => {
   const deepgram = new Deepgram(DEEPGRAM_API_KEY);
   const source = {
-    buffer: req.file.buffer,
+    buffer,
     mimetype: "audio/wav",
   };
   const response = await deepgram.transcription.preRecorded(source, {
