@@ -23,6 +23,12 @@ exports.getPost = async (req, res) => {
   res.send({ post: { ...post, tabs: tabs } });
 };
 
+exports.getSharedPost = async (req, res) => {
+  const post = await Post.getSharedPost(req.params.pointerId);
+  const tabs = await Tab.getTabs(post.user_id, post.date);
+  res.send({ post: { ...post, tabs: tabs } });
+};
+
 exports.generateShareLink = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.body.date);

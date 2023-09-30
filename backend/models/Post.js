@@ -18,6 +18,16 @@ class Post {
     );
     return post;
   }
+  static async getSharedPost(pointerId) {
+    const { post_id } = await db.oneOrNone(
+      `SELECT post_id FROM shared_posts WHERE pointer_id = $1`,
+      [pointerId]
+    );
+    return db.oneOrNone(
+      `SELECT id, user_id, summary_text, date FROM posts where id=$1`,
+      [post_id]
+    );
+  }
   static async delete(post_id) {
     const post = await db.query(`DELETE FROM posts WHERE id = $1`, [post_id]);
     return post;

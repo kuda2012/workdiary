@@ -7,6 +7,7 @@ const { tokenIsCurrent } = require("../middleware/userMiddleware");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+router.get("/shared-post/:pointerId", postController.getSharedPost);
 router.get("/search", tokenIsCurrent, postController.search);
 router.get("/:date", tokenIsCurrent, postController.getPost);
 
