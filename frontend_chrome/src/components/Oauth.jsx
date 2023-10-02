@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { GoogleLogin } from "@react-oauth/google";
 
 function Oauth() {
   const [googleAccessToken, setGoogleAccessToken] = useState();
@@ -31,9 +32,7 @@ function Oauth() {
         onClick={() => {
           chrome.identity.removeCachedAuthToken(
             { token: googleAccessToken },
-            function (response) {
-              console.log(response);
-            }
+            function (response) {}
           );
         }}
       >

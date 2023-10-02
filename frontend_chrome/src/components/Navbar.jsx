@@ -9,23 +9,24 @@ import {
   Nav,
   NavbarBrand,
 } from "reactstrap";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import {
+  setGoogleAccessToken,
+  getWorksnapToken,
+  setWorksnapToken,
+} from "../helpers/actionCreators";
+
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function NavBar() {
-  const [googleAccessToken, setGoogleAccessToken] = useState();
-  const [worksnapToken, setWorksnapToken] = useState();
+  const dispatch = useDispatch();
+  const googleAccessToken = useSelector((state) => state.google_access_token);
+  const worksnapToken = useSelector((state) => state.worksnap_token);
+
   useEffect(() => {
-    async function callBackend() {
-      if (googleAccessToken) {
-        const response = await axios.post("http://localhost:3000/users/login", {
-          google_access_token: googleAccessToken,
-        });
-        setWorksnapToken(response.data.worksnap_token);
-        return response;
-      }
+    if (googleAccessToken) {
+      dispatch(getWorksnapToken(googleAccessToken));
     }
-    callBackend();
   }, [googleAccessToken]);
   return (
     <>
@@ -38,12 +39,14 @@ function NavBar() {
                 chrome.identity.getAuthToken(
                   { interactive: true },
                   function (token) {
-                    setGoogleAccessToken(token);
+                    dispatch(setGoogleAccessToken(token));
                   }
                 );
               }}
             >
-              <NavLink>Login</NavLink>
+              <NavLink>
+                Sign in with Google <img src="/Google.png"></img>
+              </NavLink>
             </NavItem>
           ) : (
             <NavItem
@@ -51,7 +54,7 @@ function NavBar() {
                 chrome.identity.removeCachedAuthToken(
                   { token: googleAccessToken },
                   function (response) {
-                    setWorksnapToken(null);
+                    dispatch(setWorksnapToken(null));
                   }
                 );
               }}
