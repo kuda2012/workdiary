@@ -5,7 +5,7 @@ async function openPopup() {
       url: "index.html", // Replace with your HTML file's path
       type: "popup",
       width: 800, // Set the width and height as desired
-      height: 600,
+      height: 1000,
       top: 100, // Adjust the window's position as needed
       left: 100,
     },
