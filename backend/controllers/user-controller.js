@@ -14,6 +14,12 @@ exports.login = async (req, res) => {
   res.send({ worksnap_token: token });
 };
 
+exports.getAccountInfo = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const user = await User.getUser(id);
+  res.send({ user });
+};
+
 exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const doesUserExist = await User.getUser(id);
