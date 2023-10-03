@@ -8,6 +8,7 @@ import {
   NavLink,
   Nav,
   NavbarBrand,
+  Button,
 } from "reactstrap";
 import {
   setGoogleAccessToken,
@@ -18,7 +19,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-function NavBar() {
+const NavBar = () => {
   const dispatch = useDispatch();
   const googleAccessToken = useSelector((state) => state.google_access_token);
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -44,28 +45,30 @@ function NavBar() {
                 );
               }}
             >
-              <NavLink>
+              <Button>
                 Sign in with Google <img src="/Google.png"></img>
-              </NavLink>
+              </Button>
             </NavItem>
           ) : (
             <NavItem
               onClick={() => {
                 chrome.identity.removeCachedAuthToken(
                   { token: googleAccessToken },
-                  function (response) {
+                  function () {
                     dispatch(setWorksnapToken(null));
                   }
                 );
               }}
             >
-              <NavLink>Logout</NavLink>
+              <Button>
+                Logout <img src="/Google.png"></img>
+              </Button>
             </NavItem>
           )}
         </Nav>
       </ReactNavBar>
     </>
   );
-}
+};
 
 export default NavBar;

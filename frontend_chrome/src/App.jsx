@@ -1,13 +1,14 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
-import "bootswatch/dist/lux/bootstrap.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+
+import AllBelowNavbar from "./components/AllBelowNavbar";
 
 function App() {
   return (
-    <>
-      <Navbar></Navbar>
-    </>
+    <div>
+      <Navbar />
+      <AllBelowNavbar />
+    </div>
   );
 }
 
