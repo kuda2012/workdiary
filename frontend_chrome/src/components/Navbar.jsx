@@ -1,20 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import {
-  Navbar as ReactNavBar,
-  NavItem,
-  NavbarToggler,
-  Collapse,
-  NavLink,
-  Nav,
-  NavbarBrand,
-  Button,
-} from "reactstrap";
+import { Navbar as ReactNavBar, NavItem, Nav, Button } from "reactstrap";
 import {
   setGoogleAccessToken,
   getWorksnapToken,
   setWorksnapToken,
 } from "../helpers/actionCreators";
+import { NavLink } from "react-router-dom";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,8 +24,14 @@ const NavBar = () => {
   return (
     <>
       <ReactNavBar color="light" light expand="md">
-        <NavbarBrand>Worksnap</NavbarBrand>
+        <NavLink to="/">Worksnap</NavLink>
         <Nav className="ml-auto" navbar>
+          <NavItem>
+            <NavLink to="/account-info">Account</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/delete-worksnap-account">Delete user</NavLink>
+          </NavItem>
           {!worksnapToken ? (
             <NavItem
               onClick={() => {
@@ -45,9 +43,13 @@ const NavBar = () => {
                 );
               }}
             >
-              <Button>
+              <NavLink
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              >
                 Sign in with Google <img src="/Google.png"></img>
-              </Button>
+              </NavLink>
             </NavItem>
           ) : (
             <NavItem
@@ -60,9 +62,13 @@ const NavBar = () => {
                 );
               }}
             >
-              <Button>
-                Logout <img src="/Google.png"></img>
-              </Button>
+              <NavLink
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                Logout<img src="/Google.png"></img>
+              </NavLink>
             </NavItem>
           )}
         </Nav>

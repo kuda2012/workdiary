@@ -11,11 +11,10 @@ const AllBelowNavbar = () => {
   return (
     <div className="container center-row">
       <div className="row justify-content-between">
-        <div className="col-md-3">
+        <div className="col-md-6">
           <Calendar />
         </div>
-        <div className="col-md-3"></div>
-        <div className="col-md-3">
+        <div className="col-md-6">
           <ReactQuill theme="snow" value={value} onChange={setValue} />
         </div>
       </div>
