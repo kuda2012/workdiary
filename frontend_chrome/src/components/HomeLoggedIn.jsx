@@ -1,13 +1,9 @@
 import Calendar from "./Calendar";
-import "../styles/AllBelowNavbar.css";
-
-import { useState } from "react";
-import ReactQuill from "react-quill";
+import "../styles/HomeLoggedIn.css";
 import "react-quill/dist/quill.snow.css";
+import SummaryTextArea from "./SummaryTextArea";
 
-const AllBelowNavbar = () => {
-  const [value, setValue] = useState("");
-
+const HomeLoggedIn = () => {
   return (
     <div className="container center-row">
       <div className="row justify-content-between">
@@ -15,11 +11,11 @@ const AllBelowNavbar = () => {
           <Calendar />
         </div>
         <div className="col-md-6">
-          <ReactQuill theme="snow" value={value} onChange={setValue} />
+          <SummaryTextArea />
         </div>
       </div>
     </div>
   );
 };
 
-export default AllBelowNavbar;
+export default HomeLoggedIn;

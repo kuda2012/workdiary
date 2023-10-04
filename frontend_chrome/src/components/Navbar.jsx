@@ -1,13 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Navbar as ReactNavBar, NavItem, Nav, Button } from "reactstrap";
+import { Navbar as ReactNavBar, NavItem, Nav } from "reactstrap";
 import {
   setGoogleAccessToken,
   getWorksnapToken,
   setWorksnapToken,
 } from "../helpers/actionCreators";
 import { NavLink } from "react-router-dom";
-
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

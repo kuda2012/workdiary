@@ -1,8 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import AllBelowNavbar from "./components/AllBelowNavbar";
-import Oauth from "./components/Oauth";
+import Home from "./components/Home";
 import { setWorksnapToken } from "./helpers/actionCreators";
 
 const Router = () => {
@@ -16,26 +15,14 @@ const Router = () => {
   //   );
   return (
     <Routes>
-      <Route path="/" element={<AllBelowNavbar />} />
+      <Route path="/" element={<Home />} />
       <Route
         path="/account-info"
-        element={
-          worksnapToken || localStorage.getItem("worksnap_token") ? (
-            <Oauth />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
+        element={worksnapToken ? <Home /> : <Navigate to="/" />}
       />
       <Route
         path="/delete-worksnap-account"
-        element={
-          worksnapToken || localStorage.getItem("worksnap_token") ? (
-            <Oauth />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
+        element={worksnapToken ? <Home /> : <Navigate to="/" />}
       />
     </Routes>
   );

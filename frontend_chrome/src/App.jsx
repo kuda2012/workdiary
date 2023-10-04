@@ -1,7 +1,7 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 
-import AllBelowNavbar from "./components/AllBelowNavbar";
+import Home from "./components/Home";
 import Router from "./Router";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div>
       <Navbar />
       <Router />
-      <AllBelowNavbar />
+      <Home />
     </div>
   );
 }
