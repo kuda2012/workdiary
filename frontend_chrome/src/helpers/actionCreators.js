@@ -49,6 +49,23 @@ export function deleteAccount(worksnap_token) {
     }
   };
 }
+export function getPost(worksnap_token, date) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/posts?date=${date}`,
+        {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        }
+      );
+      dispatch(setPost(data.post));
+      dispatch(setDate(data.date));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function setWorksnapToken(worksnap_token) {
   return {
     type: "SET_WORKSNAP_TOKEN",
@@ -71,5 +88,11 @@ export function setDate(date) {
   return {
     type: "SET_DATE",
     date,
+  };
+}
+export function setPost(post) {
+  return {
+    type: "SET_POST",
+    post,
   };
 }

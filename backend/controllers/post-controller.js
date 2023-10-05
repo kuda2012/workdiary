@@ -11,16 +11,16 @@ exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   let post = await Post.getPost(id, req.body.date);
   if (!post) {
-    post = Post.create(id, body, summaryVoice);
+    post = await Post.create(id, req.body, summaryVoice);
   }
   res.send({ post });
 };
 
 exports.getPost = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  const post = await Post.getPost(id, req.params.date);
-  const tabs = await Tab.getTabs(id, req.params.date);
-  res.send({ post: { ...post, tabs: tabs } });
+  const post = await Post.getPost(id, req.query.date);
+  const tabs = await Tab.getTabs(id, req.query.date);
+  res.send({ date: req.query.date, post: { ...post, tabs: tabs } });
 };
 
 exports.getSharedPost = async (req, res) => {

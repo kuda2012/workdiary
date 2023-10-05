@@ -3,22 +3,26 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setDate } from "../helpers/actionCreators";
+import { getPost } from "../helpers/actionCreators";
 
 const Calendar = () => {
   const date = useSelector((state) => state.date);
+  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const post = useSelector((state) => state.post);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!date) {
-      dispatch(setDate(new Date()));
+    if (!post) {
+      dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
     }
-  }, [date]);
+  }, [post]);
 
   return (
     <>
       <DatePicker
-        selected={date}
-        onChange={(date) => dispatch(setDate(date))}
+        selected={date ? moment(date, "MM/DD/YYYY").toDate() : new Date()}
+        onChange={(date) => {
+          dispatch(getPost(worksnapToken, moment(date).format("MM/DD/YYYY")));
+        }}
       />
     </>
   );
