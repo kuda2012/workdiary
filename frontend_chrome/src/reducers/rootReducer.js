@@ -13,9 +13,16 @@ function rootReducer(state = INITIAL_STATE, action) {
         ...state,
         worksnap_token: action.worksnap_token,
       };
-    case "HALF-RESET":
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.user,
+      };
+    case "SET_DATE":
+      return { ...state, date: action.date };
+    case "HALF_RESET":
       return { token: state.token };
-    case "FULL-RESET":
+    case "FULL_RESET":
       return {};
     default:
       return state;

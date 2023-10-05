@@ -1,12 +1,14 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "./components/Home";
-import { setWorksnapToken } from "./helpers/actionCreators";
+import UserAccountInfo from "./components/UserAccountInfo";
 
 const Router = () => {
   const worksnapToken = useSelector((state) => state.worksnap_token);
-  const dispatch = useDispatch();
+
+  // const dispatch = useDispatch();
+  const location = useLocation();
   // !worksnapToken &&
   //   dispatch(
   //     setWorksnapToken(
@@ -15,14 +17,13 @@ const Router = () => {
   //   );
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
       <Route
-        path="/account-info"
-        element={worksnapToken ? <Home /> : <Navigate to="/" />}
+        path={location.pathname === "/index.html" ? "/index.html" : "/"}
+        element={<Home />}
       />
       <Route
-        path="/delete-worksnap-account"
-        element={worksnapToken ? <Home /> : <Navigate to="/" />}
+        path="/account-info"
+        element={worksnapToken ? <UserAccountInfo /> : <Navigate to="/" />}
       />
     </Routes>
   );

@@ -1,6 +1,5 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import { Navbar as ReactNavBar, NavItem, Nav } from "reactstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import {
   setGoogleAccessToken,
   getWorksnapToken,
@@ -25,50 +24,30 @@ const NavBar = () => {
       <ReactNavBar color="light" light expand="md">
         <NavLink to="/">Worksnap</NavLink>
         <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink to="/account-info">Account</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink to="/delete-worksnap-account">Delete user</NavLink>
-          </NavItem>
-          {!worksnapToken ? (
-            <NavItem
-              onClick={() => {
-                chrome.identity.getAuthToken(
-                  { interactive: true },
-                  function (token) {
-                    dispatch(setGoogleAccessToken(token));
-                  }
-                );
-              }}
-            >
-              <NavLink
-                onClick={(e) => {
-                  e.preventDefault();
+          {worksnapToken && (
+            <>
+              <NavItem>
+                <NavLink to="/account-info">Account</NavLink>
+              </NavItem>
+              <NavItem
+                onClick={() => {
+                  chrome.identity.removeCachedAuthToken(
+                    { token: googleAccessToken },
+                    function () {
+                      dispatch(setWorksnapToken(null));
+                    }
+                  );
                 }}
               >
-                Sign in with Google <img src="/Google.png"></img>
-              </NavLink>
-            </NavItem>
-          ) : (
-            <NavItem
-              onClick={() => {
-                chrome.identity.removeCachedAuthToken(
-                  { token: googleAccessToken },
-                  function () {
-                    dispatch(setWorksnapToken(null));
-                  }
-                );
-              }}
-            >
-              <NavLink
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-              >
-                Logout<img src="/Google.png"></img>
-              </NavLink>
-            </NavItem>
+                <NavLink
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  Logout
+                </NavLink>
+              </NavItem>
+            </>
           )}
         </Nav>
       </ReactNavBar>
