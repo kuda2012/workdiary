@@ -1,8 +1,6 @@
 const INITIAL_STATE = {
   google_access_token: "",
   worksnap_token: "",
-  post: { id: null, summary_text: "", date: null, summary_voice: null },
-  date: null,
 };
 
 function rootReducer(state = INITIAL_STATE, action) {

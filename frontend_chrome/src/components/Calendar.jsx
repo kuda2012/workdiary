@@ -8,14 +8,6 @@ import { getPost } from "../helpers/actionCreators";
 const Calendar = () => {
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
-  const post = useSelector((state) => state.post);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (!post) {
-      dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
-    }
-  }, [post]);
-
   return (
     <>
       <DatePicker

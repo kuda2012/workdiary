@@ -20,7 +20,11 @@ exports.getPost = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.query.date);
   const tabs = await Tab.getTabs(id, req.query.date);
-  res.send({ date: req.query.date, post: { ...post, tabs: tabs } });
+  if (tabs) {
+    post.tabs = tabs;
+  }
+
+  res.send({ date: req.query.date, post });
 };
 
 exports.getSharedPost = async (req, res) => {

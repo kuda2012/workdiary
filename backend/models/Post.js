@@ -1,6 +1,6 @@
 const db = require("../db");
 const { v4: uuid } = require("uuid");
-
+const moment = require("moment");
 class Post {
   static async create(user_id, body, summary_voice) {
     /// add optional summary_voice
@@ -9,14 +9,19 @@ class Post {
        VALUES ($1, $2, $3, $4) RETURNING id, user_id, summary_text, date`,
       [user_id, body.date, body.summary_text, summary_voice]
     );
-    return createdPost[0];
+    return {
+      ...createdPost[0],
+      date: moment(createdPost[0].date).format("MM/DD/YYYY"),
+    };
   }
   static async getPost(user_id, date) {
     const post = await db.oneOrNone(
       `SELECT id, user_id, summary_text, date FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
       [user_id, date]
     );
-    return post;
+    return post
+      ? { ...post, date: moment(post.date).format("MM/DD/YYYY") }
+      : null;
   }
   static async getSharedPost(pointerId) {
     const { post_id } = await db.oneOrNone(
