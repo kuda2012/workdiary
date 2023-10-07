@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
+const Tag = require("../models/Tag");
 const { decodeJwt } = require("../helpers/decodeJwt");
 const { speechToText } = require("../helpers/speechToText");
 
@@ -20,8 +21,12 @@ exports.getPost = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.query.date);
   const tabs = await Tab.getTabs(id, req.query.date);
+  const tags = await Tag.getTags(id, req.query.date);
   if (tabs) {
     post.tabs = tabs;
+  }
+  if (tags) {
+    post.tags = tags;
   }
 
   res.send({ date: req.query.date, post });

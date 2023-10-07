@@ -28,7 +28,7 @@ class Tag {
     }
   }
   static async getTags(user_id, date) {
-    const tags = await db.query(
+    const tags = await db.manyOrNone(
       `SELECT tags.id as tag_id, post_id, text FROM tags
       JOIN posts ON posts.id = tags.post_id
       WHERE posts.user_id = $1 AND DATE(date)=$2

@@ -36,7 +36,7 @@ class Tab {
     }
   }
   static async getTabs(user_id, date) {
-    const tabs = await db.oneOrNone(
+    const tabs = await db.manyOrNone(
       `SELECT tabs.id as tab_id, post_id, title, url, comment, tab_order FROM tabs
       JOIN posts ON posts.id = tabs.post_id
       WHERE posts.user_id = $1 AND DATE(date)=$2

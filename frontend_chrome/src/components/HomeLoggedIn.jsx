@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getPost } from "../helpers/actionCreators";
 import moment from "moment";
+import Tabs from "./Tabs";
+import Tags from "./Tags";
 
 const HomeLoggedIn = () => {
   const post = useSelector((state) => state.post);
@@ -29,8 +31,15 @@ const HomeLoggedIn = () => {
           <Calendar />
         </div>
         <div className="col-md-6">
-          {formerDate === date && (
-            <SummaryTextArea initialContent={post?.summary_text} />
+          {date && formerDate === date && (
+            <>
+              <Tags />
+              <SummaryTextArea
+                initialContent={post?.summary_text}
+                // onUpdate={onUpdate}
+              />
+              <Tabs onUpdate />
+            </>
           )}
         </div>
       </div>
