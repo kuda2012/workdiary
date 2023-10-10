@@ -65,7 +65,41 @@ export function getPost(worksnap_token, date) {
     }
   };
 }
+export function updatePost(worksnap_token, date, summary_text) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.patch(
+        `http://localhost:3000/posts/update`,
+        { worksnap_token, date, summary_text },
+        {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        }
+      );
+      dispatch(setPost(data.post));
+      dispatch(setDate(data.date));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
+export function createPost(worksnap_token, date, summary_text) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/posts/create`,
+        { worksnap_token, date, summary_text },
+        {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        }
+      );
+      dispatch(setPost(data.post));
+      dispatch(setDate(data.date));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export function setWorksnapToken(worksnap_token) {
   return {
     type: "SET_WORKSNAP_TOKEN",

@@ -14,7 +14,7 @@ exports.create = async (req, res) => {
   if (!post) {
     post = await Post.create(id, req.body, summaryVoice);
   }
-  res.send({ post });
+  res.send({ post, date: req.body.date });
 };
 
 exports.getPost = async (req, res) => {
@@ -22,10 +22,10 @@ exports.getPost = async (req, res) => {
   const post = await Post.getPost(id, req.query.date);
   const tabs = await Tab.getTabs(id, req.query.date);
   const tags = await Tag.getTags(id, req.query.date);
-  if (tabs) {
+  if (post && tabs.length > 0) {
     post.tabs = tabs;
   }
-  if (tags) {
+  if (post && tags.length > 0) {
     post.tags = tags;
   }
 
@@ -73,7 +73,15 @@ exports.update = async (req, res) => {
   }
   const summaryVoice = req.file ? Buffer.from(req.file.buffer, "binary") : null;
   const updatePost = await Post.update(post.id, req.body, summaryVoice);
-  res.send({ post: updatePost });
+  const tabs = await Tab.getTabs(id, req.body.date);
+  const tags = await Tag.getTags(id, req.body.date);
+  if (updatePost && tabs.length > 0) {
+    updatePost.tabs = tabs;
+  }
+  if (updatePost && tags.length > 0) {
+    updatePost.tags = tags;
+  }
+  res.send({ date: req.body.date, post: updatePost });
 };
 
 exports.delete = async (req, res) => {

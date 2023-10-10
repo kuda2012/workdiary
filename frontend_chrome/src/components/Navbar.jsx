@@ -4,6 +4,7 @@ import {
   setGoogleAccessToken,
   getWorksnapToken,
   setWorksnapToken,
+  resetApp,
 } from "../helpers/actionCreators";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
@@ -42,6 +43,7 @@ const NavBar = () => {
                 <NavLink
                   onClick={(e) => {
                     e.preventDefault();
+                    dispatch(resetApp());
                   }}
                 >
                   Logout

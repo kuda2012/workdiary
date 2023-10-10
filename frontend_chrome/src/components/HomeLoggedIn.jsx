@@ -4,7 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import SummaryTextArea from "./SummaryTextArea";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getPost } from "../helpers/actionCreators";
+import { getPost, updatePost, createPost } from "../helpers/actionCreators";
 import moment from "moment";
 import Tabs from "./Tabs";
 import Tags from "./Tags";
@@ -24,6 +24,17 @@ const HomeLoggedIn = () => {
     }
   }, [date, post]);
 
+  function dispatchUpdatePost(summary_text) {
+    if (post) {
+      dispatch(updatePost(worksnapToken, date, summary_text));
+    } else {
+      dispatch(createPost(worksnapToken, date, summary_text));
+    }
+    if (formerDate !== date) {
+      setFormerDate(date);
+    }
+  }
+
   return (
     <div className="container center-row">
       <div className="row justify-content-between">
@@ -36,7 +47,7 @@ const HomeLoggedIn = () => {
               <Tags />
               <SummaryTextArea
                 initialContent={post?.summary_text}
-                // onUpdate={onUpdate}
+                dispatchUpdatePost={dispatchUpdatePost}
               />
               <Tabs onUpdate />
             </>
