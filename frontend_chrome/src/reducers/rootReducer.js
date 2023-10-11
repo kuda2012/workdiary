@@ -25,6 +25,7 @@ function rootReducer(state = INITIAL_STATE, action) {
     case "HALF_RESET":
       return { token: state.token };
     case "FULL_RESET":
+      localStorage.removeItem("worksnap_token");
       return {};
     default:
       return state;

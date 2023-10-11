@@ -14,6 +14,11 @@ exports.login = async (req, res) => {
   res.send({ worksnap_token: token });
 };
 
+exports.checkedToken = async (req, res) => {
+  const worksnap_token = req.headers.authorization.substring(7);
+  res.send({ worksnap_token });
+};
+
 exports.getAccountInfo = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const user = await User.getUser(id);

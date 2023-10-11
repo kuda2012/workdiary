@@ -12,7 +12,7 @@ const HomeLoggedOut = () => {
           <img src="/w_extension.png" />
         </div>
         <div className="col-md-6">
-          <Button
+          <button
             onClick={() => {
               chrome.identity.getAuthToken(
                 { interactive: true },
@@ -23,7 +23,7 @@ const HomeLoggedOut = () => {
             }}
           >
             Sign in with Google <img src="/Google.png"></img>
-          </Button>
+          </button>
         </div>
       </div>
     </div>

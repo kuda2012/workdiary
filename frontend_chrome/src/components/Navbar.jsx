@@ -30,12 +30,9 @@ const NavBar = () => {
               </NavItem>
               <NavItem
                 onClick={() => {
-                  chrome.identity.removeCachedAuthToken(
-                    { token: googleAccessToken },
-                    function () {
-                      dispatch(setWorksnapToken(null));
-                    }
-                  );
+                  chrome.identity.removeCachedAuthToken({
+                    token: googleAccessToken,
+                  });
                 }}
               >
                 <NavLink

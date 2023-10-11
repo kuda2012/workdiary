@@ -5,6 +5,12 @@ const { tokenIsCurrent } = require("../middleware/userMiddleware");
 
 router.post("/login", UserController.login);
 router.get("/account-info", tokenIsCurrent, UserController.getAccountInfo);
+router.get(
+  "/check-worksnap-token",
+  tokenIsCurrent,
+  UserController.checkedToken
+);
+
 router.delete("/delete", tokenIsCurrent, UserController.delete);
 
 module.exports = router;

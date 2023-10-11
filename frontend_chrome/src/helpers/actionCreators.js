@@ -5,6 +5,19 @@ export function setGoogleAccessToken(google_access_token) {
     google_access_token,
   };
 }
+export function isWorksnapTokenCurrent(worksnap_token) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:3000/users/check-worksnap-token",
+        { headers: { Authorization: `Bearer ${worksnap_token}` } }
+      );
+      dispatch(setWorksnapToken(data.worksnap_token));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export function getWorksnapToken(googleAccessToken) {
   return async function (dispatch) {
     try {
