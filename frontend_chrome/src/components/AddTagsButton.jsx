@@ -1,14 +1,18 @@
 import { useSelector } from "react-redux";
-const AddTagsButton = () => {
+const AddTagsButton = ({ onTagAdd }) => {
   const tags = useSelector((state) => state?.post?.tags || []);
 
-  const handleInsertTag = ({ onUpdate }) => {
-    const value = prompt("Enter a tag:");
-    if (value) {
-      // onUpdate({ text: value }); // Call the callback to add the new tag
+  const handleInsertTag = (onUpdate) => {
+    const createdTag = prompt("Enter a tag:");
+    if (createdTag) {
+      onUpdate(createdTag); // Call the callback to add the new tag
     }
   };
-  return <button onClick={handleInsertTag}>Tags</button>;
+  return (
+    <>
+      <button onClick={() => handleInsertTag(onTagAdd)}>Add Tag</button>
+    </>
+  );
 };
 
 export default AddTagsButton;

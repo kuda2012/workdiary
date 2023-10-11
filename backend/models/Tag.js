@@ -13,13 +13,13 @@ class Tag {
     //   createdTabs.push(insertingTab[0]);
     // }
     // return createdTabs;
-    const tags = body.tags.map((tag) => ({
-      post_id: post.id,
-      text: tag.text,
-    }));
     try {
       await db.tx(async (t) => {
-        const insert = pgp.helpers.insert(tags, ["post_id", "text"], "tags");
+        const insert = pgp.helpers.insert(
+          { post_id: post.id, text: body.tag },
+          ["post_id", "text"],
+          "tags"
+        );
         return t.manyOrNone(insert + " RETURNING *");
       });
       return this.getTags(post.user_id, body.date);

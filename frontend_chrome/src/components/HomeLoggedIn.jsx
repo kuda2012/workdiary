@@ -4,7 +4,12 @@ import "react-quill/dist/quill.snow.css";
 import SummaryTextArea from "./SummaryTextArea";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getPost, updatePost, createPost } from "../helpers/actionCreators";
+import {
+  getPost,
+  updatePost,
+  createPost,
+  createTag,
+} from "../helpers/actionCreators";
 import moment from "moment";
 import Tabs from "./Tabs";
 import Tags from "./Tags";
@@ -49,7 +54,7 @@ const HomeLoggedIn = () => {
                 initialContent={post?.summary_text}
                 dispatchUpdatePost={dispatchUpdatePost}
               />
-              <Tabs onUpdate />
+              <Tabs />
             </>
           )}
         </div>

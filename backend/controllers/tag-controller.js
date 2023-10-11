@@ -1,4 +1,5 @@
 const Tag = require("../models/Tag");
+const Tab = require("../models/Tab");
 const Post = require("../models/Post");
 
 const { decodeJwt } = require("../helpers/decodeJwt");
@@ -12,7 +13,11 @@ exports.create = async (req, res) => {
     post = Post.create(id, body, summaryVoice);
   }
   const allTags = await Tag.create(post, req.body);
-  res.send({ date: req.body.date, tags: allTags });
+  const tabs = await Tab.getTabs(id, req.query.date);
+  if (post && tabs.length > 0) {
+    post.tabs = tabs;
+  }
+  res.send({ date: req.body.date, post: { ...post, tags: allTags } });
 };
 
 exports.getTags = async (req, res) => {
@@ -23,16 +28,20 @@ exports.getTags = async (req, res) => {
 
 exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  const post = await Post.getPost(id, req.body.date);
+  const post = await Post.getPost(id, req.query.date);
   const updatedTags = await Tag.delete(
     id,
     post.id,
-    req.body.tag_id,
-    req.body.date
+    req.query.tag_id,
+    req.query.date
   );
+  const tabs = await Tab.getTabs(id, req.query.date);
+  if (post && tabs.length > 0) {
+    post.tabs = tabs;
+  }
   res.send({
-    date: req.body.date,
-    message: "You tag has been deleted",
-    tags: updatedTags,
+    date: req.query.date,
+    message: "Your tag has been deleted",
+    post: { ...post, tags: updatedTags },
   });
 };
