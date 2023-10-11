@@ -1,7 +1,5 @@
 import { Navbar as ReactNavBar, NavItem, Nav } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
-  setGoogleAccessToken,
   getWorksnapToken,
   setWorksnapToken,
   resetApp,

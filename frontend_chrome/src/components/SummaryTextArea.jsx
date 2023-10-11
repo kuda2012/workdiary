@@ -6,22 +6,24 @@ import { Button } from "reactstrap";
 
 const SummaryTextArea = ({ initialContent, dispatchUpdatePost }) => {
   const [summaryText, setSummaryText] = useState(initialContent || "");
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const [buttonText, setButtonText] = useState("Save");
 
   const handleChange = (value) => {
     setSummaryText(value);
+    setButtonText("Save");
   };
 
   return (
     <div>
       <ReactQuill value={summaryText} onChange={handleChange} />
-      <Button
+      <button
         onClick={() => {
           dispatchUpdatePost(summaryText);
+          setButtonText("Saved");
         }}
       >
-        Save
-      </Button>
+        {buttonText}
+      </button>
     </div>
   );
 };

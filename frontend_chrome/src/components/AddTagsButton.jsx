@@ -8,11 +8,7 @@ const AddTagsButton = () => {
       // onUpdate({ text: value }); // Call the callback to add the new tag
     }
   };
-  return (
-    <button className="ql-customTagsButton" onClick={handleInsertTag}>
-      Tags
-    </button>
-  );
+  return <button onClick={handleInsertTag}>Tags</button>;
 };
 
 export default AddTagsButton;
