@@ -1,4 +1,4 @@
-const Tab = ({ tab }) => {
+const Tab = ({ tab, onTabDelete }) => {
   return (
     <>
       <span>
@@ -6,7 +6,7 @@ const Tab = ({ tab }) => {
       </span>
       <span>{tab.url}</span>
       <span>{tab.comment}</span>
-      <button>X</button>
+      <button onClick={() => onTabDelete(tab.tab_id)}>X</button>
     </>
   );
 };

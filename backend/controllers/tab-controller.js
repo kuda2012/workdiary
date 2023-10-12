@@ -1,4 +1,5 @@
 const Tab = require("../models/Tab");
+const Tag = require("../models/Tag");
 const Post = require("../models/Post");
 
 const { decodeJwt } = require("../helpers/decodeJwt");
@@ -41,12 +42,20 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  const post = await Post.getPost(id, req.body.date);
+  const post = await Post.getPost(id, req.query.date);
   const updatedTabs = await Tab.delete(
     id,
     post.id,
-    req.body.tab_id,
-    req.body.date
+    req.query.tab_id,
+    req.query.date
   );
-  res.send({ message: "Your tab has been deleted", tabs: updatedTabs });
+  const tags = await Tag.getTags(id, req.query.date);
+  if (post && tags.length > 0) {
+    post.tags = tags;
+  }
+  res.send({
+    date: req.query.date,
+    message: "Your tab has been deleted",
+    post: { ...post, tabs: updatedTabs },
+  });
 };

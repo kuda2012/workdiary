@@ -146,6 +146,22 @@ export function deleteTag(worksnap_token, date, tag_id) {
     }
   };
 }
+export function deleteTab(worksnap_token, date, tab_id) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3000/tabs/delete?date=${date}&tab_id=${tab_id}`,
+        {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        }
+      );
+      dispatch(setPost(data.post));
+      dispatch(setDate(data.date));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export function setWorksnapToken(worksnap_token) {
   return {
     type: "SET_WORKSNAP_TOKEN",
