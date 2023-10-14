@@ -64,14 +64,15 @@ exports.search = async (req, res) => {
 exports.update = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.body.date);
-  if (req.file) {
-    req.body.summary_text = req.body.summary_text.concat(`E'\\n'`);
-    const summaryText = await speechToText(req.file.buffer);
-    req.body.summary_text = req.body.summary_text
-      .concat(`E'\\n'`)
-      .concat(summaryText);
+  if (req.body.summary_voice) {
+    const summaryText = await speechToText(req.body.summary_voice);
+    req.body.summary_text = req.body.summary_text.concat(
+      `<p>${summaryText}</p>`
+    );
   }
-  const summaryVoice = req.file ? Buffer.from(req.file.buffer, "binary") : null;
+  const summaryVoice = req.body.summary_voice
+    ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
+    : null;
   const updatePost = await Post.update(post.id, req.body, summaryVoice);
   const tabs = await Tab.getTabs(id, req.body.date);
   const tags = await Tag.getTags(id, req.body.date);

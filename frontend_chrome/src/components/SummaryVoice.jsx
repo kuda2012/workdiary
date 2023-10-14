@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-const SummaryVoice = () => {
+const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const [isRecording, setIsRecording] = useState(false);
+  const [isPlaybackFinished, setIsPlaybackFinished] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [audioDuration, setAudioDuration] = useState(0);
   const audioChunks = useRef([]);
@@ -10,6 +12,7 @@ const SummaryVoice = () => {
   const audioStreamRef = useRef(null);
   const timerRef = useRef(null);
   const audioUrlRef = useRef(null);
+  const dispatch = useDispatch();
 
   const startRecording = async () => {
     try {
@@ -71,6 +74,7 @@ const SummaryVoice = () => {
     if (audioUrlRef.current) {
       audioRef.current.src = audioUrlRef.current;
       audioRef.current.play();
+      setIsPlaybackFinished(false);
     }
     setIsRecording(false);
   };
@@ -86,8 +90,6 @@ const SummaryVoice = () => {
 
   const resetRecording = () => {
     // Reset all the state variables and audio playback
-    console.log(audioRef.current.src, audioRef.current);
-
     audioRef.current.src = "";
     clearTimeout(timerRef.current);
     setAudioDuration(0);
@@ -95,6 +97,28 @@ const SummaryVoice = () => {
     mediaRecorderRef.current = [];
     setIsRecording(false);
     setIsPaused(false);
+  };
+  const handleAudioEnded = () => {
+    setIsPlaybackFinished(true);
+  };
+  const sendAudioToBackend = () => {
+    if (audioChunks.current.length === 0) {
+      console.log("No audio data to send.");
+      return;
+    }
+
+    // Combine the audio chunks into a single Blob
+    const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
+
+    // Convert the audio Blob to a Base64 string
+    const reader = new FileReader();
+    reader.onload = () => {
+      const audioBase64 = reader.result;
+      dispatchUpdatePost(summaryText, audioBase64);
+    };
+
+    // Read the Blob as a data URL (Base64)
+    reader.readAsDataURL(audioBlob);
   };
 
   return (
@@ -109,6 +133,7 @@ const SummaryVoice = () => {
             ? pauseRecording
             : ""
         }
+        disabled={!isPlaybackFinished}
       >
         {!isRecording && !isPaused && !audioDuration
           ? "Start Recording"
@@ -127,8 +152,11 @@ const SummaryVoice = () => {
       <button onClick={resetRecording} disabled={!audioDuration}>
         Reset
       </button>
+      <button onClick={sendAudioToBackend} disabled={!audioDuration}>
+        Interpret
+      </button>
       <div>Recording Duration: {audioDuration} seconds</div>
-      <audio controls ref={audioRef}></audio>
+      <audio controls ref={audioRef} onEnded={handleAudioEnded}></audio>
     </div>
   );
 };

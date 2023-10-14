@@ -78,12 +78,12 @@ export function getPost(worksnap_token, date) {
     }
   };
 }
-export function updatePost(worksnap_token, date, summary_text) {
+export function updatePost(worksnap_token, date, summary_text, summary_voice) {
   return async function (dispatch) {
     try {
       const { data } = await axios.patch(
         `http://localhost:3000/posts/update`,
-        { worksnap_token, date, summary_text },
+        { worksnap_token, date, summary_text, summary_voice },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         }

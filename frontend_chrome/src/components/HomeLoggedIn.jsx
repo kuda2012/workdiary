@@ -25,11 +25,11 @@ const HomeLoggedIn = () => {
     }
   }, [date, post]);
 
-  function dispatchUpdatePost(summary_text) {
+  function dispatchUpdatePost(summary_text, summary_voice) {
     if (post) {
-      dispatch(updatePost(worksnapToken, date, summary_text));
+      dispatch(updatePost(worksnapToken, date, summary_text, summary_voice));
     } else {
-      dispatch(createPost(worksnapToken, date, summary_text));
+      dispatch(createPost(worksnapToken, date, summary_text, summary_voice));
     }
     if (formerDate !== date) {
       setFormerDate(date);
@@ -45,7 +45,10 @@ const HomeLoggedIn = () => {
           {date && formerDate === date && (
             <>
               <Tags />
-              <SummaryVoice />
+              <SummaryVoice
+                summaryText={post?.summary_text}
+                dispatchUpdatePost={dispatchUpdatePost}
+              />
               <SummaryTextArea
                 initialContent={post?.summary_text}
                 dispatchUpdatePost={dispatchUpdatePost}
