@@ -1,7 +1,4 @@
-import { useSelector } from "react-redux";
 const AddTagsButton = ({ onTagAdd }) => {
-  const tags = useSelector((state) => state?.post?.tags || []);
-
   const handleInsertTag = (onUpdate) => {
     const createdTag = prompt("Enter a tag:");
     if (createdTag) {

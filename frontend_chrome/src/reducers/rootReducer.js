@@ -1,6 +1,9 @@
 const INITIAL_STATE = {
   google_access_token: "",
   worksnap_token: "",
+  interpreting: false,
+  initial_load: true,
+  logging_in: false,
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
@@ -22,6 +25,12 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, date: action.date };
     case "SET_POST":
       return { ...state, post: action.post };
+    case "TOGGLE_INTERPRETING":
+      return { ...state, interpreting: !state.interpreting };
+    case "INITIAL_LOAD":
+      return { ...state, initial_load: !state.initial_load };
+    case "LOGGING_IN":
+      return { ...state, logging_in: !state.logging_in };
     case "HALF_RESET":
       return { token: state.token };
     case "FULL_RESET":

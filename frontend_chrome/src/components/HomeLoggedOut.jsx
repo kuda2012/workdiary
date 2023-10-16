@@ -1,9 +1,9 @@
-import { useDispatch } from "react-redux";
-import { setGoogleAccessToken } from "../helpers/actionCreators";
+import { useDispatch, useSelector } from "react-redux";
+import { loggingIn, setGoogleAccessToken } from "../helpers/actionCreators";
 
 const HomeLoggedOut = () => {
   const dispatch = useDispatch();
-
+  const signingIn = useSelector((state) => state.logging_in);
   return (
     <div className="container">
       <div className="row flex-column align-items-center">
@@ -13,6 +13,7 @@ const HomeLoggedOut = () => {
         <div className="col-md-6">
           <button
             onClick={() => {
+              dispatch(loggingIn());
               chrome.identity.getAuthToken(
                 { interactive: true },
                 function (token) {
@@ -21,7 +22,8 @@ const HomeLoggedOut = () => {
               );
             }}
           >
-            Sign in with Google <img src="/Google.png"></img>
+            {!signingIn ? `Sign in with Google ` : "Authenticating..."}
+            {!signingIn && <img src="/Google.png"></img>}
           </button>
         </div>
       </div>

@@ -5,13 +5,18 @@ const { decodeJwt } = require("../helpers/decodeJwt");
 const { speechToText } = require("../helpers/speechToText");
 
 exports.create = async (req, res) => {
-  if (req.file) {
-    req.body.summary_text = await speechToText(req);
-  }
-  const summaryVoice = req.file ? Buffer.from(req.file.buffer, "binary") : null;
   const { id } = decodeJwt(req.headers.authorization);
   let post = await Post.getPost(id, req.body.date);
   if (!post) {
+    if (req.body.summary_voice) {
+      const summaryText = await speechToText(req.body.summary_voice);
+      req.body.summary_text = req.body.summary_text
+        ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
+        : `<p>${summaryText}</p>`;
+    }
+    const summaryVoice = req.body.summary_voice
+      ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
+      : null;
     post = await Post.create(id, req.body, summaryVoice);
   }
   res.send({ post, date: req.body.date });

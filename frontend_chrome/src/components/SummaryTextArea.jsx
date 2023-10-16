@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Button } from "reactstrap";
 
 const SummaryTextArea = ({ dispatchUpdatePost }) => {
-  const initialText = useSelector((state) => state?.post.summary_text);
+  const initialText = useSelector((state) => state?.post?.summary_text);
   const [summaryText, setSummaryText] = useState(initialText || "");
   const [buttonText, setButtonText] = useState("Save");
 

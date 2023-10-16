@@ -13,6 +13,7 @@ export function isWorksnapTokenCurrent(worksnap_token) {
         { headers: { Authorization: `Bearer ${worksnap_token}` } }
       );
       dispatch(setWorksnapToken(data.worksnap_token));
+      // dispatch(initialLoad());
     } catch (error) {
       console.log(error);
     }
@@ -88,6 +89,10 @@ export function updatePost(worksnap_token, date, summary_text, summary_voice) {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         }
       );
+      // controls state of "Interpreting" button for when voice is transcribing
+      if (summary_voice) {
+        dispatch(toggleInterpreting());
+      }
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
@@ -96,16 +101,19 @@ export function updatePost(worksnap_token, date, summary_text, summary_voice) {
   };
 }
 
-export function createPost(worksnap_token, date, summary_text) {
+export function createPost(worksnap_token, date, summary_text, summary_voice) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
         `http://localhost:3000/posts/create`,
-        { worksnap_token, date, summary_text },
+        { worksnap_token, date, summary_text, summary_voice },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         }
       );
+      if (summary_voice) {
+        dispatch(toggleInterpreting());
+      }
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
@@ -190,5 +198,21 @@ export function setPost(post) {
   return {
     type: "SET_POST",
     post,
+  };
+}
+export function toggleInterpreting() {
+  return {
+    type: "TOGGLE_INTERPRETING",
+  };
+}
+export function initialLoad() {
+  return {
+    type: "INITIAL_LOAD",
+  };
+}
+
+export function loggingIn() {
+  return {
+    type: "LOGGING_IN",
   };
 }

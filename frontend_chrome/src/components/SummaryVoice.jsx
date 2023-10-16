@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleInterpreting } from "../helpers/actionCreators";
 
 const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
+  const interpreting = useSelector((state) => state.interpreting);
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaybackFinished, setIsPlaybackFinished] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
@@ -106,7 +108,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       console.log("No audio data to send.");
       return;
     }
-
+    dispatch(toggleInterpreting());
     // Combine the audio chunks into a single Blob
     const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
 
@@ -152,8 +154,11 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       <button onClick={resetRecording} disabled={!audioDuration}>
         Reset
       </button>
-      <button onClick={sendAudioToBackend} disabled={!audioDuration}>
-        Interpret
+      <button
+        onClick={sendAudioToBackend}
+        disabled={!audioDuration || interpreting}
+      >
+        {!interpreting ? "Interpret" : "Interpreting..."}
       </button>
       <div>Recording Duration: {audioDuration} seconds</div>
       <audio controls ref={audioRef} onEnded={handleAudioEnded}></audio>

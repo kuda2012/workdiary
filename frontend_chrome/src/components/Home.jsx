@@ -5,7 +5,6 @@ import HomeLoggedOut from "./HomeLoggedOut";
 
 const Home = () => {
   const worksnapToken = useSelector((state) => state.worksnap_token);
-
   return worksnapToken ? <HomeLoggedIn /> : <HomeLoggedOut />;
 };
 
