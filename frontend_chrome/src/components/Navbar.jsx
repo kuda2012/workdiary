@@ -1,9 +1,5 @@
 import { Navbar as ReactNavBar, NavItem, Nav } from "reactstrap";
-import {
-  getWorksnapToken,
-  setWorksnapToken,
-  resetApp,
-} from "../helpers/actionCreators";
+import { getWorksnapToken, resetApp } from "../helpers/actionCreators";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
