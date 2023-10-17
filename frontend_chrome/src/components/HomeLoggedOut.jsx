@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { loggingIn, setGoogleAccessToken } from "../helpers/actionCreators";
+import {
+  loggingIn,
+  resetApp,
+  setGoogleAccessToken,
+} from "../helpers/actionCreators";
 
 const HomeLoggedOut = () => {
   const dispatch = useDispatch();
@@ -13,13 +17,17 @@ const HomeLoggedOut = () => {
         <div className="col-md-6">
           <button
             onClick={() => {
-              dispatch(loggingIn());
-              chrome.identity.getAuthToken(
-                { interactive: true },
-                function (token) {
-                  dispatch(setGoogleAccessToken(token));
-                }
-              );
+              try {
+                dispatch(loggingIn());
+                chrome.identity.getAuthToken(
+                  { interactive: true },
+                  function (token) {
+                    dispatch(setGoogleAccessToken(token));
+                  }
+                );
+              } catch (error) {
+                dispatch(resetApp());
+              }
             }}
           >
             {!signingIn ? `Sign in with Google ` : "Authenticating..."}

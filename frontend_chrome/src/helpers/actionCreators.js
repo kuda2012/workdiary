@@ -27,6 +27,7 @@ export function getWorksnapToken(googleAccessToken) {
       });
       dispatch(setWorksnapToken(data.worksnap_token));
     } catch (error) {
+      dispatch(resetApp());
       console.log(error);
     }
   };
@@ -96,6 +97,9 @@ export function updatePost(worksnap_token, date, summary_text, summary_voice) {
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
+      if (summary_voice) {
+        dispatch(toggleInterpreting());
+      }
       console.log(error);
     }
   };
@@ -117,6 +121,9 @@ export function createPost(worksnap_token, date, summary_text, summary_voice) {
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
+      if (summary_voice) {
+        dispatch(toggleInterpreting());
+      }
       console.log(error);
     }
   };
