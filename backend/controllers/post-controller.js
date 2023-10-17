@@ -15,10 +15,11 @@ exports.create = async (req, res) => {
         : `<p>${summaryText}</p>`;
     }
     const summaryVoice = req.body.summary_voice
-      ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
+      ? req.body.summary_voice.split(",")[1]
       : null;
     post = await Post.create(id, req.body, summaryVoice);
   }
+  res.setHeader("Content-Type", "audio/wav");
   res.send({ post, date: req.body.date });
 };
 
@@ -33,7 +34,7 @@ exports.getPost = async (req, res) => {
   if (post && tags.length > 0) {
     post.tags = tags;
   }
-
+  res.setHeader("Content-Type", "audio/wav");
   res.send({ date: req.query.date, post });
 };
 
@@ -76,7 +77,7 @@ exports.update = async (req, res) => {
     );
   }
   const summaryVoice = req.body.summary_voice
-    ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
+    ? req.body.summary_voice.split(",")[1]
     : null;
   const updatePost = await Post.update(post.id, req.body, summaryVoice);
   const tabs = await Tab.getTabs(id, req.body.date);
@@ -87,6 +88,7 @@ exports.update = async (req, res) => {
   if (updatePost && tags.length > 0) {
     updatePost.tags = tags;
   }
+  res.setHeader("Content-Type", "audio/wav");
   res.send({ date: req.body.date, post: updatePost });
 };
 

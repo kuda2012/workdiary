@@ -6,21 +6,26 @@ class Post {
     /// add optional summary_voice
     const createdPost = await db.query(
       `INSERT INTO posts (user_id, date, summary_text, summary_voice)
-       VALUES ($1, $2, $3, $4) RETURNING id, user_id, summary_text, date`,
+       VALUES ($1, $2, $3, $4) RETURNING id, user_id, summary_voice, summary_text, date`,
       [user_id, body.date, body.summary_text, summary_voice]
     );
     return {
       ...createdPost[0],
+      summary_voice: createdPost[0].summary_voice.toString("base64"),
       date: moment(createdPost[0].date).format("MM/DD/YYYY"),
     };
   }
   static async getPost(user_id, date) {
     const post = await db.oneOrNone(
-      `SELECT id, user_id, summary_text, date FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
+      `SELECT id, user_id, summary_text, date, summary_voice FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
       [user_id, date]
     );
     return post
-      ? { ...post, date: moment(post.date).format("MM/DD/YYYY") }
+      ? {
+          ...post,
+          summary_voice: post.summary_voice.toString("base64"),
+          date: moment(post.date).format("MM/DD/YYYY"),
+        }
       : null;
   }
   static async getSharedPost(pointerId) {
@@ -29,7 +34,7 @@ class Post {
       [pointerId]
     );
     return db.oneOrNone(
-      `SELECT id, user_id, summary_text, date FROM posts where id=$1`,
+      `SELECT id, user_id, summary_text, summary_voice, date FROM posts where id=$1`,
       [post_id]
     );
   }
@@ -50,9 +55,12 @@ class Post {
     }
     queryText = queryText.slice(0, -1);
     queryValues.push(post_id);
-    queryText += ` WHERE id = $${queryValues.length} RETURNING id, user_id, summary_text, date`;
+    queryText += ` WHERE id = $${queryValues.length} RETURNING id, user_id, summary_text, summary_voice,  date`;
     const result = await db.query(queryText, queryValues);
-    return result[0];
+    return {
+      ...result[0],
+      summary_voice: result[0].summary_voice.toString("base64"),
+    };
   }
   // static async getOrCreatePostForDay(user_id, body) {
   //   const getPost = await this.getPost(user_id, body.date);
