@@ -36,12 +36,17 @@ const HomeLoggedIn = () => {
     }
   }
   return (
-    <div className="container center-row">
-      <div className="row justify-content-between">
-        <div className="col-md-6">
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col">
           <Calendar />
         </div>
-        <div className="col-md-6">
+      </div>
+      <div className="row justify-content-around">
+        <div className="col-md-4">
+          <Calendar />
+        </div>
+        <div className="col-md-8">
           {date && formerDate === date && (
             <>
               <Tags />
