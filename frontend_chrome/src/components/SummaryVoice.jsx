@@ -15,6 +15,39 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const timerRef = useRef(null);
   const audioUrlRef = useRef(null);
   const dispatch = useDispatch();
+  const summaryVoice = useSelector((state) => state?.post?.summary_voice);
+
+  const playSummaryVoice = () => {
+    if (summaryVoice) {
+      // Decode the Base64 audio data
+      const decodedData = atob(summaryVoice);
+
+      // Convert the decoded data to a Uint8Array
+      const uint8Array = new Uint8Array(decodedData.length);
+      for (let i = 0; i < decodedData.length; i++) {
+        uint8Array[i] = decodedData.charCodeAt(i);
+      }
+
+      // Create a Blob from the Uint8Array with the appropriate MIME type
+      const audioBlob = new Blob([uint8Array], { type: "audio/wav" });
+
+      // Create an audio URL
+      const audioUrl = URL.createObjectURL(audioBlob);
+
+      // Set the audio element's source
+      audioRef.current.src = audioUrl;
+
+      // Play the audio
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaybackFinished(false);
+        })
+        .catch((error) => {
+          console.error("Error playing audio:", error);
+        });
+    }
+  };
 
   const startRecording = async () => {
     try {
@@ -120,11 +153,17 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     };
 
     // Read the Blob as a data URL (Base64)
-    reader.readAsDataURL(audioBlob);
+    reader.readAsDataURL(audioBlob, "audio/wav");
   };
 
   return (
     <div>
+      <button
+        onClick={playSummaryVoice} // Add this function to play the summaryVoice
+        disabled={!summaryVoice || isRecording}
+      >
+        Play Summary Voice
+      </button>
       <button
         onClick={
           !isRecording && !isPaused && !audioDuration

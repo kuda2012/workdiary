@@ -7,19 +7,19 @@ const { speechToText } = require("../helpers/speechToText");
 exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   let post = await Post.getPost(id, req.body.date);
+  let summaryVoice;
   if (!post) {
-    if (req.body.summary_voice) {
+    if (req.body) {
       const summaryText = await speechToText(req.body.summary_voice);
       req.body.summary_text = req.body.summary_text
         ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
         : `<p>${summaryText}</p>`;
     }
-    const summaryVoice = req.body.summary_voice
-      ? req.body.summary_voice.split(",")[1]
+    summaryVoice = req.body.summary_voice
+      ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
       : null;
     post = await Post.create(id, req.body, summaryVoice);
   }
-  res.setHeader("Content-Type", "audio/wav");
   res.send({ post, date: req.body.date });
 };
 
@@ -70,14 +70,16 @@ exports.search = async (req, res) => {
 exports.update = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.body.date);
+  let summaryVoice;
   if (req.body.summary_voice) {
     const summaryText = await speechToText(req.body.summary_voice);
     req.body.summary_text = req.body.summary_text.concat(
       `<p>${summaryText}</p>`
     );
   }
-  const summaryVoice = req.body.summary_voice
-    ? req.body.summary_voice.split(",")[1]
+
+  summaryVoice = req.body.summary_voice
+    ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
     : null;
   const updatePost = await Post.update(post.id, req.body, summaryVoice);
   const tabs = await Tab.getTabs(id, req.body.date);
@@ -88,8 +90,10 @@ exports.update = async (req, res) => {
   if (updatePost && tags.length > 0) {
     updatePost.tags = tags;
   }
-  res.setHeader("Content-Type", "audio/wav");
-  res.send({ date: req.body.date, post: updatePost });
+  res.send({
+    date: req.body.date,
+    post: { ...updatePost },
+  });
 };
 
 exports.delete = async (req, res) => {
