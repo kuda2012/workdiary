@@ -11,7 +11,7 @@ class Post {
     );
     return {
       ...createdPost[0],
-      summary_voice: createdPost[0].summary_voice.toString("base64"),
+      summary_voice: createdPost[0]?.summary_voice?.toString("base64"),
       date: moment(createdPost[0].date).format("MM/DD/YYYY"),
     };
   }
@@ -23,7 +23,7 @@ class Post {
     return post
       ? {
           ...post,
-          summary_voice: post.summary_voice.toString("base64"),
+          summary_voice: post?.summary_voice?.toString("base64"),
           date: moment(post.date).format("MM/DD/YYYY"),
         }
       : null;
@@ -59,7 +59,7 @@ class Post {
     const result = await db.query(queryText, queryValues);
     return {
       ...result[0],
-      summary_voice: result[0].summary_voice.toString("base64"),
+      summary_voice: result[0]?.summary_voice?.toString("base64"),
     };
   }
   // static async getOrCreatePostForDay(user_id, body) {

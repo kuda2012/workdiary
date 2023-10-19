@@ -10,8 +10,8 @@ CREATE TABLE "tabs" (
   "post_id" integer,
   "title" varchar,
   "url" text,
-  "comment" varchar,
-  "tab_order" integer
+  "icon" text,
+  "screenshot" text,
 );
 
 CREATE TABLE "users" (

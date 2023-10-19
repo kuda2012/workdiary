@@ -10,10 +10,15 @@ exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   let post = await Post.getPost(id, req.body.date);
   if (!post) {
-    post = Post.create(id, body, summaryVoice);
+    post = Post.create(id, req.body);
   }
   const addTabs = await Tab.create(post, req.body);
-  res.send({ tabs: addTabs });
+  post.tabs = addTabs;
+  const tags = await Tag.getTags(id, req.query.date);
+  if (post && tags.length > 0) {
+    post.tags = tags;
+  }
+  res.send({ post, date: req.body.date });
 };
 
 exports.getTabs = async (req, res) => {
@@ -37,7 +42,12 @@ exports.update = async (req, res) => {
     post.id,
     req.body.date
   );
-  res.send({ date: req.body.date, tabs: updatedTabs });
+  post.tabs = updatedTabs;
+  const tags = await Tag.getTags(id, req.query.date);
+  if (post && tags.length > 0) {
+    post.tags = tags;
+  }
+  res.send({ date: req.body.date, post });
 };
 
 exports.delete = async (req, res) => {

@@ -44,7 +44,7 @@ const HomeLoggedIn = () => {
       </div>
       <div className="row justify-content-around">
         <div className="col-md-4">
-          <Calendar />
+          <Tabs />
         </div>
         <div className="col-md-8">
           {date && formerDate === date && (
@@ -58,7 +58,6 @@ const HomeLoggedIn = () => {
                 initialContent={post?.summary_text}
                 dispatchUpdatePost={dispatchUpdatePost}
               />
-              <Tabs />
             </>
           )}
         </div>

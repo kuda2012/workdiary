@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
   let post = await Post.getPost(id, req.body.date);
   let summaryVoice;
   if (!post) {
-    if (req.body) {
+    if (req.body.summary_voice) {
       const summaryText = await speechToText(req.body.summary_voice);
       req.body.summary_text = req.body.summary_text
         ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
@@ -73,9 +73,9 @@ exports.update = async (req, res) => {
   let summaryVoice;
   if (req.body.summary_voice) {
     const summaryText = await speechToText(req.body.summary_voice);
-    req.body.summary_text = req.body.summary_text.concat(
-      `<p>${summaryText}</p>`
-    );
+    req.body.summary_text = req.body.summary_text
+      ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
+      : `<p>${summaryText}</p>`;
   }
 
   summaryVoice = req.body.summary_voice

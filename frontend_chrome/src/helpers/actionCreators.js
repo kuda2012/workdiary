@@ -128,6 +128,39 @@ export function createPost(worksnap_token, date, summary_text, summary_voice) {
     }
   };
 }
+async function queryTabs() {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({}, (tabs) => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        const newTabs = tabs.map((tab) => {
+          return { title: tab.title, url: tab.url, icon: tab.favIconUrl };
+        });
+        resolve(newTabs);
+      }
+    });
+  });
+}
+
+export function createTabs(worksnap_token, date) {
+  return async function (dispatch) {
+    try {
+      const newTabs = await queryTabs();
+      const { data } = await axios.post(
+        `http://localhost:3000/tabs/create`,
+        { worksnap_token, date, tabs: newTabs },
+        {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        }
+      );
+      dispatch(setPost(data.post));
+      dispatch(setDate(data.date));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export function createTag(worksnap_token, date, tag) {
   return async function (dispatch) {
     try {

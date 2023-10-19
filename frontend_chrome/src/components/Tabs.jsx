@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Tab from "./Tab";
-import { deleteTab } from "../helpers/actionCreators";
+import { createTabs, deleteTab } from "../helpers/actionCreators";
 
 const Tabs = () => {
   const tabs = useSelector((state) => state.post?.tabs);
@@ -15,10 +15,19 @@ const Tabs = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            {tabs &&
-              tabs.map((tab) => <Tab tab={tab} onTabDelete={onTabDelete} />)}
+            <button onClick={() => dispatch(createTabs(worksnapToken, date))}>
+              Pull Current tabs
+            </button>
           </div>
         </div>
+        {tabs &&
+          tabs.map((tab, index) => (
+            <div key={index} className="row">
+              <div className="col-md-12">
+                <Tab tab={tab} onTabDelete={onTabDelete} />
+              </div>
+            </div>
+          ))}
       </div>
     </>
   );
