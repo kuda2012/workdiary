@@ -13,18 +13,6 @@ const Tab = ({ tab, onTabDelete }) => {
           {tab.title}
         </a>
       </b>
-      <button
-        onClick={() => onTabDelete(tab.tab_id)}
-        style={{
-          fontSize: "12px",
-          padding: "4px 8px",
-          margin: "0",
-          backgroundColor: "lightgray",
-          border: "1px solid gray",
-        }}
-      >
-        X
-      </button>
     </span>
   );
 };

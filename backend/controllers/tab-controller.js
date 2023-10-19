@@ -50,6 +50,21 @@ exports.update = async (req, res) => {
   res.send({ date: req.body.date, post });
 };
 
+exports.bulkDelete = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const post = await Post.getPost(id, req.query.date);
+  const updatedTabs = await Tab.bulkDelete(post, req.query.tab_ids);
+  const tags = await Tag.getTags(id, req.query.date);
+  if (post && tags.length > 0) {
+    post.tags = tags;
+  }
+  res.send({
+    date: req.query.date,
+    message: "Your tabs have been deleted",
+    post: { ...post, tabs: updatedTabs },
+  });
+};
+
 exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.query.date);

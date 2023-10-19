@@ -194,6 +194,43 @@ export function deleteTag(worksnap_token, date, tag_id) {
     }
   };
 }
+function arrayToCSV(arr) {
+  if (!Array.isArray(arr) || arr.length === 0) {
+    return ""; // Return an empty string for an empty array or invalid input
+  }
+
+  // Use the map function to convert array values to strings
+  const csvArray = arr.map((value) => {
+    if (typeof value === "string") {
+      // Escape double quotes by doubling them up
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+    return String(value);
+  });
+
+  // Join the array elements with commas
+  return csvArray.join(",");
+}
+export function bulkDeleteTabs(worksnap_token, date, tabs) {
+  console.log(tabs.map((tab) => tab.tab_id));
+  console.log(arrayToCSV(tabs.map((tab) => tab.tab_id)));
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3000/tabs/bulkDelete?date=${date}&tab_ids=${arrayToCSV(
+          tabs.map((tab) => tab.tab_id)
+        )} `,
+        {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        }
+      );
+      dispatch(setPost(data.post));
+      dispatch(setDate(data.date));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export function deleteTab(worksnap_token, date, tab_id) {
   return async function (dispatch) {
     try {
