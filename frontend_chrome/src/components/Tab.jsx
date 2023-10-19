@@ -1,6 +1,28 @@
-const Tab = ({ tab, onTabDelete }) => {
+const Tab = ({
+  tab,
+  onTabDelete,
+  setTabsSelected,
+  isSelected,
+  setAllBoxesSelected,
+}) => {
   return (
     <span>
+      <input
+        type="checkbox"
+        checked={isSelected}
+        onChange={() => {
+          setAllBoxesSelected(false);
+          if (isSelected) {
+            setTabsSelected((tabsSelected) =>
+              tabsSelected.filter(
+                (tabSelected) => tabSelected.tab_id !== tab.tab_id
+              )
+            );
+          } else {
+            setTabsSelected((tabsSelected) => [...tabsSelected, tab]);
+          }
+        }}
+      />
       {tab.icon && (
         <img
           src={tab.icon}

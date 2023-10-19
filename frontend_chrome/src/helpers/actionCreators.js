@@ -161,6 +161,19 @@ export function createTabs(worksnap_token, date) {
     }
   };
 }
+export function openTabs(tabs) {
+  return async function (dispatch) {
+    const urlsToOpen = tabs.map((tab) => tab.url);
+    try {
+      chrome.windows.create({ url: urlsToOpen }, (newWindow) => {
+        // Do something with the new window if needed
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function createTag(worksnap_token, date, tag) {
   return async function (dispatch) {
     try {
@@ -212,8 +225,6 @@ function arrayToCSV(arr) {
   return csvArray.join(",");
 }
 export function bulkDeleteTabs(worksnap_token, date, tabs) {
-  console.log(tabs.map((tab) => tab.tab_id));
-  console.log(arrayToCSV(tabs.map((tab) => tab.tab_id)));
   return async function (dispatch) {
     try {
       const { data } = await axios.delete(
