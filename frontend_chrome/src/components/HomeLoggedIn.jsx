@@ -4,7 +4,12 @@ import "react-quill/dist/quill.snow.css";
 import SummaryTextArea from "./SummaryTextArea";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getPost, updatePost, createPost } from "../helpers/actionCreators";
+import {
+  getPost,
+  updatePost,
+  createPost,
+  deletePost,
+} from "../helpers/actionCreators";
 import moment from "moment";
 import Tabs from "./Tabs";
 import Tags from "./Tags";
@@ -40,6 +45,13 @@ const HomeLoggedIn = () => {
       <div className="row justify-content-center">
         <div className="col">
           <Calendar />
+          <button
+            onClick={() => {
+              dispatch(deletePost(worksnapToken, date));
+            }}
+          >
+            Delete Post
+          </button>
         </div>
       </div>
       <div className="row justify-content-around">

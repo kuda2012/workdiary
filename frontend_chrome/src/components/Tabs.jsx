@@ -6,7 +6,7 @@ import {
   deleteTab,
   openTabs,
 } from "../helpers/actionCreators";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Tabs = () => {
   const tabs = useSelector((state) => state.post?.tabs);
@@ -22,6 +22,12 @@ const Tabs = () => {
     });
     dispatch(deleteTab(worksnapToken, date, tab_id));
   }
+
+  useEffect(() => {
+    if (!tabs) {
+      setTabsSelected(new Map());
+    }
+  }, [tabs]);
   return (
     <>
       <div className="container">

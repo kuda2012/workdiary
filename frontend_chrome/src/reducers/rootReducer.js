@@ -32,7 +32,7 @@ function rootReducer(state = INITIAL_STATE, action) {
     case "LOGGING_IN":
       return { ...state, logging_in: !state.logging_in };
     case "HALF_RESET":
-      return { token: state.token };
+      return { token: state.token, date: state.date };
     case "FULL_RESET":
       localStorage.removeItem("worksnap_token");
       return {};

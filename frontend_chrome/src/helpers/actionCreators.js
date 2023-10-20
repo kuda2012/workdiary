@@ -64,6 +64,24 @@ export function deleteAccount(worksnap_token) {
     }
   };
 }
+export function deletePost(worksnap_token, date) {
+  return async function (dispatch) {
+    try {
+      await axios
+        .delete(`http://localhost:3000/posts/delete?date=${date}`, {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        })
+        .then(({ data }) => {
+          setTimeout(() => {
+            alert(data.message);
+          }, 1000);
+        });
+      dispatch(halfReset());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export function getPost(worksnap_token, date) {
   return async function (dispatch) {
     try {
@@ -269,7 +287,11 @@ export function setUserAccountInfo(user) {
     user,
   };
 }
-
+export function halfReset() {
+  return {
+    type: "HALF_RESET",
+  };
+}
 export function resetApp() {
   return {
     type: "FULL_RESET",
