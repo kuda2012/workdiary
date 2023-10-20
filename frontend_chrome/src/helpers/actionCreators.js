@@ -161,11 +161,10 @@ export function createTabs(worksnap_token, date) {
     }
   };
 }
-export function openTabs(tabs) {
+export function openTabs(tabUrls) {
   return async function (dispatch) {
-    const urlsToOpen = tabs.map((tab) => tab.url);
     try {
-      chrome.windows.create({ url: urlsToOpen }, (newWindow) => {
+      chrome.windows.create({ url: tabUrls }, (newWindow) => {
         // Do something with the new window if needed
       });
     } catch (error) {

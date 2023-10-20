@@ -13,19 +13,12 @@ const Tabs = () => {
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const dispatch = useDispatch();
+  const [allBoxesSelected, setAllBoxesSelected] = useState(false);
+  const [tabsSelected, setTabsSelected] = useState(new Map());
   function onTabDelete(tab_id) {
     dispatch(deleteTab(worksnapToken, date, tab_id));
   }
 
-  // agregate selected, setSelected - contains all urls and tab_ids of those checked
-  // if selected locally, add to aggregate and update your checkbox based off if you're in aggregate
-  // same if unselected locally
-
-  // if select all button checked, add all tabs to aggregate
-  // if select all unchecked, empty aggregate
-
-  const [allBoxesSelected, setAllBoxesSelected] = useState(false);
-  const [tabsSelected, setTabsSelected] = useState([]);
   return (
     <>
       <div className="container">
@@ -51,13 +44,22 @@ const Tabs = () => {
               onChange={() => {
                 setAllBoxesSelected(!allBoxesSelected);
                 if (allBoxesSelected) {
-                  setTabsSelected([]);
-                } else {
-                  setTabsSelected(tabs);
+                  setTabsSelected(new Map());
+                } else if (tabs.length !== tabsSelected.size) {
+                  setTabsSelected((selectingAllTabs) => {
+                    tabs.map((addTab) =>
+                      selectingAllTabs.set(addTab.tab_id, addTab.url)
+                    );
+                    return new Map(selectingAllTabs);
+                  });
                 }
               }}
             ></input>
-            <button onClick={() => dispatch(openTabs(tabsSelected))}>
+            <button
+              onClick={() =>
+                dispatch(openTabs(Array.from(tabsSelected.values())))
+              }
+            >
               Open Tabs in a new window
             </button>
           </div>
@@ -71,13 +73,7 @@ const Tabs = () => {
                   onTabDelete={onTabDelete}
                   setTabsSelected={setTabsSelected}
                   setAllBoxesSelected={setAllBoxesSelected}
-                  isSelected={
-                    tabsSelected.find(
-                      (selectedTab) => selectedTab.tab_id === tab.tab_id
-                    )
-                      ? true
-                      : false
-                  }
+                  isSelected={tabsSelected.has(tab.tab_id)}
                 />
               </div>
               <div className="col-md-2">

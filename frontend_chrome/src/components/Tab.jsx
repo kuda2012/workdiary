@@ -1,25 +1,21 @@
-const Tab = ({
-  tab,
-  onTabDelete,
-  setTabsSelected,
-  isSelected,
-  setAllBoxesSelected,
-}) => {
+const Tab = ({ tab, setTabsSelected, isSelected, setAllBoxesSelected }) => {
   return (
     <span>
       <input
         type="checkbox"
         checked={isSelected}
         onChange={() => {
-          setAllBoxesSelected(false);
           if (isSelected) {
-            setTabsSelected((tabsSelected) =>
-              tabsSelected.filter(
-                (tabSelected) => tabSelected.tab_id !== tab.tab_id
-              )
-            );
+            setAllBoxesSelected(false);
+            setTabsSelected((tabsSelected) => {
+              tabsSelected.delete(tab.tab_id);
+              return new Map(tabsSelected);
+            });
           } else {
-            setTabsSelected((tabsSelected) => [...tabsSelected, tab]);
+            setTabsSelected((tabsSelected) => {
+              tabsSelected.set(tab.tab_id, tab.url);
+              return new Map(tabsSelected);
+            });
           }
         }}
       />
