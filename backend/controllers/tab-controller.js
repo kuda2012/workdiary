@@ -13,12 +13,11 @@ exports.create = async (req, res) => {
     post = Post.create(id, req.body);
   }
   const addTabs = await Tab.create(post, req.body);
-  post.tabs = addTabs;
-  const tags = await Tag.getTags(id, req.query.date);
+  const tags = await Tag.getTags(id, req.body.date);
   if (post && tags.length > 0) {
     post.tags = tags;
   }
-  res.send({ post, date: req.body.date });
+  res.send({ date: req.body.date, post: { ...post, tabs: addTabs } });
 };
 
 exports.getTabs = async (req, res) => {
@@ -42,12 +41,11 @@ exports.update = async (req, res) => {
     post.id,
     req.body.date
   );
-  post.tabs = updatedTabs;
   const tags = await Tag.getTags(id, req.query.date);
   if (post && tags.length > 0) {
     post.tags = tags;
   }
-  res.send({ date: req.body.date, post });
+  res.send({ date: req.body.date, post: { ...post, tabs: updatedTabs } });
 };
 
 exports.bulkDelete = async (req, res) => {

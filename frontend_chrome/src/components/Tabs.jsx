@@ -16,9 +16,12 @@ const Tabs = () => {
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
   const [tabsSelected, setTabsSelected] = useState(new Map());
   function onTabDelete(tab_id) {
+    setTabsSelected((selectingTabs) => {
+      selectingTabs.delete(tab_id);
+      return new Map(selectingTabs);
+    });
     dispatch(deleteTab(worksnapToken, date, tab_id));
   }
-
   return (
     <>
       <div className="container">
@@ -28,9 +31,10 @@ const Tabs = () => {
               Pull Current tabs
             </button>
             <button
-              onClick={() =>
-                dispatch(bulkDeleteTabs(worksnapToken, date, tabs))
-              }
+              onClick={() => {
+                setTabsSelected(new Map());
+                dispatch(bulkDeleteTabs(worksnapToken, date, tabs));
+              }}
             >
               Delete All Tabs
             </button>
@@ -38,8 +42,10 @@ const Tabs = () => {
         </div>
         <div className="row">
           <div className="col-md-12">
+            <label for="selectAllInput">Select all: </label>
             <input
               type="checkbox"
+              id="selectAllInput"
               checked={allBoxesSelected}
               onChange={() => {
                 setAllBoxesSelected(!allBoxesSelected);
@@ -54,7 +60,7 @@ const Tabs = () => {
                   });
                 }
               }}
-            ></input>
+            />
             <button
               onClick={() =>
                 dispatch(openTabs(Array.from(tabsSelected.values())))
@@ -70,7 +76,6 @@ const Tabs = () => {
               <div className="col-md-10">
                 <Tab
                   tab={tab}
-                  onTabDelete={onTabDelete}
                   setTabsSelected={setTabsSelected}
                   setAllBoxesSelected={setAllBoxesSelected}
                   isSelected={tabsSelected.has(tab.tab_id)}

@@ -13,7 +13,7 @@ exports.create = async (req, res) => {
     post = Post.create(id, body, summaryVoice);
   }
   const allTags = await Tag.create(post, req.body);
-  const tabs = await Tab.getTabs(id, req.query.date);
+  const tabs = await Tab.getTabs(id, req.body.date);
   if (post && tabs.length > 0) {
     post.tabs = tabs;
   }
