@@ -22,13 +22,16 @@ const HomeLoggedIn = () => {
   const [formerDate, setFormerDate] = useState(date);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!post && !date) {
+    if (!post) {
+      setFormerDate(moment().format("MM/DD/YYYY"));
       dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
     }
-    if (formerDate !== date) {
-      setFormerDate(date);
-    }
-  }, [date, post]);
+  }, [post]);
+
+  // useEffect(() => {
+  //   console.log(post, date, formerDate);
+  //   setFormerDate(date);
+  // }, [date]);
 
   function dispatchUpdatePost(summary_text, summary_voice) {
     if (post) {
@@ -36,15 +39,12 @@ const HomeLoggedIn = () => {
     } else {
       dispatch(createPost(worksnapToken, date, summary_text, summary_voice));
     }
-    if (formerDate !== date) {
-      setFormerDate(date);
-    }
   }
   return (
     <div className="container">
       <div className="row justify-content-center">
         <div className="col">
-          <Calendar />
+          <Calendar setFormerDate={setFormerDate} />
           <button
             onClick={() => {
               dispatch(deletePost(worksnapToken, date));
@@ -59,7 +59,7 @@ const HomeLoggedIn = () => {
           <Tabs />
         </div>
         <div className="col-md-8">
-          {date && formerDate === date && (
+          {date === formerDate && (
             <>
               <Tags />
               <SummaryVoice

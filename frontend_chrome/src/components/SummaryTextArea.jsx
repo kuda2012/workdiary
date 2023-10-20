@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
+import { Autosave } from "react-autosave"; // Import the Autosave component
 
 const SummaryTextArea = ({ dispatchUpdatePost }) => {
   const initialText = useSelector((state) => state?.post?.summary_text);
@@ -13,12 +14,16 @@ const SummaryTextArea = ({ dispatchUpdatePost }) => {
     setButtonText("Save");
   };
 
-  useEffect(() => {
-    setSummaryText(initialText);
-  }, [initialText]);
   return (
     <div>
       <ReactQuill value={summaryText} onChange={handleChange} />
+      <Autosave
+        data={summaryText}
+        onSave={(data) => {
+          dispatchUpdatePost(data);
+          setButtonText("Saved");
+        }}
+      />
       <button
         onClick={() => {
           dispatchUpdatePost(summaryText);
