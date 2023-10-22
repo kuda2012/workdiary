@@ -19,19 +19,13 @@ const HomeLoggedIn = () => {
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
-  const [formerDate, setFormerDate] = useState(date);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!post) {
-      setFormerDate(moment().format("MM/DD/YYYY"));
+    if (!date && !post) {
+      // intial load of journal data
       dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
     }
-  }, [post]);
-
-  // useEffect(() => {
-  //   console.log(post, date, formerDate);
-  //   setFormerDate(date);
-  // }, [date]);
+  }, [post, date]);
 
   function dispatchUpdatePost(summary_text, summary_voice) {
     if (post) {
@@ -44,7 +38,7 @@ const HomeLoggedIn = () => {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col">
-          <Calendar setFormerDate={setFormerDate} />
+          <Calendar />
           <button
             onClick={() => {
               dispatch(deletePost(worksnapToken, date));
@@ -59,7 +53,7 @@ const HomeLoggedIn = () => {
           <Tabs />
         </div>
         <div className="col-md-8">
-          {date === formerDate && (
+          {date && (
             <>
               <Tags />
               <SummaryVoice
