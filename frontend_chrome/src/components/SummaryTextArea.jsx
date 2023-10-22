@@ -5,28 +5,34 @@ import { useSelector } from "react-redux";
 import { Autosave } from "react-autosave"; // Import the Autosave component
 
 const SummaryTextArea = ({ dispatchUpdatePost }) => {
-  const initialText = useSelector((state) => state?.post?.summary_text);
-  const [summaryText, setSummaryText] = useState(initialText || "");
+  const summaryText = useSelector((state) => state?.post?.summary_text);
+  const [localSummaryText, setLocalSummaryText] = useState(summaryText || "");
   const [buttonText, setButtonText] = useState("Save");
 
   const handleChange = (value) => {
-    setSummaryText(value);
+    setLocalSummaryText(value);
     setButtonText("Save");
   };
+  useEffect(() => {
+    setLocalSummaryText(summaryText);
+  }, [summaryText]);
 
   return (
     <div>
-      <ReactQuill value={summaryText} onChange={handleChange} />
+      <ReactQuill value={localSummaryText} onChange={handleChange} />
       <Autosave
-        data={summaryText}
+        data={localSummaryText}
+        interval={1500}
         onSave={(data) => {
-          dispatchUpdatePost(data);
-          setButtonText("Saved");
+          if (localSummaryText != summaryText) {
+            dispatchUpdatePost(data);
+            setButtonText("Saved");
+          }
         }}
       />
       <button
         onClick={() => {
-          dispatchUpdatePost(summaryText);
+          dispatchUpdatePost(localSummaryText);
           setButtonText("Saved");
         }}
       >
