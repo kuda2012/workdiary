@@ -32,6 +32,24 @@ export function getWorksnapToken(googleAccessToken) {
     }
   };
 }
+export function searchJournal(worksnap_token, query) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/posts/search?query=${query}`,
+        { headers: { Authorization: `Bearer ${worksnap_token}` } }
+      );
+      if (data.results.length === 0) {
+        alert("No matches for this query");
+      } else {
+        dispatch(setSearchResults(data.results));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function getUserAccountInfo(worksnap_token) {
   return async function (dispatch) {
     try {
@@ -285,6 +303,17 @@ export function setUserAccountInfo(user) {
   return {
     type: "SET_USER",
     user,
+  };
+}
+export function clearSearchResults() {
+  return {
+    type: "CLEAR_SEARCH_RESULTS",
+  };
+}
+export function setSearchResults(results) {
+  return {
+    type: "SET_SEARCH_RESULTS",
+    results,
   };
 }
 export function halfReset() {

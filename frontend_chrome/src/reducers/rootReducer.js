@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   interpreting: false,
   initial_load: true,
   logging_in: false,
+  search_results: [],
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
@@ -25,6 +26,10 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, date: action.date };
     case "SET_POST":
       return { ...state, post: action.post };
+    case "SET_SEARCH_RESULTS":
+      return { ...state, search_results: action.results };
+    case "CLEAR_SEARCH_RESULTS":
+      return { ...state, search_results: [] };
     case "TOGGLE_INTERPRETING":
       return { ...state, interpreting: !state.interpreting };
     case "INITIAL_LOAD":

@@ -14,6 +14,7 @@ import moment from "moment";
 import Tabs from "./Tabs";
 import Tags from "./Tags";
 import SummaryVoice from "./SummaryVoice";
+import SearchBar from "./SearchBar";
 
 const HomeLoggedIn = () => {
   const post = useSelector((state) => state.post);
@@ -38,6 +39,7 @@ const HomeLoggedIn = () => {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col">
+          <SearchBar />
           <Calendar />
           <button
             onClick={() => {

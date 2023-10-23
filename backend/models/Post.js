@@ -77,28 +77,45 @@ class Post {
   // OR
   static async search(user_id, query) {
     return db.query(
-      `SELECT
-    p.date,
-    p.summary_text,
-    tabs.url,
-    tabs.title,
-    tabs.comment,
-    tags.text
-FROM
-    posts AS p
-LEFT JOIN
-    tags ON p.id = tags.post_id
-LEFT JOIN
-    tabs ON p.id = tabs.post_id
-WHERE
-    p.user_id = $1
-    AND (
-        tags.text ILIKE '%' || $2 || '%' -- Search tags by text
-        OR
-        p.text_search::text ILIKE '%' || $2 || '%'
-        OR
-        tabs.text_search::text ILIKE '%' || $2 || '%'
-    );`,
+      `WITH RankedResults AS (
+          SELECT
+            p.date,
+            p.summary_text,
+            tabs.url,
+            tabs.title,
+            STRING_AGG(tags.text, ', ') AS tag_list,
+            ROW_NUMBER() OVER (PARTITION BY p.date ORDER BY p.date) AS rn
+          FROM
+            posts AS p
+          LEFT JOIN
+            tags ON p.id = tags.post_id
+          LEFT JOIN
+            tabs ON p.id = tabs.post_id
+          WHERE
+            p.user_id = $1
+            AND (
+              tags.text ILIKE '%' || $2 || '%' -- Search tags by text
+              OR
+              p.date::text ILIKE '%' || $2 || '%'
+              OR
+              p.summary_text ILIKE '%' || $2 || '%'
+              OR
+              tabs.url ILIKE '%' || $2 || '%'
+              OR
+              tabs.title ILIKE '%' || $2 || '%'
+            )
+          GROUP BY
+            p.date, p.summary_text, tabs.url, tabs.title
+        )
+        SELECT
+          date,
+          summary_text,
+          url,
+          title,
+          tag_list
+        FROM RankedResults
+        WHERE rn = 1;
+`,
       [user_id, query]
     );
   }
