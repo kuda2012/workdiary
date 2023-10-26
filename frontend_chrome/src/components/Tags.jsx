@@ -14,7 +14,6 @@ const Tags = () => {
   function onTagDelete(tag_id) {
     dispatch(deleteTag(worksnapToken, date, tag_id));
   }
-
   return (
     <>
       <div className="container">

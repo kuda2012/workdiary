@@ -10,7 +10,7 @@ exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   let post = await Post.getPost(id, req.body.date);
   if (!post) {
-    post = Post.create(id, req.body);
+    post = await Post.create(id, req.body);
   }
   const allTags = await Tag.create(post, req.body);
   const tabs = await Tab.getTabs(id, req.body.date);

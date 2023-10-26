@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,11 +23,12 @@ const SearchBar = ({ search }) => {
   // Handler to dispatch the search contents to the search function
   const handleSearch = () => {
     // Call the search function with the search input text
+    setIsOpen(true);
     dispatch(searchJournal(worksnapToken, searchText));
   };
 
   const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
     if (searchText.trim() !== "") {
       // Check if the search text is not empty or only contains whitespace
       handleSearch();
@@ -37,17 +38,18 @@ const SearchBar = ({ search }) => {
   // Handler to select a result item and call getPost
   const handleResultClick = (item) => {
     setSearchText(""); // Clear the search input
-    setIsOpen(false); // Close the dropdown
-
     if (item && item.date) {
       // Call the getPost function with the selected date
       dispatch(getPost(worksnapToken, moment(item.date).format("MM/DD/YYYY")));
       dispatch(clearSearchResults()); // You need to define the getPost function
     }
   };
-
   return (
-    <form onSubmit={handleFormSubmit} style={{ textAlign: "left" }}>
+    <form
+      className="search-bar"
+      onSubmit={handleFormSubmit}
+      style={{ width: "33%", position: "relative", textAlign: "left" }}
+    >
       <input
         id="search"
         type="text"
@@ -55,19 +57,35 @@ const SearchBar = ({ search }) => {
         value={searchText}
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
+        onBlur={() => setTimeout(() => setIsOpen(false), 150)}
+        style={{ width: "100%" }}
       />
-      {searchResults && (
-        <div className="search-results">
+      {isOpen && searchResults && (
+        <div
+          className="search-results"
+          style={{
+            position: "absolute",
+            zIndex: 1, // Places it above other content
+            top: "100%", // Position below the input
+            maxHeight: "300px",
+            overflowY: "auto",
+            width: "100%",
+          }}
+        >
           {searchResults.map((result, index) => (
             <button
+              type="button"
               key={index}
               className="result-item"
               onClick={() => {
                 handleResultClick(result);
               }}
+              style={{
+                width: "100%",
+                textAlign: "left",
+              }}
             >
-              Date: {result.date},{" "}
+              Date: {result.date} -{" "}
               {result.match_source === "summary_text"
                 ? "Summary"
                 : result.match_source.charAt(0).toUpperCase() +
