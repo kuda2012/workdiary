@@ -36,7 +36,8 @@ const SummaryTextArea = ({ dispatchUpdatePost }) => {
           setButtonText("Saved");
         }}
       >
-        {buttonText}
+        {buttonText === "Saved" && <b>{buttonText}</b>}
+        {buttonText === "Save" && <>{buttonText}</>}
       </button>
     </div>
   );

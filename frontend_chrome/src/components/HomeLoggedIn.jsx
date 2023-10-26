@@ -37,17 +37,14 @@ const HomeLoggedIn = () => {
   }
   return (
     <div className="container">
-      <div className="row justify-content-center">
+      <div className="row">
         <div className="col">
           <SearchBar />
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col">
           <Calendar />
-          <button
-            onClick={() => {
-              dispatch(deletePost(worksnapToken, date));
-            }}
-          >
-            Delete Post
-          </button>
         </div>
       </div>
       <div className="row justify-content-around">
@@ -68,6 +65,17 @@ const HomeLoggedIn = () => {
               />
             </>
           )}
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <button
+            onClick={() => {
+              dispatch(deletePost(worksnapToken, date));
+            }}
+          >
+            Delete Post
+          </button>
         </div>
       </div>
     </div>

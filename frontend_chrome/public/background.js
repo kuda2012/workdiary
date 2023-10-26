@@ -7,7 +7,7 @@ async function openPopup() {
       width: 1250, // Set the width and height as desired
       height: 1000,
       top: 100, // Adjust the window's position as needed
-      left: 100,
+      left: -800,
     },
     function (window) {
       windowId = window.id;
