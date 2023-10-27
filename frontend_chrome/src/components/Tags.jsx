@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import Tag from "./Tag";
-import AddTagsButton from "./AddTagsButton";
 import { createTag, deleteTag } from "../helpers/actionCreators";
 
 const Tags = () => {
@@ -14,6 +13,12 @@ const Tags = () => {
   function onTagDelete(tag_id) {
     dispatch(deleteTag(worksnapToken, date, tag_id));
   }
+  const handleInsertTag = (onUpdate) => {
+    const createdTag = prompt("Enter a tag:");
+    if (createdTag) {
+      onUpdate(createdTag); // Call the callback to add the new tag
+    }
+  };
   return (
     <>
       <div className="container">
@@ -21,6 +26,11 @@ const Tags = () => {
           <div className="col-md-12">
             {tags &&
               tags.map((tag) => <Tag tag={tag} onTagDelete={onTagDelete} />)}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <button onClick={() => handleInsertTag(onTagAdd)}>Add Tag</button>
           </div>
         </div>
       </div>

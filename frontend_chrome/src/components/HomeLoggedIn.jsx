@@ -15,12 +15,15 @@ import Tabs from "./Tabs";
 import Tags from "./Tags";
 import SummaryVoice from "./SummaryVoice";
 import SearchBar from "./SearchBar";
-import Editor from "./Editor";
+import TagsModal from "./TagsModal";
 
 const HomeLoggedIn = () => {
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
+  const [isTagsModalOpen, setIsTagsModalOpen] = useState(false);
+  const openTagsModal = () => setIsTagsModalOpen(true);
+  const closeTagsModal = () => setIsTagsModalOpen(false);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!date && !post) {
@@ -36,6 +39,7 @@ const HomeLoggedIn = () => {
       dispatch(createPost(worksnapToken, date, summary_text, summary_voice));
     }
   }
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -55,20 +59,35 @@ const HomeLoggedIn = () => {
         <div className="col-md-8">
           {date && (
             <>
-              <Tags />
               <SummaryVoice
                 summaryText={post?.summary_text}
                 dispatchUpdatePost={dispatchUpdatePost}
               />
-              {/* <Editor /> */}
               <SummaryTextArea
                 initialContent={post?.summary_text}
                 dispatchUpdatePost={dispatchUpdatePost}
+                openTagsModal={openTagsModal}
               />
             </>
           )}
         </div>
       </div>
+      {isTagsModalOpen && (
+        <TagsModal
+          isTagsModalOpen={isTagsModalOpen}
+          closeTagsModal={closeTagsModal}
+        >
+          <div className="row justify-content-between">
+            <div className="col">
+              <h2>Tags</h2>
+            </div>
+            <div className="col">
+              <button onClick={closeTagsModal}>Close</button>
+            </div>
+          </div>
+          <Tags />
+        </TagsModal>
+      )}
       <div className="row">
         <div className="col">
           <button
