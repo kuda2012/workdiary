@@ -19,7 +19,6 @@ const Tags = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <AddTagsButton onTagAdd={onTagAdd} />
             {tags &&
               tags.map((tag) => <Tag tag={tag} onTagDelete={onTagDelete} />)}
           </div>

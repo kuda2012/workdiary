@@ -6,9 +6,9 @@ const AddTagsButton = ({ onTagAdd }) => {
     }
   };
   return (
-    <>
-      <button onClick={() => handleInsertTag(onTagAdd)}>Add Tag</button>
-    </>
+    <button className="ql-addTags" onClick={() => handleInsertTag(onTagAdd)}>
+      Tags
+    </button>
   );
 };
 

@@ -15,6 +15,7 @@ import Tabs from "./Tabs";
 import Tags from "./Tags";
 import SummaryVoice from "./SummaryVoice";
 import SearchBar from "./SearchBar";
+import Editor from "./Editor";
 
 const HomeLoggedIn = () => {
   const post = useSelector((state) => state.post);
@@ -59,6 +60,7 @@ const HomeLoggedIn = () => {
                 summaryText={post?.summary_text}
                 dispatchUpdatePost={dispatchUpdatePost}
               />
+              {/* <Editor /> */}
               <SummaryTextArea
                 initialContent={post?.summary_text}
                 dispatchUpdatePost={dispatchUpdatePost}
