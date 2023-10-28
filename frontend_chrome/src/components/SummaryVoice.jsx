@@ -157,7 +157,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   };
 
   return (
-    <div>
+    <div className="mb-3">
       <button
         onClick={playSummaryVoice} // Add this function to play the summaryVoice
         disabled={!summaryVoice || isRecording}

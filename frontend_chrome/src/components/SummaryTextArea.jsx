@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import "../styles/SummaryTextArea.css";
 import { Autosave } from "react-autosave";
 import CustomToolBar from "./CustomToolbar";
 import { useSelector } from "react-redux";
@@ -26,7 +27,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   }, [summaryText]);
 
   return (
-    <div>
+    <div id="summaryTextContainer">
       <CustomToolBar openTagsModal={openTagsModal} />
       <ReactQuill
         value={localSummaryText}

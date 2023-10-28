@@ -47,7 +47,10 @@ const HomeLoggedIn = () => {
           <SearchBar />
         </div>
       </div>
-      <div className="row justify-content-center">
+      <div
+        className="row justify-content-center"
+        style={{ marginTop: "20px", marginBottom: "100px" }}
+      >
         <div className="col">
           <Calendar />
         </div>
@@ -56,7 +59,7 @@ const HomeLoggedIn = () => {
         <div className="col-md-4">
           <Tabs />
         </div>
-        <div className="col-md-8">
+        <div className="col-md-8 d-flex flex-column align-items-center">
           {date && (
             <>
               <SummaryVoice
