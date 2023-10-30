@@ -4,3 +4,6 @@
 .ql-editor {
   min-height: 300px;
 }
+.ql-editor strong {
+  font-weight: bold;
+}

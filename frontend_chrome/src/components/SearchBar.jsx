@@ -57,7 +57,7 @@ const SearchBar = ({ search }) => {
         value={searchText}
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}
-        onBlur={() => setTimeout(() => setIsOpen(false), 150)}
+        onBlur={() => setTimeout(() => setIsOpen(false), 200)}
         style={{ width: "100%" }}
       />
       {isOpen && searchResults && (

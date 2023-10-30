@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleInterpreting } from "../helpers/actionCreators";
+// import AudioPlayer from "react-audio-player";
 
 const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const interpreting = useSelector((state) => state.interpreting);
@@ -102,6 +103,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         setAudioDuration((duration) => duration + 1);
       }, 1000);
       setIsRecording(true);
+      setIsPaused(false);
     }
   };
 
@@ -157,50 +159,52 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   };
 
   return (
-    <div className="mb-3">
-      <button
+    <div className="mt-5">
+      <h4>Hey, Kuda. Tell us. How was work today?</h4>
+      <div>Recording Duration: {audioDuration}s</div>
+      <div>
+        {/* <button
         onClick={playSummaryVoice} // Add this function to play the summaryVoice
         disabled={!summaryVoice || isRecording}
       >
         Play Summary Voice
-      </button>
-      <button
-        onClick={
-          !isRecording && !isPaused && !audioDuration
-            ? startRecording
-            : isPaused
-            ? resumeRecording
-            : isRecording
-            ? pauseRecording
-            : ""
-        }
-        disabled={!isPlaybackFinished}
-      >
-        {!isRecording && !isPaused && !audioDuration
-          ? "Start Recording"
-          : isPaused
-          ? "Resume"
-          : isRecording
-          ? "Pause"
-          : ""}
-      </button>
-      <button onClick={playRecording} disabled={!audioDuration || isRecording}>
-        Play
-      </button>
-      <button onClick={stopRecording} disabled={!audioDuration}>
-        Stop
-      </button>
-      <button onClick={resetRecording} disabled={!audioDuration}>
-        Reset
-      </button>
-      <button
-        onClick={sendAudioToBackend}
-        disabled={!audioDuration || interpreting}
-      >
-        {!interpreting ? "Interpret" : "Interpreting..."}
-      </button>
-      <div>Recording Duration: {audioDuration} seconds</div>
-      <audio controls ref={audioRef} onEnded={handleAudioEnded}></audio>
+      </button> */}
+        <button
+          onClick={
+            !isRecording && !isPaused && !audioDuration
+              ? startRecording
+              : resumeRecording
+          }
+          disabled={!isPlaybackFinished}
+        >
+          <img src="/microphone.png" title="Record"></img>
+        </button>
+        <button onClick={pauseRecording} disabled={!isRecording}>
+          <img src="/pause.png" title="Pause"></img>
+        </button>
+        <button onClick={stopRecording} disabled={!audioDuration}>
+          <img src="/stop.png" title="Stop Recording"></img>
+        </button>
+        <button
+          onClick={playRecording}
+          disabled={!audioDuration || isRecording}
+        >
+          <img src="/play.png" title="Play"></img>
+        </button>
+        <button onClick={resetRecording} disabled={!audioDuration}>
+          <img src="/reset.png" title="Reset"></img>
+        </button>
+        <button
+          onClick={sendAudioToBackend}
+          disabled={!audioDuration || interpreting}
+        >
+          <img src="/voice_to_text.png" title="Interpret" />
+        </button>
+      </div>
+      <div>
+        <audio controls ref={audioRef} onEnded={handleAudioEnded} />
+        {/* <AudioPlayer ref={audioRef} controls onEnded={handleAudioEnded} /> */}
+      </div>
     </div>
   );
 };

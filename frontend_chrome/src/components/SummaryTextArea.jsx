@@ -11,6 +11,27 @@ const modules = {
     container: "#toolbar",
   },
 };
+const formats = [
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "align",
+  "header",
+  "font",
+  "color",
+  "list",
+  "bullet",
+  "ordered",
+  "list[unchecked]",
+  "list[checked]",
+  "indent",
+  "blockquote",
+  "link",
+  "image",
+  "background",
+  "direction",
+];
 
 const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const summaryText = useSelector((state) => state?.post?.summary_text);
@@ -33,6 +54,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
         value={localSummaryText}
         onChange={handleChange}
         modules={modules}
+        formats={formats}
       />
 
       <Autosave

@@ -76,33 +76,38 @@ const Tabs = () => {
             </button>
           </div>
         </div>
-        {tabs &&
-          tabs.map((tab, index) => (
-            <div key={index} className="row">
-              <div className="col-md-10">
-                <Tab
-                  tab={tab}
-                  setTabsSelected={setTabsSelected}
-                  setAllBoxesSelected={setAllBoxesSelected}
-                  isSelected={tabsSelected.has(tab.tab_id)}
-                />
+        <div
+          className="container"
+          style={{ maxHeight: "600px", overflowY: "auto" }}
+        >
+          {tabs &&
+            tabs.map((tab, index) => (
+              <div key={index} className="row">
+                <div className="col-md-10">
+                  <Tab
+                    tab={tab}
+                    setTabsSelected={setTabsSelected}
+                    setAllBoxesSelected={setAllBoxesSelected}
+                    isSelected={tabsSelected.has(tab.tab_id)}
+                  />
+                </div>
+                <div className="col-md-2">
+                  <button
+                    onClick={() => onTabDelete(tab.tab_id)}
+                    style={{
+                      fontSize: "12px",
+                      padding: "4px 8px",
+                      margin: "0",
+                      backgroundColor: "lightgray",
+                      border: "1px solid gray",
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
               </div>
-              <div className="col-md-2">
-                <button
-                  onClick={() => onTabDelete(tab.tab_id)}
-                  style={{
-                    fontSize: "12px",
-                    padding: "4px 8px",
-                    margin: "0",
-                    backgroundColor: "lightgray",
-                    border: "1px solid gray",
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </>
   );

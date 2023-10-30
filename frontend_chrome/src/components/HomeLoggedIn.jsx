@@ -16,6 +16,7 @@ import Tags from "./Tags";
 import SummaryVoice from "./SummaryVoice";
 import SearchBar from "./SearchBar";
 import TagsModal from "./TagsModal";
+import TabsModal from "./TabsModal";
 
 const HomeLoggedIn = () => {
   const post = useSelector((state) => state.post);
@@ -24,6 +25,11 @@ const HomeLoggedIn = () => {
   const [isTagsModalOpen, setIsTagsModalOpen] = useState(false);
   const openTagsModal = () => setIsTagsModalOpen(true);
   const closeTagsModal = () => setIsTagsModalOpen(false);
+
+  const [isTabsModalOpen, setIsTabsModalOpen] = useState(false);
+  const openTabsModal = () => setIsTabsModalOpen(true);
+  const closeTabsModal = () => setIsTabsModalOpen(false);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (!date && !post) {
@@ -44,22 +50,27 @@ const HomeLoggedIn = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col">
-          <SearchBar />
+          <div className="d-flex justify-content-start">
+            <Calendar />
+          </div>
         </div>
-      </div>
-      <div
-        className="row justify-content-center"
-        style={{ marginTop: "20px", marginBottom: "100px" }}
-      >
         <div className="col">
-          <Calendar />
+          <div className="d-flex justify-content-end">
+            <SearchBar />
+          </div>
         </div>
+
+        {/* <div
+          className="row"
+          style={{ marginTop: "20px", marginBottom: "100px" }}
+        >
+          <div className="col">
+            <Calendar />
+          </div>
+        </div> */}
       </div>
       <div className="row justify-content-around">
-        <div className="col-md-4">
-          <Tabs />
-        </div>
-        <div className="col-md-8 d-flex flex-column align-items-center">
+        <div className="col-10 d-flex flex-column align-items-center">
           {date && (
             <>
               <SummaryVoice
@@ -74,7 +85,31 @@ const HomeLoggedIn = () => {
             </>
           )}
         </div>
+        <div className="col-2 d-flex align-items-center">
+          <button
+            style={{ transform: "rotate(-90deg)" }}
+            onClick={() => openTabsModal()}
+          >
+            <h4>Log your tabs</h4>
+          </button>
+          {isTabsModalOpen && (
+            <TabsModal
+              isTabsModalOpen={isTabsModalOpen}
+              closeTabsModal={closeTabsModal}
+            >
+              <div className="row justify-content-between">
+                <div className="col">
+                  <button onClick={closeTabsModal} className="close-button">
+                    Close
+                  </button>
+                </div>
+              </div>
+              <Tabs />
+            </TabsModal>
+          )}
+        </div>
       </div>
+
       {isTagsModalOpen && (
         <TagsModal
           isTagsModalOpen={isTagsModalOpen}
