@@ -99,9 +99,7 @@ const HomeLoggedIn = () => {
             >
               <div className="row justify-content-between">
                 <div className="col">
-                  <button onClick={closeTabsModal} className="close-button">
-                    Close
-                  </button>
+                  <h2>Tags</h2>
                 </div>
               </div>
               <Tabs />
@@ -117,11 +115,11 @@ const HomeLoggedIn = () => {
         >
           <div className="row justify-content-between">
             <div className="col">
-              <h2>Tags</h2>
+              <h2>Tabs</h2>
             </div>
-            <div className="col">
+            {/* <div className="col">
               <button onClick={closeTagsModal}>Close</button>
-            </div>
+            </div> */}
           </div>
           <Tags />
         </TagsModal>

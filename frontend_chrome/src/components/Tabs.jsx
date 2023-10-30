@@ -48,7 +48,6 @@ const Tabs = () => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <label for="selectAllInput">Select all: </label>
             <input
               type="checkbox"
               id="selectAllInput"
@@ -67,12 +66,13 @@ const Tabs = () => {
                 }
               }}
             />
+            <label for="selectAllInput"> : Select all</label>
             <button
               onClick={() =>
                 dispatch(openTabs(Array.from(tabsSelected.values())))
               }
             >
-              Open Tabs in a new window
+              Open selected
             </button>
           </div>
         </div>
@@ -83,28 +83,12 @@ const Tabs = () => {
           {tabs &&
             tabs.map((tab, index) => (
               <div key={index} className="row">
-                <div className="col-md-10">
-                  <Tab
-                    tab={tab}
-                    setTabsSelected={setTabsSelected}
-                    setAllBoxesSelected={setAllBoxesSelected}
-                    isSelected={tabsSelected.has(tab.tab_id)}
-                  />
-                </div>
-                <div className="col-md-2">
-                  <button
-                    onClick={() => onTabDelete(tab.tab_id)}
-                    style={{
-                      fontSize: "12px",
-                      padding: "4px 8px",
-                      margin: "0",
-                      backgroundColor: "lightgray",
-                      border: "1px solid gray",
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
+                <Tab
+                  tab={tab}
+                  setTabsSelected={setTabsSelected}
+                  setAllBoxesSelected={setAllBoxesSelected}
+                  isSelected={tabsSelected.has(tab.tab_id)}
+                />
               </div>
             ))}
         </div>

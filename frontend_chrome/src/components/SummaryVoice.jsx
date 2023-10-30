@@ -143,6 +143,12 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       console.log("No audio data to send.");
       return;
     }
+    if (mediaRecorderRef.current && (isRecording || isPaused)) {
+      mediaRecorderRef.current.stop();
+      clearInterval(timerRef.current);
+      setIsRecording(false);
+      setIsPaused(false);
+    }
     dispatch(toggleInterpreting());
     // Combine the audio chunks into a single Blob
     const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
@@ -173,6 +179,8 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
           onClick={
             !isRecording && !isPaused && !audioDuration
               ? startRecording
+              : isRecording && !isPaused
+              ? pauseRecording
               : resumeRecording
           }
           disabled={!isPlaybackFinished}
