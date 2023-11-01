@@ -18,25 +18,17 @@ const UserAccountInfo = () => {
     dispatch(deleteAccount(worksnapToken));
     toggleModal();
   };
-  useEffect(() => {
-    if (!userAccountInfo) {
-      dispatch(getUserAccountInfo(worksnapToken));
-    }
-  }, [userAccountInfo]);
-
   return (
     <div>
       {userAccountInfo && (
         <>
           <h1>User Information</h1>
-          <ul>
-            <li>
-              <strong>Name:</strong> {userAccountInfo.name}
-            </li>
-            <li>
-              <strong>Email:</strong> {userAccountInfo.email}
-            </li>
-          </ul>
+          <div>
+            <strong>Name:</strong> {userAccountInfo.name}
+          </div>
+          <div>
+            <strong>Email:</strong> {userAccountInfo.email}
+          </div>
           <Button onClick={toggleModal} color="primary">
             Delete account?
           </Button>

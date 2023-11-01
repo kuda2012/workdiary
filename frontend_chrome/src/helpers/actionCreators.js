@@ -15,6 +15,7 @@ export function isWorksnapTokenCurrent(worksnap_token) {
       dispatch(setWorksnapToken(data.worksnap_token));
       // dispatch(initialLoad());
     } catch (error) {
+      dispatch(resetApp());
       console.log(error);
     }
   };
@@ -262,16 +263,20 @@ function arrayToCSV(arr) {
 export function bulkDeleteTabs(worksnap_token, date, tabs) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.delete(
-        `http://localhost:3000/tabs/bulkDelete?date=${date}&tab_ids=${arrayToCSV(
-          tabs.map((tab) => tab.tab_id)
-        )} `,
-        {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
-        }
-      );
-      dispatch(setPost(data.post));
-      dispatch(setDate(data.date));
+      if (tabs) {
+        const { data } = await axios.delete(
+          `http://localhost:3000/tabs/bulkDelete?date=${date}&tab_ids=${arrayToCSV(
+            tabs[0]?.tab_id !== undefined
+              ? tabs.map((tab) => tab?.tab_id)
+              : tabs
+          )} `,
+          {
+            headers: { Authorization: `Bearer ${worksnap_token}` },
+          }
+        );
+        dispatch(setPost(data.post));
+        dispatch(setDate(data.date));
+      }
     } catch (error) {
       console.log(error);
     }

@@ -9,6 +9,7 @@ import {
   updatePost,
   createPost,
   deletePost,
+  getUserAccountInfo,
 } from "../helpers/actionCreators";
 import moment from "moment";
 import Tabs from "./Tabs";
@@ -19,6 +20,7 @@ import TagsModal from "./TagsModal";
 import TabsModal from "./TabsModal";
 
 const HomeLoggedIn = () => {
+  const userAccountInfo = useSelector((state) => state?.user);
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -36,7 +38,10 @@ const HomeLoggedIn = () => {
       // intial load of journal data
       dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
     }
-  }, [post, date]);
+    if (!userAccountInfo) {
+      dispatch(getUserAccountInfo(worksnapToken));
+    }
+  }, [post, date, userAccountInfo]);
 
   function dispatchUpdatePost(summary_text, summary_voice) {
     if (post) {
@@ -71,7 +76,7 @@ const HomeLoggedIn = () => {
       </div>
       <div className="row justify-content-around">
         <div className="col-10 d-flex flex-column align-items-center">
-          {date && (
+          {date && userAccountInfo && (
             <>
               <SummaryVoice
                 summaryText={post?.summary_text}
@@ -90,7 +95,7 @@ const HomeLoggedIn = () => {
             style={{ transform: "rotate(-90deg)" }}
             onClick={() => openTabsModal()}
           >
-            <h4>Log your tabs</h4>
+            <h4>Your browser tabs</h4>
           </button>
           {isTabsModalOpen && (
             <TabsModal
@@ -128,7 +133,13 @@ const HomeLoggedIn = () => {
         <div className="col">
           <button
             onClick={() => {
-              dispatch(deletePost(worksnapToken, date));
+              if (post) {
+                dispatch(deletePost(worksnapToken, date));
+              } else {
+                alert(
+                  "You have not save anything to this date, there's nothing to delete."
+                );
+              }
             }}
           >
             Delete Post

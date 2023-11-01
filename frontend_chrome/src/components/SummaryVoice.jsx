@@ -4,6 +4,7 @@ import { toggleInterpreting } from "../helpers/actionCreators";
 // import AudioPlayer from "react-audio-player";
 
 const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
+  const userAccountInfo = useSelector((state) => state?.user);
   const interpreting = useSelector((state) => state.interpreting);
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaybackFinished, setIsPlaybackFinished] = useState(true);
@@ -166,7 +167,10 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
 
   return (
     <div className="mt-5">
-      <h4>Hey, Kuda. Tell us. How was work today?</h4>
+      <h4>
+        Hey, {userAccountInfo.name.match(/(\w+)/)[0]}. Tell us. How was work
+        today?
+      </h4>
       <div>Recording Duration: {audioDuration}s</div>
       <div>
         {/* <button

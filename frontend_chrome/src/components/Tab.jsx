@@ -1,5 +1,11 @@
 import "../styles/Tab.css";
-const Tab = ({ tab, setTabsSelected, isSelected, setAllBoxesSelected }) => {
+const Tab = ({
+  tab,
+  onTabDelete,
+  setTabsSelected,
+  isSelected,
+  setAllBoxesSelected,
+}) => {
   return (
     <>
       <div className="col-md-2">

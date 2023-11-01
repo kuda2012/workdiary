@@ -74,6 +74,21 @@ const Tabs = () => {
             >
               Open selected
             </button>
+            <button
+              onClick={() => {
+                dispatch(
+                  bulkDeleteTabs(
+                    worksnapToken,
+                    date,
+                    Array.from(tabsSelected.keys())
+                  )
+                );
+                setTabsSelected(new Map());
+                setAllBoxesSelected(false);
+              }}
+            >
+              Delete Selected
+            </button>
           </div>
         </div>
         <div
@@ -88,6 +103,7 @@ const Tabs = () => {
                   setTabsSelected={setTabsSelected}
                   setAllBoxesSelected={setAllBoxesSelected}
                   isSelected={tabsSelected.has(tab.tab_id)}
+                  onTabDelete={onTabDelete}
                 />
               </div>
             ))}
