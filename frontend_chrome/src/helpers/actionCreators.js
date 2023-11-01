@@ -298,6 +298,23 @@ export function deleteTab(worksnap_token, date, tab_id) {
     }
   };
 }
+
+export async function setAlarm(userAccountInfo) {
+  // In your content script or background script that has access to the tabId:
+  chrome.alarms.create("myAlarm", {
+    when: Date.now() + 1000, // Set the alarm to go off in 1 second.
+  });
+  chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === "myAlarm") {
+      const audio = new Audio(chrome.runtime.getURL("game-alarm.wav")); // Get the URL to your sound fil
+      audio.play();
+      setTimeout(() => {
+        audio.pause();
+      }, 4000);
+    }
+  });
+}
+
 export function setWorksnapToken(worksnap_token) {
   return {
     type: "SET_WORKSNAP_TOKEN",

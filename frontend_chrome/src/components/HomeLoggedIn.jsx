@@ -10,6 +10,7 @@ import {
   createPost,
   deletePost,
   getUserAccountInfo,
+  setAlarm,
 } from "../helpers/actionCreators";
 import moment from "moment";
 import Tabs from "./Tabs";
@@ -31,6 +32,7 @@ const HomeLoggedIn = () => {
   const [isTabsModalOpen, setIsTabsModalOpen] = useState(false);
   const openTabsModal = () => setIsTabsModalOpen(true);
   const closeTabsModal = () => setIsTabsModalOpen(false);
+  const [setAlarmOnce, setSetAlarmOnce] = useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,7 +43,11 @@ const HomeLoggedIn = () => {
     if (!userAccountInfo) {
       dispatch(getUserAccountInfo(worksnapToken));
     }
-  }, [post, date, userAccountInfo]);
+    if (userAccountInfo && !setAlarmOnce) {
+      setAlarm(userAccountInfo);
+      setSetAlarmOnce(true);
+    }
+  }, [post, date, userAccountInfo, setAlarmOnce]);
 
   function dispatchUpdatePost(summary_text, summary_voice) {
     if (post) {

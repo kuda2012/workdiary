@@ -7,8 +7,21 @@
   "action": {
     "default_icon": "/w_extension.png"
   },
-  "permissions": ["tabs", "windows", "identity"],
-  "host_permissions": ["http://localhost:3000/*"],
+  "permissions": [
+    "tabs",
+    "windows",
+    "activeTab",
+    "scripting",
+    "identity",
+    "alarms"
+  ],
+  "host_permissions": ["*://*/"],
+  "web_accessible_resources": [
+    {
+      "resources": ["public/game-alarm.wav"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "background": {
     "service_worker": "background.js"
   },
