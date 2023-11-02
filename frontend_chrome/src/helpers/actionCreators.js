@@ -307,7 +307,7 @@ export async function setAlarm(userAccountInfo) {
   chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === "myAlarm") {
       const audio = new Audio(chrome.runtime.getURL("game-alarm.wav")); // Get the URL to your sound fil
-      audio.play();
+      // audio.play();
       setTimeout(() => {
         audio.pause();
       }, 4000);

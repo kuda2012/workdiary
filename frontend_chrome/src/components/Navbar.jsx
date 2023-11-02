@@ -1,4 +1,4 @@
-import { Navbar as ReactNavBar, NavItem, Nav } from "reactstrap";
+import { Navbar as ReactNavBar, NavItem, Nav, NavbarBrand } from "reactstrap";
 import { getWorksnapToken, resetApp } from "../helpers/actionCreators";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
@@ -17,12 +17,18 @@ const NavBar = () => {
   return (
     <>
       <ReactNavBar color="light" light expand="md">
-        <NavLink to="/">Worksnap</NavLink>
-        <Nav className="ml-auto" navbar>
+        <NavbarBrand>
+          <NavLink to="/" style={{ textDecoration: "none" }}>
+            Worksnap
+          </NavLink>
+        </NavbarBrand>
+        <Nav className="ms-auto" navbar>
           {worksnapToken && (
             <>
               <NavItem>
-                <NavLink to="/account-info">Account</NavLink>
+                <NavLink to="/account-info" style={{ textDecoration: "none" }}>
+                  Settings
+                </NavLink>
               </NavItem>
               <NavItem
                 onClick={() => {
@@ -32,6 +38,7 @@ const NavBar = () => {
                 }}
               >
                 <NavLink
+                  style={{ textDecoration: "none" }}
                   onClick={(e) => {
                     e.preventDefault();
                     dispatch(resetApp());

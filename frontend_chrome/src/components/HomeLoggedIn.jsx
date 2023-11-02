@@ -101,7 +101,7 @@ const HomeLoggedIn = () => {
             style={{ transform: "rotate(-90deg)" }}
             onClick={() => openTabsModal()}
           >
-            <h4>Your browser tabs</h4>
+            <h4>Your tabs</h4>
           </button>
           {isTabsModalOpen && (
             <TabsModal
