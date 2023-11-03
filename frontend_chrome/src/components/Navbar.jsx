@@ -26,7 +26,7 @@ const NavBar = () => {
           {worksnapToken && (
             <>
               <NavItem>
-                <NavLink to="/account-info" style={{ textDecoration: "none" }}>
+                <NavLink to="/settings" style={{ textDecoration: "none" }}>
                   Settings
                 </NavLink>
               </NavItem>

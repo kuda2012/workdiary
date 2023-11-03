@@ -19,26 +19,43 @@ const UserAccountInfo = () => {
     toggleModal();
   };
   return (
-    <div>
-      {userAccountInfo && (
-        <>
-          <h1>User Information</h1>
-          <div>
-            <strong>Name:</strong> {userAccountInfo.name}
+    <div className="dropdown">
+      <button
+        className="btn btn-primary dropdown-toggle"
+        type="button"
+        id="userInfoDropdown"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="outside"
+        data-target="#userInfoDropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        User Information
+      </button>
+      <div
+        className="dropdown-menu"
+        aria-labelledby="userInfoDropdown"
+        style={{ width: "400px" }}
+      >
+        {userAccountInfo && (
+          <div className="text-center">
+            <div>
+              <strong>Name:</strong> {userAccountInfo.name}
+            </div>
+            <div>
+              <strong>Email:</strong> {userAccountInfo.email}
+            </div>
+            <Button onClick={toggleModal} color="primary">
+              Delete account?
+            </Button>
+            <DeleteAccountModal
+              isOpen={isModalOpen}
+              toggleModal={toggleModal}
+              onDelete={handleDelete}
+            />
           </div>
-          <div>
-            <strong>Email:</strong> {userAccountInfo.email}
-          </div>
-          <Button onClick={toggleModal} color="primary">
-            Delete account?
-          </Button>
-          <DeleteAccountModal
-            isOpen={isModalOpen}
-            toggleModal={toggleModal}
-            onDelete={handleDelete}
-          />
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 };

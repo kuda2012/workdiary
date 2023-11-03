@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "./components/Home";
-import UserAccountInfo from "./components/UserAccountInfo";
+import Settings from "./components/Settings";
 
 const Router = () => {
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -15,8 +15,8 @@ const Router = () => {
         element={<Home />}
       />
       <Route
-        path="/account-info"
-        element={worksnapToken ? <UserAccountInfo /> : <Navigate to="/" />}
+        path="/settings"
+        element={worksnapToken ? <Settings /> : <Navigate to="/" />}
       />
     </Routes>
   );
