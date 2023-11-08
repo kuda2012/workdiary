@@ -15,7 +15,11 @@ const CustomToolBar = ({ openTagsModal }) => {
       <button className="ql-strike" />
       <button className="ql-list" value="ordered" />
       <button className="ql-list" value="bullet" />
-      <button className="showTags" onClick={openTagsModal}>
+      <button
+        className="showTags"
+        onClick={openTagsModal}
+        style={{ position: "relative", bottom: "3px" }}
+      >
         <b>Tags</b>
       </button>
     </div>

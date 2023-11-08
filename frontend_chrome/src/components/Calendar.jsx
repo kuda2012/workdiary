@@ -9,6 +9,14 @@ const Calendar = () => {
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const dispatch = useDispatch();
+
+  const handleDateInputChange = (event) => {
+    const selectedDate = moment(event.target.value, "MM/DD/YYYY", true);
+    if (selectedDate.isValid()) {
+      dispatch(getPost(worksnapToken, selectedDate.format("MM/DD/YYYY")));
+    }
+  };
+
   return (
     <>
       <DatePicker
@@ -18,9 +26,28 @@ const Calendar = () => {
             getPost(worksnapToken, moment(datePickerDate).format("MM/DD/YYYY"))
           );
         }}
+        customInput={
+          <CustomDatePickerInput onDateChange={handleDateInputChange} />
+        }
       />
     </>
   );
 };
+
+const CustomDatePickerInput = ({ value, onClick, onDateChange }) => (
+  <input
+    type="text"
+    value={value}
+    onClick={onClick}
+    onChange={onDateChange}
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      textAlign: "center",
+      width: "100%",
+    }}
+  />
+);
 
 export default Calendar;

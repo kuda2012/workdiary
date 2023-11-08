@@ -3,6 +3,7 @@ import { getWorksnapToken, resetApp } from "../helpers/actionCreators";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SearchBar from "./SearchBar";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const NavBar = () => {
                   Logout
                 </NavLink>
               </NavItem>
+              <SearchBar />
             </>
           )}
         </Nav>

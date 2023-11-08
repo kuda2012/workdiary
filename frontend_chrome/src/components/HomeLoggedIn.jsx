@@ -59,29 +59,36 @@ const HomeLoggedIn = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col">
-          <div className="d-flex justify-content-start">
-            <Calendar />
-          </div>
-        </div>
-        <div className="col">
-          <div className="d-flex justify-content-end">
-            <SearchBar />
-          </div>
-        </div>
-
-        {/* <div
-          className="row"
-          style={{ marginTop: "20px", marginBottom: "100px" }}
+      <div className="row justify-content-center align-items-center">
+        <div
+          className="col-1 mt-1"
+          style={{ position: "relative", right: "163px" }}
         >
-          <div className="col">
+          <div>
+            <button>
+              <img src="/question_mark.png"></img>
+            </button>
+          </div>
+        </div>
+        <div className="col-5 mt-2" style={{ position: "relative" }}>
+          <div>
             <Calendar />
           </div>
-        </div> */}
+        </div>
+        <div
+          className="col-1 mt-1"
+          style={{ position: "relative", left: "132px" }}
+        >
+          <div>
+            <button>
+              <img src="/gear-settings.png"></img>
+            </button>
+          </div>
+        </div>
       </div>
       <div className="row justify-content-around">
-        <div className="col-10 d-flex flex-column align-items-center">
+        <div className="col-2"></div>
+        <div className="col-8 d-flex flex-column align-items-center">
           {date && userAccountInfo && (
             <>
               <SummaryVoice
@@ -96,7 +103,7 @@ const HomeLoggedIn = () => {
             </>
           )}
         </div>
-        <div className="col-2 d-flex align-items-center">
+        <div className="col-2 d-flex align-items-center justify-content-start pl-0">
           <button
             style={{ transform: "rotate(-90deg)" }}
             onClick={() => openTabsModal()}

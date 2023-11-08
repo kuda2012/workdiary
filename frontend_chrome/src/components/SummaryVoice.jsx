@@ -167,7 +167,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
 
   return (
     <div className="mt-5">
-      <h4>
+      <h4 className="mb-4">
         Hey, {userAccountInfo.name.match(/(\w+)/)[0]}. Tell us. How was work
         today?
       </h4>
@@ -213,7 +213,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
           <img src="/voice_to_text.png" title="Interpret" />
         </button>
       </div>
-      <div>
+      <div className="mb-5">
         <audio controls ref={audioRef} onEnded={handleAudioEnded} />
         {/* <AudioPlayer ref={audioRef} controls onEnded={handleAudioEnded} /> */}
       </div>
