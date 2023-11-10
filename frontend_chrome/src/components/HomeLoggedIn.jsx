@@ -19,12 +19,17 @@ import SummaryVoice from "./SummaryVoice";
 import SearchBar from "./SearchBar";
 import TagsModal from "./TagsModal";
 import TabsModal from "./TabsModal";
+import Settings from "./Settings";
+import SettingsModal from "./SettingsModal";
+import HowToModal from "./HowToModal";
+import HowTo from "./HowTo";
 
 const HomeLoggedIn = () => {
   const userAccountInfo = useSelector((state) => state?.user);
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
+
   const [isTagsModalOpen, setIsTagsModalOpen] = useState(false);
   const openTagsModal = () => setIsTagsModalOpen(true);
   const closeTagsModal = () => setIsTagsModalOpen(false);
@@ -32,6 +37,15 @@ const HomeLoggedIn = () => {
   const [isTabsModalOpen, setIsTabsModalOpen] = useState(false);
   const openTabsModal = () => setIsTabsModalOpen(true);
   const closeTabsModal = () => setIsTabsModalOpen(false);
+
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const openSettingsModal = () => setIsSettingsModalOpen(true);
+  const closeSettingsModal = () => setIsSettingsModalOpen(false);
+
+  const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
+  const openHowToModal = () => setIsHowToModalOpen(true);
+  const closeHowToModal = () => setIsHowToModalOpen(false);
+
   const [setAlarmOnce, setSetAlarmOnce] = useState(false);
 
   const dispatch = useDispatch();
@@ -65,9 +79,22 @@ const HomeLoggedIn = () => {
           style={{ position: "relative", right: "163px" }}
         >
           <div>
-            <button>
+            <button onClick={() => openHowToModal()}>
               <img src="/question_mark.png"></img>
             </button>
+            {isHowToModalOpen && (
+              <HowToModal
+                isHowToModalOpen={isHowToModalOpen}
+                closeHowToModal={closeHowToModal}
+              >
+                {/* <div className="row justify-content-between">
+                  <div className="col">
+                    <h2>Settings</h2>
+                  </div>
+                </div> */}
+                <HowTo />
+              </HowToModal>
+            )}
           </div>
         </div>
         <div className="col-5 mt-2" style={{ position: "relative" }}>
@@ -80,9 +107,22 @@ const HomeLoggedIn = () => {
           style={{ position: "relative", left: "132px" }}
         >
           <div>
-            <button>
+            <button onClick={() => openSettingsModal()}>
               <img src="/gear-settings.png"></img>
             </button>
+            {isSettingsModalOpen && (
+              <SettingsModal
+                isSettingsModalOpen={isSettingsModalOpen}
+                closeSettingsModal={closeSettingsModal}
+              >
+                {/* <div className="row justify-content-between">
+                  <div className="col">
+                    <h2>Settings</h2>
+                  </div>
+                </div> */}
+                <Settings />
+              </SettingsModal>
+            )}
           </div>
         </div>
       </div>
@@ -145,6 +185,7 @@ const HomeLoggedIn = () => {
       <div className="row">
         <div className="col">
           <button
+            style={{ position: "relative", left: "300px" }}
             onClick={() => {
               if (post) {
                 dispatch(deletePost(worksnapToken, date));

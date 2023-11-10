@@ -7,7 +7,7 @@ import {
   searchJournal,
 } from "../helpers/actionCreators";
 
-const SearchBar = ({ search }) => {
+const SearchBar = ({ search, toggleSearchBar }) => {
   // State to hold the search input text
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const searchResults = useSelector((state) => state.search_results);
@@ -42,13 +42,19 @@ const SearchBar = ({ search }) => {
       // Call the getPost function with the selected date
       dispatch(getPost(worksnapToken, moment(item.date).format("MM/DD/YYYY")));
       dispatch(clearSearchResults()); // You need to define the getPost function
+      toggleSearchBar();
     }
   };
   return (
     <form
       className="search-bar"
       onSubmit={handleFormSubmit}
-      style={{ width: "33%", position: "relative", textAlign: "left" }}
+      style={{
+        width: "20%",
+        position: "relative",
+        right: "50px",
+        textAlign: "left",
+      }}
     >
       <input
         id="search"

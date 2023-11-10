@@ -37,7 +37,7 @@ const Alarm = () => {
 
   return (
     <div className="dropdown">
-      <button
+      {/* <button
         className="btn btn-danger dropdown-toggle"
         type="button"
         id="alarmDropdown"
@@ -48,7 +48,22 @@ const Alarm = () => {
         aria-expanded="false"
       >
         Set Daily Reminder
-      </button>
+      </button> */}
+      <div
+        className="dropdown-toggle"
+        type="button"
+        id="alarmDropdown"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="outside"
+        data-target="#alarmDropdown" // Include data-target
+        aria-haspopup="true"
+        aria-expanded="false"
+        style={{ textAlign: "center", border: "2px solid black" }}
+      >
+        <img src="/alarm.jpg"></img>
+        <div>Set Reminder</div>
+      </div>
+
       <div
         className="dropdown-menu text-center flex-column align-items-center"
         aria-labelledby="alarmDropdown"

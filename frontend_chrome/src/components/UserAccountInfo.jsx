@@ -20,7 +20,7 @@ const UserAccountInfo = () => {
   };
   return (
     <div className="dropdown">
-      <button
+      {/* <button
         className="btn btn-primary dropdown-toggle"
         type="button"
         id="userInfoDropdown"
@@ -31,7 +31,21 @@ const UserAccountInfo = () => {
         aria-expanded="false"
       >
         User Information
-      </button>
+      </button> */}
+      <div
+        className="dropdown-toggle"
+        type="button"
+        id="userInfoDropdown"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="outside"
+        data-target="#userInfoDropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+        style={{ textAlign: "center", border: "2px solid black" }}
+      >
+        <img src="/user_information.png"></img>
+        <div> User Information</div>
+      </div>
       <div
         className="dropdown-menu"
         aria-labelledby="userInfoDropdown"
