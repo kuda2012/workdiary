@@ -8,6 +8,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 router.get("/shared-post/:pointerId", postController.getSharedPost);
+router.get("/all-dates", tokenIsCurrent, postController.getAllPostDates);
 router.get("/search", tokenIsCurrent, postController.search);
 
 router.post(

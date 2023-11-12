@@ -7,8 +7,7 @@ import { getPost } from "../helpers/actionCreators";
 
 const Calendar = () => {
   const date = useSelector((state) => state.date);
-  const post = useSelector((state) => state.post);
-
+  const allPostDates = useSelector((state) => state.all_post_dates);
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const dispatch = useDispatch();
 
@@ -22,12 +21,16 @@ const Calendar = () => {
   return (
     <>
       <DatePicker
+        disabledKeyboardNavigation={true}
         selected={date ? moment(date, "MM/DD/YYYY").toDate() : new Date()}
         onChange={(datePickerDate) => {
           dispatch(
             getPost(worksnapToken, moment(datePickerDate).format("MM/DD/YYYY"))
           );
         }}
+        highlightDates={allPostDates?.map((date) =>
+          moment(date, "YYYY-MM-DD").toDate()
+        )}
         customInput={
           <CustomDatePickerInput onDateChange={handleDateInputChange} />
         }

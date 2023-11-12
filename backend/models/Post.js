@@ -29,6 +29,13 @@ class Post {
         }
       : null;
   }
+  static async getAllPostDates(user_id) {
+    const allPostDates = await db.query(
+      `SELECT date FROM posts WHERE user_id = $1`,
+      [user_id]
+    );
+    return allPostDates.map((date) => date.date);
+  }
   static async getSharedPost(pointerId) {
     const { post_id } = await db.oneOrNone(
       `SELECT post_id FROM shared_posts WHERE pointer_id = $1`,

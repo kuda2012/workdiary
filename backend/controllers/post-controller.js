@@ -20,7 +20,8 @@ exports.create = async (req, res) => {
       : null;
     post = await Post.create(id, req.body, summaryVoice);
   }
-  res.send({ post, date: req.body.date });
+  const allPostDates = await Post.getAllPostDates(id);
+  res.send({ post, date: req.body.date, all_post_dates: [...allPostDates] });
 };
 
 exports.getPost = async (req, res) => {
@@ -38,6 +39,11 @@ exports.getPost = async (req, res) => {
   res.send({ date: req.query.date, post });
 };
 
+exports.getAllPostDates = async (req, res) => {
+  const { id } = decodeJwt(req.headers.authorization);
+  const allPostDates = await Post.getAllPostDates(id);
+  res.send({ all_post_dates: [...allPostDates] });
+};
 exports.getSharedPost = async (req, res) => {
   const post = await Post.getSharedPost(req.params.pointerId);
   const tabs = await Tab.getTabs(post.user_id, post.date);

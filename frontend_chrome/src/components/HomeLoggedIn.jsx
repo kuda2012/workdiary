@@ -11,6 +11,7 @@ import {
   deletePost,
   getUserAccountInfo,
   setAlarm,
+  getAllPostDates,
 } from "../helpers/actionCreators";
 import moment from "moment";
 import Tabs from "./Tabs";
@@ -53,6 +54,7 @@ const HomeLoggedIn = () => {
     if (!date && !post) {
       // intial load of journal data
       dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
+      dispatch(getAllPostDates(worksnapToken));
     }
     if (!user) {
       dispatch(getUserAccountInfo(worksnapToken));

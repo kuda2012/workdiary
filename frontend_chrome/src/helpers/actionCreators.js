@@ -117,6 +117,21 @@ export function getPost(worksnap_token, date) {
     }
   };
 }
+export function getAllPostDates(worksnap_token) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/posts/all-dates`,
+        {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        }
+      );
+      dispatch(setAllPostDates(data.all_post_dates));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export function updatePost(worksnap_token, date, summary_text, summary_voice) {
   return async function (dispatch) {
     try {
@@ -156,6 +171,7 @@ export function createPost(worksnap_token, date, summary_text, summary_voice) {
         dispatch(toggleInterpreting());
       }
       dispatch(setPost(data.post));
+      dispatch(setAllPostDates(data.all_post_dates));
       dispatch(setDate(data.date));
     } catch (error) {
       if (summary_voice) {
@@ -432,6 +448,12 @@ export function setPost(post) {
   return {
     type: "SET_POST",
     post,
+  };
+}
+export function setAllPostDates(all_post_dates) {
+  return {
+    type: "SET_ALL_POST_DATES",
+    all_post_dates,
   };
 }
 export function toggleInterpreting() {

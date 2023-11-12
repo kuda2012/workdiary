@@ -25,6 +25,8 @@ function rootReducer(state = INITIAL_STATE, action) {
       };
     case "SET_DATE":
       return { ...state, date: action.date };
+    case "SET_ALL_POST_DATES":
+      return { ...state, all_post_dates: action.all_post_dates };
     case "SET_POST":
       return { ...state, post: action.post };
     case "SET_SEARCH_RESULTS":
@@ -38,7 +40,11 @@ function rootReducer(state = INITIAL_STATE, action) {
     case "LOGGING_IN":
       return { ...state, logging_in: !state.logging_in };
     case "HALF_RESET":
-      return { token: state.token, date: state.date };
+      return {
+        token: state.token,
+        date: state.date,
+        all_post_dates: state.all_post_dates,
+      };
     case "FULL_RESET":
       localStorage.removeItem("worksnap_token");
       return {};
