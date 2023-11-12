@@ -4,6 +4,7 @@ const UserController = require("../controllers/user-controller");
 const { tokenIsCurrent } = require("../middleware/userMiddleware");
 
 router.post("/login", UserController.login);
+router.post("/change-alarm", tokenIsCurrent, UserController.changeAlarm);
 router.get("/account-info", tokenIsCurrent, UserController.getAccountInfo);
 router.get(
   "/check-worksnap-token",

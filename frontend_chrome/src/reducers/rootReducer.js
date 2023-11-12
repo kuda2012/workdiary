@@ -13,6 +13,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, google_access_token: action.google_access_token };
     case "SET_WORKSNAP_TOKEN":
       localStorage.setItem("worksnap_token", action.worksnap_token);
+      chrome.storage.local.set({ worksnap_token: action.worksnap_token });
       return {
         ...state,
         worksnap_token: action.worksnap_token,

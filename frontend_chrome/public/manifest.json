@@ -13,7 +13,9 @@
     "activeTab",
     "scripting",
     "identity",
-    "alarms"
+    "notifications",
+    "alarms",
+    "storage"
   ],
   "host_permissions": ["*://*/"],
   "web_accessible_resources": [

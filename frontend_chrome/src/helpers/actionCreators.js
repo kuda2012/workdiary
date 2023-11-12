@@ -299,20 +299,94 @@ export function deleteTab(worksnap_token, date, tab_id) {
   };
 }
 
-export async function setAlarm(userAccountInfo) {
-  // In your content script or background script that has access to the tabId:
-  chrome.alarms.create("myAlarm", {
-    when: Date.now() + 1000, // Set the alarm to go off in 1 second.
-  });
-  chrome.alarms.onAlarm.addListener((alarm) => {
-    if (alarm.name === "myAlarm") {
-      const audio = new Audio(chrome.runtime.getURL("game-alarm.wav")); // Get the URL to your sound fil
-      // audio.play();
-      setTimeout(() => {
-        audio.pause();
-      }, 4000);
+export function changeAlarm(worksnap_token, user) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/users/change-alarm`,
+        { ...user },
+        {
+          headers: { Authorization: `Bearer ${worksnap_token}` },
+        }
+      );
+      dispatch(setUserAccountInfo(data.user));
+    } catch (error) {
+      console.log(error);
     }
-  });
+  };
+}
+
+export async function setAlarm(user) {
+  // In your content script or background script that has access to the tabId:
+  await chrome.alarms.clearAll();
+  // Get the current date
+  const currentDate = new Date();
+
+  // Define the day you want to check (e.g., "mon")
+
+  // Get the current day of the week as a string (e.g., "mon")
+  const currentDay = currentDate
+    .toLocaleString("en-us", { weekday: "short" })
+    .toLowerCase();
+
+  // Check if today is the specified day
+  let shouldSetAlarm = false;
+  for (let day of user.alarm_days) {
+    const currentTime = new Date().toLocaleTimeString("en-US", {
+      hour12: false,
+    });
+
+    if (
+      user.alarm_status &&
+      currentDay === day.day &&
+      day.value &&
+      currentTime < user.alarm_time
+    ) {
+      shouldSetAlarm = (await chrome.alarms.get("myAlarm")) ? false : true;
+      break;
+    }
+  }
+
+  if (shouldSetAlarm) {
+    // Get the current time
+    const currentTime = new Date();
+
+    // Parse the military time string "17:00" and set it to today's date
+    const militaryTimeString = user.alarm_time;
+    const militaryTimeArray = militaryTimeString.split(":");
+    const militaryTime = new Date();
+    militaryTime.setHours(parseInt(militaryTimeArray[0], 10));
+    militaryTime.setMinutes(parseInt(militaryTimeArray[1], 10));
+    militaryTime.setSeconds(0);
+
+    // Calculate the time difference in seconds
+    const timeDifferenceInSeconds = Number(
+      Math.floor(militaryTime - currentTime)
+    );
+    console.log(currentTime, militaryTimeString);
+    console.log(`Time difference in seconds: ${timeDifferenceInSeconds}`);
+    chrome.alarms.create("myAlarm", {
+      when: Date.now() + timeDifferenceInSeconds, // Set the alarm to go off in 1 second.
+    });
+    chrome.alarms.onAlarm.addListener(async (alarm) => {
+      if (alarm.name === "myAlarm") {
+        chrome.notifications.create({
+          type: "basic",
+          iconUrl: "w_extension.png",
+          title: "Worksnap",
+          message: `Your ${user.alarm_time} reminder to log in your worksnap journal`,
+          // Include sound property for the sound file
+        });
+
+        // const audio = new Audio(chrome.runtime.getURL("game-alarm.wav"));
+        // audio.volume = 0.5; // Get the URL to your sound fil
+        // audio.play();
+        // setTimeout(() => {
+        //   audio.pause();
+        // }, 2000);
+      }
+    });
+  }
 }
 
 export function setWorksnapToken(worksnap_token) {

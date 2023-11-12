@@ -25,7 +25,7 @@ import HowToModal from "./HowToModal";
 import HowTo from "./HowTo";
 
 const HomeLoggedIn = () => {
-  const userAccountInfo = useSelector((state) => state?.user);
+  const user = useSelector((state) => state?.user);
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -54,14 +54,14 @@ const HomeLoggedIn = () => {
       // intial load of journal data
       dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
     }
-    if (!userAccountInfo) {
+    if (!user) {
       dispatch(getUserAccountInfo(worksnapToken));
     }
-    if (userAccountInfo && !setAlarmOnce) {
-      setAlarm(userAccountInfo);
-      setSetAlarmOnce(true);
+    if (user && !setAlarmOnce) {
+      // setAlarm(user);
+      // setSetAlarmOnce(true);
     }
-  }, [post, date, userAccountInfo, setAlarmOnce]);
+  }, [post, date, user, setAlarmOnce]);
 
   function dispatchUpdatePost(summary_text, summary_voice) {
     if (post) {
@@ -129,7 +129,7 @@ const HomeLoggedIn = () => {
       <div className="row justify-content-around">
         <div className="col-2"></div>
         <div className="col-8 d-flex flex-column align-items-center">
-          {date && userAccountInfo && (
+          {date && user && (
             <>
               <SummaryVoice
                 summaryText={post?.summary_text}
@@ -157,7 +157,7 @@ const HomeLoggedIn = () => {
             >
               <div className="row justify-content-between">
                 <div className="col">
-                  <h2>Tags</h2>
+                  <h2>Tabs</h2>
                 </div>
               </div>
               <Tabs />
@@ -173,7 +173,7 @@ const HomeLoggedIn = () => {
         >
           <div className="row justify-content-between">
             <div className="col">
-              <h2>Tabs</h2>
+              <h2>Tags</h2>
             </div>
             {/* <div className="col">
               <button onClick={closeTagsModal}>Close</button>

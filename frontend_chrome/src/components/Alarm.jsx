@@ -1,38 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup } from "reactstrap";
 import { Autosave } from "react-autosave";
+import { useDispatch, useSelector } from "react-redux";
+import { changeAlarm, setAlarm } from "../helpers/actionCreators";
 
 const Alarm = () => {
+  const dispatch = useDispatch();
   const [buttonText, setButtonText] = useState("Save");
-  const [isOn, setIsOn] = useState(false);
-  const [pullsTabsReminder, setPullsTabsReminder] = useState(false);
-  const [alarmTime, setAlarmTime] = useState("17:00");
-  const [daysOfWeek, setDaysOfWeek] = useState({
-    sun: false,
-    mon: true,
-    tue: true,
-    wed: true,
-    thu: true,
-    fri: true,
-    sat: false,
-  });
+  const user = useSelector((state) => state?.user);
+  const alarmDays = useSelector((state) => state?.user?.alarm_days);
+  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const [alarmChanged, setAlarmChanged] = useState(false);
 
   const handleSwitchToggle = () => {
-    setIsOn(!isOn);
+    setButtonText("Save");
+    dispatch(changeAlarm(worksnapToken, { alarm_status: !user.alarm_status }));
   };
   const handlePullsTabReminder = () => {
-    setPullsTabsReminder(!pullsTabsReminder);
+    setButtonText("Save");
+    dispatch(
+      changeAlarm(worksnapToken, { auto_pull_tabs: !user.auto_pull_tabs })
+    );
   };
 
   const handleTimeChange = (event) => {
-    setAlarmTime(event.target.value);
+    setButtonText("Save");
+    dispatch(changeAlarm(worksnapToken, { alarm_time: event.target.value }));
   };
 
-  const handleDayCheckboxChange = (day) => {
-    setDaysOfWeek({
-      ...daysOfWeek,
-      [day]: !daysOfWeek[day],
+  useEffect(() => {
+    if (user && alarmChanged) {
+      setAlarm(user);
+      setAlarmChanged(false);
+    }
+  }, [user, alarmChanged]);
+
+  const handleDayCheckboxChange = (changedDay) => {
+    let updatedAlarmDays = alarmDays.map((day) => {
+      if (changedDay.day === day.day) {
+        return { day: changedDay.day, value: !day.value };
+      } else {
+        return day;
+      }
     });
+    dispatch(
+      changeAlarm(worksnapToken, {
+        alarm_days: updatedAlarmDays,
+      })
+    );
+    setButtonText("Save");
   };
 
   return (
@@ -71,32 +87,32 @@ const Alarm = () => {
         <div class="btn-group" role="group" aria-label="Toggle Switch">
           <ButtonGroup>
             <Button
-              color={isOn ? "success" : "secondary"}
-              onClick={handleSwitchToggle}
+              color={user.alarm_status ? "success" : "secondary"}
+              onClick={() => handleSwitchToggle(user.alarm_status)}
             >
               On
             </Button>
             <Button
-              color={isOn ? "secondary" : "danger"}
-              onClick={handleSwitchToggle}
+              color={user.alarm_status ? "secondary" : "danger"}
+              onClick={() => handleSwitchToggle(user.alarm_status)}
             >
               Off
             </Button>
           </ButtonGroup>
         </div>
         <div className="d-flex mt-4">
-          {Object.keys(daysOfWeek).map((day) => (
-            <div key={day} className="mx-2">
+          {alarmDays.map((day) => (
+            <div key={day.day} className="mx-2">
               <div className="form-check">
                 <input
                   type="checkbox"
                   className="form-check-input"
-                  id={day}
-                  checked={daysOfWeek[day]}
+                  id={day.day}
+                  checked={day.value}
                   onChange={() => handleDayCheckboxChange(day)}
                 />
-                <label className="form-check-label" htmlFor={day}>
-                  {day.toUpperCase()}
+                <label className="form-check-label" htmlFor={day.day}>
+                  {day.day.toUpperCase()}
                 </label>
               </div>
             </div>
@@ -110,7 +126,7 @@ const Alarm = () => {
             width: "200px",
           }}
           id="timePicker"
-          value={alarmTime}
+          value={user.alarm_time}
           onChange={handleTimeChange}
         />
         <div className="d-flex mt-4 align-items-center justify-content-center">
@@ -120,19 +136,21 @@ const Alarm = () => {
                 type="checkbox"
                 className="form-check-input"
                 id="pullTabsReminder"
-                checked={pullsTabsReminder}
-                onChange={() => handlePullsTabReminder()}
+                checked={user.auto_pull_tabs}
+                onChange={() => handlePullsTabReminder(user.auto_pull_tabs)}
               />
               <label className="form-check-label" htmlFor="pullTabsReminder">
                 Automatically pull your browser tabs
+                <br /> (This will happen regardless of your alarm on/off status)
               </label>
             </div>
           </div>
         </div>
         <Autosave
-          data={isOn}
-          interval={1500}
+          data={user}
+          interval={2000}
           onSave={(data) => {
+            setAlarmChanged(true);
             setButtonText("Saved");
           }}
         />
