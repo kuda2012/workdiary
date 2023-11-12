@@ -7,6 +7,8 @@ import { getPost } from "../helpers/actionCreators";
 
 const Calendar = () => {
   const date = useSelector((state) => state.date);
+  const post = useSelector((state) => state.post);
+
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const dispatch = useDispatch();
 

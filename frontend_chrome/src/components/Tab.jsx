@@ -10,6 +10,7 @@ const Tab = ({
     <>
       <div className="col-md-2">
         <input
+          style={{ position: "relative", top: "2px" }}
           type="checkbox"
           checked={isSelected}
           onChange={() => {

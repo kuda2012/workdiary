@@ -7,6 +7,7 @@ import {
   openTabs,
 } from "../helpers/actionCreators";
 import { useEffect, useState } from "react";
+import { Button } from "reactstrap";
 
 const Tabs = () => {
   const tabs = useSelector((state) => state.post?.tabs);
@@ -32,22 +33,61 @@ const Tabs = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-12">
-            <button onClick={() => dispatch(createTabs(worksnapToken, date))}>
+          <div className="col-12">
+            <Button
+              color="primary"
+              style={{ width: "100%" }}
+              onClick={() => dispatch(createTabs(worksnapToken, date))}
+            >
               Pull Current tabs
-            </button>
-            <button
+            </Button>
+            {/* <Button
               onClick={() => {
                 setTabsSelected(new Map());
                 dispatch(bulkDeleteTabs(worksnapToken, date, tabs));
               }}
             >
               Delete All Tabs
-            </button>
+            </Button> */}
+          </div>
+        </div>
+        <div className="row mt-2 justify-content-around align-items-center">
+          <div className="col-6">
+            <Button
+              // className="m-1"
+              color="info"
+              onClick={() =>
+                dispatch(openTabs(Array.from(tabsSelected.values())))
+              }
+            >
+              Open selected
+            </Button>
+          </div>
+          <div className="col-6">
+            <Button
+              // className="m-1"
+              color="danger"
+              onClick={() => {
+                dispatch(
+                  bulkDeleteTabs(
+                    worksnapToken,
+                    date,
+                    Array.from(tabsSelected.keys())
+                  )
+                );
+                setTabsSelected(new Map());
+                setAllBoxesSelected(false);
+              }}
+            >
+              Delete Selected
+            </Button>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
+          <div
+            style={{ position: "relative", right: "4px" }}
+            className="col-6 m-3"
+          >
             <input
               type="checkbox"
               id="selectAllInput"
@@ -66,29 +106,12 @@ const Tabs = () => {
                 }
               }}
             />
-            <label for="selectAllInput"> : Select all</label>
-            <button
-              onClick={() =>
-                dispatch(openTabs(Array.from(tabsSelected.values())))
-              }
+            <label
+              style={{ position: "relative", bottom: "1px" }}
+              for="selectAllInput"
             >
-              Open selected
-            </button>
-            <button
-              onClick={() => {
-                dispatch(
-                  bulkDeleteTabs(
-                    worksnapToken,
-                    date,
-                    Array.from(tabsSelected.keys())
-                  )
-                );
-                setTabsSelected(new Map());
-                setAllBoxesSelected(false);
-              }}
-            >
-              Delete Selected
-            </button>
+              <span className="ms-2">Select all</span>
+            </label>
           </div>
         </div>
         <div
