@@ -65,11 +65,27 @@ const HomeLoggedIn = () => {
     }
   }, [post, date, user, setAlarmOnce]);
 
-  function dispatchUpdatePost(summary_text, summary_voice) {
+  function dispatchUpdatePost(summary_text, summary_voice, audioDuration) {
     if (post) {
-      dispatch(updatePost(worksnapToken, date, summary_text, summary_voice));
+      dispatch(
+        updatePost(
+          worksnapToken,
+          date,
+          summary_text,
+          summary_voice,
+          audioDuration
+        )
+      );
     } else {
-      dispatch(createPost(worksnapToken, date, summary_text, summary_voice));
+      dispatch(
+        createPost(
+          worksnapToken,
+          date,
+          summary_text,
+          summary_voice,
+          audioDuration
+        )
+      );
     }
   }
 

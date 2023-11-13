@@ -11,20 +11,23 @@ exports.create = async (req, res) => {
   let summaryVoice;
   let updatedLog;
   let getLog;
-  let tooManyTranscriptions;
+  let transcriptionErrorMsg;
   if (!post) {
-    if (req.body.summary_voice) {
+    if (req.body.summary_voice && req.body.audio_duration < 180) {
       getLog = await TranscribeLog.getLog(id);
-      if (!getLog || getLog?.count < 5) {
+      if (!getLog || getLog?.count < 180) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
           ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
           : `<p>${summaryText}</p>`;
         updatedLog = await TranscribeLog.updateLog(id);
       } else {
-        tooManyTranscriptions =
+        transcriptionErrorMsg =
           "You have maxed out the amount of transcriptions you can do per day";
       }
+    } else if (req.body.summary_voice && req.body.audio_duration > 180) {
+      transcriptionErrorMsg =
+        "Your voice transcription is too long. It must be less than 180s";
     }
     summaryVoice = req.body.summary_voice
       ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
@@ -37,7 +40,7 @@ exports.create = async (req, res) => {
     date: req.body.date,
     all_post_dates: [...allPostDates],
     log: updatedLog ? updatedLog : getLog,
-    too_many_transcriptions: tooManyTranscriptions,
+    transcriptior_error_msg: transcriptionErrorMsg,
   });
 };
 
@@ -96,19 +99,22 @@ exports.update = async (req, res) => {
   let summaryVoice;
   let updatedLog;
   let getLog;
-  let tooManyTranscriptions;
-  if (req.body.summary_voice) {
+  let transcriptionErrorMsg;
+  if (req.body.summary_voice && req.body.audio_duration < 180) {
     getLog = await TranscribeLog.getLog(id);
-    if (!getLog || getLog?.count < 5) {
+    if (!getLog || getLog?.count < 180) {
       const summaryText = await speechToText(req.body.summary_voice);
       req.body.summary_text = req.body.summary_text
         ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
         : `<p>${summaryText}</p>`;
       updatedLog = await TranscribeLog.updateLog(id);
     } else {
-      tooManyTranscriptions =
+      transcriptionErrorMsg =
         "You have maxed out the amount of transcriptions you can do per day";
     }
+  } else if (req.body.summary_voice && req.body.audio_duration > 180) {
+    transcriptionErrorMsg =
+      "Your voice transcription is too long. It must be less than 180s";
   }
 
   summaryVoice = req.body.summary_voice
@@ -127,7 +133,7 @@ exports.update = async (req, res) => {
     date: req.body.date,
     post: { ...updatePost },
     log: updatedLog ? updatedLog : getLog,
-    too_many_transcriptions: tooManyTranscriptions,
+    transcription_error_msg: transcriptionErrorMsg,
   });
 };
 

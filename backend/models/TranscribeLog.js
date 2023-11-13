@@ -1,12 +1,12 @@
 const db = require("../db");
 class TranscribeLog {
   static async create(user_id) {
-    const getTranscribeLog = await db.query(
+    const createdLog = await db.query(
       `INSERT INTO transcribe_log (user_id)
        VALUES ($1) RETURNING *`,
       [user_id]
     );
-    return getTranscribeLog[0];
+    return createdLog[0];
   }
   static async getLog(user_id) {
     return db.oneOrNone(
@@ -16,7 +16,7 @@ class TranscribeLog {
     );
   }
   static async updateLog(user_id) {
-    log = await db.query(
+    const log = await db.query(
       `UPDATE transcribe_log
         SET count = count + 1
         WHERE user_id=$1 AND date > (CURRENT_TIMESTAMP - INTERVAL '1 day')

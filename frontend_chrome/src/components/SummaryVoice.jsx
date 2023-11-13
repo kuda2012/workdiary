@@ -158,7 +158,8 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     const reader = new FileReader();
     reader.onload = () => {
       const audioBase64 = reader.result;
-      dispatchUpdatePost(summaryText, audioBase64);
+      dispatchUpdatePost(summaryText, audioBase64, audioDuration);
+      resetRecording();
     };
 
     // Read the Blob as a data URL (Base64)

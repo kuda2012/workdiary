@@ -132,12 +132,18 @@ export function getAllPostDates(worksnap_token) {
     }
   };
 }
-export function updatePost(worksnap_token, date, summary_text, summary_voice) {
+export function updatePost(
+  worksnap_token,
+  date,
+  summary_text,
+  summary_voice,
+  audio_duration
+) {
   return async function (dispatch) {
     try {
       const { data } = await axios.patch(
         `http://localhost:3000/posts/update`,
-        { worksnap_token, date, summary_text, summary_voice },
+        { worksnap_token, date, summary_text, summary_voice, audio_duration },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         }
@@ -146,8 +152,8 @@ export function updatePost(worksnap_token, date, summary_text, summary_voice) {
       if (summary_voice) {
         dispatch(toggleInterpreting());
       }
-      if (data.too_many_transcriptions) {
-        alert(data.too_many_transcriptions);
+      if (data.transcription_error_msg) {
+        alert(data.transcription_error_msg);
       }
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
@@ -160,12 +166,18 @@ export function updatePost(worksnap_token, date, summary_text, summary_voice) {
   };
 }
 
-export function createPost(worksnap_token, date, summary_text, summary_voice) {
+export function createPost(
+  worksnap_token,
+  date,
+  summary_text,
+  summary_voice,
+  audio_duration
+) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
         `http://localhost:3000/posts/create`,
-        { worksnap_token, date, summary_text, summary_voice },
+        { worksnap_token, date, summary_text, summary_voice, audio_duration },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         }
@@ -175,8 +187,8 @@ export function createPost(worksnap_token, date, summary_text, summary_voice) {
       }
       dispatch(setPost(data.post));
       dispatch(setAllPostDates(data.all_post_dates));
-      if (data.too_many_transcriptions) {
-        alert(data.too_many_transcriptions);
+      if (data.transcription_error_msg) {
+        alert(data.transcription_error_msg);
       }
       dispatch(setDate(data.date));
     } catch (error) {
