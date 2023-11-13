@@ -146,6 +146,9 @@ export function updatePost(worksnap_token, date, summary_text, summary_voice) {
       if (summary_voice) {
         dispatch(toggleInterpreting());
       }
+      if (data.too_many_transcriptions) {
+        alert(data.too_many_transcriptions);
+      }
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
@@ -172,6 +175,9 @@ export function createPost(worksnap_token, date, summary_text, summary_voice) {
       }
       dispatch(setPost(data.post));
       dispatch(setAllPostDates(data.all_post_dates));
+      if (data.too_many_transcriptions) {
+        alert(data.too_many_transcriptions);
+      }
       dispatch(setDate(data.date));
     } catch (error) {
       if (summary_voice) {

@@ -9,14 +9,22 @@ exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   let post = await Post.getPost(id, req.body.date);
   let summaryVoice;
-  let logCount;
+  let updatedLog;
+  let getLog;
+  let tooManyTranscriptions;
   if (!post) {
     if (req.body.summary_voice) {
-      const summaryText = await speechToText(req.body.summary_voice);
-      req.body.summary_text = req.body.summary_text
-        ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
-        : `<p>${summaryText}</p>`;
-      logCount = await TranscribeLog.log(id);
+      getLog = await TranscribeLog.getLog(id);
+      if (!getLog || getLog?.count < 5) {
+        const summaryText = await speechToText(req.body.summary_voice);
+        req.body.summary_text = req.body.summary_text
+          ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
+          : `<p>${summaryText}</p>`;
+        updatedLog = await TranscribeLog.updateLog(id);
+      } else {
+        tooManyTranscriptions =
+          "You have maxed out the amount of transcriptions you can do per day";
+      }
     }
     summaryVoice = req.body.summary_voice
       ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
@@ -28,7 +36,8 @@ exports.create = async (req, res) => {
     post,
     date: req.body.date,
     all_post_dates: [...allPostDates],
-    log_count: logCount,
+    log: updatedLog ? updatedLog : getLog,
+    too_many_transcriptions: tooManyTranscriptions,
   });
 };
 
@@ -85,13 +94,21 @@ exports.update = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.body.date);
   let summaryVoice;
-  let logCount;
+  let updatedLog;
+  let getLog;
+  let tooManyTranscriptions;
   if (req.body.summary_voice) {
-    const summaryText = await speechToText(req.body.summary_voice);
-    req.body.summary_text = req.body.summary_text
-      ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
-      : `<p>${summaryText}</p>`;
-    logCount = await TranscribeLog.log(id);
+    getLog = await TranscribeLog.getLog(id);
+    if (!getLog || getLog?.count < 5) {
+      const summaryText = await speechToText(req.body.summary_voice);
+      req.body.summary_text = req.body.summary_text
+        ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
+        : `<p>${summaryText}</p>`;
+      updatedLog = await TranscribeLog.updateLog(id);
+    } else {
+      tooManyTranscriptions =
+        "You have maxed out the amount of transcriptions you can do per day";
+    }
   }
 
   summaryVoice = req.body.summary_voice
@@ -109,7 +126,8 @@ exports.update = async (req, res) => {
   res.send({
     date: req.body.date,
     post: { ...updatePost },
-    log_count: logCount,
+    log: updatedLog ? updatedLog : getLog,
+    too_many_transcriptions: tooManyTranscriptions,
   });
 };
 
