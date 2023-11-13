@@ -3,17 +3,20 @@ const Tab = require("../models/Tab");
 const Tag = require("../models/Tag");
 const { decodeJwt } = require("../helpers/decodeJwt");
 const { speechToText } = require("../helpers/speechToText");
+const TranscribeLog = require("../models/TranscribeLog");
 
 exports.create = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   let post = await Post.getPost(id, req.body.date);
   let summaryVoice;
+  let logCount;
   if (!post) {
     if (req.body.summary_voice) {
       const summaryText = await speechToText(req.body.summary_voice);
       req.body.summary_text = req.body.summary_text
         ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
         : `<p>${summaryText}</p>`;
+      logCount = await TranscribeLog.log(id);
     }
     summaryVoice = req.body.summary_voice
       ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
@@ -21,7 +24,12 @@ exports.create = async (req, res) => {
     post = await Post.create(id, req.body, summaryVoice);
   }
   const allPostDates = await Post.getAllPostDates(id);
-  res.send({ post, date: req.body.date, all_post_dates: [...allPostDates] });
+  res.send({
+    post,
+    date: req.body.date,
+    all_post_dates: [...allPostDates],
+    log_count: logCount,
+  });
 };
 
 exports.getPost = async (req, res) => {
@@ -77,11 +85,13 @@ exports.update = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.body.date);
   let summaryVoice;
+  let logCount;
   if (req.body.summary_voice) {
     const summaryText = await speechToText(req.body.summary_voice);
     req.body.summary_text = req.body.summary_text
       ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
       : `<p>${summaryText}</p>`;
+    logCount = await TranscribeLog.log(id);
   }
 
   summaryVoice = req.body.summary_voice
@@ -99,6 +109,7 @@ exports.update = async (req, res) => {
   res.send({
     date: req.body.date,
     post: { ...updatePost },
+    log_count: logCount,
   });
 };
 
