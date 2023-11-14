@@ -10,14 +10,12 @@ import {
   createPost,
   deletePost,
   getUserAccountInfo,
-  setAlarm,
   getAllPostDates,
 } from "../helpers/actionCreators";
 import moment from "moment";
 import Tabs from "./Tabs";
 import Tags from "./Tags";
 import SummaryVoice from "./SummaryVoice";
-import SearchBar from "./SearchBar";
 import TagsModal from "./TagsModal";
 import TabsModal from "./TabsModal";
 import Settings from "./Settings";
@@ -47,8 +45,6 @@ const HomeLoggedIn = () => {
   const openHowToModal = () => setIsHowToModalOpen(true);
   const closeHowToModal = () => setIsHowToModalOpen(false);
 
-  const [setAlarmOnce, setSetAlarmOnce] = useState(false);
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (!date && !post) {
@@ -59,11 +55,7 @@ const HomeLoggedIn = () => {
     if (!user) {
       dispatch(getUserAccountInfo(worksnapToken));
     }
-    if (user && !setAlarmOnce) {
-      // setAlarm(user);
-      // setSetAlarmOnce(true);
-    }
-  }, [post, date, user, setAlarmOnce]);
+  }, [post, date, user]);
 
   function dispatchUpdatePost(summary_text, summary_voice, audioDuration) {
     if (post) {
@@ -105,11 +97,6 @@ const HomeLoggedIn = () => {
                 isHowToModalOpen={isHowToModalOpen}
                 closeHowToModal={closeHowToModal}
               >
-                {/* <div className="row justify-content-between">
-                  <div className="col">
-                    <h2>Settings</h2>
-                  </div>
-                </div> */}
                 <HowTo />
               </HowToModal>
             )}
@@ -133,11 +120,6 @@ const HomeLoggedIn = () => {
                 isSettingsModalOpen={isSettingsModalOpen}
                 closeSettingsModal={closeSettingsModal}
               >
-                {/* <div className="row justify-content-between">
-                  <div className="col">
-                    <h2>Settings</h2>
-                  </div>
-                </div> */}
                 <Settings />
               </SettingsModal>
             )}
@@ -193,9 +175,6 @@ const HomeLoggedIn = () => {
             <div className="col">
               <h2>Tags</h2>
             </div>
-            {/* <div className="col">
-              <button onClick={closeTagsModal}>Close</button>
-            </div> */}
           </div>
           <Tags />
         </TagsModal>

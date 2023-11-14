@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleInterpreting } from "../helpers/actionCreators";
-// import AudioPlayer from "react-audio-player";
 
 const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const userAccountInfo = useSelector((state) => state?.user);

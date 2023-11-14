@@ -1,19 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Navbar as ReactNavBar,
-  NavbarBrand,
-  NavbarToggler,
-  Collapse,
-  Nav,
-  NavItem,
-} from "reactstrap";
+import { Navbar as ReactNavBar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getWorksnapToken,
-  isWorksnapTokenCurrent,
-  resetApp,
-} from "../helpers/actionCreators";
+import { getWorksnapToken, resetApp } from "../helpers/actionCreators";
 import SearchBar from "./SearchBar";
 
 const NavBar = () => {
@@ -60,8 +49,6 @@ const NavBar = () => {
             Worksnap
           </NavLink>
         </NavbarBrand>
-        {/* <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar> */}
         <Nav navbar>
           {worksnapToken && (
             <>
@@ -86,50 +73,9 @@ const NavBar = () => {
             </>
           )}
         </Nav>
-        {/* </Collapse> */}
       </ReactNavBar>
     </>
   );
 };
-//   function toogleMenuMobile() {
-//   setCollapsed(!isCollapsed);
-// }
-
-//   return (
-//     <>
-//       <div className="container">
-//         <ReactNavBar
-//           color="light"
-//           className="navbar-expand-lg"
-//           id="louge-navbar"
-//         >
-//           <NavbarBrand className="navbar-brand">
-//             <NavLink to="/" style={{ textDecoration: "none" }}>
-//               Worksnap
-//             </NavLink>
-//           </NavbarBrand>
-
-//           <NavbarToggler onClick={toggle}>
-//             {/* <BsBorderWidth size={24} color="#fff" /> */}
-//           </NavbarToggler>
-//           <Collapse className="navbar-collapse" navbar isOpen={isOpen}>
-//             <Nav className="navbar-nav">
-//               <NavItem className="active">
-//                 <NavLink data-scroll href="#hero">
-//                   home
-//                 </NavLink>
-//               </NavItem>
-//               <NavItem>
-//                 <NavLink data-scroll href="#about">
-//                   about us
-//                 </NavLink>
-//               </NavItem>
-//             </Nav>
-//           </Collapse>
-//         </ReactNavBar>
-//       </div>
-//     </>
-//   );
-// };
 
 export default NavBar;

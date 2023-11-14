@@ -7,7 +7,7 @@ import {
   searchJournal,
 } from "../helpers/actionCreators";
 
-const SearchBar = ({ search, toggleSearchBar }) => {
+const SearchBar = ({ toggleSearchBar }) => {
   // State to hold the search input text
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const searchResults = useSelector((state) => state.search_results);

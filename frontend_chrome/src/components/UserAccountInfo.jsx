@@ -20,18 +20,6 @@ const UserAccountInfo = () => {
   };
   return (
     <div className="dropdown">
-      {/* <button
-        className="btn btn-primary dropdown-toggle"
-        type="button"
-        id="userInfoDropdown"
-        data-bs-toggle="dropdown"
-        data-bs-auto-close="outside"
-        data-target="#userInfoDropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        User Information
-      </button> */}
       <div
         className="dropdown-toggle"
         type="button"
