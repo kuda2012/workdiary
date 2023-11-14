@@ -62,14 +62,16 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
         interval={1500}
         onSave={(data) => {
           if (localSummaryText !== summaryText) {
-            dispatchUpdatePost(data);
+            dispatchUpdatePost(data === "<p><br></p>" ? "" : data);
             setButtonText("Saved");
           }
         }}
       />
       <button
         onClick={() => {
-          dispatchUpdatePost(localSummaryText);
+          dispatchUpdatePost(
+            localSummaryText === "<p><br></p>" ? "" : localSummaryText
+          );
           setButtonText("Saved");
         }}
       >
