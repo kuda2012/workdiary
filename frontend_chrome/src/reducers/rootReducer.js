@@ -43,7 +43,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       return {
         token: state.token,
         date: state.date,
-        all_post_dates: state.all_post_dates,
+        all_post_dates: action.all_post_dates,
       };
     case "FULL_RESET":
       localStorage.removeItem("worksnap_token");

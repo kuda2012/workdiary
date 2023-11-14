@@ -174,12 +174,12 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       </h4>
       <div>Recording Duration: {audioDuration}s</div>
       <div>
-        {/* <button
-        onClick={playSummaryVoice} // Add this function to play the summaryVoice
-        disabled={!summaryVoice || isRecording}
-      >
-        Play Summary Voice
-      </button> */}
+        <button
+          onClick={playSummaryVoice} // Add this function to play the summaryVoice
+          disabled={!summaryVoice || isRecording}
+        >
+          Play Summary Voice
+        </button>
         <button
           onClick={
             !isRecording && !isPaused && !audioDuration

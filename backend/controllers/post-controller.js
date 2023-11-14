@@ -141,5 +141,9 @@ exports.delete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.query.date);
   if (post) await Post.delete(post.id);
-  res.send({ message: `Your post for ${req.query.date} has been deleted` });
+  const allPostDates = await Post.getAllPostDates(id);
+  res.send({
+    message: `Your post for ${req.query.date} has been deleted`,
+    all_post_dates: [...allPostDates],
+  });
 };

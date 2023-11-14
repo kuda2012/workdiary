@@ -93,9 +93,9 @@ export function deletePost(worksnap_token, date) {
         .then(({ data }) => {
           setTimeout(() => {
             alert(data.message);
+            dispatch(halfReset(data.all_post_dates));
           }, 1000);
         });
-      dispatch(halfReset());
     } catch (error) {
       console.log(error);
     }
@@ -446,9 +446,10 @@ export function setSearchResults(results) {
     results,
   };
 }
-export function halfReset() {
+export function halfReset(all_post_dates) {
   return {
     type: "HALF_RESET",
+    all_post_dates,
   };
 }
 export function resetApp() {
