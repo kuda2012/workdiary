@@ -158,6 +158,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     const reader = new FileReader();
     reader.onload = () => {
       const audioBase64 = reader.result;
+      console.log(audioBase64);
       dispatchUpdatePost(summaryText, audioBase64, audioDuration);
       resetRecording();
     };
