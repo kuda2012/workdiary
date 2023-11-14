@@ -4,16 +4,6 @@ const pgp = require("pg-promise")();
 
 class Tab {
   static async create(post, body) {
-    // const createdTabs = [];
-    // for (let tab of body.tabs) {
-    //   const insertingTab = await db.query(
-    //     `INSERT INTO tabs (post_id, title, url, comment, tab_tab_order)
-    //    VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-    //     [post.id, tab.title, tab.url, tab.comment, tab.tab_tab_order]
-    //   );
-    //   createdTabs.push(insertingTab[0]);
-    // }
-    // return createdTabs;
     const tabs = body.tabs.map((tab) => ({
       post_id: post.id,
       title: tab.title,
@@ -56,31 +46,7 @@ class Tab {
     );
     return tabs;
   }
-  // static async update(tab) {
-  // let queryText = "UPDATE TABS SET";
-  // const queryValues = [];
-  // if (tab.title !== undefined) {
-  //   queryText += " title = $1,"; // Add the column to the query
-  //   queryValues.push(tab.title); // Add the value to the parameter array
-  // }
-  // if (tab.url !== undefined) {
-  //   queryText += " url = $2,"; // Add the column to the query
-  //   queryValues.push(tab.url); // Add the value to the parameter array
-  // }
-  // if (tab.comment !== undefined) {
-  //   queryText += " comment = $3,"; // Add the column to the query
-  //   queryValues.push(tab.comment); // Add the value to the parameter array
-  // }
-  // if (tab.tab_order !== undefined) {
-  //   queryText += " tab_order = $4,"; // Add the column to the query
-  //   queryValues.push(tab.tab_order); // Add the value to the parameter array
-  // }
-  // queryText = queryText.slice(0, -1);
-  // queryValues.push(tab.tab_id);
-  // queryText += ` WHERE id = $${queryValues.length} RETURNING *`;
-  // const result = await db.query(queryText, queryValues);
-  // return result[0];
-  // }
+
   static async delete(user_id, post_id, tab_id, date) {
     const tab = await db.oneOrNone(
       `SELECT * FROM tabs

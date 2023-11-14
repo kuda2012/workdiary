@@ -7,7 +7,6 @@ const { tokenIsCurrent } = require("../middleware/userMiddleware");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.get("/shared-post/:pointerId", postController.getSharedPost);
 router.get("/all-dates", tokenIsCurrent, postController.getAllPostDates);
 router.get("/search", tokenIsCurrent, postController.search);
 
@@ -17,16 +16,6 @@ router.post(
   upload.single("summary_voice"),
   postController.create
 );
-router.post(
-  "/generate-share-link",
-  tokenIsCurrent,
-  postController.generateShareLink
-);
-router.post(
-  "/deactivate-share-link",
-  tokenIsCurrent,
-  postController.deactivateShareLink
-);
 router.patch(
   "/update",
   tokenIsCurrent,
@@ -34,5 +23,17 @@ router.patch(
   postController.update
 );
 router.delete("/delete", tokenIsCurrent, postController.delete);
+
+// router.get("/shared-post/:pointerId", postController.getSharedPost);
+// router.post(
+//   "/generate-share-link",
+//   tokenIsCurrent,
+//   postController.generateShareLink
+// );
+// router.post(
+//   "/deactivate-share-link",
+//   tokenIsCurrent,
+//   postController.deactivateShareLink
+// );
 
 module.exports = router;

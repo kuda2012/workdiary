@@ -70,19 +70,7 @@ class Post {
       summary_voice: result[0]?.summary_voice?.toString("base64"),
     };
   }
-  // static async getOrCreatePostForDay(user_id, body) {
-  //   const getPost = await this.getPost(user_id, body.date);
-  //   const createdPost = await this.create(user_id, body);
-  //   if (!getPost) {
-  //     return createdPost;
-  //   }
-  //   return getPost;
-  // }
 
-  // p.text_search @@ plainto_tsquery('english', $2) -- Search using ts_query
-  // OR
-  // tabs.text_search @@ plainto_tsquery('english', $2) -- Search using ts_query
-  // OR
   static async search(user_id, query) {
     let searchResults = await db.query(
       `WITH RankedResults AS (

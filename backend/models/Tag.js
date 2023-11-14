@@ -3,16 +3,6 @@ const pgp = require("pg-promise")();
 
 class Tag {
   static async create(post, body) {
-    // const createdTabs = [];
-    // for (let tag of body.tags) {
-    //   const insertingTab = await db.query(
-    //     `INSERT INTO tags (post_id, title, url, comment, tag_order)
-    //    VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-    //     [post.id, tag.title, tag.url, tag.comment, tag.tag_order]
-    //   );
-    //   createdTabs.push(insertingTab[0]);
-    // }
-    // return createdTabs;
     try {
       await db.tx(async (t) => {
         const insert = pgp.helpers.insert(
