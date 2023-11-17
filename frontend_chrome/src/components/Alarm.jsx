@@ -16,12 +16,12 @@ const Alarm = () => {
     setButtonText("Save");
     dispatch(changeAlarm(worksnapToken, { alarm_status: !user.alarm_status }));
   };
-  const handlePullsTabReminder = () => {
-    setButtonText("Save");
-    dispatch(
-      changeAlarm(worksnapToken, { auto_pull_tabs: !user.auto_pull_tabs })
-    );
-  };
+  // const handlePullsTabReminder = () => {
+  //   setButtonText("Save");
+  //   dispatch(
+  //     changeAlarm(worksnapToken, { auto_pull_tabs: !user.auto_pull_tabs })
+  //   );
+  // };
 
   const handleTimeChange = (event) => {
     setButtonText("Save");
@@ -53,20 +53,23 @@ const Alarm = () => {
 
   return (
     <div className="dropdown">
-      <div
+      <Button
         className="dropdown-toggle"
         type="button"
+        color="secondary"
         id="alarmDropdown"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"
         data-target="#alarmDropdown" // Include data-target
         aria-haspopup="true"
         aria-expanded="false"
-        style={{ textAlign: "center", border: "2px solid black" }}
+        style={{ textAlign: "center", border: ".5px solid black" }}
       >
-        <img src="/alarm.jpg"></img>
-        <div>Set Reminder</div>
-      </div>
+        <div>
+          <img src="/alarm.jpg" />
+          <div>Set Reminder</div>
+        </div>
+      </Button>
 
       <div
         className="dropdown-menu text-center flex-column align-items-center"
@@ -117,7 +120,7 @@ const Alarm = () => {
           value={user.alarm_time}
           onChange={handleTimeChange}
         />
-        <div className="d-flex mt-4 align-items-center justify-content-center">
+        {/* <div className="d-flex mt-4 align-items-center justify-content-center">
           <div className="mx-2">
             <div className="form-check">
               <input
@@ -133,7 +136,7 @@ const Alarm = () => {
               </label>
             </div>
           </div>
-        </div>
+        </div> */}
         <Autosave
           data={user}
           interval={2000}
@@ -142,14 +145,16 @@ const Alarm = () => {
             setButtonText("Saved");
           }}
         />
-        <button
+        <Button
+          className="mt-4"
+          color="secondary"
           onClick={() => {
             setButtonText("Saved");
           }}
         >
           {buttonText === "Saved" && <b>{buttonText}</b>}
           {buttonText === "Save" && <>{buttonText}</>}
-        </button>
+        </Button>
       </div>
     </div>
   );

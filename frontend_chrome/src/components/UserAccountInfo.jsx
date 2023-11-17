@@ -20,20 +20,21 @@ const UserAccountInfo = () => {
   };
   return (
     <div className="dropdown">
-      <div
+      <Button
         className="dropdown-toggle"
         type="button"
+        color="secondary"
         id="userInfoDropdown"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"
         data-target="#userInfoDropdown"
         aria-haspopup="true"
         aria-expanded="false"
-        style={{ textAlign: "center", border: "2px solid black" }}
+        style={{ textAlign: "center", border: ".5px solid black" }}
       >
         <img src="/user_information.png"></img>
         <div> User Information</div>
-      </div>
+      </Button>
       <div
         className="dropdown-menu"
         aria-labelledby="userInfoDropdown"
@@ -47,7 +48,7 @@ const UserAccountInfo = () => {
             <div>
               <strong>Email:</strong> {userAccountInfo.email}
             </div>
-            <Button onClick={toggleModal} color="primary">
+            <Button onClick={toggleModal} color="primary" className="mt-3">
               Delete account?
             </Button>
             <DeleteAccountModal

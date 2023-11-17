@@ -22,6 +22,8 @@ import Settings from "./Settings";
 import SettingsModal from "./SettingsModal";
 import HowToModal from "./HowToModal";
 import HowTo from "./HowTo";
+import DeletePostModal from "./DeletePostModal";
+import DeletePost from "./DeletePost";
 
 const HomeLoggedIn = () => {
   const user = useSelector((state) => state?.user);
@@ -44,6 +46,10 @@ const HomeLoggedIn = () => {
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
   const openHowToModal = () => setIsHowToModalOpen(true);
   const closeHowToModal = () => setIsHowToModalOpen(false);
+
+  const [isDeletePostModalOpen, setIsDeletePostModalOpen] = useState(false);
+  const openDeletePostModal = () => setIsDeletePostModalOpen(true);
+  const closeDeletePostModal = () => setIsDeletePostModalOpen(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -120,6 +126,7 @@ const HomeLoggedIn = () => {
                 isSettingsModalOpen={isSettingsModalOpen}
                 closeSettingsModal={closeSettingsModal}
               >
+                <h5>Settings</h5>
                 <Settings />
               </SettingsModal>
             )}
@@ -185,7 +192,7 @@ const HomeLoggedIn = () => {
             style={{ position: "relative", left: "300px" }}
             onClick={() => {
               if (post) {
-                dispatch(deletePost(worksnapToken, date));
+                openDeletePostModal();
               } else {
                 alert(
                   "You have not save anything to this date, there's nothing to delete."
@@ -195,6 +202,14 @@ const HomeLoggedIn = () => {
           >
             Delete Post
           </button>
+          {isDeletePostModalOpen && (
+            <DeletePostModal
+              isDeletePostModalOpen={isDeletePostModalOpen}
+              closeDeletePostModal={closeDeletePostModal}
+            >
+              <DeletePost closeDeletePostModal={closeDeletePostModal} />
+            </DeletePostModal>
+          )}
         </div>
       </div>
     </div>

@@ -43,10 +43,11 @@ const NavBar = () => {
             fontSize: "1.5rem",
             position: "relative",
             left: `${worksnapToken ? "12px" : "0px"}`,
+            textTransform: "none",
           }}
         >
           <NavLink to="/" style={{ textDecoration: "none" }}>
-            Worksnap
+            Work Diary
           </NavLink>
         </NavbarBrand>
         <Nav navbar>

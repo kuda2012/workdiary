@@ -111,7 +111,7 @@ chrome.runtime.onInstalled.addListener(async () => {
             type: "basic",
             iconUrl: "w_extension.png",
             title: "Worksnap",
-            message: `Your ${user.alarm_time} reminder to log in your worksnap journal`,
+            message: `Reminder to log in your Work Diary (click here to open app)`,
             // Include sound property for the sound file
           });
           chrome.notifications.onClicked.addListener(() => {

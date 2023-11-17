@@ -26,9 +26,11 @@ const Tabs = () => {
 
   useEffect(() => {
     if (!tabs) {
+      console.log("hello");
       setTabsSelected(new Map());
     }
   }, [tabs]);
+  console.log(tabs);
   return (
     <>
       <div className="container">
@@ -68,15 +70,17 @@ const Tabs = () => {
               // className="m-1"
               color="danger"
               onClick={() => {
-                dispatch(
-                  bulkDeleteTabs(
-                    worksnapToken,
-                    date,
-                    Array.from(tabsSelected.keys())
-                  )
-                );
-                setTabsSelected(new Map());
-                setAllBoxesSelected(false);
+                if (tabsSelected.size > 0) {
+                  dispatch(
+                    bulkDeleteTabs(
+                      worksnapToken,
+                      date,
+                      Array.from(tabsSelected.keys())
+                    )
+                  );
+                  setTabsSelected(new Map());
+                  setAllBoxesSelected(false);
+                }
               }}
             >
               Delete Selected
