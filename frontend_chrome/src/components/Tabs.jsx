@@ -24,13 +24,6 @@ const Tabs = () => {
     dispatch(deleteTab(worksnapToken, date, tab_id));
   }
 
-  useEffect(() => {
-    if (!tabs) {
-      console.log("hello");
-      setTabsSelected(new Map());
-    }
-  }, [tabs]);
-  console.log(tabs);
   return (
     <>
       <div className="container">
@@ -43,14 +36,6 @@ const Tabs = () => {
             >
               Pull Current tabs
             </Button>
-            {/* <Button
-              onClick={() => {
-                setTabsSelected(new Map());
-                dispatch(bulkDeleteTabs(worksnapToken, date, tabs));
-              }}
-            >
-              Delete All Tabs
-            </Button> */}
           </div>
         </div>
         <div className="row mt-2 justify-content-around align-items-center">

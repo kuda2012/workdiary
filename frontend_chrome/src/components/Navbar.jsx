@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Navbar as ReactNavBar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getWorksnapToken, resetApp } from "../helpers/actionCreators";
+import {
+  getWorksnapToken,
+  loggingIn,
+  resetApp,
+  setGoogleAccessToken,
+} from "../helpers/actionCreators";
 import SearchBar from "./SearchBar";
 
 const NavBar = () => {
@@ -51,6 +56,38 @@ const NavBar = () => {
           </NavLink>
         </NavbarBrand>
         <Nav navbar>
+          {!worksnapToken && (
+            <>
+              <NavItem
+                onClick={() => {
+                  chrome.identity.removeCachedAuthToken({
+                    token: googleAccessToken,
+                  });
+                  toggle(); // Close the menu after clicking on an item
+                }}
+              >
+                <NavLink
+                  style={{ textDecoration: "none" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    try {
+                      dispatch(loggingIn());
+                      chrome.identity.getAuthToken(
+                        { interactive: true },
+                        function (token) {
+                          dispatch(setGoogleAccessToken(token));
+                        }
+                      );
+                    } catch (error) {
+                      dispatch(resetApp());
+                    }
+                  }}
+                >
+                  Login
+                </NavLink>
+              </NavItem>
+            </>
+          )}
           {worksnapToken && (
             <>
               <NavItem

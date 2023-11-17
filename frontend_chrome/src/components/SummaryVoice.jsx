@@ -168,8 +168,11 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   return (
     <div className="mt-5">
       <h4 className="mb-4">
-        Hey, {userAccountInfo.name.match(/(\w+)/)[0]}. Tell us. How was work
-        today?
+        {userAccountInfo
+          ? `Hey, ${
+              userAccountInfo.name.match(/(\w+)/)[0]
+            }. Tell us. How was work today?`
+          : "Hey *insert_first_name*, you gotta sign up or login to use the app."}
       </h4>
       <div>Recording Duration: {audioDuration}s</div>
       <div>

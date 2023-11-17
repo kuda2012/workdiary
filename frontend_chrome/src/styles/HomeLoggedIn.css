@@ -4,3 +4,8 @@
   justify-content: center; /* Horizontally center content */
   align-items: center; /* Vertically center content */
 }
+
+.main-container:not(.clickable) {
+  pointer-events: none;
+  /* Additional styles for non-clickable state */
+}

@@ -53,13 +53,17 @@ chrome.runtime.onInstalled.addListener(async () => {
     }
   }
   await chrome.storage.local.get(["worksnap_token"]).then(async (result) => {
-    const worksnapToken = await isWorksnapTokenCurrent(result.worksnap_token);
-    const response = await fetch("http://localhost:3000/users/account-info", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${worksnapToken}` },
-    });
-    const { user } = await response.json();
-    await setAlarm(user);
+    const worksnapToken = result?.worksnap_token
+      ? await isWorksnapTokenCurrent(result.worksnap_token)
+      : null;
+    if (worksnapToken) {
+      const response = await fetch("http://localhost:3000/users/account-info", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${worksnapToken}` },
+      });
+      const { user } = await response.json();
+      await setAlarm(user);
+    }
   });
 
   async function setAlarm(user) {

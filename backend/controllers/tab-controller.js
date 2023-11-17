@@ -29,7 +29,6 @@ exports.getTabs = async (req, res) => {
 exports.update = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.body.date);
-  console.log("why here");
   const updatedTabs = await Tab.bulkUpdate(
     req.body.tabs,
     id,
