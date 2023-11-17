@@ -10,7 +10,7 @@ import {
 } from "../helpers/actionCreators";
 import SearchBar from "./SearchBar";
 
-const NavBar = () => {
+const NavBar = ({ openContainerModal }) => {
   const dispatch = useDispatch();
   const googleAccessToken = useSelector((state) => state.google_access_token);
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -70,17 +70,18 @@ const NavBar = () => {
                   style={{ textDecoration: "none" }}
                   onClick={(e) => {
                     e.preventDefault();
-                    try {
-                      dispatch(loggingIn());
-                      chrome.identity.getAuthToken(
-                        { interactive: true },
-                        function (token) {
-                          dispatch(setGoogleAccessToken(token));
-                        }
-                      );
-                    } catch (error) {
-                      dispatch(resetApp());
-                    }
+                    openContainerModal();
+                    // try {
+                    //   dispatch(loggingIn());
+                    //   chrome.identity.getAuthToken(
+                    //     { interactive: true },
+                    //     function (token) {
+                    //       dispatch(setGoogleAccessToken(token));
+                    //     }
+                    //   );
+                    // } catch (error) {
+                    //   dispatch(resetApp());
+                    // }
                   }}
                 >
                   Login

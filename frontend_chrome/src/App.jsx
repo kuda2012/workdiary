@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Router from "./Router";
 import { useDispatch, useSelector } from "react-redux";
 import { isWorksnapTokenCurrent } from "./helpers/actionCreators";
+import { useState } from "react";
 
 function App() {
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -10,11 +11,20 @@ function App() {
   if (!worksnapToken && localStorage.getItem("worksnap_token")) {
     dispatch(isWorksnapTokenCurrent(localStorage.getItem("worksnap_token")));
   }
-  // const initialLoad = useSelector((state) => state.initial_load);
+
+  const [isContainerModalOpen, setIsContainerModalOpen] = useState(
+    !worksnapToken ? true : false
+  );
+  const openContainerModal = () => setIsContainerModalOpen(true);
+  const closeContainerModal = () => setIsContainerModalOpen(false);
   return (
     <>
-      <Navbar />
-      <Router />
+      <Navbar openContainerModal={openContainerModal} />
+      <Router
+        isContainerModalOpen={isContainerModalOpen}
+        openContainerModal={openContainerModal}
+        closeContainerModal={closeContainerModal}
+      />
     </>
   );
 }

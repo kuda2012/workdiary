@@ -3,7 +3,11 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "./components/Home";
 
-const Router = () => {
+const Router = ({
+  isContainerModalOpen,
+  openContainerModal,
+  closeContainerModal,
+}) => {
   const worksnapToken = useSelector((state) => state.worksnap_token);
 
   const location = useLocation();
@@ -11,7 +15,13 @@ const Router = () => {
     <Routes>
       <Route
         path={location.pathname === "/index.html" ? "/index.html" : "/"}
-        element={<Home />}
+        element={
+          <Home
+            isContainerModalOpen={isContainerModalOpen}
+            openContainerModal={openContainerModal}
+            closeContainerModal={closeContainerModal}
+          />
+        }
       />
     </Routes>
   );
