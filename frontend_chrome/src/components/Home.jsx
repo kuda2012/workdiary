@@ -36,7 +36,6 @@ const HomeLoggedIn = ({
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
-
   const [isTagsModalOpen, setIsTagsModalOpen] = useState(false);
   const openTagsModal = () => setIsTagsModalOpen(true);
   const closeTagsModal = () => setIsTagsModalOpen(false);

@@ -22,7 +22,7 @@ exports.signup = async (req, res, next) => {
 
 exports.loginGoogle = async (req, res) => {
   const payload = await User.verifyGoogleToken(req.body.google_access_token);
-  const token = User.generateWorksnapAccessToken(payload);
+  const token = await User.generateWorksnapAccessToken(payload);
   const doesUserExist = await User.getUser(payload.sub);
   if (!doesUserExist) {
     await User.createGoogleUser(payload);

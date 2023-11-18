@@ -53,9 +53,10 @@ chrome.runtime.onInstalled.addListener(async () => {
     }
   }
   await chrome.storage.local.get(["worksnap_token"]).then(async (result) => {
-    const worksnapToken = result?.worksnap_token
-      ? await isWorksnapTokenCurrent(result.worksnap_token)
-      : null;
+    const worksnapToken =
+      result?.worksnap_token && typeof result?.worksnap_token === "string"
+        ? await isWorksnapTokenCurrent(result.worksnap_token)
+        : null;
     if (worksnapToken) {
       const response = await fetch("http://localhost:3000/users/account-info", {
         method: "GET",

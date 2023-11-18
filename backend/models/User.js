@@ -3,9 +3,10 @@ const ExpressError = require("../expressError");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { v4: uuid } = require("uuid");
+const nodemailer = require("nodemailer");
+const axios = require("axios");
 const { SECRET_KEY, EMAIL_PASSWORD } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
-const nodemailer = require("nodemailer");
 
 class User {
   static async createGoogleUser(payload) {
