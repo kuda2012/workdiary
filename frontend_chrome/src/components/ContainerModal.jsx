@@ -16,7 +16,12 @@ const ContainerModal = ({
   return isContainerModalOpen
     ? ReactDOM.createPortal(
         <div className="container-modal-overlay" onClick={handleOverlayClick}>
-          <div className="container-modal">{children}</div>
+          <div
+            className="container-modal"
+            style={{ position: "relative", bottom: "100px" }}
+          >
+            {children}
+          </div>
         </div>,
         document.body
       )

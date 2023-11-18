@@ -11,17 +11,22 @@ if (process.env.NODE_ENV === "test") {
   DB_URI = process.env.DATABASE_URL || "postgres://localhost/worksnap";
 }
 
+const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 const CLIENT_ID = process.env.CLIENT_ID;
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY;
 
+const BCRYPT_HASH_ROUNDS = 12;
+
 console.log("Using database", DB_URI);
 module.exports = {
   PORT,
   DB_URI,
   CLIENT_ID,
+  EMAIL_PASSWORD,
+  BCRYPT_HASH_ROUNDS,
   SECRET_KEY,
   DEEPGRAM_API_KEY,
 };

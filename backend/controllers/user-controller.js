@@ -2,21 +2,68 @@ const axios = require("axios");
 const { SECRET_KEY } = require("../config");
 const { decodeJwt } = require("../helpers/decodeJwt");
 const User = require("../models/User");
+const ExpressError = require("../expressError");
 const jwt = require("jsonwebtoken");
 
-exports.login = async (req, res) => {
-  const payload = await verifyGoogleToken(req.body.google_access_token);
-  const token = generateWorksnapAccessToken(payload);
+exports.signup = async (req, res, next) => {
+  try {
+    let user = await User.create(req.body);
+    let token = await User.getLoggedIn(req.body);
+    res.json({ worksnap_token: token });
+  } catch (error) {
+    if (error.code === "23505") {
+      error.status = 409;
+      error.message =
+        "This email is already taken. Please try a different one.";
+    }
+    next(error);
+  }
+};
+
+exports.loginGoogle = async (req, res) => {
+  const payload = await User.verifyGoogleToken(req.body.google_access_token);
+  const token = User.generateWorksnapAccessToken(payload);
   const doesUserExist = await User.getUser(payload.sub);
   if (!doesUserExist) {
-    await User.create(payload);
+    await User.createGoogleUser(payload);
   }
   res.send({ worksnap_token: token });
 };
 
+exports.login = async (req, res, next) => {
+  try {
+    let token = await User.getLoggedIn(req.body);
+    res.json({ worksnap_token: token });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.changePassword = async (req, res, next) => {
+  try {
+    let message = await User.changePassword(req.body);
+    res.json({
+      message,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.forgotPassword = async (req, res, next) => {
+  try {
+    let message = await User.forgotPassword(req.body);
+    res.json({
+      message,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.changeAlarm = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  let user = await User.getUser(id);
+  const user = await User.getUser(id);
   if (user) {
     user = await User.update(req.body, id);
   }
@@ -42,27 +89,3 @@ exports.delete = async (req, res) => {
   }
   res.send({ message: "Your account has been deleted!" });
 };
-
-async function verifyGoogleToken(google_access_token) {
-  // Verifies the access token
-  const { data } = await axios.get(
-    `https://oauth2.googleapis.com/tokeninfo?access_token=${google_access_token}`
-  );
-  // adding a name to the payload
-  const getInfo = await axios.get(
-    `https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses&access_token=${google_access_token}`
-  );
-  data.name = getInfo.data.names[0].displayName;
-  return data;
-}
-
-function generateWorksnapAccessToken(payload) {
-  const token = jwt.sign(
-    { id: payload.sub, email: payload.email, name: payload.name },
-    SECRET_KEY,
-    {
-      expiresIn: "1y",
-    }
-  );
-  return token;
-}

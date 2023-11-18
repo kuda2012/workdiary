@@ -14,7 +14,7 @@ const HomeLoggedOut = () => {
       <div className="row flex-column align-items-center">
         <div className="col-md-6 mb-5 mt-5">
           <img
-            style={{ position: "relative", right: "25px" }}
+            style={{ position: "relative", right: "5px" }}
             src="work_diary_0.png"
           />
         </div>
