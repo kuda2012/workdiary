@@ -21,12 +21,6 @@ const NavBar = ({ openContainerModal }) => {
     }
   }, [googleAccessToken]);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
 
   const toggleSearchBar = () => {
@@ -58,14 +52,7 @@ const NavBar = ({ openContainerModal }) => {
         <Nav navbar>
           {!worksnapToken && (
             <>
-              <NavItem
-                onClick={() => {
-                  chrome.identity.removeCachedAuthToken({
-                    token: googleAccessToken,
-                  });
-                  toggle(); // Close the menu after clicking on an item
-                }}
-              >
+              <NavItem>
                 <NavLink
                   style={{ textDecoration: "none" }}
                   onClick={(e) => {
@@ -91,14 +78,7 @@ const NavBar = ({ openContainerModal }) => {
           )}
           {worksnapToken && (
             <>
-              <NavItem
-                onClick={() => {
-                  chrome.identity.removeCachedAuthToken({
-                    token: googleAccessToken,
-                  });
-                  toggle(); // Close the menu after clicking on an item
-                }}
-              >
+              <NavItem>
                 <NavLink
                   style={{ textDecoration: "none" }}
                   onClick={(e) => {

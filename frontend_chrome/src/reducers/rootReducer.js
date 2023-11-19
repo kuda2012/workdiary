@@ -47,6 +47,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       };
     case "FULL_RESET":
       localStorage.removeItem("worksnap_token");
+      chrome.storage.local.clear();
       return {};
     default:
       return state;

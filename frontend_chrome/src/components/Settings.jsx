@@ -2,7 +2,7 @@ import React from "react";
 import Alarm from "./Alarm";
 import UserAccountInfo from "./UserAccountInfo";
 
-const Settings = () => {
+const Settings = ({ closeSettingsModal }) => {
   const componentStyle = {
     display: "flex",
     justifyContent: "space-around",
@@ -12,7 +12,7 @@ const Settings = () => {
 
   return (
     <div style={componentStyle}>
-      <UserAccountInfo />
+      <UserAccountInfo closeSettingsModal={closeSettingsModal} />
       <Alarm />
     </div>
   );

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteAccountModal from "./DeleteAccountModal";
 
-const UserAccountInfo = () => {
+const UserAccountInfo = ({ closeSettingsModal }) => {
   const dispatch = useDispatch();
   const userAccountInfo = useSelector((state) => state.user);
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -16,7 +16,10 @@ const UserAccountInfo = () => {
   const handleDelete = () => {
     // Put your delete account logic here
     dispatch(deleteAccount(worksnapToken));
-    toggleModal();
+    setTimeout(() => {
+      closeSettingsModal();
+      toggleModal();
+    }, [2000]);
   };
   return (
     <div className="dropdown">

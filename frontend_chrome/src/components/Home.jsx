@@ -123,7 +123,7 @@ const HomeLoggedIn = ({
                 <button onClick={() => openHowToModal()}>
                   <img src="/question_mark.png"></img>
                 </button>
-                {isHowToModalOpen && (
+                {isHowToModalOpen && worksnapToken && (
                   <HowToModal
                     isHowToModalOpen={isHowToModalOpen}
                     closeHowToModal={closeHowToModal}
@@ -146,13 +146,13 @@ const HomeLoggedIn = ({
                 <button onClick={() => openSettingsModal()}>
                   <img src="/gear-settings.png"></img>
                 </button>
-                {isSettingsModalOpen && (
+                {isSettingsModalOpen && worksnapToken && (
                   <SettingsModal
                     isSettingsModalOpen={isSettingsModalOpen}
                     closeSettingsModal={closeSettingsModal}
                   >
                     <h5>Settings</h5>
-                    <Settings />
+                    <Settings closeSettingsModal={closeSettingsModal} />
                   </SettingsModal>
                 )}
               </div>

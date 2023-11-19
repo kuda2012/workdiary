@@ -12,8 +12,9 @@ const HowTo = () => {
 
   return (
     <div style={componentStyle}>
-      <UserAccountInfo />
-      <Alarm />
+      <h5>How to use the app</h5>
+      {/* <UserAccountInfo />
+      <Alarm /> */}
     </div>
   );
 };
