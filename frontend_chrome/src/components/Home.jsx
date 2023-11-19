@@ -177,10 +177,23 @@ const HomeLoggedIn = ({
             </div>
             <div className="col-2 d-flex align-items-center justify-content-start pl-0">
               <button
-                style={{ transform: "rotate(-90deg)" }}
+                style={{
+                  transform: "rotate(-90deg)",
+                  border: "1px solid gray",
+                  position: "relative",
+                  left: "20px",
+                  top: "25px",
+                }}
                 onClick={() => openTabsModal()}
               >
-                <h4>Your tabs</h4>
+                <span
+                  style={{
+                    fontSize: "1.25rem", // Set font size to resemble h5 size
+                    textTransform: "uppercase", // Convert text to uppercase
+                  }}
+                >
+                  Your tabs
+                </span>
               </button>
               {isTabsModalOpen && (
                 <TabsModal
