@@ -9,3 +9,8 @@
   pointer-events: none;
   /* Additional styles for non-clickable state */
 }
+.unclickable-exception-elements,
+.unclickable-exception-elements * {
+  pointer-events: auto;
+  /* Additional styles for the exception element */
+}

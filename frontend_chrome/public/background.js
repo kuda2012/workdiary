@@ -107,6 +107,8 @@ chrome.runtime.onInstalled.addListener(async () => {
       const timeDifferenceInSeconds = Number(
         Math.floor(militaryTime - currentTime)
       );
+      console.log(currentTime, militaryTimeString);
+      console.log(`Time difference in seconds: ${timeDifferenceInSeconds}`);
       chrome.alarms.create("myAlarm", {
         when: Date.now() + timeDifferenceInSeconds, // Set the alarm to go off in 1 second.
       });

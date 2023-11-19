@@ -95,8 +95,13 @@ const HomeLoggedIn = ({
   return (
     <div
       className="outerDiv"
-      onClick={() => {
-        !worksnapToken && !isContainerModalOpen ? openContainerModal() : null;
+      onClick={(e) => {
+        !worksnapToken &&
+        !isContainerModalOpen &&
+        !isHowToModalOpen &&
+        e.target.className !== "unclickable-exception-elements"
+          ? openContainerModal()
+          : null;
       }}
     >
       {isContainerModalOpen && !worksnapToken && (
@@ -120,10 +125,16 @@ const HomeLoggedIn = ({
               style={{ position: "relative", right: "163px" }}
             >
               <div>
-                <button onClick={() => openHowToModal()}>
-                  <img src="/question_mark.png"></img>
+                <button
+                  onClick={() => openHowToModal()}
+                  className="unclickable-exception-elements"
+                >
+                  <img
+                    src="/question_mark.png"
+                    className="unclickable-exception-elements"
+                  ></img>
                 </button>
-                {isHowToModalOpen && worksnapToken && (
+                {isHowToModalOpen && (
                   <HowToModal
                     isHowToModalOpen={isHowToModalOpen}
                     closeHowToModal={closeHowToModal}
