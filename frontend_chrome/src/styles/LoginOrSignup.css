@@ -1,0 +1,30 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0px;
+}
+.input-password {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.signup-password {
+  margin-right: 5px;
+}
+.password-button {
+  width: 40%;
+  margin-left: 10px;
+}
+.signup-form-items {
+  margin: 8px 0px;
+}
+.signup-submit {
+  margin: 8px 0px 0px 0px;
+}
+
+.forgot-password:hover {
+  /* Change underline color and style on hover */
+  color: #007bff;
+}

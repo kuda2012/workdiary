@@ -18,7 +18,7 @@ const ContainerModal = ({
         <div className="container-modal-overlay" onClick={handleOverlayClick}>
           <div
             className="container-modal"
-            style={{ position: "relative", bottom: "100px" }}
+            style={{ position: "relative", width: "500px" }}
           >
             {children}
           </div>

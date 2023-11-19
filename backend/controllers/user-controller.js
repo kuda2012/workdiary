@@ -63,7 +63,7 @@ exports.forgotPassword = async (req, res, next) => {
 
 exports.changeAlarm = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
-  const user = await User.getUser(id);
+  let user = await User.getUser(id);
   if (user) {
     user = await User.update(req.body, id);
   }

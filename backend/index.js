@@ -19,4 +19,20 @@ app.use("/posts", postRoutes);
 app.use("/tabs", tabRoutes);
 app.use("/tags", tagRoutes);
 
+app.use(function (req, res, next) {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
+
+/** Generic error handler. */
+
+app.use(function (err, req, res, next) {
+  if (err.stack) console.error(err.stack);
+  return res.status(err.status || 500).send({
+    message: err.message,
+    err,
+  });
+});
+
 module.exports = { app };

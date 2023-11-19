@@ -20,7 +20,7 @@ export function isWorksnapTokenCurrent(worksnap_token) {
     }
   };
 }
-export function getWorksnapToken(googleAccessToken) {
+export function loginGoogle(googleAccessToken) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
@@ -30,6 +30,52 @@ export function getWorksnapToken(googleAccessToken) {
         }
       );
       dispatch(setWorksnapToken(data.worksnap_token));
+    } catch (error) {
+      dispatch(resetApp());
+      alert(error);
+      console.log(error);
+    }
+  };
+}
+export function login(formData) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.post("http://localhost:3000/users/login", {
+        ...formData,
+      });
+      dispatch(setWorksnapToken(data.worksnap_token));
+    } catch (error) {
+      dispatch(resetApp());
+      alert(error?.response?.data?.message);
+      console.log(error);
+    }
+  };
+}
+
+export function signup(formData) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.post("http://localhost:3000/users/signup", {
+        ...formData,
+      });
+      dispatch(setWorksnapToken(data.worksnap_token));
+    } catch (error) {
+      dispatch(resetApp());
+      alert(error?.response?.data?.message);
+      console.log(error);
+    }
+  };
+}
+export function forgotPassword(formData) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/users/forgot-password",
+        {
+          ...formData,
+        }
+      );
+      alert(data.message);
     } catch (error) {
       dispatch(resetApp());
       console.log(error);
@@ -407,6 +453,7 @@ export async function setAlarm(user) {
     });
     chrome.alarms.onAlarm.addListener(async (alarm) => {
       if (alarm.name === "myAlarm") {
+        console.log("fire notification");
         chrome.notifications.create({
           type: "basic",
           iconUrl: "w_extension.png",

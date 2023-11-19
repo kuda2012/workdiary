@@ -3,7 +3,7 @@ import { Navbar as ReactNavBar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getWorksnapToken,
+  loginGoogle,
   loggingIn,
   resetApp,
   setGoogleAccessToken,
@@ -17,7 +17,7 @@ const NavBar = ({ openContainerModal }) => {
 
   useEffect(() => {
     if (googleAccessToken) {
-      dispatch(getWorksnapToken(googleAccessToken));
+      dispatch(loginGoogle(googleAccessToken));
     }
   }, [googleAccessToken]);
 

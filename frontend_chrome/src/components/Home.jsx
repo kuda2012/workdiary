@@ -24,7 +24,7 @@ import HowToModal from "./HowToModal";
 import HowTo from "./HowTo";
 import DeletePostModal from "./DeletePostModal";
 import DeletePost from "./DeletePost";
-import HomeLoggedOut from "./HomeLoggedOut";
+import Authentication from "./Authentication";
 import ContainerModal from "./ContainerModal";
 
 const HomeLoggedIn = ({
@@ -104,8 +104,8 @@ const HomeLoggedIn = ({
           isContainerModalOpen={isContainerModalOpen}
           closeContainerModal={closeContainerModal}
         >
-          <h5>Work Diary</h5>
-          <HomeLoggedOut />
+          <h5 style={{ textTransform: "none" }}>Work Diary</h5>
+          <Authentication />
         </ContainerModal>
       )}
       {
