@@ -47,7 +47,7 @@ const Tabs = () => {
                 dispatch(openTabs(Array.from(tabsSelected.values())))
               }
             >
-              Open selected
+              Open selected in new window
             </Button>
           </div>
           <div className="col-6">

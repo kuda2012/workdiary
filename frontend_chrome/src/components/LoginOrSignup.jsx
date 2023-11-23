@@ -3,7 +3,7 @@ import "../styles/LoginOrSignup.css";
 import { useDispatch } from "react-redux";
 import { Button } from "reactstrap";
 import { login, signup } from "../helpers/actionCreators";
-const LoginOrSignup = ({ isSignup, isForgotPassword, setIsForgotPassword }) => {
+const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
   const dispatch = useDispatch();
   const INITIAL_STATE = {
     email: "",
@@ -11,9 +11,9 @@ const LoginOrSignup = ({ isSignup, isForgotPassword, setIsForgotPassword }) => {
     name: "",
   };
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [showPassword1, setShowPassword1] = useState(false);
-  const toggleShowPassword1 = () => {
-    setShowPassword1((password) => !password);
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPassword((password) => !password);
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,7 +72,7 @@ const LoginOrSignup = ({ isSignup, isForgotPassword, setIsForgotPassword }) => {
                 <input
                   autoComplete="new-password"
                   placeholder="Password"
-                  type={showPassword1 ? "text" : "password"}
+                  type={showPassword ? "text" : "password"}
                   required={true}
                   id="password"
                   name="password"
@@ -83,9 +83,9 @@ const LoginOrSignup = ({ isSignup, isForgotPassword, setIsForgotPassword }) => {
                 <Button
                   type="button"
                   className="password-button"
-                  onClick={() => toggleShowPassword1()}
+                  onClick={() => toggleShowPassword()}
                 >
-                  {showPassword1 ? "Hide" : "Show"}
+                  {showPassword ? "Hide" : "Show"}
                 </Button>
               </div>
               <Button color="primary" className="signup-submit mt-2">

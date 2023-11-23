@@ -32,7 +32,7 @@ export function loginGoogle(googleAccessToken) {
       dispatch(setWorksnapToken(data.worksnap_token));
     } catch (error) {
       dispatch(resetApp());
-      alert(error);
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };

@@ -14,20 +14,29 @@ exports.signup = async (req, res, next) => {
     if (error.code === "23505") {
       error.status = 409;
       error.message =
-        "This email is already taken. Please try a different one.";
+        "This email is already taken. Please try a different one or try logging in through google";
     }
     next(error);
   }
 };
 
-exports.loginGoogle = async (req, res) => {
-  const payload = await User.verifyGoogleToken(req.body.google_access_token);
-  const token = await User.generateWorksnapAccessToken(payload);
-  const doesUserExist = await User.getUser(payload.sub);
-  if (!doesUserExist) {
-    await User.createGoogleUser(payload);
+exports.loginGoogle = async (req, res, next) => {
+  try {
+    const payload = await User.verifyGoogleToken(req.body.google_access_token);
+    const token = await User.generateWorksnapAccessToken(payload);
+    const doesUserExist = await User.getUser(payload.sub, payload.email);
+    if (!doesUserExist) {
+      await User.createGoogleUser(payload);
+    } else {
+      throw new ExpressError(
+        "A user already exists for this email. Please sign in by entering your username and password",
+        400
+      );
+    }
+    res.send({ worksnap_token: token });
+  } catch (error) {
+    next(error);
   }
-  res.send({ worksnap_token: token });
 };
 
 exports.login = async (req, res, next) => {
@@ -42,6 +51,18 @@ exports.login = async (req, res, next) => {
 exports.changePassword = async (req, res, next) => {
   try {
     let message = await User.changePassword(req.body);
+    res.json({
+      message,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const { email } = decodeJwt(req.headers.authorization);
+    const user = await User.getUser(null, email);
+    let message = await User.resetPassword(req.body, user.email);
     res.json({
       message,
     });

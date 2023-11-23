@@ -11,9 +11,9 @@ const { BCRYPT_HASH_ROUNDS } = require("../config");
 class User {
   static async createGoogleUser(payload) {
     const getUser = await db.query(
-      `INSERT INTO users (id, email, name)
-       VALUES ($1, $2, $3) RETURNING id, email, name`,
-      [payload.sub, payload.email, payload.name]
+      `INSERT INTO users (id, email, name, auth_provider)
+       VALUES ($1, $2, $3, $4) RETURNING id, email, name, auth_provider`,
+      [payload.sub, payload.email, payload.name, "google"]
     );
     return getUser[0];
   }
@@ -22,9 +22,9 @@ class User {
     const { email, password, name } = body;
     const hashedPassword = await bcrypt.hash(password, BCRYPT_HASH_ROUNDS);
     const newUser = await db.query(
-      `INSERT INTO users (id, email, password, name)
-       VALUES ($1, $2, $3, $4) RETURNING id, email, name`,
-      [uuid(), email.toLowerCase(), hashedPassword, name]
+      `INSERT INTO users (id, email, password, name, auth_provider)
+       VALUES ($1, $2, $3, $4, $5) RETURNING id, email, name, auth_provider`,
+      [uuid(), email.toLowerCase(), hashedPassword, name, "username_password"]
     );
     return newUser[0];
   }
@@ -65,6 +65,16 @@ class User {
   }
   static async changePassword(body) {
     const { password, email } = body;
+    const { auth_provider } = await db.oneOrNone(
+      `SELECT auth_provider from users WHERE email =$1`,
+      [email.toLowerCase()]
+    );
+    if (auth_provider === "google") {
+      throw new ExpressError(
+        "Google sign-on users cannot reset their passwords",
+        400
+      );
+    }
     if (body.new_password.length < 5 || body.new_password.length > 25) {
       throw new ExpressError(
         "Password length must be longer than 4 characters but less than 26",
@@ -105,11 +115,51 @@ class User {
       );
     }
   }
+  static async resetPassword(body, email) {
+    const { auth_provider } = await db.oneOrNone(
+      `SELECT auth_provider from users WHERE email =$1`,
+      [email.toLowerCase()]
+    );
+    if (auth_provider === "google") {
+      throw new ExpressError(
+        "Google sign-on users cannot reset their passwords",
+        400
+      );
+    }
+    if (body.new_password.length < 5 || body.new_password.length > 25) {
+      throw new ExpressError(
+        "Password length must be longer than 4 characters but less than 26",
+        400
+      );
+    }
+    if (body.new_password !== body.new_password_copy) {
+      throw new ExpressError("New Passwords do not match", 400);
+    }
+
+    const newPassword = await bcrypt.hash(
+      body.new_password,
+      BCRYPT_HASH_ROUNDS
+    );
+    if (newPassword) {
+      await db.query(
+        `UPDATE users
+                        SET password=$1
+                        where email=$2`,
+        [newPassword, email]
+      );
+      return "Password has been changed";
+    } else {
+      throw new ExpressError("Issue with resetting password", 400);
+    }
+  }
 
   static async forgotPassword(body) {
     try {
       const { email } = body;
       const user = await this.getUser(null, email);
+      if (user.auth_provider === "google") {
+        return "If the given email is on file, we have a sent a link there to reset your password";
+      }
       if (user) {
         const transporter = nodemailer.createTransport({
           service: "gmail",
@@ -123,15 +173,15 @@ class User {
             // ca: [fs.readFileSync('path/to/your/ca.crt')]
           },
         });
-        const token = jwt.sign({ email: "email" }, SECRET_KEY, {
-          expiresIn: "1h",
+        const token = jwt.sign({ email }, SECRET_KEY, {
+          expiresIn: "30m",
         });
         // Email options
         const mailOptions = {
           from: "kuda.mwakutuya@gmail.com",
           to: email,
           subject: "Password Reset",
-          html: `<p>Click the link to reset your password: <a href="https://workdiary.me/reset-password?token=${token}">Reset Password</a></p>`,
+          html: `<p>Click the link to reset your password: <a href="https://http://localhost:5173/reset-password?token=${token}">Reset Password</a></p>`,
         };
 
         // Send email
@@ -143,7 +193,7 @@ class User {
           }
         });
       }
-      return "If the given email is on file, we have a sent a reset link there to reset your password";
+      return "If the given email is on file, we have a sent a link there to reset your password";
     } catch (error) {
       next(error);
     }
@@ -185,7 +235,7 @@ class User {
   }
   static async getUser(id, email) {
     const getUser = await db.oneOrNone(
-      `SELECT id, email, name, alarm_status, alarm_time, alarm_days FROM users
+      `SELECT id, email, name, alarm_status, alarm_time, alarm_days, auth_provider FROM users
        WHERE id = $1 OR email = $2`,
       [id, email]
     );
