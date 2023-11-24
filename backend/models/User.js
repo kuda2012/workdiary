@@ -110,12 +110,12 @@ class User {
       }
     } else {
       throw new ExpressError(
-        "User does not exist or you may have used Google sign-in to create account. If you used Google sign-in you cannot change update your password through us",
+        "User does not exist or you may have used Google sign-in to create account. If you used Google sign-in you cannot change your password",
         404
       );
     }
   }
-  static async resetPassword(body, email) {
+  static async resetPassword(body, email, user_id, token) {
     const { auth_provider } = await db.oneOrNone(
       `SELECT auth_provider from users WHERE email =$1`,
       [email.toLowerCase()]
@@ -136,6 +136,16 @@ class User {
       throw new ExpressError("New Passwords do not match", 400);
     }
 
+    const tokenAlreadyUsed = await db.query(
+      `Select token from invalid_tokens
+    WHERE token = $1`,
+      [token]
+    );
+
+    if (tokenAlreadyUsed.length !== 0) {
+      throw new ExpressError("You've already reset your password", 400);
+    }
+
     const newPassword = await bcrypt.hash(
       body.new_password,
       BCRYPT_HASH_ROUNDS
@@ -146,6 +156,11 @@ class User {
                         SET password=$1
                         where email=$2`,
         [newPassword, email]
+      );
+      await db.query(
+        `INSERT INTO invalid_tokens (user_id, token)
+        VALUES ($1, $2)`,
+        [user_id, token]
       );
       return "Password has been changed";
     } else {
@@ -173,15 +188,15 @@ class User {
             // ca: [fs.readFileSync('path/to/your/ca.crt')]
           },
         });
-        const token = jwt.sign({ email }, SECRET_KEY, {
-          expiresIn: "30m",
+        const token = jwt.sign({ user_id: user.id, email }, SECRET_KEY, {
+          expiresIn: "10m",
         });
         // Email options
         const mailOptions = {
           from: "kuda.mwakutuya@gmail.com",
           to: email,
           subject: "Password Reset",
-          html: `<p>Click the link to reset your password: <a href="https://http://localhost:5173/reset-password?token=${token}">Reset Password</a></p>`,
+          html: `<p>Click the link to reset your password: <a href="http://localhost:5173/reset-password?token=${token}">Reset Password</a>. You have about 10 mins until it expires</p>`,
         };
 
         // Send email

@@ -60,9 +60,14 @@ exports.changePassword = async (req, res, next) => {
 };
 exports.resetPassword = async (req, res, next) => {
   try {
-    const { email } = decodeJwt(req.headers.authorization);
+    const { email, user_id } = decodeJwt(req.headers.authorization);
     const user = await User.getUser(null, email);
-    let message = await User.resetPassword(req.body, user.email);
+    let message = await User.resetPassword(
+      req.body,
+      user.email,
+      user_id,
+      req.headers.authorization
+    );
     res.json({
       message,
     });
