@@ -25,21 +25,12 @@ const HowTo = () => {
             <div className="accordion-body">
               <ol>
                 <li>
-                  Record a voice note of how your work day went (or just type it
-                  out). You can speak how you normally would, it will add
-                  punctuation.
-                </li>
-                <li>
-                  Click the green button to have your voice turned into text
-                </li>
-                <li>Add a tag to your note</li>
-                <li>
-                  Pull your tabs for today (delete the ones you don't want to
-                  keep)
-                </li>
-                <li>
-                  Set your alarm so you can remember to come back tomorrow (it's
-                  already pre-set for 5pm)
+                  You can't use the app in the browser (at least for now).
+                  Please click{" "}
+                  <a href="https://twitter.com/kuda2012_" target="_blank">
+                    here
+                  </a>{" "}
+                  to download the chrome extension.
                 </li>
               </ol>
             </div>
