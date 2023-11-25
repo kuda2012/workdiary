@@ -44,6 +44,10 @@ const HowTo = () => {
                   Set your alarm so you can remember to come back tomorrow (it's
                   already pre-set for 5pm)
                 </li>
+                <li>
+                  If you like the app, Right Click this tab in the browswer and
+                  "pin" this app to your window for easy access
+                </li>
               </ol>
             </div>
           </div>
