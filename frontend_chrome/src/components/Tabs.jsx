@@ -39,11 +39,22 @@ const Tabs = () => {
     const fetchWindows = async () => {
       try {
         const allWindows = await chrome.windows.getAll();
-        setWindows(
-          allWindows
-            .filter((window) => window.type !== "popup")
-            .sort((a, b) => a.left - b.left)
-        );
+        setWindows(() => {
+          return allWindows
+            .filter(
+              (window) => window.type !== "popup" && window.type !== "panel"
+            )
+            .sort((a, b) => {
+              if (a.left !== b.left) {
+                return a.left - b.left; // Sort based on 'left' values
+              } else if (a.focused !== b.focused) {
+                // If 'left' values are equal, sort based on 'focused' property
+                return a.focused ? -1 : 1; // Place focused:true before focused:false
+              } else {
+                return 0; // Maintain the same order for objects with the same 'left' and 'focused' values
+              }
+            });
+        });
       } catch (error) {
         console.error("Error fetching windows:", error);
       }
