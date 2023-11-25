@@ -17,6 +17,7 @@ const DeletePost = ({ closeDeletePostModal }) => {
         onClick={() => {
           if (post) {
             dispatch(deletePost(worksnapToken, date));
+            closeDeletePostModal();
           } else {
             alert(
               "You have not save anything to this date, there's nothing to delete."
