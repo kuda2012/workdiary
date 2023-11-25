@@ -7,15 +7,26 @@ import {
   openTabs,
 } from "../helpers/actionCreators";
 import { useEffect, useState } from "react";
-import { Button } from "reactstrap";
+import {
+  Button,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
+import "../styles/Tabs.css";
 
 const Tabs = () => {
   const tabs = useSelector((state) => state.post?.tabs);
   const date = useSelector((state) => state.date);
   const worksnapToken = useSelector((state) => state.worksnap_token);
+  const [windows, setWindows] = useState(null);
   const dispatch = useDispatch();
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
   const [tabsSelected, setTabsSelected] = useState(new Map());
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
   function onTabDelete(tab_id) {
     setTabsSelected((selectingTabs) => {
       selectingTabs.delete(tab_id);
@@ -23,6 +34,23 @@ const Tabs = () => {
     });
     dispatch(deleteTab(worksnapToken, date, tab_id));
   }
+
+  useEffect(() => {
+    const fetchWindows = async () => {
+      try {
+        const allWindows = await chrome.windows.getAll();
+        setWindows(
+          allWindows
+            .filter((window) => window.type !== "popup")
+            .sort((a, b) => a.left - b.left)
+        );
+      } catch (error) {
+        console.error("Error fetching windows:", error);
+      }
+    };
+
+    fetchWindows();
+  }, []);
 
   return (
     <>
@@ -40,15 +68,79 @@ const Tabs = () => {
         </div>
         <div className="row mt-2 justify-content-around align-items-center">
           <div className="col-6">
-            <Button
+            {/* <Button
               // className="m-1"
               color="info"
-              onClick={() =>
-                dispatch(openTabs(Array.from(tabsSelected.values())))
-              }
-            >
-              Open selected in new window
-            </Button>
+              id="Popover1"
+              onClick={() => {
+                togglePopover();
+                // dispatch(openTabs(Array.from(tabsSelected.values())));
+              }}
+            > */}
+            {/* <div className="d-flex">
+              <Dropdown
+                isOpen={dropdownOpen}
+                toggle={toggle}
+                modifiers={{
+                  preventOverflow: { boundariesElement: "viewport" },
+                }}
+              >
+                <DropdownToggle color="info" caret size="md">
+                  Open selected in...
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem header>Header</DropdownItem>
+                  <DropdownItem>Some Action</DropdownItem>
+                  <DropdownItem text>Dropdown Item Text</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div> */}
+            <div class="dropdown">
+              <button
+                class="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-info py-4"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Open selected in...
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-dark"
+                aria-labelledby="dropdownMenuButton1"
+              >
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    onClick={() => {
+                      dispatch(openTabs(Array.from(tabsSelected.values())));
+                    }}
+                  >
+                    New Window
+                  </a>
+                </li>
+                {windows &&
+                  windows.map((window, i) => (
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        onClick={() => {
+                          dispatch(
+                            openTabs(
+                              Array.from(tabsSelected.values()),
+                              window.id
+                            )
+                          );
+                        }}
+                      >
+                        Window {i + 1}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
           <div className="col-6">
             <Button
@@ -81,7 +173,8 @@ const Tabs = () => {
               type="checkbox"
               id="selectAllInput"
               checked={allBoxesSelected}
-              onChange={() => {
+              onChange={async () => {
+                if (!tabs || tabs?.length === 0) return;
                 setAllBoxesSelected(!allBoxesSelected);
                 if (allBoxesSelected) {
                   setTabsSelected(new Map());

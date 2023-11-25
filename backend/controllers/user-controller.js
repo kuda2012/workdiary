@@ -27,7 +27,7 @@ exports.loginGoogle = async (req, res, next) => {
     const doesUserExist = await User.getUser(payload.sub, payload.email);
     if (!doesUserExist) {
       await User.createGoogleUser(payload);
-    } else {
+    } else if (doesUserExist && doesUserExist.auth_provider !== "google") {
       throw new ExpressError(
         "A user already exists for this email. Please sign in by entering your username and password",
         400

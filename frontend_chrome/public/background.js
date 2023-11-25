@@ -1,28 +1,42 @@
 let windowId;
+let tabId;
 async function openPopup() {
-  chrome.windows.create(
-    {
-      url: "index.html", // Replace with your HTML file's path
-      type: "popup",
-      width: 800, // Set the width and height as desired
-      height: 980,
-      top: 200, // Adjust the window's position as needed
-      left: 200,
-    },
-    function (window) {
-      windowId = window.id;
-    }
-  );
-}
-
-function closePopup() {
-  chrome.windows.remove(windowId, function () {
-    windowId = undefined;
+  if (tabId) {
+    chrome.tabs.remove(tabId);
+  }
+  // chrome.windows.create(
+  //   {
+  //     url: "index.html", // Replace with your HTML file's path
+  //     type: "popup",
+  //     width: 800, // Set the width and height as desired
+  //     height: 980,
+  //     top: 200, // Adjust the window's position as needed
+  //     left: 200,
+  //   },
+  //   function (window) {
+  //     windowId = window.id;
+  //   }
+  // );
+  chrome.tabs.create({ url: "/index.html" }, (tab) => {
+    tabId = tab.id;
   });
 }
 
+function closePopup() {
+  // chrome.windows.remove(windowId, function () {
+  //   windowId = undefined;
+  // });
+  chrome.tabs.remove(tabId);
+  tabId = undefined;
+}
+
 chrome.action.onClicked.addListener(function () {
-  if (!windowId) {
+  // if (!windowId) {
+  //   openPopup();
+  // } else {
+  //   closePopup();
+  // }
+  if (!tabId) {
     openPopup();
   } else {
     closePopup();
