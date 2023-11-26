@@ -22,7 +22,6 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const playSummaryVoice = () => {
     if (summaryVoice) {
       // Decode the Base64 audio data
-      console.log(summaryVoice);
       const decodedData = atob(summaryVoice);
 
       // Convert the decoded data to a Uint8Array

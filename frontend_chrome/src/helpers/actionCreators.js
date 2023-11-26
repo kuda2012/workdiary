@@ -66,6 +66,24 @@ export function signup(formData) {
     }
   };
 }
+export function changePassword(worksnap_token, formData) {
+  return async function () {
+    try {
+      const { data } = await axios.patch(
+        "http://localhost:3000/users/change-password",
+        {
+          ...formData,
+        },
+        { headers: { Authorization: `Bearer ${worksnap_token}` } }
+      );
+      alert(data.message);
+    } catch (error) {
+      alert(error?.response?.data?.message);
+      // dispatch(resetApp());
+      console.log(error);
+    }
+  };
+}
 export function forgotPassword(formData) {
   return async function (dispatch) {
     try {

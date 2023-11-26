@@ -41,7 +41,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, logging_in: !state.logging_in };
     case "HALF_RESET":
       return {
-        token: state.token,
+        worksnap_token: state.worksnap_token,
         date: state.date,
         all_post_dates: action.all_post_dates,
       };

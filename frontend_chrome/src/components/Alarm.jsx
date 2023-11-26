@@ -63,7 +63,11 @@ const Alarm = () => {
         data-target="#alarmDropdown" // Include data-target
         aria-haspopup="true"
         aria-expanded="false"
-        style={{ textAlign: "center", border: ".5px solid black" }}
+        style={{
+          textAlign: "center",
+          border: ".2px solid black",
+          borderRadius: "15px",
+        }}
       >
         <div>
           <img src="/alarm.jpg" />
