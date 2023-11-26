@@ -3,6 +3,7 @@ import { Button, ButtonGroup } from "reactstrap";
 import { Autosave } from "react-autosave";
 import { useDispatch, useSelector } from "react-redux";
 import { changeAlarm, setAlarm } from "../helpers/actionCreators";
+import "../styles/Alarm.css";
 
 const Alarm = () => {
   const dispatch = useDispatch();
@@ -53,10 +54,8 @@ const Alarm = () => {
 
   return (
     <div className="dropdown">
-      <Button
+      <button
         className="dropdown-toggle"
-        type="button"
-        color="secondary"
         id="alarmDropdown"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"
@@ -65,15 +64,15 @@ const Alarm = () => {
         aria-expanded="false"
         style={{
           textAlign: "center",
-          border: ".2px solid black",
+          // border: ".2px solid black",
           borderRadius: "15px",
         }}
       >
         <div>
-          <img src="/alarm.jpg" />
+          <img src="/alarm.png" />
           <div>Set Reminder</div>
         </div>
-      </Button>
+      </button>
 
       <div
         className="dropdown-menu text-center flex-column align-items-center"
@@ -82,12 +81,14 @@ const Alarm = () => {
         <div class="btn-group" role="group" aria-label="Toggle Switch">
           <ButtonGroup>
             <Button
+              // className={`btn btn-${user.alarm_status ? success : secondary}`}
               color={user.alarm_status ? "success" : "secondary"}
               onClick={() => handleSwitchToggle(user.alarm_status)}
             >
               On
             </Button>
             <Button
+              // className={`btn btn-${user.alarm_status ? secondary : danger}`}
               color={user.alarm_status ? "secondary" : "danger"}
               onClick={() => handleSwitchToggle(user.alarm_status)}
             >
@@ -149,16 +150,18 @@ const Alarm = () => {
             setButtonText("Saved");
           }}
         />
-        <Button
+        <button
           className="mt-4"
+          id="saveAlarm"
           color="secondary"
+          style={{ border: ".5px solid gray", borderRadius: "15px" }}
           onClick={() => {
             setButtonText("Saved");
           }}
         >
           {buttonText === "Saved" && <b>{buttonText}</b>}
           {buttonText === "Save" && <>{buttonText}</>}
-        </Button>
+        </button>
       </div>
     </div>
   );

@@ -205,9 +205,10 @@ const HomeLoggedIn = ({
             </div>
             <div className="col-2 d-flex align-items-center justify-content-end px-0">
               <button
+                id="tabsHome"
                 style={{
                   transform: "rotate(-90deg)",
-                  border: "1px solid gray",
+                  border: ".5px solid gray",
                   position: "relative",
                   // left: "10px",
                   top: "25px",

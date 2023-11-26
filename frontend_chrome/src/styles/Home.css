@@ -14,3 +14,6 @@
   pointer-events: auto;
   /* Additional styles for the exception element */
 }
+#tabsHome:hover {
+  border: 1.5px solid blue !important;
+}

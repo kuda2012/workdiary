@@ -1,4 +1,4 @@
-import { Button, Modal, Input } from "reactstrap";
+import { Button, Modal, Input, Form } from "reactstrap";
 import { getUserAccountInfo, deleteAccount } from "../helpers/actionCreators";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,22 +15,23 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
-  const handleDelete = () => {
+  const handleDelete = (e) => {
     // Put your delete account logic here
+    e.preventDefault();
     if (confirmation === "delete account") {
       dispatch(deleteAccount(worksnapToken));
       setTimeout(() => {
         window.location.reload();
       }, [2000]);
+    } else {
+      alert(`Must spell "delete account" correctly`);
     }
   };
 
   return (
     <div className="dropdown">
-      <Button
+      <button
         className="dropdown-toggle"
-        type="button"
-        color="secondary"
         id="userInfoDropdown"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"
@@ -39,13 +40,13 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
         aria-expanded="false"
         style={{
           textAlign: "center",
-          border: ".2px solid black",
+          // border: ".2px solid black",
           borderRadius: "15px",
         }}
       >
         <img src="/user_information.png"></img>
         <div> User Information</div>
-      </Button>
+      </button>
       <div
         className="dropdown-menu"
         aria-labelledby="userInfoDropdown"
@@ -134,23 +135,37 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
                 data-bs-parent="#accordionExample"
               >
                 <div class="accordion-body">
-                  <p>
-                    We are sorry to see you go. Deleting this account will only
-                    delete your Worksnap account, not your Google account.
-                  </p>
-                  <Input
-                    type="text"
-                    placeholder="Type 'delete account' to confirm"
-                    value={confirmation}
-                    onChange={(e) => setConfirmation(e.target.value)}
-                  />
-
-                  <Button color="danger" onClick={handleDelete}>
-                    Delete
-                  </Button>
-                  <Button color="secondary" onClick={toggleModal}>
-                    Cancel
-                  </Button>
+                  <form onSubmit={handleDelete}>
+                    <p>
+                      We are sorry to see you go. Deleting this account will
+                      only delete your Work Diary account, not your Google
+                      account.
+                    </p>
+                    <Input
+                      type="text"
+                      placeholder="Type 'delete account' to confirm"
+                      value={confirmation}
+                      onChange={(e) => setConfirmation(e.target.value)}
+                    />
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-12 d-flex justify-content-between px-0 mt-2">
+                          <button
+                            className="btn btn-danger"
+                            onClick={handleDelete}
+                          >
+                            Delete
+                          </button>
+                          <button
+                            className="btn btn-primary"
+                            onClick={closeSettingsModal}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
