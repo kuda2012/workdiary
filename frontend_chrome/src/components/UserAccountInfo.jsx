@@ -17,8 +17,7 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
     // Put your delete account logic here
     dispatch(deleteAccount(worksnapToken));
     setTimeout(() => {
-      closeSettingsModal();
-      toggleModal();
+      window.location.reload();
     }, [2000]);
   };
   return (

@@ -38,6 +38,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const [localSummaryText, setLocalSummaryText] = useState(summaryText || "");
   const [buttonText, setButtonText] = useState("Save");
+  const [initialRender, setInitialRender] = useState(true);
 
   const handleChange = (value) => {
     setLocalSummaryText(value);
@@ -46,6 +47,9 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
 
   useEffect(() => {
     setLocalSummaryText(summaryText);
+    if (initialRender) {
+      setInitialRender(false);
+    }
   }, [summaryText]);
 
   return (
@@ -58,16 +62,18 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
         formats={formats}
       />
 
-      <Autosave
-        data={localSummaryText}
-        interval={1500}
-        onSave={(data) => {
-          if (localSummaryText !== summaryText && worksnapToken) {
-            dispatchUpdatePost(data === "<p><br></p>" ? "" : data);
-            setButtonText("Saved");
-          }
-        }}
-      />
+      {!initialRender && (
+        <Autosave
+          data={localSummaryText}
+          interval={1500}
+          onSave={(data) => {
+            if (localSummaryText !== summaryText && worksnapToken) {
+              dispatchUpdatePost(data === "<p><br></p>" ? "" : data);
+              setButtonText("Saved");
+            }
+          }}
+        />
+      )}
       <button
         onClick={() => {
           dispatchUpdatePost(

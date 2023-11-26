@@ -1,0 +1,51 @@
+/* #recordButton:hover {
+  background-color: rgb(240, 85, 111);
+  border-radius: 5px 0px 0px 5px;
+}
+#interpretButton:hover {
+  background-color: rgb(83, 173, 106);
+  border-radius: 0px 5px 5px 0px;
+} */
+
+/* #recordButton {
+  font-size: small;
+} */
+
+.send {
+  background-color: rgb(83, 173, 106);
+}
+.record-button {
+  width: 10px; /* Adjust the size as needed */
+  height: 10px; /* Adjust the size as needed */
+  border-radius: 50%; /* Make it a circle by setting border-radius to 50% */
+  background-color: rgb(240, 85, 111);
+  display: inline-block; /* Ensure it takes up space */
+  margin-right: 5px;
+  /* position: relative;
+  left: 22px;
+  margin: 0;
+  padding: 0; */
+  /* background-color: transparent; /* Set a transparent background */
+  /* border: 2px solid red; Add a border to resemble a button */
+  /* Optionally, add other styles like hover effects, shadow, etc. */
+}
+
+.recorder {
+  border-radius: 5px 5px 5px 5px;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1); /* Initial size */
+  }
+  50% {
+    transform: scale(1.2); /* Larger size */
+  }
+  100% {
+    transform: scale(1); /* Back to the original size */
+  }
+}
+
+/* Apply the animation to the text */
+.pulsating-text {
+  animation: pulse 1.5s infinite; /* Use the pulse animation for 2 seconds infinitely */
+}

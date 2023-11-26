@@ -12,6 +12,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  width: 100%; /* Ensure the body doesn't exceed the maximum width */
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgb(135, 138, 153) !important;
 }
 
 a {
@@ -25,10 +30,13 @@ a:hover {
 
 body {
   margin: 0;
+  padding: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  max-width: 1034px; /* Set your desired maximum width */
+  width: 100%; /* Ensure the body doesn't exceed the maximum width */
 }
 
 h1 {

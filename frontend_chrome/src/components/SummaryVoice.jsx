@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleInterpreting } from "../helpers/actionCreators";
+import "../styles/SummaryVoice.css";
 
 const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const userAccountInfo = useSelector((state) => state?.user);
@@ -21,6 +22,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const playSummaryVoice = () => {
     if (summaryVoice) {
       // Decode the Base64 audio data
+      console.log(summaryVoice);
       const decodedData = atob(summaryVoice);
 
       // Convert the decoded data to a Uint8Array
@@ -72,7 +74,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         audioRef.current.src = audioUrlRef.current;
       };
 
-      mediaRecorder.start(1000);
+      mediaRecorder.start();
       setIsRecording(true);
       timerRef.current = setInterval(() => {
         setAudioDuration((duration) => duration + 1);
@@ -165,6 +167,11 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     reader.readAsDataURL(audioBlob, "audio/wav");
   };
 
+  useEffect(() => {
+    if (audioDuration === 180) {
+      stopRecording();
+    }
+  }, [audioDuration]);
   return (
     <div className="mt-5">
       <h4 className="mb-4">
@@ -174,14 +181,15 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
             }. Tell us. How was work today?`
           : "Hey *insert_first_name*, you gotta sign up or login to use the app."}
       </h4>
-      <div>Recording Duration: {audioDuration}s</div>
       <div>
-        <button
-          onClick={playSummaryVoice} // Add this function to play the summaryVoice
-          disabled={!summaryVoice || isRecording}
-        >
-          Play Summary Voice
-        </button>
+        {/* {summaryVoice && (
+          <button
+            onClick={playSummaryVoice} // Add this function to play the summaryVoice
+            disabled={!summaryVoice || isRecording}
+          >
+            Play Summary Voice
+          </button>
+        )} */}
         <button
           onClick={
             !isRecording && !isPaused && !audioDuration
@@ -190,31 +198,74 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
               ? pauseRecording
               : resumeRecording
           }
-          disabled={!isPlaybackFinished}
+          disabled={
+            !isPlaybackFinished || (audioDuration && !isPaused && !isRecording)
+          }
+          id="recordButton"
+          className="recorder"
         >
-          <img src="/microphone.png" title="Record"></img>
+          <span
+            className={`record-button ${isRecording && "pulsating-text"}`}
+          />
+          <span>
+            {!isRecording && !isPaused && !audioDuration
+              ? "RECORD"
+              : isRecording && !isPaused
+              ? "RECORDING"
+              : "RESUME"}
+          </span>
+          {/* <img src="/microphone.png" title="Record"></img> */}
         </button>
-        <button onClick={pauseRecording} disabled={!isRecording}>
+        <button
+          className="recorder"
+          onClick={pauseRecording}
+          disabled={!isRecording}
+        >
           <img src="/pause.png" title="Pause"></img>
         </button>
-        <button onClick={stopRecording} disabled={!audioDuration}>
+        <button
+          className="recorder"
+          onClick={stopRecording}
+          disabled={!audioDuration}
+        >
           <img src="/stop.png" title="Stop Recording"></img>
         </button>
         <button
+          className="recorder"
           onClick={playRecording}
           disabled={!audioDuration || isRecording}
         >
           <img src="/play.png" title="Play"></img>
         </button>
-        <button onClick={resetRecording} disabled={!audioDuration}>
+        <button
+          className="recorder"
+          onClick={resetRecording}
+          disabled={!audioDuration}
+        >
           <img src="/reset.png" title="Reset"></img>
         </button>
         <button
-          onClick={sendAudioToBackend}
-          disabled={!audioDuration || interpreting}
+          className={`recorder ${
+            audioDuration && !isPaused && !isRecording && "send"
+          }`}
+          id="interpretButton"
+          onClick={() => {
+            if (audioDuration) sendAudioToBackend();
+          }}
+          // disabled={!audioDuration || interpreting}
         >
-          <img src="/voice_to_text.png" title="Interpret" />
+          SEND
+          {/* <img src="/voice_to_text.png" title="Interpret" /> */}
         </button>
+      </div>
+      <div
+        style={{ color: `${audioDuration < 165 ? "" : "red"}` }}
+        className="m-3"
+      >
+        Recording Duration:{" "}
+        <span style={{ color: `${isRecording && "green"}` }}>
+          {audioDuration}s
+        </span>
       </div>
       <div className="mb-5">
         <audio controls ref={audioRef} onEnded={handleAudioEnded} />

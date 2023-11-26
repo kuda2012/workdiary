@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
     }
     summaryVoice = req.body.summary_voice
       ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
-      : null;
+      : undefined;
     post = await Post.create(id, req.body, summaryVoice);
   }
   const allPostDates = await Post.getAllPostDates(id);
@@ -96,8 +96,13 @@ exports.update = async (req, res) => {
 
   summaryVoice = req.body.summary_voice
     ? Buffer.from(req.body.summary_voice.split(",")[1], "base64")
-    : null;
-  const updatePost = await Post.update(post.id, req.body, summaryVoice);
+    : undefined;
+  const updatePost = await Post.update(
+    post.id,
+    req.body,
+    summaryVoice,
+    post.summary_voice
+  );
   const tabs = await Tab.getTabs(id, req.body.date);
   const tags = await Tag.getTags(id, req.body.date);
   if (updatePost && tabs.length > 0) {
@@ -124,7 +129,6 @@ exports.delete = async (req, res) => {
     all_post_dates: [...allPostDates],
   });
 };
-
 
 // exports.getSharedPost = async (req, res) => {
 //   const post = await Post.getSharedPost(req.params.pointerId);

@@ -2,6 +2,10 @@ const db = require("../db");
 const { v4: uuid } = require("uuid");
 const moment = require("moment");
 const { formatSearchResults } = require("../helpers/formatSearchResults");
+
+const ffmpeg = require("ffmpeg-static");
+const { exec } = require("child_process");
+const { promisify } = require("util");
 class Post {
   static async create(user_id, body, summary_voice) {
     /// add optional summary_voice
@@ -50,15 +54,68 @@ class Post {
     const post = await db.query(`DELETE FROM posts WHERE id = $1`, [post_id]);
     return post;
   }
-  static async update(post_id, body, summary_voice) {
+  static async updateAudioMetadata(buffer) {
+    try {
+      const fs = require("fs");
+      const inputFilePath = "./temp_audio_input.opus"; // Assume the input is Opus
+      const intermediateFilePath = "./temp_audio_intermediate.wav";
+      const outputFilePath = "./temp_audio_output.wav";
+
+      // Write the Opus audio data to an input file
+      fs.writeFileSync(inputFilePath, buffer);
+
+      // Use FFmpeg to convert Opus to PCM WAV
+      const convertCommand = `${ffmpeg} -i ${inputFilePath} -c:a pcm_s16le ${intermediateFilePath}`;
+      const asyncConvertExec = promisify(exec);
+      await asyncConvertExec(convertCommand);
+
+      // Use FFmpeg to update the audio duration metadata
+      const metadataCommand = `${ffmpeg} -i ${intermediateFilePath} -c copy -y ${outputFilePath}`;
+      const asyncMetadataExec = promisify(exec);
+      await asyncMetadataExec(metadataCommand);
+
+      // Read the updated audio file back into a buffer
+      const updatedAudioFromFFmpeg = fs.readFileSync(outputFilePath);
+
+      // Cleanup: Delete temporary input and intermediate files
+      fs.unlinkSync(inputFilePath);
+      fs.unlinkSync(intermediateFilePath);
+      fs.unlinkSync(outputFilePath);
+
+      return updatedAudioFromFFmpeg; // Return the updated audio buffer from FFmpeg
+    } catch (error) {
+      console.error("Error updating audio metadata:", error);
+      throw error;
+    }
+  }
+
+  static async update(post_id, body, newSummaryVoice, oldSummaryVoice) {
     let queryText = "UPDATE posts SET";
     const queryValues = [];
     if (body.summary_text !== undefined) {
       queryValues.push(body.summary_text); // Add the value to the parameter array
       queryText += ` summary_text = $${queryValues.length},`; // Add the column to the query
     }
-    if (summary_voice !== undefined) {
-      queryValues.push(summary_voice); // Add the value to the parameter array
+    if (newSummaryVoice !== undefined) {
+      if (oldSummaryVoice) {
+        const existingSummaryVoice = Buffer.from(oldSummaryVoice, "base64");
+        let updatedSummaryVoice = null;
+        updatedSummaryVoice = Buffer.concat([
+          existingSummaryVoice,
+          newSummaryVoice,
+        ]);
+        const updatedAudioFromFFmpeg = await this.updateAudioMetadata(
+          updatedSummaryVoice
+        );
+        updatedSummaryVoice = Buffer.concat([
+          updatedSummaryVoice,
+          updatedAudioFromFFmpeg,
+        ]);
+        queryValues.push(updatedSummaryVoice);
+      } else {
+        queryValues.push(newSummaryVoice);
+      }
+      // Add the value to the parameter array
       queryText += ` summary_voice = $${queryValues.length},`; // Add the column to the query
     }
     queryText = queryText.slice(0, -1);

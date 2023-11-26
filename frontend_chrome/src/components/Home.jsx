@@ -135,58 +135,55 @@ const HomeLoggedIn = ({
       )}
       {
         <div
-          className={`container-fluid main-container${
+          className={`container main-container${
             worksnapToken ? "clickable" : ""
           }`}
         >
-          <div className="row justify-content-center align-items-center">
+          <div className="row justify-content-between">
             <div
-              className="col-1 mt-1"
-              style={{ position: "relative", right: "163px" }}
+              className="col mt-1 d-flex justify-content-start px-0"
+              // style={{ position: "relative", right: "163px" }}
             >
-              <div>
-                <button
-                  onClick={() => openHowToModal()}
+              <button
+                onClick={() => openHowToModal()}
+                className="unclickable-exception-elements"
+              >
+                <img
+                  src="/question_mark.png"
                   className="unclickable-exception-elements"
+                ></img>
+              </button>
+              {isHowToModalOpen && (
+                <HowToModal
+                  isHowToModalOpen={isHowToModalOpen}
+                  closeHowToModal={closeHowToModal}
                 >
-                  <img
-                    src="/question_mark.png"
-                    className="unclickable-exception-elements"
-                  ></img>
-                </button>
-                {isHowToModalOpen && (
-                  <HowToModal
-                    isHowToModalOpen={isHowToModalOpen}
-                    closeHowToModal={closeHowToModal}
-                  >
-                    <HowTo />
-                  </HowToModal>
-                )}
-              </div>
-            </div>
-            <div className="col-5 mt-2" style={{ position: "relative" }}>
-              <div>
-                <Calendar />
-              </div>
+                  <HowTo />
+                </HowToModal>
+              )}
             </div>
             <div
-              className="col-1 mt-1"
-              style={{ position: "relative", left: "132px" }}
+              className="col mt-2"
+              style={{ position: "relative", right: "10px" }}
             >
-              <div>
-                <button onClick={() => openSettingsModal()}>
-                  <img src="/gear-settings.png"></img>
-                </button>
-                {isSettingsModalOpen && worksnapToken && (
-                  <SettingsModal
-                    isSettingsModalOpen={isSettingsModalOpen}
-                    closeSettingsModal={closeSettingsModal}
-                  >
-                    <h5>Settings</h5>
-                    <Settings closeSettingsModal={closeSettingsModal} />
-                  </SettingsModal>
-                )}
-              </div>
+              <Calendar />
+            </div>
+            <div
+              className="col mt-1 d-flex justify-content-end px-0"
+              // style={{ position: "relative", left: "132px" }}
+            >
+              <button onClick={() => openSettingsModal()}>
+                <img src="/gear-settings.png"></img>
+              </button>
+              {isSettingsModalOpen && worksnapToken && (
+                <SettingsModal
+                  isSettingsModalOpen={isSettingsModalOpen}
+                  closeSettingsModal={closeSettingsModal}
+                >
+                  <h5>Settings</h5>
+                  <Settings closeSettingsModal={closeSettingsModal} />
+                </SettingsModal>
+              )}
             </div>
           </div>
           <div className="row justify-content-around">
@@ -206,14 +203,15 @@ const HomeLoggedIn = ({
               </>
               {/* )} */}
             </div>
-            <div className="col-2 d-flex align-items-center justify-content-start pl-0">
+            <div className="col-2 d-flex align-items-center justify-content-end px-0">
               <button
                 style={{
                   transform: "rotate(-90deg)",
                   border: "1px solid gray",
                   position: "relative",
-                  left: "20px",
-                  top: "25px",
+                  // left: "10px",
+                  top: "20px",
+                  // right: "0",
                 }}
                 onClick={() => openTabsModal()}
               >

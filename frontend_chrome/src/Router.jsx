@@ -7,7 +7,6 @@ const Router = ({
   openContainerModal,
   closeContainerModal,
 }) => {
-  const location = useLocation();
   return (
     <Routes>
       <Route
