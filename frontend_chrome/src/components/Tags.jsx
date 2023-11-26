@@ -29,7 +29,7 @@ const Tags = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-12 mt-1">
             <button onClick={() => handleInsertTag(onTagAdd)}>Add Tag</button>
           </div>
         </div>

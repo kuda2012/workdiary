@@ -210,7 +210,8 @@ const HomeLoggedIn = ({
                   border: "1px solid gray",
                   position: "relative",
                   // left: "10px",
-                  top: "20px",
+                  top: "25px",
+                  // top: "34px",
                   // right: "0",
                 }}
                 onClick={() => openTabsModal()}

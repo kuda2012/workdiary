@@ -108,7 +108,7 @@ const Tabs = () => {
             </div> */}
             <div class="dropdown">
               <button
-                class="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-info py-4"
+                class="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-info py-4 px-3"
                 type="button"
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"

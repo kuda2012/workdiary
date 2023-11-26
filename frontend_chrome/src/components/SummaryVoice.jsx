@@ -205,7 +205,8 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
           className="recorder"
         >
           <span
-            className={`record-button ${isRecording && "pulsating-text"}`}
+            id="recordRedDot"
+            className={`${isRecording && "pulsating-red-dot"}`}
           />
           <span>
             {!isRecording && !isPaused && !audioDuration
@@ -228,27 +229,26 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
           onClick={stopRecording}
           disabled={!audioDuration}
         >
-          <img src="/stop.png" title="Stop Recording"></img>
+          <img src="/stop_1.png" title="Stop Recording"></img>
         </button>
         <button
           className="recorder"
           onClick={playRecording}
           disabled={!audioDuration || isRecording}
         >
-          <img src="/play.png" title="Play"></img>
+          <img src="/play_1.png" title="Play"></img>
         </button>
         <button
           className="recorder"
           onClick={resetRecording}
           disabled={!audioDuration}
         >
-          <img src="/reset.png" title="Reset"></img>
+          <img src="/trash_1.png" title="Reset"></img>
         </button>
         <button
           className={`recorder ${
             audioDuration && !isPaused && !isRecording && "send"
           }`}
-          id="interpretButton"
           onClick={() => {
             if (audioDuration) sendAudioToBackend();
           }}
