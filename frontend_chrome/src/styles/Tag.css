@@ -1,0 +1,9 @@
+.tag {
+  border-radius: 15px;
+  min-width: 50px;
+  max-height: 40px;
+}
+
+.delete-tag {
+  border-radius: 15px;
+}

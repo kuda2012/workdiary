@@ -8,7 +8,7 @@ const NavBar = ({ openHowToModal }) => {
       <ReactNavBar color="light" className="navbar-expand-lg">
         <NavbarBrand>
           <NavLink
-            to="/"
+            to="#"
             onClick={(e) => {
               e.preventDefault();
             }}
@@ -19,7 +19,7 @@ const NavBar = ({ openHowToModal }) => {
         <Nav navbar className="me-auto">
           <NavItem>
             <NavLink
-              to="/"
+           to="#"
               onClick={(e) => {
                 e.preventDefault();
                 openHowToModal();

@@ -45,7 +45,7 @@ const NavBar = ({ openContainerModal }) => {
             textTransform: "none",
           }}
         >
-          <NavLink to="/" style={{ textDecoration: "none" }}>
+          <NavLink to="#" style={{ textDecoration: "none" }}>
             Work Diary
           </NavLink>
         </NavbarBrand>
