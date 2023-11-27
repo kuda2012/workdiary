@@ -151,7 +151,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       setIsRecording(false);
       setIsPaused(false);
     }
-    dispatch(toggleInterpreting());
+
     // Combine the audio chunks into a single Blob
     const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
 
@@ -247,10 +247,16 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         </button>
         <button
           className={`recorder ${
-            audioDuration && !isPaused && !isRecording && "send"
+            audioDuration && !isRecording && !interpreting && "send"
           }`}
           onClick={() => {
-            if (audioDuration) sendAudioToBackend();
+            if (audioDuration) {
+              dispatch(toggleInterpreting());
+              stopRecording();
+              setTimeout(() => {
+                sendAudioToBackend();
+              }, 1000);
+            }
           }}
           disabled={interpreting}
         >
@@ -262,7 +268,6 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
               height="15"
               width="15"
               ariaLabel="blocks-loading"
-              wrapperStyle={{}}
               wrapperClass="blocks-wrapper"
             />
           )}

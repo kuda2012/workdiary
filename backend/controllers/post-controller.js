@@ -15,7 +15,13 @@ exports.create = async (req, res, next) => {
     if (!post) {
       if (req.body.summary_voice && req.body.audio_duration < 180) {
         getLog = await TranscribeLog.getLog(id);
-        if (!getLog || getLog?.count < 180) {
+        if (!getLog) {
+          const summaryText = await speechToText(req.body.summary_voice);
+          req.body.summary_text = req.body.summary_text
+            ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
+            : `<p>${summaryText}</p>`;
+          updatedLog = await TranscribeLog.create(id);
+        } else if (getLog?.count < 10) {
           const summaryText = await speechToText(req.body.summary_voice);
           req.body.summary_text = req.body.summary_text
             ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
@@ -82,10 +88,15 @@ exports.update = async (req, res, next) => {
     const post = await Post.getPost(id, req.body.date);
     let updatedLog;
     let getLog;
-    let transcriptionErrorMsg;
     if (req.body.summary_voice && req.body.audio_duration < 180) {
       getLog = await TranscribeLog.getLog(id);
-      if (!getLog || getLog?.count < 180) {
+      if (!getLog) {
+        const summaryText = await speechToText(req.body.summary_voice);
+        req.body.summary_text = req.body.summary_text
+          ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
+          : `<p>${summaryText}</p>`;
+        updatedLog = await TranscribeLog.create(id);
+      } else if (getLog?.count < 10) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
           ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
@@ -113,9 +124,11 @@ exports.update = async (req, res, next) => {
     if (updatePost && tags.length > 0) {
       updatePost.tags = tags;
     }
+    const allPostDates = await Post.getAllPostDates(id);
     res.send({
       date: req.body.date,
       post: { ...updatePost },
+      all_post_dates: [...allPostDates],
       log: updatedLog ? updatedLog : getLog,
     });
   } catch (error) {

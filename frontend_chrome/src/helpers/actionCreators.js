@@ -206,10 +206,8 @@ export function updatePost(
       if (summary_voice) {
         dispatch(toggleInterpreting());
       }
-      if (data.transcription_error_msg) {
-        alert(data.transcription_error_msg);
-      }
       dispatch(setPost(data.post));
+      dispatch(setAllPostDates(data.all_post_dates));
       dispatch(setDate(data.date));
     } catch (error) {
       if (summary_voice) {
