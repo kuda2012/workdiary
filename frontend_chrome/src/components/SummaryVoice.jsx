@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleInterpreting } from "../helpers/actionCreators";
 import "../styles/SummaryVoice.css";
+import { Blocks } from "react-loader-spinner";
 
 const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const userAccountInfo = useSelector((state) => state?.user);
@@ -251,9 +252,20 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
           onClick={() => {
             if (audioDuration) sendAudioToBackend();
           }}
-          // disabled={!audioDuration || interpreting}
+          disabled={interpreting}
         >
-          SEND
+          {!interpreting ? (
+            "SEND"
+          ) : (
+            <Blocks
+              visible={true}
+              height="15"
+              width="15"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+            />
+          )}
           {/* <img src="/voice_to_text.png" title="Interpret" /> */}
         </button>
       </div>
