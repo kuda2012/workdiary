@@ -8,12 +8,17 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
   const INITIAL_STATE = {
     email: "",
     password: "",
+    password_copy: "",
     name: "",
   };
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [showPassword, setShowPassword] = useState(false);
-  const toggleShowPassword = () => {
-    setShowPassword((password) => !password);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const toggleShowPassword1 = () => {
+    setShowPassword1((password) => !password);
+  };
+  const toggleShowPassword2 = () => {
+    setShowPassword2((password) => !password);
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,10 +27,10 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (formData.password !== formData.password_copy) {
-    //   alert("Passwords do not match");
-    //   return;
-    // }
+    if (formData.password !== formData.password_copy && isSignup) {
+      alert("Passwords do not match");
+      return;
+    }
     try {
       dispatch(isSignup ? signup(formData) : login(formData));
       setFormData(INITIAL_STATE);
@@ -72,7 +77,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
                 <input
                   autoComplete="new-password"
                   placeholder="Password"
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword1 ? "text" : "password"}
                   required={true}
                   id="password"
                   name="password"
@@ -83,11 +88,33 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
                 <Button
                   type="button"
                   className="password-button"
-                  onClick={() => toggleShowPassword()}
+                  onClick={() => toggleShowPassword1()}
                 >
-                  {showPassword ? "Hide" : "Show"}
+                  {showPassword1 ? "Hide" : "Show"}
                 </Button>
               </div>
+              {isSignup && (
+                <div className="input-password mt-2">
+                  <input
+                    autoComplete="new-password-copy"
+                    placeholder="Enter password again"
+                    type={showPassword2 ? "text" : "password"}
+                    required={true}
+                    id="password_copy"
+                    name="password_copy"
+                    className="form-control signup-password"
+                    onChange={handleChange}
+                    value={formData.password_copy}
+                  />
+                  <Button
+                    type="button"
+                    className="password-button"
+                    onClick={() => toggleShowPassword2()}
+                  >
+                    {showPassword2 ? "Hide" : "Show"}
+                  </Button>
+                </div>
+              )}
               <Button color="primary" className="signup-submit mt-2">
                 {isSignup ? "Sign up" : "Login"}
               </Button>

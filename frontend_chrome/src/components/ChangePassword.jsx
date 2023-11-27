@@ -101,11 +101,11 @@ const ChangePassword = ({ closeSettingsModal }) => {
                 {showPassword1 ? "Hide" : "Show"}
               </Button>
             </div>
-            <div className="input-password">
+            <div className="input-password mt-1">
               <input
                 autoComplete="password-copy"
                 id="new_password_copy"
-                placeholder="Enter again"
+                placeholder="Enter new password again"
                 type={showPassword2 ? "text" : "password"}
                 required={true}
                 name="new_password_copy"

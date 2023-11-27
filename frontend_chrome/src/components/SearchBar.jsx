@@ -52,7 +52,7 @@ const SearchBar = ({ toggleSearchBar }) => {
       style={{
         width: "20%",
         position: "relative",
-        right: "65px",
+        right: "135px",
         textAlign: "left",
       }}
     >

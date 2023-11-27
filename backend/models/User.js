@@ -20,6 +20,9 @@ class User {
 
   static async create(body) {
     const { email, password, name } = body;
+    if (body.password !== body.password_copy) {
+      throw new ExpressError("Passwords do not match", 400);
+    }
     const hashedPassword = await bcrypt.hash(password, BCRYPT_HASH_ROUNDS);
     const newUser = await db.query(
       `INSERT INTO users (id, email, password, name, auth_provider)
