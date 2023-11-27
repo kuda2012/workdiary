@@ -59,7 +59,7 @@ const SearchBar = ({ toggleSearchBar }) => {
       <input
         id="search"
         type="text"
-        placeholder="Search..."
+        // placeholder="Search..."
         value={searchText}
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}

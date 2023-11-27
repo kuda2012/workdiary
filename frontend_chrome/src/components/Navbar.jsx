@@ -41,7 +41,7 @@ const NavBar = ({ openContainerModal }) => {
           style={{
             fontSize: "1.5rem",
             position: "relative",
-            right: `${worksnapToken ? "0px" : "0px"}`,
+            right: `${worksnapToken && isSearchBarVisible ? "161px" : "0px"}`,
             textTransform: "none",
           }}
         >
