@@ -178,27 +178,14 @@ export function getPost(worksnap_token, date) {
         }
       );
       dispatch(setPost(data.post));
+      dispatch(setAllPostDates(data.all_post_dates));
       dispatch(setDate(data.date));
     } catch (error) {
       console.log(error);
     }
   };
 }
-export function getAllPostDates(worksnap_token) {
-  return async function (dispatch) {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3000/posts/all-dates`,
-        {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
-        }
-      );
-      dispatch(setAllPostDates(data.all_post_dates));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
+
 export function updatePost(
   worksnap_token,
   date,

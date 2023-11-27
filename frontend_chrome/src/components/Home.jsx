@@ -8,9 +8,7 @@ import {
   getPost,
   updatePost,
   createPost,
-  deletePost,
   getUserAccountInfo,
-  getAllPostDates,
 } from "../helpers/actionCreators";
 import moment from "moment";
 import Tabs from "./Tabs";
@@ -61,7 +59,6 @@ const HomeLoggedIn = ({
     if (!date && !post && worksnapToken) {
       // intial load of journal data
       dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
-      dispatch(getAllPostDates(worksnapToken));
     }
     if (!user && worksnapToken) {
       dispatch(getUserAccountInfo(worksnapToken));
