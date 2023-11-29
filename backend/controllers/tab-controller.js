@@ -26,22 +26,6 @@ exports.getTabs = async (req, res) => {
   res.send({ date: req.params.date, tabs });
 };
 
-exports.update = async (req, res) => {
-  const { id } = decodeJwt(req.headers.authorization);
-  const post = await Post.getPost(id, req.body.date);
-  const updatedTabs = await Tab.bulkUpdate(
-    req.body.tabs,
-    id,
-    post.id,
-    req.body.date
-  );
-  const tags = await Tag.getTags(id, req.query.date);
-  if (post && tags.length > 0) {
-    post.tags = tags;
-  }
-  res.send({ date: req.body.date, post: { ...post, tabs: updatedTabs } });
-};
-
 exports.bulkDelete = async (req, res) => {
   const { id } = decodeJwt(req.headers.authorization);
   const post = await Post.getPost(id, req.query.date);

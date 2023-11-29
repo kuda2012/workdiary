@@ -95,6 +95,7 @@ export function forgotPassword(formData) {
       );
       alert(data.message);
     } catch (error) {
+      alert(error?.response?.data?.message);
       dispatch(resetApp());
       console.log(error);
     }

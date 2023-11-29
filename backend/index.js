@@ -2,7 +2,24 @@ const express = require("express");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 const { tokenIsCurrent } = require("./middleware/userMiddleware");
+const ExpressError = require("./expressError");
+const { rateLimit } = require("express-rate-limit");
 const app = express();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200, // limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again later!",
+  handler: (req, res, next, options) => {
+    try {
+      return next(new ExpressError(options.message, 429));
+    } catch (error) {
+      next(error);
+    }
+  },
+});
+
+// Apply the rate limiter to all requests
+app.use(limiter);
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: false }));

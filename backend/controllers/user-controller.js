@@ -18,6 +18,7 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.loginGoogle = async (req, res, next) => {
+  // excused
   try {
     const payload = await User.verifyGoogleToken(req.body.google_access_token);
     const doesUserExist = await User.getUser(payload.sub, payload.email);
@@ -47,7 +48,8 @@ exports.login = async (req, res, next) => {
 
 exports.changePassword = async (req, res, next) => {
   try {
-    let message = await User.changePassword(req.body);
+    const { email } = decodeJwt(req.headers.authorization);
+    let message = await User.changePassword(req.body, email);
     res.json({
       message,
     });
@@ -58,11 +60,10 @@ exports.changePassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
   try {
     const { email, user_id } = decodeJwt(req.headers.authorization);
-    const user = await User.getUser(null, email);
     let message = await User.resetPassword(
       req.body,
-      user.email,
       user_id,
+      email,
       req.headers.authorization
     );
     res.json({

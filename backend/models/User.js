@@ -8,6 +8,7 @@ const axios = require("axios");
 const { SECRET_KEY, EMAIL_PASSWORD } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
 
+
 class User {
   static async createGoogleUser(payload) {
     const getUser = await db.query(
@@ -67,8 +68,8 @@ class User {
       );
     }
   }
-  static async changePassword(body) {
-    const { password, email } = body;
+  static async changePassword(body, email) {
+    const { password } = body;
     const { auth_provider } = await db.oneOrNone(
       `SELECT auth_provider from users WHERE email =$1`,
       [email.toLowerCase()]
@@ -119,7 +120,7 @@ class User {
       );
     }
   }
-  static async resetPassword(body, email, user_id, token) {
+  static async resetPassword(body, user_id, email, token) {
     const { auth_provider } = await db.oneOrNone(
       `SELECT auth_provider from users WHERE email =$1`,
       [email.toLowerCase()]
@@ -140,13 +141,13 @@ class User {
       throw new ExpressError("New Passwords do not match", 400);
     }
 
-    const tokenAlreadyUsed = await db.query(
+    const tokenAlreadyUsed = await db.oneOrNone(
       `Select token from invalid_tokens
     WHERE token = $1`,
       [token]
     );
 
-    if (tokenAlreadyUsed.length !== 0) {
+    if (tokenAlreadyUsed) {
       throw new ExpressError("You've already reset your password", 400);
     }
 
