@@ -8,8 +8,6 @@ class Tab {
       post_id: post.id,
       title: tab.title,
       url: tab.url,
-      comment: tab.comment,
-      tab_order: tab.tab_order,
       icon: tab.icon,
       screenshot: tab.screenshot,
     }));
@@ -17,15 +15,7 @@ class Tab {
       await db.tx(async (t) => {
         const insert = pgp.helpers.insert(
           tabs,
-          [
-            "post_id",
-            "title",
-            "url",
-            "comment",
-            "tab_order",
-            "icon",
-            "screenshot",
-          ],
+          ["post_id", "title", "url", "icon", "screenshot"],
           "tabs"
         );
         return t.manyOrNone(insert + " RETURNING *");
@@ -37,10 +27,9 @@ class Tab {
   }
   static async getTabs(user_id, date) {
     const tabs = await db.manyOrNone(
-      `SELECT tabs.id as tab_id, post_id, title, url, comment, icon, tab_order FROM tabs
+      `SELECT tabs.id as tab_id, post_id, title, url, icon FROM tabs
       JOIN posts ON posts.id = tabs.post_id
       WHERE posts.user_id = $1 AND DATE(date)=$2
-      ORDER BY tab_order
       `,
       [user_id, date]
     );

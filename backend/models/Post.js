@@ -34,16 +34,7 @@ class Post {
     );
     return allPostDates.map((date) => date.date);
   }
-  static async getSharedPost(pointerId) {
-    const { post_id } = await db.oneOrNone(
-      `SELECT post_id FROM shared_posts WHERE pointer_id = $1`,
-      [pointerId]
-    );
-    return db.oneOrNone(
-      `SELECT id, user_id, summary_text, date FROM posts where id=$1`,
-      [post_id]
-    );
-  }
+
   static async delete(post_id) {
     const post = await db.query(`DELETE FROM posts WHERE id = $1`, [post_id]);
     return post;
@@ -117,20 +108,30 @@ class Post {
     searchResults = formatSearchResults(searchResults, query);
     return searchResults;
   }
-  static async generateShareLink(post_id) {
-    return db.query(
-      `INSERT INTO shared_posts (pointer_id, post_id)
-       VALUES ($1, $2) RETURNING pointer_id, post_id`,
-      [uuid(), post_id]
-    );
-  }
-  static async deactivateShareLink(post_id) {
-    return db.query(
-      `DELETE FROM shared_posts
-       WHERE post_id=$1`,
-      [post_id]
-    );
-  }
+  // static async getSharedPost(pointerId) {
+  //   const { post_id } = await db.oneOrNone(
+  //     `SELECT post_id FROM shared_posts WHERE pointer_id = $1`,
+  //     [pointerId]
+  //   );
+  //   return db.oneOrNone(
+  //     `SELECT id, user_id, summary_text, date FROM posts where id=$1`,
+  //     [post_id]
+  //   );
+  // }
+  // static async generateShareLink(post_id) {
+  //   return db.query(
+  //     `INSERT INTO shared_posts (pointer_id, post_id)
+  //      VALUES ($1, $2) RETURNING pointer_id, post_id`,
+  //     [uuid(), post_id]
+  //   );
+  // }
+  // static async deactivateShareLink(post_id) {
+  //   return db.query(
+  //     `DELETE FROM shared_posts
+  //      WHERE post_id=$1`,
+  //     [post_id]
+  //   );
+  // }
 }
 
 module.exports = Post;
