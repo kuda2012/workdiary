@@ -1,20 +1,17 @@
-const axios = require("axios");
-const { SECRET_KEY } = require("../config");
 const { decodeJwt } = require("../helpers/decodeJwt");
 const User = require("../models/User");
 const ExpressError = require("../expressError");
-const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res, next) => {
   try {
-    let user = await User.create(req.body);
+    await User.create(req.body);
     let token = await User.getLoggedIn(req.body);
     res.json({ worksnap_token: token });
   } catch (error) {
     if (error.code === "23505") {
       error.status = 409;
       error.message =
-        "This email is already taken. Please try a different one or try logging in through google";
+        "This email is already taken. Please try a different one or try logging in through Google";
     }
     next(error);
   }
@@ -23,7 +20,6 @@ exports.signup = async (req, res, next) => {
 exports.loginGoogle = async (req, res, next) => {
   try {
     const payload = await User.verifyGoogleToken(req.body.google_access_token);
-    const token = await User.generateWorksnapAccessToken(payload);
     const doesUserExist = await User.getUser(payload.sub, payload.email);
     if (!doesUserExist) {
       await User.createGoogleUser(payload);
@@ -33,6 +29,7 @@ exports.loginGoogle = async (req, res, next) => {
         400
       );
     }
+    const token = await User.generateWorksnapAccessToken(payload);
     res.send({ worksnap_token: token });
   } catch (error) {
     next(error);
@@ -97,7 +94,10 @@ exports.changeAlarm = async (req, res) => {
 };
 
 exports.checkedToken = async (req, res) => {
-  const worksnap_token = req.headers.authorization.substring(7);
+  // refreshing token after being verified in tokenIsCurrent
+  const worksnap_token = await User.generateWorksnapAccessToken(
+    decodeJwt(req.headers.authorization)
+  );
   res.send({ worksnap_token });
 };
 

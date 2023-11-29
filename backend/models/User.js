@@ -48,10 +48,11 @@ class User {
       );
       if (passwordCorrect) {
         const result = await this.getUser(null, email);
-        const token = jwt.sign(result, SECRET_KEY, {
-          expiresIn: "1y",
+        return this.generateWorksnapAccessToken({
+          id: result.id,
+          name: result.name,
+          email: result.email,
         });
-        return token;
       } else {
         throw new ExpressError(
           "The email and password combination you have entered do not match any of our records. Please try again.",
@@ -274,7 +275,11 @@ class User {
 
   static async generateWorksnapAccessToken(payload) {
     const token = jwt.sign(
-      { id: payload.sub, email: payload.email, name: payload.name },
+      {
+        id: payload.sub || payload.id,
+        email: payload.email,
+        name: payload.name,
+      },
       SECRET_KEY,
       {
         expiresIn: "1y",

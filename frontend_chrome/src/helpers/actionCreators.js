@@ -377,7 +377,7 @@ export function bulkDeleteTabs(worksnap_token, date, tabs) {
     try {
       if (tabs) {
         const { data } = await axios.delete(
-          `http://localhost:3000/tabs/bulkDelete?date=${date}&tab_ids=${arrayToCSV(
+          `http://localhost:3000/tabs/bulk-delete?date=${date}&tab_ids=${arrayToCSV(
             tabs[0]?.tab_id !== undefined
               ? tabs.map((tab) => tab?.tab_id)
               : tabs
