@@ -13,7 +13,7 @@ function App() {
     dispatch(isWorksnapTokenCurrent(localStorage.getItem("worksnap_token")));
   }
 
-  const [isContainerModalOpen, setIsContainerModalOpen] = useState(
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(
     !worksnapToken ? true : false
   );
 
@@ -25,13 +25,13 @@ function App() {
       }, 600);
     }
   });
-  const openContainerModal = () => setIsContainerModalOpen(true);
-  const closeContainerModal = () => setIsContainerModalOpen(false);
+  const openAuthModal = () => setIsAuthModalOpen(true);
+  const closeAuthModal = () => setIsAuthModalOpen(false);
   return (
     <>
       {firstLoad ? (
         <>
-          <Navbar openContainerModal={openContainerModal} />
+          <Navbar openAuthModal={openAuthModal} />
           <div
             className="container d-flex justify-content-center align-items-center"
             style={{ height: "80%" }}
@@ -53,11 +53,11 @@ function App() {
         </>
       ) : (
         <>
-          <Navbar openContainerModal={openContainerModal} />
+          <Navbar openAuthModal={openAuthModal} />
           <Router
-            isContainerModalOpen={isContainerModalOpen}
-            openContainerModal={openContainerModal}
-            closeContainerModal={closeContainerModal}
+            isAuthModalOpen={isAuthModalOpen}
+            openAuthModal={openAuthModal}
+            closeAuthModal={closeAuthModal}
           />
         </>
       )}

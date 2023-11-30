@@ -2,11 +2,7 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./components/Home";
 
-const Router = ({
-  isContainerModalOpen,
-  openContainerModal,
-  closeContainerModal,
-}) => {
+const Router = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
   return (
     <Routes>
       <Route
@@ -14,9 +10,9 @@ const Router = ({
         // path={location.pathname === "/index.html" ? "/index.html" : "/"}
         element={
           <Home
-            isContainerModalOpen={isContainerModalOpen}
-            openContainerModal={openContainerModal}
-            closeContainerModal={closeContainerModal}
+            isAuthModalOpen={isAuthModalOpen}
+            openAuthModal={openAuthModal}
+            closeAuthModal={closeAuthModal}
           />
         }
       />

@@ -10,7 +10,7 @@ import {
 } from "../helpers/actionCreators";
 import SearchBar from "./SearchBar";
 
-const NavBar = ({ openContainerModal }) => {
+const NavBar = ({ openAuthModal }) => {
   const dispatch = useDispatch();
   const googleAccessToken = useSelector((state) => state.google_access_token);
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -57,7 +57,7 @@ const NavBar = ({ openContainerModal }) => {
                   style={{ textDecoration: "none" }}
                   onClick={(e) => {
                     e.preventDefault();
-                    openContainerModal();
+                    openAuthModal();
                     // try {
                     //   dispatch(loggingIn());
                     //   chrome.identity.getAuthToken(

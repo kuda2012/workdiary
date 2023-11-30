@@ -22,14 +22,11 @@ import HowToModal from "./HowToModal";
 import HowTo from "./HowTo";
 import DeletePostModal from "./DeletePostModal";
 import DeletePost from "./DeletePost";
-import Authentication from "./Authentication";
-import ContainerModal from "./ContainerModal";
+import Auth from "./Auth";
+import AuthModal from "./AuthModal";
+import AuthModalHeader from "./AuthModalHeader";
 
-const HomeLoggedIn = ({
-  isContainerModalOpen,
-  openContainerModal,
-  closeContainerModal,
-}) => {
+const HomeLoggedIn = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
   const user = useSelector((state) => state?.user);
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
@@ -94,41 +91,21 @@ const HomeLoggedIn = ({
       className="outerDiv"
       onClick={(e) => {
         !worksnapToken &&
-        !isContainerModalOpen &&
+        !isAuthModalOpen &&
         !isHowToModalOpen &&
         e.target.className !== "unclickable-exception-elements"
-          ? openContainerModal()
+          ? openAuthModal()
           : null;
       }}
     >
-      {isContainerModalOpen && !worksnapToken && (
-        <ContainerModal
-          isContainerModalOpen={isContainerModalOpen}
-          closeContainerModal={closeContainerModal}
+      {isAuthModalOpen && !worksnapToken && (
+        <AuthModal
+          isAuthModalOpen={isAuthModalOpen}
+          closeAuthModal={closeAuthModal}
         >
-          <div className="row justify-content-between">
-            <div className="col">
-              <h1 style={{ textTransform: "none" }}>Work Diary</h1>
-            </div>
-            <div className="col">
-              <span
-                style={{
-                  cursor: "pointer",
-                  position: "relative",
-                  left: "150px",
-                }}
-                onClick={() => {
-                  openHowToModal();
-                }}
-                className="unclickable-exception-elements"
-              >
-                <b style={{ textDecoration: "underline" }}>About</b>
-              </span>
-            </div>
-          </div>
-
-          <Authentication />
-        </ContainerModal>
+          <AuthModalHeader openHowToModal={openHowToModal} />
+          <Auth />
+        </AuthModal>
       )}
       {
         <div

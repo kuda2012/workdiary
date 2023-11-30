@@ -4,7 +4,7 @@ import LoginLogo from "./LoginLogo";
 import LoginOrSignup from "./LoginOrSignup";
 import ForgotPassword from "./ForgotPassword";
 
-const Authentication = () => {
+const Auth = () => {
   const [isSignup, setIsSignup] = useState(true);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   return (
@@ -66,4 +66,4 @@ const Authentication = () => {
   );
 };
 
-export default Authentication;
+export default Auth;

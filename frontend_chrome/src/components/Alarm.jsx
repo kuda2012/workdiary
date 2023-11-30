@@ -17,12 +17,6 @@ const Alarm = () => {
     setButtonText("Save");
     dispatch(changeAlarm(worksnapToken, { alarm_status: !user.alarm_status }));
   };
-  // const handlePullsTabReminder = () => {
-  //   setButtonText("Save");
-  //   dispatch(
-  //     changeAlarm(worksnapToken, { auto_pull_tabs: !user.auto_pull_tabs })
-  //   );
-  // };
 
   const handleTimeChange = (event) => {
     setButtonText("Save");
@@ -125,27 +119,10 @@ const Alarm = () => {
           value={user.alarm_time}
           onChange={handleTimeChange}
         />
-        {/* <div className="d-flex mt-4 align-items-center justify-content-center">
-          <div className="mx-2">
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="pullTabsReminder"
-                checked={user.auto_pull_tabs}
-                onChange={() => handlePullsTabReminder(user.auto_pull_tabs)}
-              />
-              <label className="form-check-label" htmlFor="pullTabsReminder">
-                Automatically pull your browser tabs
-                <br /> (This will happen regardless of your alarm on/off status)
-              </label>
-            </div>
-          </div>
-        </div> */}
         <Autosave
           data={user}
           interval={2000}
-          onSave={(data) => {
+          onSave={() => {
             setAlarmChanged(true);
             setButtonText("Saved");
           }}

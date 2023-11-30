@@ -1,5 +1,5 @@
 /* Modal.css */
-.container-modal-overlay {
+.auth-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.container-modal {
+.auth-modal {
   background-color: white;
   border: 1px solid #ccc;
   padding: 20px;
