@@ -86,13 +86,13 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
                   onChange={handleChange}
                   value={formData.password}
                 />
-                <Button
+                <button
                   type="button"
                   className="password-button"
                   onClick={() => toggleShowPassword1()}
                 >
                   {showPassword1 ? "Hide" : "Show"}
-                </Button>
+                </button>
               </div>
               {isSignup && (
                 <div className="input-password mt-2">
@@ -107,13 +107,13 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
                     onChange={handleChange}
                     value={formData.password_copy}
                   />
-                  <Button
+                  <button
                     type="button"
                     className="password-button"
                     onClick={() => toggleShowPassword2()}
                   >
                     {showPassword2 ? "Hide" : "Show"}
-                  </Button>
+                  </button>
                 </div>
               )}
               <Button color="primary" className="signup-submit mt-2">

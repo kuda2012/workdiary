@@ -113,13 +113,13 @@ const ChangePassword = ({ closeSettingsModal }) => {
                 onChange={handleChange}
                 value={formData.new_password_copy}
               />
-              <Button
+              <button
                 type="button"
                 className="password-button"
                 onClick={() => toggleShowPassword2()}
               >
                 {showPassword2 ? "Hide" : "Show"}
-              </Button>
+              </button>
             </div>
             <Button color="primary" className="change-password-submit mt-4">
               Submit

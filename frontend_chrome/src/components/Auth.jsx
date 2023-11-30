@@ -1,6 +1,5 @@
 import { useState } from "react";
 import GoogleSignupButton from "./GoogleSignupButton";
-import LoginLogo from "./LoginLogo";
 import LoginOrSignup from "./LoginOrSignup";
 import ForgotPassword from "./ForgotPassword";
 
@@ -11,7 +10,10 @@ const Auth = () => {
     <div className="container">
       <div className="row flex-column align-items-center">
         <div className="col-6 mb-5 mt-5">
-          <LoginLogo />
+          <img
+            style={{ position: "relative", left: "10px" }}
+            src="work_diary_0.png"
+          />
         </div>
         {!isForgotPassword && (
           <>

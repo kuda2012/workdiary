@@ -1,3 +1,15 @@
-/* #saveAlarm:hover {
-  border: 1px solid blue !important;
-} */
+#save-alarm {
+  border: 1px solid gray;
+}
+#save-alarm:hover {
+  border: 1.5px solid #646cff !important;
+}
+
+#alarm-dropdown {
+  text-align: center;
+}
+
+#time-picker {
+  margin: auto;
+  width: 200px;
+}

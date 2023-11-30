@@ -41,7 +41,6 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
         style={{
           textAlign: "center",
           // border: ".2px solid black",
-          borderRadius: "15px",
         }}
       >
         <img src="/user_information.png"></img>

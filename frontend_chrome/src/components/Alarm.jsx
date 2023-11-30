@@ -50,17 +50,12 @@ const Alarm = () => {
     <div className="dropdown">
       <button
         className="dropdown-toggle"
-        id="alarmDropdown"
+        id="alarm-dropdown"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"
-        data-target="#alarmDropdown" // Include data-target
+        data-target="#alarm-dropdown" // Include data-target
         aria-haspopup="true"
         aria-expanded="false"
-        style={{
-          textAlign: "center",
-          // border: ".2px solid black",
-          borderRadius: "15px",
-        }}
       >
         <div>
           <img src="/alarm.png" />
@@ -70,7 +65,7 @@ const Alarm = () => {
 
       <div
         className="dropdown-menu text-center flex-column align-items-center"
-        aria-labelledby="alarmDropdown"
+        aria-labelledby="alarm-dropdown"
       >
         <div class="btn-group" role="group" aria-label="Toggle Switch">
           <ButtonGroup>
@@ -111,11 +106,7 @@ const Alarm = () => {
         <input
           type="time"
           className="form-control mt-3"
-          style={{
-            margin: "auto", // Center the input element vertically
-            width: "200px",
-          }}
-          id="timePicker"
+          id="time-picker"
           value={user.alarm_time}
           onChange={handleTimeChange}
         />
@@ -129,9 +120,8 @@ const Alarm = () => {
         />
         <button
           className="mt-4"
-          id="saveAlarm"
+          id="save-alarm"
           color="secondary"
-          style={{ border: ".5px solid gray", borderRadius: "15px" }}
           onClick={() => {
             setButtonText("Saved");
           }}
