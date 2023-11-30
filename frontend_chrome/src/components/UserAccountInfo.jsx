@@ -1,7 +1,7 @@
-import { Button, Modal, Input, Form } from "reactstrap";
-import { getUserAccountInfo, deleteAccount } from "../helpers/actionCreators";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Input } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteAccount } from "../helpers/actionCreators";
 import ChangePassword from "./ChangePassword";
 
 const UserAccountInfo = ({ closeSettingsModal }) => {

@@ -7,6 +7,7 @@ import SummaryVoice from "./SummaryVoice";
 import TagsModal from "./TagsModal";
 import TabsModal from "./TabsModal";
 import SummaryTextArea from "./SummaryTextArea";
+
 const MiddleRowMain = () => {
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);

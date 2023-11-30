@@ -1,5 +1,3 @@
-import "../styles/Home.css";
-import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getPost, getUserAccountInfo } from "../helpers/actionCreators";
@@ -8,6 +6,8 @@ import Auth from "./Auth";
 import AuthModal from "./AuthModal";
 import AuthModalHeader from "./AuthModalHeader";
 import MainContainer from "./MainContainer";
+import "../styles/Home.css";
+import "react-quill/dist/quill.snow.css";
 
 const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
   const user = useSelector((state) => state?.user);

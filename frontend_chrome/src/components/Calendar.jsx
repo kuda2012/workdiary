@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPost } from "../helpers/actionCreators";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch, useSelector } from "react-redux";
-import { getPost } from "../helpers/actionCreators";
 
 const Calendar = () => {
   const date = useSelector((state) => state.date);

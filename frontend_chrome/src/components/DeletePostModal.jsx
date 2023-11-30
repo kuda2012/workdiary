@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "../styles/DeletePostModal.css"; // You can create your own CSS for styling
 

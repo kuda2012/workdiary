@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "../styles/LoginOrSignup.css";
 import { useDispatch } from "react-redux";
 import { Button } from "reactstrap";
 import { login, signup } from "../helpers/actionCreators";
+import "../styles/LoginOrSignup.css";
+
 const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
   const dispatch = useDispatch();
   const INITIAL_STATE = {

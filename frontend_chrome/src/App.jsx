@@ -1,10 +1,10 @@
-import "./App.css";
-import Navbar from "./components/Navbar";
-import Router from "./Router";
 import { useDispatch, useSelector } from "react-redux";
-import { isWorksnapTokenCurrent } from "./helpers/actionCreators";
 import { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
+import { isWorksnapTokenCurrent } from "./helpers/actionCreators";
+import Navbar from "./components/Navbar";
+import Router from "./Router";
+import "./App.css";
 
 function App() {
   const worksnapToken = useSelector((state) => state.worksnap_token);

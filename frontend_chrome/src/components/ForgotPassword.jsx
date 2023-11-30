@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import "../styles/ForgotPassword.css";
 import { useDispatch } from "react-redux";
 import { Button } from "reactstrap";
 import { forgotPassword } from "../helpers/actionCreators";
-const ForgotPassword = ({ isForgotPassword, setIsForgotPassword }) => {
+import "../styles/ForgotPassword.css";
+
+const ForgotPassword = () => {
   const dispatch = useDispatch();
   const INITIAL_STATE = {
     email: "",

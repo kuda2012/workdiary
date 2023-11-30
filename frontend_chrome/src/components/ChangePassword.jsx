@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "../styles/ChangePassword.css";
-import { Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { changePassword } from "../helpers/actionCreators";
+import { Button } from "reactstrap";
+import "../styles/ChangePassword.css";
 
 const ChangePassword = ({ closeSettingsModal }) => {
   const INITIAL_STATE = {

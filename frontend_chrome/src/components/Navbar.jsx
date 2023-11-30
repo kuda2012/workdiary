@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar as ReactNavBar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginGoogle,
-  loggingIn,
-  resetApp,
-  setGoogleAccessToken,
-} from "../helpers/actionCreators";
+import { loginGoogle, resetApp } from "../helpers/actionCreators";
 import SearchBar from "./SearchBar";
 
 const NavBar = ({ openAuthModal }) => {

@@ -1,19 +1,13 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Tab from "./Tab";
+import { Button } from "reactstrap";
 import {
   bulkDeleteTabs,
   createTabs,
   deleteTab,
   openTabs,
 } from "../helpers/actionCreators";
-import { useEffect, useState } from "react";
-import {
-  Button,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import Tab from "./Tab";
 import "../styles/Tabs.css";
 
 const Tabs = () => {
