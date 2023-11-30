@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "../styles/SettingsModal.css"; // You can create your own CSS for styling
+import "../styles/SettingsModal.css";
 
 const SettingsModal = ({
   isSettingsModalOpen,

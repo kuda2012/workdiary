@@ -2,6 +2,7 @@ import { useState } from "react";
 import GoogleSignupButton from "./GoogleSignupButton";
 import LoginOrSignup from "./LoginOrSignup";
 import ForgotPassword from "./ForgotPassword";
+import "../styles/Auth.css";
 
 const Auth = () => {
   const [isSignup, setIsSignup] = useState(true);
@@ -10,10 +11,7 @@ const Auth = () => {
     <div className="container">
       <div className="row flex-column align-items-center">
         <div className="col-6 mb-5 mt-5">
-          <img
-            style={{ position: "relative", left: "10px" }}
-            src="work_diary_0.png"
-          />
+          <img id="login-logo" src="work_diary_0.png" />
         </div>
         {!isForgotPassword && (
           <>
@@ -32,15 +30,13 @@ const Auth = () => {
             </div>
             <div className="col mt-3 text-center">
               <span
-                style={{ cursor: "pointer" }}
+                id="span-auth-toggler"
                 onClick={() => setIsSignup(!isSignup)}
               >
                 {isSignup
                   ? `Already have an account? `
                   : "Don't have an account? "}
-                <b style={{ textDecoration: "underline" }}>
-                  {isSignup ? "LOG IN" : "SIGN UP"}
-                </b>
+                <b id="bold-auth-toggler">{isSignup ? "LOG IN" : "SIGN UP"}</b>
               </span>
             </div>
           </>
@@ -52,13 +48,13 @@ const Auth = () => {
                 isForgotPassword={isForgotPassword}
                 setIsForgotPassword={setIsForgotPassword}
               />
-            </div>{" "}
+            </div>
             <div className="col mt-3 text-center forgot-password">
               <span
-                style={{ cursor: "pointer" }}
+                id="span-auth-toggler"
                 onClick={() => setIsForgotPassword(false)}
               >
-                <b style={{ textDecoration: "underline" }}> Back to login</b>
+                <b id="bold-auth-toggler"> Back to login</b>
               </span>
             </div>
           </>

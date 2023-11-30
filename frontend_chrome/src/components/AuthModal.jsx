@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "../styles/AuthModal.css"; // You can create your own CSS for styling
+import "../styles/AuthModal.css";
 
 const AuthModal = ({ isAuthModalOpen, closeAuthModal, children }) => {
   if (!isAuthModalOpen) return null;

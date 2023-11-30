@@ -1,19 +1,33 @@
-.center-row {
-  min-height: 100vh; /* Ensure the container takes up the full viewport height */
-  display: flex;
-  justify-content: center; /* Horizontally center content */
-  align-items: center; /* Vertically center content */
+.unclickable-exception-elements,
+.unclickable-exception-elements * {
+  pointer-events: auto;
 }
-
 .main-container:not(.clickable) {
   pointer-events: none;
   /* Additional styles for non-clickable state */
 }
-.unclickable-exception-elements,
-.unclickable-exception-elements * {
-  pointer-events: auto;
-  /* Additional styles for the exception element */
+#calendar-column {
+  position: relative;
+  right: 10px;
 }
-#tabsHome:hover {
+
+#custom-date-picker-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+#tabs-home {
+  transform: rotate(-90deg);
+  border: 0.5px solid gray;
+  position: relative;
+  top: 25px;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+}
+
+#tabs-home:hover {
   border: 1.5px solid #646cff !important;
 }

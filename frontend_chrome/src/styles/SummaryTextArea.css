@@ -1,5 +1,11 @@
-#summaryTextContainer {
+#summary-text-container {
   width: 500px;
+}
+#toolbar {
+  border-radius: 5px 5px 0px 0px;
+}
+.ql-container {
+  border-radius: 0px 0px 5px 5px;
 }
 .ql-editor {
   min-height: 300px;

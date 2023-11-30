@@ -1,0 +1,15 @@
+#login-logo {
+  position: relative;
+  left: 10px;
+}
+
+#span-auth-toggler {
+  cursor: pointer;
+}
+
+#bold-auth-toggler {
+  text-decoration: underline;
+}
+#bold-auth-toggler:hover {
+  color: #007bff;
+}

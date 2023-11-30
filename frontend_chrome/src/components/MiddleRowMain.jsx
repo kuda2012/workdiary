@@ -7,6 +7,7 @@ import SummaryVoice from "./SummaryVoice";
 import TagsModal from "./TagsModal";
 import TabsModal from "./TabsModal";
 import SummaryTextArea from "./SummaryTextArea";
+import "../styles/Home.css";
 
 const MiddleRowMain = () => {
   const post = useSelector((state) => state.post);
@@ -62,27 +63,8 @@ const MiddleRowMain = () => {
         </>
       </div>
       <div className="col-2 d-flex align-items-center justify-content-end px-0">
-        <button
-          id="tabsHome"
-          style={{
-            transform: "rotate(-90deg)",
-            border: ".5px solid gray",
-            position: "relative",
-            // left: "10px",
-            top: "25px",
-            // top: "34px",
-            // right: "0",
-          }}
-          onClick={() => openTabsModal()}
-        >
-          <span
-            style={{
-              fontSize: "1.25rem", // Set font size to resemble h5 size
-              textTransform: "uppercase", // Convert text to uppercase
-            }}
-          >
-            Your tabs
-          </span>
+        <button id="tabs-home" onClick={() => openTabsModal()}>
+          <span>Your tabs</span>
         </button>
         {isTabsModalOpen && (
           <TabsModal

@@ -18,39 +18,6 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const timerRef = useRef(null);
   const audioUrlRef = useRef(null);
   const dispatch = useDispatch();
-  const summaryVoice = useSelector((state) => state?.post?.summary_voice);
-
-  const playSummaryVoice = () => {
-    if (summaryVoice) {
-      // Decode the Base64 audio data
-      const decodedData = atob(summaryVoice);
-
-      // Convert the decoded data to a Uint8Array
-      const uint8Array = new Uint8Array(decodedData.length);
-      for (let i = 0; i < decodedData.length; i++) {
-        uint8Array[i] = decodedData.charCodeAt(i);
-      }
-
-      // Create a Blob from the Uint8Array with the appropriate MIME type
-      const audioBlob = new Blob([uint8Array], { type: "audio/wav" });
-
-      // Create an audio URL
-      const audioUrl = URL.createObjectURL(audioBlob);
-
-      // Set the audio element's source
-      audioRef.current.src = audioUrl;
-
-      // Play the audio
-      audioRef.current
-        .play()
-        .then(() => {
-          setIsPlaybackFinished(false);
-        })
-        .catch((error) => {
-          console.error("Error playing audio:", error);
-        });
-    }
-  };
 
   const startRecording = async () => {
     try {
@@ -182,14 +149,6 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
           : "Hey, first_name. Tell us. How was work today?"}
       </h4>
       <div>
-        {/* {summaryVoice && (
-          <button
-            onClick={playSummaryVoice} // Add this function to play the summaryVoice
-            disabled={!summaryVoice || isRecording}
-          >
-            Play Summary Voice
-          </button>
-        )} */}
         <button
           onClick={
             !isRecording && !isPaused && !audioDuration
@@ -202,10 +161,9 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
             !isPlaybackFinished || (audioDuration && !isPaused && !isRecording)
           }
           id="recordButton"
-          className="recorder"
         >
           <span
-            id="recordRedDot"
+            id="record-red-dot"
             className={`${isRecording && "pulsating-red-dot"}`}
           />
           <span>
@@ -215,38 +173,24 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
               ? "RECORDING"
               : "RESUME"}
           </span>
-          {/* <img src="/microphone.png" title="Record"></img> */}
         </button>
-        <button
-          className="recorder"
-          onClick={pauseRecording}
-          disabled={!isRecording}
-        >
+        <button onClick={pauseRecording} disabled={!isRecording}>
           <img src="/pause.png" title="Pause"></img>
         </button>
-        <button
-          className="recorder"
-          onClick={stopRecording}
-          disabled={!audioDuration}
-        >
+        <button onClick={stopRecording} disabled={!audioDuration}>
           <img src="/stop_1.png" title="Stop Recording"></img>
         </button>
         <button
-          className="recorder"
           onClick={playRecording}
           disabled={!audioDuration || isRecording}
         >
           <img src="/play_1.png" title="Play"></img>
         </button>
-        <button
-          className="recorder"
-          onClick={resetRecording}
-          disabled={!audioDuration}
-        >
+        <button onClick={resetRecording} disabled={!audioDuration}>
           <img src="/trash_1.png" title="Reset"></img>
         </button>
         <button
-          className={`recorder ${
+          className={`${
             audioDuration && !isRecording && !interpreting && "send"
           }`}
           onClick={() => {
@@ -271,21 +215,24 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
               wrapperClass="blocks-wrapper"
             />
           )}
-          {/* <img src="/voice_to_text.png" title="Interpret" /> */}
         </button>
       </div>
       <div
-        style={{ color: `${audioDuration < 165 ? "" : "red"}` }}
+        id={audioDuration >= 165 && `recording-duration-too-long`}
         className="m-3"
       >
         Recording Duration:{" "}
-        <span style={{ color: `${isRecording && "green"}` }}>
+        <b
+          id={
+            (isRecording && `is-recording-duration`) ||
+            (isRecording && audioDuration < 165 && `is-recording-duration`)
+          }
+        >
           {audioDuration}s
-        </span>
+        </b>
       </div>
       <div className="mb-5">
         <audio controls ref={audioRef} onEnded={handleAudioEnded} />
-        {/* <AudioPlayer ref={audioRef} controls onEnded={handleAudioEnded} /> */}
       </div>
     </div>
   );

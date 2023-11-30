@@ -4,7 +4,9 @@
 #save-alarm:hover {
   border: 1.5px solid #646cff !important;
 }
-
+.dropdown-menu {
+  border-radius: 8px !important;
+}
 #alarm-dropdown {
   text-align: center;
 }

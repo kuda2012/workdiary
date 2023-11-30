@@ -1,22 +1,20 @@
+import "../styles/AuthModal.css";
+
 const AuthModalHeader = ({ openHowToModal }) => {
   return (
     <div className="row justify-content-between">
       <div className="col">
-        <h1 style={{ textTransform: "none" }}>Work Diary</h1>
+        <h1 id="header-how-to-auth-modal-header">Work Diary</h1>
       </div>
       <div className="col">
         <span
-          style={{
-            cursor: "pointer",
-            position: "relative",
-            left: "150px",
-          }}
+          id="span-how-to-auth-modal-header"
           onClick={() => {
             openHowToModal();
           }}
           className="unclickable-exception-elements"
         >
-          <b style={{ textDecoration: "underline" }}>About</b>
+          <b id="bold-how-to-auth-modal-header">About</b>
         </span>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Input } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAccount } from "../helpers/actionCreators";
 import ChangePassword from "./ChangePassword";
+import "../styles/Alarm.css";
 
 const UserAccountInfo = ({ closeSettingsModal }) => {
   const dispatch = useDispatch();
@@ -12,9 +13,6 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [confirmation, setConfirmation] = useState("");
 
-  const toggleModal = () => {
-    setModalOpen(!isModalOpen);
-  };
   const handleDelete = (e) => {
     // Put your delete account logic here
     e.preventDefault();
@@ -40,7 +38,6 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
         aria-expanded="false"
         style={{
           textAlign: "center",
-          // border: ".2px solid black",
         }}
       >
         <img src="/user_information.png"></img>

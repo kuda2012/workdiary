@@ -53,7 +53,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   }, [summaryText]);
 
   return (
-    <div id="summaryTextContainer">
+    <div id="summary-text-container">
       <CustomToolBar openTagsModal={openTagsModal} />
       <ReactQuill
         value={localSummaryText}

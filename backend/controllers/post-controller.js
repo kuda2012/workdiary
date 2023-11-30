@@ -13,7 +13,7 @@ exports.create = async (req, res, next) => {
     let updatedLog;
     let getLog;
     if (!post) {
-      if (req.body.summary_voice && req.body.audio_duration < 180) {
+      if (req.body.summary_voice && req.body.audio_duration <= 180) {
         getLog = await TranscribeLog.getLog(id);
         if (!getLog) {
           const summaryText = await speechToText(req.body.summary_voice);

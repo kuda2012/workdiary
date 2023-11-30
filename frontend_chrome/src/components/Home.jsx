@@ -6,8 +6,8 @@ import Auth from "./Auth";
 import AuthModal from "./AuthModal";
 import AuthModalHeader from "./AuthModalHeader";
 import MainContainer from "./MainContainer";
-import "../styles/Home.css";
 import "react-quill/dist/quill.snow.css";
+import "../styles/Home.css";
 
 const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
   const user = useSelector((state) => state?.user);
@@ -32,7 +32,7 @@ const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
 
   return (
     <div
-      className="outerDiv"
+      id="outer-div"
       onClick={(e) => {
         !worksnapToken &&
         !isAuthModalOpen &&

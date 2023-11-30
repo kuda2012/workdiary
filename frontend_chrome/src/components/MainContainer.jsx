@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import TopRowMain from "./TopRowMain";
 import MiddleRowMain from "./MiddleRowMain";
 import BottomRowMain from "./BottomRowMain";
+import "../styles/Home.css";
 
 const MainContainer = ({
   isHowToModalOpen,

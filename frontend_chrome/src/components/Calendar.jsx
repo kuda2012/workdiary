@@ -3,6 +3,7 @@ import { getPost } from "../helpers/actionCreators";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
+import "../styles/Home.css";
 
 const Calendar = () => {
   const date = useSelector((state) => state.date);
@@ -40,17 +41,11 @@ const Calendar = () => {
 
 const CustomDatePickerInput = ({ value, onClick, onDateChange }) => (
   <input
+    id="custom-date-picker-input"
     type="text"
     value={value}
     onClick={onClick}
     onChange={onDateChange}
-    style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      textAlign: "center",
-      width: "100%",
-    }}
   />
 );
 

@@ -11,8 +11,8 @@ const HowToModal = ({ isHowToModalOpen, closeHowToModal, children }) => {
   };
   return isHowToModalOpen
     ? ReactDOM.createPortal(
-        <div className="howTo-modal-overlay" onClick={handleOverlayClick}>
-          <div className="howTo-modal" style={{ width: "500px" }}>
+        <div className="how-to-modal-overlay" onClick={handleOverlayClick}>
+          <div className="how-to-modal" style={{ width: "500px" }}>
             {children}
           </div>
         </div>,

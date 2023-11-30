@@ -8,7 +8,6 @@ const axios = require("axios");
 const { SECRET_KEY, EMAIL_PASSWORD } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
 
-
 class User {
   static async createGoogleUser(payload) {
     const getUser = await db.query(
@@ -188,9 +187,7 @@ class User {
             pass: EMAIL_PASSWORD,
           },
           tls: {
-            rejectUnauthorized: false, // Accept self-signed certificates
-            // Or explicitly set the CA certificate if available
-            // ca: [fs.readFileSync('path/to/your/ca.crt')]
+            rejectUnauthorized: false,
           },
         });
         const token = jwt.sign({ user_id: user.id, email }, SECRET_KEY, {

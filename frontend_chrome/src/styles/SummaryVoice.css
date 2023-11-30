@@ -1,7 +1,7 @@
 .send {
   background-color: rgb(83, 173, 106);
 }
-#recordRedDot {
+#record-red-dot {
   width: 10px; /* Adjust the size as needed */
   height: 10px; /* Adjust the size as needed */
   border-radius: 50%; /* Make it a circle by setting border-radius to 50% */
@@ -10,15 +10,20 @@
   margin-right: 5px;
 }
 
-.recorder {
-  border-radius: 5px 5px 5px 5px;
+#is-recording-duration {
+  color: green;
 }
+
+#recording-duration-too-long {
+  color: red;
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1); /* Initial size */
   }
   50% {
-    transform: scale(1.2); /* Larger size */
+    transform: scale(1.3); /* Larger size */
   }
   100% {
     transform: scale(1); /* Back to the original size */

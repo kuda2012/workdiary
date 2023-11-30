@@ -5,6 +5,7 @@ import Settings from "./Settings";
 import SettingsModal from "./SettingsModal";
 import HowToModal from "./HowToModal";
 import HowTo from "./HowTo";
+import "../styles/Home.css";
 
 const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
   const worksnapToken = useSelector((state) => state.worksnap_token);
@@ -14,10 +15,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
 
   return (
     <div className="row justify-content-between">
-      <div
-        className="col mt-1 d-flex justify-content-start px-0"
-        // style={{ position: "relative", right: "163px" }}
-      >
+      <div className="col mt-1 d-flex justify-content-start px-0">
         <button
           onClick={() => openHowToModal()}
           className="unclickable-exception-elements"
@@ -36,13 +34,10 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
           </HowToModal>
         )}
       </div>
-      <div className="col mt-2" style={{ position: "relative", right: "10px" }}>
+      <div id="calendar-column" className="col mt-2">
         <Calendar />
       </div>
-      <div
-        className="col mt-1 d-flex justify-content-end px-0"
-        // style={{ position: "relative", left: "132px" }}
-      >
+      <div className="col mt-1 d-flex justify-content-end px-0">
         <button onClick={() => openSettingsModal()}>
           <img src="/gear-settings.png"></img>
         </button>
