@@ -12,12 +12,7 @@ const AuthModal = ({ isAuthModalOpen, closeAuthModal, children }) => {
   return isAuthModalOpen
     ? ReactDOM.createPortal(
         <div className="auth-modal-overlay" onClick={handleOverlayClick}>
-          <div
-            className="auth-modal"
-            style={{ position: "relative", width: "500px" }}
-          >
-            {children}
-          </div>
+          <div className="auth-modal">{children}</div>
         </div>,
         document.body
       )

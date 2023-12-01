@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { Autosave } from "react-autosave";
+import { useSelector } from "react-redux";
 import ReactQuill from "react-quill";
+import CustomToolBar from "./CustomToolbar";
 import "react-quill/dist/quill.snow.css";
 import "../styles/SummaryTextArea.css";
-import { Autosave } from "react-autosave";
-import CustomToolBar from "./CustomToolbar";
-import { useSelector } from "react-redux";
 
 const modules = {
   toolbar: {

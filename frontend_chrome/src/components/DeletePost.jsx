@@ -9,7 +9,7 @@ const DeletePost = ({ closeDeletePostModal }) => {
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const dispatch = useDispatch();
   return (
-    <div style={{ textAlign: "center" }}>
+    <div>
       <p>Are you sure you want to delete your post for {date}?</p>
       <Button
         color="danger"

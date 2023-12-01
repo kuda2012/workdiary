@@ -53,20 +53,9 @@ const NavBar = ({ openAuthModal }) => {
                   onClick={(e) => {
                     e.preventDefault();
                     openAuthModal();
-                    // try {
-                    //   dispatch(loggingIn());
-                    //   chrome.identity.getAuthToken(
-                    //     { interactive: true },
-                    //     function (token) {
-                    //       dispatch(setGoogleAccessToken(token));
-                    //     }
-                    //   );
-                    // } catch (error) {
-                    //   dispatch(resetApp());
-                    // }
                   }}
                 >
-                  Login
+                  Login/Sign-up
                 </NavLink>
               </NavItem>
             </>

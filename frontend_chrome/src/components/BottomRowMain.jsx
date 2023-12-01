@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import DeletePostModal from "./DeletePostModal";
 import DeletePost from "./DeletePost";
+import "../styles/Home.css";
 
 const BottomRowMain = () => {
   const post = useSelector((state) => state.post);
@@ -14,7 +15,7 @@ const BottomRowMain = () => {
     <div className="row">
       <div className="col">
         <button
-          style={{ position: "relative", left: "300px" }}
+          id="delete-post-button"
           onClick={() => {
             if (post) {
               openDeletePostModal();

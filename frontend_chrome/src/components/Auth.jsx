@@ -36,7 +36,7 @@ const Auth = () => {
                 {isSignup
                   ? `Already have an account? `
                   : "Don't have an account? "}
-                <b id="bold-auth-toggler">{isSignup ? "LOG IN" : "SIGN UP"}</b>
+                <b id="bold-auth-toggler">{isSignup ? "LOGIN" : "SIGN UP"}</b>
               </span>
             </div>
           </>

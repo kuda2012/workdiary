@@ -124,10 +124,8 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
               <span
                 className="forgot-password"
                 onClick={() => setIsForgotPassword(true)}
-                style={{ cursor: "pointer", textDecoration: "underline" }}
               >
                 Forgot your password?
-                {/* <b style={{ textDecoration: "underline" }}> CLICK HERE</b> */}
               </span>
             )}
           </form>

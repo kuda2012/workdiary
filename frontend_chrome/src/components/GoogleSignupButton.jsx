@@ -1,18 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "reactstrap";
 import {
   loggingIn,
   resetApp,
   setGoogleAccessToken,
 } from "../helpers/actionCreators";
-import { Button } from "reactstrap";
+import "../styles/LoginOrSignup.css";
 
 const GoogleLoginButton = ({ isSignup }) => {
   const dispatch = useDispatch();
   const signingIn = useSelector((state) => state.logging_in);
   return (
     <Button
+      id="google-login-button"
       color="primary"
-      style={{ width: "300px", position: "relative", right: "40px" }}
       onClick={() => {
         try {
           dispatch(loggingIn());
@@ -24,15 +25,10 @@ const GoogleLoginButton = ({ isSignup }) => {
         }
       }}
     >
-      {!signingIn && (
-        <img
-          style={{ position: "relative", right: "50px" }}
-          src="/Google.png"
-        ></img>
-      )}
-      <span style={{ position: "relative", right: "12px" }}>
+      {!signingIn && <img id="google-login-img" src="/Google.png"></img>}
+      <span id="google-login-span">
         {!signingIn
-          ? `${isSignup ? "Sign up" : "Log-in"} with Google `
+          ? `${isSignup ? "Sign up" : "Login"} with Google `
           : "Authenticating..."}
       </span>
     </Button>

@@ -13,3 +13,7 @@
 .ql-editor strong {
   font-weight: bold;
 }
+#show-tags {
+  position: relative;
+  bottom: 3px;
+}

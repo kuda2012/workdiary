@@ -33,8 +33,9 @@ function App() {
         <>
           <Navbar openAuthModal={openAuthModal} />
           <div
+            id='three-dots-container'
             className="container d-flex justify-content-center align-items-center"
-            style={{ height: "80%" }}
+ 
           >
             <div className="row">
               <div className="col">

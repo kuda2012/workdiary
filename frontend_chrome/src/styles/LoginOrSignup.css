@@ -28,3 +28,17 @@
   /* Change underline color and style on hover */
   color: #007bff;
 }
+
+#google-login-button {
+  width: 300px;
+  position: relative;
+  right: 40px;
+}
+#google-login-img {
+  position: relative;
+  right: 50px;
+}
+#google-login-span {
+  position: relative;
+  right: 12px;
+}
