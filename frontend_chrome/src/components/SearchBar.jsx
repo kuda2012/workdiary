@@ -12,8 +12,10 @@ const SearchBar = ({ toggleSearchBar }) => {
   // State to hold the search input text
   const worksnapToken = useSelector((state) => state.worksnap_token);
   const searchResults = useSelector((state) => state.search_results);
+  const query = useSelector((state) => state.query);
+
   const dispatch = useDispatch();
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("" || query);
   const [isOpen, setIsOpen] = useState(false);
 
   // Handler to update the search input text
@@ -52,6 +54,7 @@ const SearchBar = ({ toggleSearchBar }) => {
         id="search-input"
         type="text"
         value={searchText}
+        autocomplete="off"
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}
         onBlur={() => setTimeout(() => setIsOpen(false), 200)}
@@ -68,10 +71,9 @@ const SearchBar = ({ toggleSearchBar }) => {
               }}
             >
               Date: {result.date} -{" "}
-              {result.match_source === "summary_text"
-                ? "Summary"
-                : result.match_source.charAt(0).toUpperCase() +
-                  result.match_source.slice(1)}
+              {result.match_source === "tab_title"
+                ? "tab title"
+                : result.match_source}
               : {result[result.match_source]}
             </button>
           ))}

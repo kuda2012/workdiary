@@ -76,7 +76,7 @@ exports.search = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
     const searchResults = await Post.search(id, req.query.query);
-    res.send({ results: searchResults });
+    res.send({ results: searchResults, query: req.query.query });
   } catch (error) {
     next(error);
   }

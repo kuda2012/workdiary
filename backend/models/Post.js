@@ -59,29 +59,29 @@ class Post {
   static async search(user_id, query) {
     let searchResults = await db.query(
       `WITH RankedResults AS (
-        SELECT
-          p.date,
-          p.summary_text,
-          tabs.url,
-          tabs.title,
-          STRING_AGG(tags.text, ', ') AS tag,
-          (CASE
+    SELECT
+        p.date,
+        p.summary_text as note,
+        tabs.url as tab,
+        tabs.title as tab_title,
+        STRING_AGG(tags.text, ', ') AS tag,
+        (CASE
             WHEN tags.text ILIKE '%' || $2 || '%' THEN 'tag'
-            WHEN p.summary_text ILIKE '%' || $2 || '%' THEN 'summary_text'
-            WHEN tabs.url ILIKE '%' || $2 || '%' THEN 'url'
-            WHEN tabs.title ILIKE '%' || $2 || '%' THEN 'title'
+            WHEN p.summary_text ILIKE '%' || $2 || '%' THEN 'note'
+            WHEN tabs.url ILIKE '%' || $2 || '%' THEN 'tab'
+            WHEN tabs.title ILIKE '%' || $2 || '%' THEN 'tab_title'
             ELSE 'no_match'
-          END) AS match_source,
-          ROW_NUMBER() OVER (PARTITION BY p.date ORDER BY p.date) AS rn
-        FROM
-          posts AS p
-        LEFT JOIN
-          tags ON p.id = tags.post_id
-        LEFT JOIN
-          tabs ON p.id = tabs.post_id
-        WHERE
-          p.user_id = $1
-          AND (
+        END) AS match_source,
+        ROW_NUMBER() OVER (PARTITION BY p.date ORDER BY p.date) AS rn
+    FROM
+        posts AS p
+    LEFT JOIN
+        tags ON p.id = tags.post_id
+    LEFT JOIN
+        tabs ON p.id = tabs.post_id
+    WHERE
+        p.user_id = $1
+        AND (
             tags.text ILIKE '%' || $2 || '%'
             OR
             p.summary_text ILIKE '%' || $2 || '%'
@@ -89,24 +89,24 @@ class Post {
             tabs.url ILIKE '%' || $2 || '%'
             OR
             tabs.title ILIKE '%' || $2 || '%'
-          )
-        GROUP BY
-          p.date, p.summary_text, tabs.url, tabs.title, match_source
         )
-        SELECT
-        date,
-        summary_text,
-        url,
-        title,
-        tag,
-        match_source
-        FROM RankedResults
-        WHERE rn = 1;
+    GROUP BY
+        p.date, p.summary_text, tabs.url, tabs.title, match_source
+)
+SELECT
+    date,
+    note,
+    tab,
+    tab_title,
+    tag,
+    match_source
+FROM RankedResults
+WHERE rn = 1;
 `,
+
       [user_id, query]
     );
-    searchResults = formatSearchResults(searchResults, query);
-    return searchResults;
+    return formatSearchResults(searchResults, query);
   }
   // static async getSharedPost(pointerId) {
   //   const { post_id } = await db.oneOrNone(

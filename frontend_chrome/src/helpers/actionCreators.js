@@ -111,7 +111,7 @@ export function searchJournal(worksnap_token, query) {
       if (data.results.length === 0) {
         alert("No matches for this query");
       } else {
-        dispatch(setSearchResults(data.results));
+        dispatch(setSearchResults(data.results, data.query));
       }
     } catch (error) {
       console.log(error);
@@ -520,10 +520,11 @@ export function clearSearchResults() {
     type: "CLEAR_SEARCH_RESULTS",
   };
 }
-export function setSearchResults(results) {
+export function setSearchResults(results, query) {
   return {
     type: "SET_SEARCH_RESULTS",
     results,
+    query,
   };
 }
 export function halfReset(all_post_dates) {
