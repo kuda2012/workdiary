@@ -483,7 +483,7 @@ export async function setAlarm(user) {
     });
     chrome.alarms.onAlarm.addListener(async (alarm) => {
       if (alarm.name === "myAlarm") {
-        console.log("fire notification");
+        console.log("fire alarm");
         chrome.notifications.create({
           type: "basic",
           iconUrl: "w_extension.png",

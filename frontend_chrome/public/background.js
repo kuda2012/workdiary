@@ -1,53 +1,26 @@
 let windowId;
 let tabId;
-async function openPopup() {
+async function openApp() {
   if (tabId) {
+    console.log(tabId);
     chrome.tabs.remove(tabId);
   }
-  // chrome.windows.create(
-  //   {
-  //     url: "index.html", // Replace with your HTML file's path
-  //     type: "popup",
-  //     width: 800, // Set the width and height as desired
-  //     height: 980,
-  //     top: 200, // Adjust the window's position as needed
-  //     left: 200,
-  //   },
-  //   function (window) {
-  //     windowId = window.id;
-  //   }
-  // );
   chrome.tabs.create({ url: "/index.html" }, (tab) => {
     tabId = tab.id;
   });
 }
 
-function closePopup() {
-  // chrome.windows.remove(windowId, function () {
-  //   windowId = undefined;
-  // });
+function closeApp() {
   chrome.tabs.remove(tabId);
   tabId = undefined;
 }
 
 chrome.action.onClicked.addListener(function () {
-  // if (!windowId) {
-  //   openPopup();
-  // } else {
-  //   closePopup();
-  // }
   if (!tabId) {
-    openPopup();
+    openApp();
   } else {
-    closePopup();
+    closeApp();
   }
-});
-
-chrome.windows.onRemoved.addListener(function () {
-  // Handle window removal here
-  windowId = undefined;
-
-  // Perform any necessary cleanup or tasks
 });
 
 chrome.runtime.onInstalled.addListener(async () => {
@@ -128,16 +101,15 @@ chrome.runtime.onInstalled.addListener(async () => {
       });
       chrome.alarms.onAlarm.addListener(async (alarm) => {
         if (alarm.name === "myAlarm") {
-          console.log("fire notification");
+          console.log("fire alarm");
           chrome.notifications.create({
             type: "basic",
             iconUrl: "w_extension.png",
             title: "Worksnap",
-            message: `Reminder to log in your Work Diary (click here to open app)`,
-            // Include sound property for the sound file
+            message: `Reminder to write your Work Diary (click here to open app)`,
           });
           chrome.notifications.onClicked.addListener(() => {
-            openPopup();
+            openApp();
           });
         }
       });
