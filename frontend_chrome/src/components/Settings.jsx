@@ -3,15 +3,8 @@ import Alarm from "./Alarm";
 import UserAccountInfo from "./UserAccountInfo";
 
 const Settings = ({ closeSettingsModal }) => {
-  const componentStyle = {
-    display: "flex",
-    justifyContent: "space-around",
-    marginTop: "50px",
-    // Add this property for space between the components
-  };
-
   return (
-    <div style={componentStyle}>
+    <div id="settings-container">
       <UserAccountInfo closeSettingsModal={closeSettingsModal} />
       <Alarm />
     </div>

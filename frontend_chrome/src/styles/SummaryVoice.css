@@ -1,3 +1,15 @@
+/* #media-recorder {
+  position: relative;
+  right: 10px;
+}
+#record-duration-audio-ref {
+  position: relative;
+  right: 10px;
+} */
+#summary-voice {
+  position: relative;
+  right: 5px;
+}
 .send {
   background-color: rgb(83, 173, 106);
 }

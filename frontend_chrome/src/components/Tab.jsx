@@ -10,7 +10,7 @@ const Tab = ({
     <>
       <div className="col-md-2">
         <input
-          style={{ position: "relative", top: "2px" }}
+          className="tab-checkbox"
           type="checkbox"
           checked={isSelected}
           onChange={() => {
@@ -30,11 +30,7 @@ const Tab = ({
         />
       </div>
       <div className="col-md-2">
-        <img
-          src={tab.icon}
-          alt="Tab Icon"
-          style={{ maxWidth: "16px", maxHeight: "16px" }}
-        />
+        <img className="tab-icon" src={tab.icon} alt="Tab Icon" />
       </div>
       <div className="col-md-6 tab-link-column">
         <b>
@@ -50,16 +46,7 @@ const Tab = ({
       </div>
 
       <div className="col-md-2">
-        <button
-          onClick={() => onTabDelete(tab.tab_id)}
-          style={{
-            fontSize: "12px",
-            padding: "4px 8px",
-            margin: "0",
-            backgroundColor: "lightgray",
-            border: "1px solid gray",
-          }}
-        >
+        <button className="delete-tab" onClick={() => onTabDelete(tab.tab_id)}>
           X
         </button>
       </div>

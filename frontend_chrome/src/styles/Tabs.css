@@ -1,5 +1,24 @@
-#dropdownMenuButton1::after {
+#drop-down-menu-button1::after {
   position: absolute;
   right: 60px;
   top: 50px;
+}
+
+#pull-current-tabs {
+  width: 100%;
+}
+
+#select-all-tabs-column {
+  position: relative;
+  right: 4px;
+}
+
+#select-all-tabs-label {
+  position: relative;
+  bottom: 1px;
+}
+
+#render-tabs-container {
+  max-height: 600px;
+  overflow-y: auto;
 }

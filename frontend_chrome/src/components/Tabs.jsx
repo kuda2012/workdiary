@@ -18,9 +18,7 @@ const Tabs = () => {
   const dispatch = useDispatch();
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
   const [tabsSelected, setTabsSelected] = useState(new Map());
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
   function onTabDelete(tab_id) {
     setTabsSelected((selectingTabs) => {
       selectingTabs.delete(tab_id);
@@ -63,8 +61,8 @@ const Tabs = () => {
         <div className="row">
           <div className="col-12">
             <Button
+              id="pull-current-tabs"
               color="primary"
-              style={{ width: "100%" }}
               onClick={() => dispatch(createTabs(worksnapToken, date))}
             >
               Pull Current tabs
@@ -73,38 +71,11 @@ const Tabs = () => {
         </div>
         <div className="row mt-2 justify-content-around align-items-center">
           <div className="col-6">
-            {/* <Button
-              // className="m-1"
-              color="info"
-              id="Popover1"
-              onClick={() => {
-                togglePopover();
-                // dispatch(openTabs(Array.from(tabsSelected.values())));
-              }}
-            > */}
-            {/* <div className="d-flex">
-              <Dropdown
-                isOpen={dropdownOpen}
-                toggle={toggle}
-                modifiers={{
-                  preventOverflow: { boundariesElement: "viewport" },
-                }}
-              >
-                <DropdownToggle color="info" caret size="md">
-                  Open selected in...
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem header>Header</DropdownItem>
-                  <DropdownItem>Some Action</DropdownItem>
-                  <DropdownItem text>Dropdown Item Text</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </div> */}
             <div class="dropdown">
               <button
                 class="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-info py-4 px-3"
                 type="button"
-                id="dropdownMenuButton1"
+                id="drop-down-menu-button1"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
@@ -112,7 +83,7 @@ const Tabs = () => {
               </button>
               <ul
                 class="dropdown-menu dropdown-menu-dark"
-                aria-labelledby="dropdownMenuButton1"
+                aria-labelledby="drop-down-menu-button1"
               >
                 <li>
                   <a
@@ -149,7 +120,6 @@ const Tabs = () => {
           </div>
           <div className="col-6">
             <Button
-              // className="m-1"
               color="danger"
               onClick={() => {
                 if (tabsSelected.size > 0) {
@@ -170,13 +140,10 @@ const Tabs = () => {
           </div>
         </div>
         <div className="row">
-          <div
-            style={{ position: "relative", right: "4px" }}
-            className="col-6 m-3"
-          >
+          <div id="select-all-tabs-column" className="col-6 m-3">
             <input
               type="checkbox"
-              id="selectAllInput"
+              id="select-all-tabs-input"
               checked={allBoxesSelected}
               onChange={async () => {
                 if (!tabs || tabs?.length === 0) return;
@@ -193,18 +160,12 @@ const Tabs = () => {
                 }
               }}
             />
-            <label
-              style={{ position: "relative", bottom: "1px" }}
-              for="selectAllInput"
-            >
+            <label id="select-all-tabs-label" for="select-all-tabs-input">
               <span className="ms-2">Select all</span>
             </label>
           </div>
         </div>
-        <div
-          className="container"
-          style={{ maxHeight: "600px", overflowY: "auto" }}
-        >
+        <div id="render-tabs-container" className="container">
           {tabs &&
             tabs.map((tab, index) => (
               <div key={index} className="row">

@@ -140,7 +140,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     }
   }, [audioDuration]);
   return (
-    <div className="mt-5">
+    <div className="mt-5" id="summary-voice">
       <h4 className="mb-4">
         {userAccountInfo
           ? `Hey, ${

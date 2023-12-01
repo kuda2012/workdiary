@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginGoogle, resetApp } from "../helpers/actionCreators";
 import SearchBar from "./SearchBar";
+import "../styles/Navbar.css";
 
 const NavBar = ({ openAuthModal }) => {
   const dispatch = useDispatch();
@@ -25,22 +26,19 @@ const NavBar = ({ openAuthModal }) => {
     <>
       <ReactNavBar color="light" className="navbar-expand-lg">
         {worksnapToken && (
-          <NavItem style={{ listStyleType: "none" }} onClick={toggleSearchBar}>
-            <NavLink style={{ textDecoration: "none" }}>Search</NavLink>
+          <NavItem className="nav-item" onClick={toggleSearchBar}>
+            <NavLink className="nav-link">Search</NavLink>
           </NavItem>
         )}
         {worksnapToken && isSearchBarVisible && (
           <SearchBar toggleSearchBar={toggleSearchBar} />
         )}
         <NavbarBrand
-          style={{
-            fontSize: "1.5rem",
-            position: "relative",
-            right: `${worksnapToken && isSearchBarVisible ? "161px" : "0px"}`,
-            textTransform: "none",
-          }}
+          className={`nav-brand ${
+            worksnapToken && isSearchBarVisible && "nav-brand-move-right"
+          }`}
         >
-          <NavLink to="#" style={{ textDecoration: "none" }}>
+          <NavLink to="#" className="nav-link">
             Work Diary
           </NavLink>
         </NavbarBrand>
@@ -49,13 +47,13 @@ const NavBar = ({ openAuthModal }) => {
             <>
               <NavItem>
                 <NavLink
-                  style={{ textDecoration: "none" }}
+                  className="nav-link"
                   onClick={(e) => {
                     e.preventDefault();
                     openAuthModal();
                   }}
                 >
-                  Login/Sign-up
+                  Login
                 </NavLink>
               </NavItem>
             </>
@@ -64,7 +62,7 @@ const NavBar = ({ openAuthModal }) => {
             <>
               <NavItem>
                 <NavLink
-                  style={{ textDecoration: "none" }}
+                  className="nav-link"
                   onClick={(e) => {
                     e.preventDefault();
                     dispatch(resetApp());

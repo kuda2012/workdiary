@@ -1,0 +1,9 @@
+#user-info-dropdown-button {
+  text-align: center;
+}
+.dropdown-menu {
+  border-radius: 8px !important;
+}
+#user-info-dropdown-menu {
+  width: 400px;
+}

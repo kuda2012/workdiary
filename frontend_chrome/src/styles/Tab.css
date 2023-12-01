@@ -9,3 +9,21 @@
   display: inline-block;
   max-width: 100%; /* Ensure the link doesn't exceed its parent's width */
 }
+
+.tab-checkbox {
+  position: relative;
+  top: 2px;
+}
+
+.tab-icon {
+  max-width: 16px;
+  max-height: 16px;
+}
+
+.delete-tab {
+  font-size: 12px;
+  padding: 4px 8px;
+  margin: 0;
+  background-color: lightgray;
+  border: 1px solid gray;
+}

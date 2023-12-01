@@ -3,14 +3,13 @@ import { Input } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAccount } from "../helpers/actionCreators";
 import ChangePassword from "./ChangePassword";
-import "../styles/Alarm.css";
+import "../styles/UserAccountInfo.css";
 
 const UserAccountInfo = ({ closeSettingsModal }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const allPostDates = useSelector((state) => state?.all_post_dates);
   const worksnapToken = useSelector((state) => state.worksnap_token);
-  const [isModalOpen, setModalOpen] = useState(false);
   const [confirmation, setConfirmation] = useState("");
 
   const handleDelete = (e) => {
@@ -30,23 +29,20 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
     <div className="dropdown">
       <button
         className="dropdown-toggle"
-        id="userInfoDropdown"
+        id="user-info-dropdown-button"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"
-        data-target="#userInfoDropdown"
+        data-target="#user-info-dropdown-button"
         aria-haspopup="true"
         aria-expanded="false"
-        style={{
-          textAlign: "center",
-        }}
       >
         <img src="/user_information.png"></img>
         <div> User Information</div>
       </button>
       <div
+        id="user-info-dropdown-menu"
         className="dropdown-menu"
-        aria-labelledby="userInfoDropdown"
-        style={{ width: "400px" }}
+        aria-labelledby="user-info-dropdown-button"
       >
         {user && (
           <div class="accordion" id="accordionExample">

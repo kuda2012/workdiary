@@ -6,6 +6,7 @@ import {
   getPost,
   searchJournal,
 } from "../helpers/actionCreators";
+import "../styles/SearchBar.css";
 
 const SearchBar = ({ toggleSearchBar }) => {
   // State to hold the search input text
@@ -46,49 +47,24 @@ const SearchBar = ({ toggleSearchBar }) => {
     }
   };
   return (
-    <form
-      className="search-bar"
-      onSubmit={handleFormSubmit}
-      style={{
-        width: "20%",
-        position: "relative",
-        right: "135px",
-        textAlign: "left",
-      }}
-    >
+    <form id="search-bar-form" onSubmit={handleFormSubmit}>
       <input
-        id="search"
+        id="search-input"
         type="text"
-        // placeholder="Search..."
         value={searchText}
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}
         onBlur={() => setTimeout(() => setIsOpen(false), 200)}
-        style={{ width: "100%" }}
       />
       {isOpen && searchResults && (
-        <div
-          className="search-results"
-          style={{
-            position: "absolute",
-            zIndex: 1, // Places it above other content
-            top: "100%", // Position below the input
-            maxHeight: "300px",
-            overflowY: "auto",
-            width: "100%",
-          }}
-        >
+        <div id="search-results-container">
           {searchResults.map((result, index) => (
             <button
+              className="search-results"
               type="button"
               key={index}
-              className="result-item"
               onClick={() => {
                 handleResultClick(result);
-              }}
-              style={{
-                width: "100%",
-                textAlign: "left",
               }}
             >
               Date: {result.date} -{" "}
