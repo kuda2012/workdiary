@@ -180,34 +180,54 @@ class User {
     try {
       const { email } = body;
       const user = await this.getUser(null, email);
-      if (user.auth_provider === "google") {
-        return "If the given email is on file, we have a sent a link there to reset your password";
-      }
+      // if (user.auth_provider === "google") {
+      //   return "If the given email is on file, we have a sent a link there to reset your password";
+      // }
       if (user) {
         const transporter = nodemailer.createTransport({
-          host: "smtp.zoho.com",
+          host: "smtppro.zoho.com",
           port: 587, // Use port 465 for secure SSL/TLS connection
           secure: false,
           auth: {
             user: "no-reply@workdiary.me", // Your Zoho Mail email address
             pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
           },
-          tls: {
-            rejectUnauthorized: false,
-          },
         });
         const token = jwt.sign({ user_id: user.id, email }, SECRET_KEY, {
           expiresIn: "10m",
         });
-        // const token = jwt.sign({yes:'add' }, SECRET_KEY, {
+        // const token = jwt.sign({ yes: "add" }, SECRET_KEY, {
         //   expiresIn: "10m",
         // });
         // Email options
         const mailOptions = {
           from: "no-reply@workdiary.me",
           to: email,
-          subject: "Password Reset",
-          html: `<p>Click the link to reset your password: <a href="http://localhost:5173/reset-password?token=${token}">Reset Password</a>. You have about 10 mins until it expires</p>`,
+          subject: "Work Diary: Password Reset",
+          html: `<div>
+                      <img src="cid:work_diary_image" alt="Work Diary Image" />
+                      <p>
+                       
+                      <a href="http://localhost:5173/reset-password?token=${token}">
+                        Click here</a>
+                         to reset your password. You have about 10 mins until it expires
+                    </p>
+                    <small>Didn't request this? Just ignore</small>
+                    <div>
+                    <small>
+                        <a href="https://chromewebstore.google.com/">
+                            Download app
+                        </a> 
+                    </small>
+                    </div>
+                </div>`,
+          attachments: [
+            {
+              filename: "w_trident.png",
+              path: "./w_trident.png",
+              cid: "work_diary_image", // Same as the src cid in the img tag
+            },
+          ],
         };
 
         // Send email

@@ -5,11 +5,12 @@ const userSchema = require("../schema/userschema.json");
 const ExpressError = require("../expressError");
 const rateLimit = require("express-rate-limit");
 const emailResetLimiter = rateLimit({
-  windowMs: 60 * 60 * 24 * 1000, // 15 minutes
-  limit: 5, // limit each IP to 100 requests per windowMs
+  windowMs: 60 * 60 * 24 * 1000, // 24 hrs
+  limit: 500, // limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again later.",
   handler: (req, res, next, options) => {
     try {
+      console.log("hi");
       return next(new ExpressError(options.message, 429));
     } catch (error) {
       next(error);
