@@ -60,7 +60,7 @@ exports.changePassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
   try {
     const { email, user_id } = decodeJwt(req.headers.authorization);
-    let message = await User.resetPassword(
+    const message = await User.resetPassword(
       req.body,
       user_id,
       email,
@@ -85,34 +85,60 @@ exports.forgotPassword = async (req, res, next) => {
   }
 };
 
-exports.changeAlarm = async (req, res) => {
-  const { id } = decodeJwt(req.headers.authorization);
-  let user = await User.getUser(id);
-  if (user) {
-    user = await User.update(req.body, id);
+exports.changeAlarm = async (req, res, next) => {
+  try {
+    const { id } = decodeJwt(req.headers.authorization);
+    let user = await User.getUser(id);
+    if (user) {
+      user = await User.update(req.body, id);
+    }
+    res.send({ user: { ...user } });
+  } catch (error) {
+    next(erro);
   }
-  res.send({ user: { ...user } });
 };
 
-exports.checkedToken = async (req, res) => {
+exports.checkedToken = async (req, res, next) => {
   // refreshing token after being verified in tokenIsCurrent
-  const worksnap_token = await User.generateWorksnapAccessToken(
-    decodeJwt(req.headers.authorization)
-  );
-  res.send({ worksnap_token });
-};
-
-exports.getAccountInfo = async (req, res) => {
-  const { id } = decodeJwt(req.headers.authorization);
-  const user = await User.getUser(id);
-  res.send({ user });
-};
-
-exports.delete = async (req, res) => {
-  const { id } = decodeJwt(req.headers.authorization);
-  const doesUserExist = await User.getUser(id);
-  if (doesUserExist) {
-    await User.delete(id);
+  try {
+    const worksnap_token = await User.generateWorksnapAccessToken(
+      decodeJwt(req.headers.authorization)
+    );
+    res.send({ worksnap_token });
+  } catch (error) {
+    next(error);
   }
-  res.send({ message: "Your account has been deleted!" });
+};
+
+exports.getAccountInfo = async (req, res, next) => {
+  try {
+    const { id } = decodeJwt(req.headers.authorization);
+    const user = await User.getUser(id);
+    res.send({ user });
+  } catch (error) {
+    next(error);
+  }
+};
+exports.contactUs = async (req, res, next) => {
+  try {
+    const message = await User.contactUs(req.body);
+    res.json({
+      message,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.delete = async (req, res, next) => {
+  try {
+    const { id } = decodeJwt(req.headers.authorization);
+    const doesUserExist = await User.getUser(id);
+    if (doesUserExist) {
+      await User.delete(id);
+    }
+    res.send({ message: "Your account has been deleted!" });
+  } catch (error) {
+    next(error);
+  }
 };

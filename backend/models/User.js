@@ -177,34 +177,33 @@ class User {
   }
 
   static async forgotPassword(body) {
-    try {
-      const { email } = body;
-      const user = await this.getUser(null, email);
-      // if (user.auth_provider === "google") {
-      //   return "If the given email is on file, we have a sent a link there to reset your password";
-      // }
-      if (user) {
-        const transporter = nodemailer.createTransport({
-          host: "smtppro.zoho.com",
-          port: 587, // Use port 465 for secure SSL/TLS connection
-          secure: false,
-          auth: {
-            user: "no-reply@workdiary.me", // Your Zoho Mail email address
-            pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
-          },
-        });
-        const token = jwt.sign({ user_id: user.id, email }, SECRET_KEY, {
-          expiresIn: "10m",
-        });
-        // const token = jwt.sign({ yes: "add" }, SECRET_KEY, {
-        //   expiresIn: "10m",
-        // });
-        // Email options
-        const mailOptions = {
-          from: "no-reply@workdiary.me",
-          to: email,
-          subject: "Work Diary: Password Reset",
-          html: `<div>
+    const { email } = body;
+    const user = await this.getUser(null, email);
+    if (user.auth_provider === "google") {
+      return "If the given email is on file, we have a sent a link there to reset your password";
+    }
+    if (user) {
+      const transporter = nodemailer.createTransport({
+        host: "smtppro.zoho.com",
+        port: 587, // Use port 465 for secure SSL/TLS connection
+        secure: false,
+        auth: {
+          user: "no-reply@workdiary.me", // Your Zoho Mail email address
+          pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
+        },
+      });
+      const token = jwt.sign({ user_id: user.id, email }, SECRET_KEY, {
+        expiresIn: "10m",
+      });
+      // const token = jwt.sign({ yes: "add" }, SECRET_KEY, {
+      //   expiresIn: "10m",
+      // });
+      // Email options
+      const mailOptions = {
+        from: "no-reply@workdiary.me",
+        to: email,
+        subject: "Work Diary: Password Reset",
+        html: `<div>
                       <img src="cid:work_diary_image" alt="Work Diary Image" />
                       <p>
                        
@@ -221,28 +220,58 @@ class User {
                     </small>
                     </div>
                 </div>`,
-          attachments: [
-            {
-              filename: "w_trident.png",
-              path: "./w_trident.png",
-              cid: "work_diary_image", // Same as the src cid in the img tag
-            },
-          ],
-        };
+        attachments: [
+          {
+            filename: "w_trident.png",
+            path: "./w_trident.png",
+            cid: "work_diary_image", // Same as the src cid in the img tag
+          },
+        ],
+      };
 
-        // Send email
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.error("Error sending email:", error);
-          } else {
-            console.log("Email sent:", info.response);
-          }
-        });
-      }
-      return "If the given email is on file, we have a sent a link there to reset your password";
-    } catch (error) {
-      next(error);
+      // Send email
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email:", error);
+        } else {
+          console.log("Email sent:", info.response);
+        }
+      });
     }
+    return "If the given email is on file, we have a sent a link there to reset your password";
+  }
+  static async contactUs(body) {
+    const transporter = nodemailer.createTransport({
+      host: "smtppro.zoho.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "no-reply@workdiary.me", // Your Zoho Mail email address
+        pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
+      },
+    });
+
+    const mailOptions = {
+      from: "no-reply@workdiary.me",
+      to: "contact@workdiary.me",
+      subject: `From Contact form: ${body.subject}`,
+      html: `<div>
+                <p><strong>Name:</strong> ${body.name}</p>
+                <p><strong>Sender's Email:</strong> ${body.email}</p>
+                <p><strong>Message:</strong> ${body.message}</p>
+            </div>`,
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+      } else {
+        console.log("Email sent:", info.response);
+      }
+    });
+
+    return "Sent your email!";
   }
   static async delete(user_id) {
     const getUser = await db.query(

@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/HowTo.css";
+import ContactForm from "./ContactForm";
 
 const HowTo = () => {
   return (
@@ -146,6 +147,34 @@ const HowTo = () => {
                   <img src="coffee.png" alt="Social Media 2" />
                   Buy me a coffee
                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseFour"
+            aria-expanded="false"
+            aria-controls="collapseFour"
+          >
+            <h5>Contact</h5>
+          </button>
+        </h2>
+        <div
+          id="collapseFour"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingFour"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <div className="row">
+              <div className="col">
+                <ContactForm />
               </div>
             </div>
           </div>
