@@ -14,13 +14,13 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
   };
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
+  // const [showPassword2, setShowPassword2] = useState(false);
   const toggleShowPassword1 = () => {
     setShowPassword1((password) => !password);
   };
-  const toggleShowPassword2 = () => {
-    setShowPassword2((password) => !password);
-  };
+  // const toggleShowPassword2 = () => {
+  //   setShowPassword2((password) => !password);
+  // };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((data) => ({ ...data, [name]: value }));
@@ -28,10 +28,10 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.password !== formData.password_copy && isSignup) {
-      alert("Passwords do not match");
-      return;
-    }
+    // if (formData.password !== formData.password_copy && isSignup) {
+    //   alert("Passwords do not match");
+    //   return;
+    // }
     try {
       dispatch(isSignup ? signup(formData) : login(formData));
       setFormData(INITIAL_STATE);
@@ -94,7 +94,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
                   {showPassword1 ? "Hide" : "Show"}
                 </button>
               </div>
-              {isSignup && (
+              {/* {isSignup && (
                 <div className="input-password mt-2">
                   <input
                     autoComplete="new-password-copy"
@@ -115,7 +115,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
                     {showPassword2 ? "Hide" : "Show"}
                   </button>
                 </div>
-              )}
+              )} */}
               <Button color="primary" className="signup-submit mt-2">
                 {isSignup ? "Sign up" : "Login"}
               </Button>

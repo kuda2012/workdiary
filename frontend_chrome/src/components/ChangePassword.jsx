@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changePassword } from "../helpers/actionCreators";
 import { Button } from "reactstrap";
+import { changePassword } from "../helpers/actionCreators";
 import "../styles/ChangePassword.css";
 
 const ChangePassword = ({ closeSettingsModal }) => {
@@ -73,13 +73,13 @@ const ChangePassword = ({ closeSettingsModal }) => {
                 onChange={handleChange}
                 value={formData.password}
               />
-              <Button
+              <button
                 type="button"
                 className="password-button"
                 onClick={() => toggleShowOriginalPassword()}
               >
                 {showOriginalPassword ? "Hide" : "Show"}
-              </Button>
+              </button>
             </div>
             <div className="input-password mt-1">
               <input
@@ -93,13 +93,13 @@ const ChangePassword = ({ closeSettingsModal }) => {
                 onChange={handleChange}
                 value={formData.new_password}
               />
-              <Button
+              <button
                 type="button"
                 className="password-button"
                 onClick={() => toggleShowPassword1()}
               >
                 {showPassword1 ? "Hide" : "Show"}
-              </Button>
+              </button>
             </div>
             <div className="input-password mt-1">
               <input

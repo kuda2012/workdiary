@@ -5,11 +5,7 @@ const bcrypt = require("bcrypt");
 const { v4: uuid } = require("uuid");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
-const {
-  SECRET_KEY,
-  GMAIL_PASSWORD,
-  ZOHO_EMAIL_PASSWORD,
-} = require("../config");
+const { SECRET_KEY, ZOHO_EMAIL_PASSWORD } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
 
 class User {
@@ -24,9 +20,9 @@ class User {
 
   static async create(body) {
     const { email, password, name } = body;
-    if (body.password !== body.password_copy) {
-      throw new ExpressError("Passwords do not match", 400);
-    }
+    // if (body.password !== body.password_copy) {
+    //   throw new ExpressError("Passwords do not match", 400);
+    // }
     const hashedPassword = await bcrypt.hash(password, BCRYPT_HASH_ROUNDS);
     const newUser = await db.query(
       `INSERT INTO users (id, email, password, name, auth_provider)
