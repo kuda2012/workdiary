@@ -1,36 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import {
+  Navbar as ReactNavBar,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+} from "reactstrap";
+import "../styles/Navbar.css";
 
-import { Navbar as ReactNavBar, NavbarBrand, Nav, NavItem } from "reactstrap";
-import { NavLink } from "react-router-dom";
 const NavBar = ({ openHowToModal }) => {
   return (
-    <>
-      <ReactNavBar color="light" className="navbar-expand-lg">
-        <NavbarBrand>
+    <ReactNavBar color="light" className="navbar-expand-lg">
+      <NavbarBrand className="nav-brand" to="/">
+        Work Diary
+      </NavbarBrand>
+      <Nav className="me-auto">
+        <NavItem className="nav-item">
           <NavLink
+            className="nav-link"
             to="#"
             onClick={(e) => {
               e.preventDefault();
+              openHowToModal();
             }}
           >
-            Work Diary
+            About
           </NavLink>
-        </NavbarBrand>
-        <Nav navbar className="me-auto">
-          <NavItem>
-            <NavLink
-           to="#"
-              onClick={(e) => {
-                e.preventDefault();
-                openHowToModal();
-              }}
-            >
-              About
-            </NavLink>
-          </NavItem>
-        </Nav>
-      </ReactNavBar>
-    </>
+        </NavItem>
+      </Nav>
+    </ReactNavBar>
   );
 };
 

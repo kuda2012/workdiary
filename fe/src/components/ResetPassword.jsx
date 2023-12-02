@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
-import "../styles/resetPassword.css";
 import { Button } from "reactstrap";
 import { useLocation } from "react-router-dom";
-
+import axios from "axios";
+import "../styles/resetPassword.css";
 const ResetPassword = ({}) => {
   const INITIAL_STATE = {
     new_password: "",
@@ -65,17 +64,17 @@ const ResetPassword = ({}) => {
                 type={showPassword1 ? "text" : "password"}
                 required={true}
                 name="new_password"
-                className="form-control signup-password"
+                className="form-control signup-password mb-2"
                 onChange={handleChange}
                 value={formData.new_password}
               />
-              <Button
+              <button
                 type="button"
-                className="password-button"
+                className="password-button mb-2"
                 onClick={() => toggleShowPassword1()}
               >
                 {showPassword1 ? "Hide" : "Show"}
-              </Button>
+              </button>
             </div>
             <div className="input-password">
               <input
@@ -89,13 +88,13 @@ const ResetPassword = ({}) => {
                 onChange={handleChange}
                 value={formData.new_password_copy}
               />
-              <Button
+              <button
                 type="button"
                 className="password-button"
                 onClick={() => toggleShowPassword2()}
               >
                 {showPassword2 ? "Hide" : "Show"}
-              </Button>
+              </button>
             </div>
             <Button color="primary" className="reset-password-submit mt-4">
               Submit

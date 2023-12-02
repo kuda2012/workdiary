@@ -1,7 +1,7 @@
-import "./App.css";
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Router from "./Router";
-import { useState } from "react";
+import "./App.css";
 
 function App() {
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);

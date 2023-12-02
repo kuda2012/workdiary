@@ -7,7 +7,7 @@ const Home = ({ isHowToModalOpen, closeHowToModal }) => {
     <div className="container">
       <div className="row justify-content-center">
         {isHowToModalOpen && (
-        <HowToModal
+          <HowToModal
             isHowToModalOpen={isHowToModalOpen}
             closeHowToModal={closeHowToModal}
           >

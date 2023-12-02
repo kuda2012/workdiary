@@ -53,7 +53,7 @@ const NavBar = ({ openAuthModal }) => {
                     openAuthModal();
                   }}
                 >
-                  Login
+                  Login/Sign-up
                 </NavLink>
               </NavItem>
             </>
