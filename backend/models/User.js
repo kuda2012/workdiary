@@ -5,7 +5,11 @@ const bcrypt = require("bcrypt");
 const { v4: uuid } = require("uuid");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
-const { SECRET_KEY, EMAIL_PASSWORD } = require("../config");
+const {
+  SECRET_KEY,
+  GMAIL_PASSWORD,
+  ZOHO_EMAIL_PASSWORD,
+} = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
 
 class User {
@@ -181,10 +185,12 @@ class User {
       }
       if (user) {
         const transporter = nodemailer.createTransport({
-          service: "gmail",
+          host: "smtp.zoho.com",
+          port: 587, // Use port 465 for secure SSL/TLS connection
+          secure: false,
           auth: {
-            user: "kuda.mwakutuya@gmail.com",
-            pass: EMAIL_PASSWORD,
+            user: "no-reply@workdiary.me", // Your Zoho Mail email address
+            pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
           },
           tls: {
             rejectUnauthorized: false,
@@ -193,9 +199,12 @@ class User {
         const token = jwt.sign({ user_id: user.id, email }, SECRET_KEY, {
           expiresIn: "10m",
         });
+        // const token = jwt.sign({yes:'add' }, SECRET_KEY, {
+        //   expiresIn: "10m",
+        // });
         // Email options
         const mailOptions = {
-          from: "kuda.mwakutuya@gmail.com",
+          from: "no-reply@workdiary.me",
           to: email,
           subject: "Password Reset",
           html: `<p>Click the link to reset your password: <a href="http://localhost:5173/reset-password?token=${token}">Reset Password</a>. You have about 10 mins until it expires</p>`,

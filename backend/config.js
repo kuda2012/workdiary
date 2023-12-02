@@ -11,12 +11,15 @@ if (process.env.NODE_ENV === "test") {
   DB_URI = process.env.DATABASE_URL || "postgres://localhost/worksnap";
 }
 
-const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
+const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD;
+
 const CLIENT_ID = process.env.CLIENT_ID;
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY;
+
+const ZOHO_EMAIL_PASSWORD = process.env.ZOHO_EMAIL_PASSWORD;
 
 const BCRYPT_HASH_ROUNDS = 12;
 
@@ -25,8 +28,9 @@ module.exports = {
   PORT,
   DB_URI,
   CLIENT_ID,
-  EMAIL_PASSWORD,
+  GMAIL_PASSWORD,
   BCRYPT_HASH_ROUNDS,
   SECRET_KEY,
   DEEPGRAM_API_KEY,
+  ZOHO_EMAIL_PASSWORD,
 };
