@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const jsonschema = require("jsonschema");
-let { SECRET_KEY } = require("../config").default;
+let { SECRET_KEY } = require("../config");
 const userSchema = require("../schema/userschema.json");
 const ExpressError = require("../expressError");
 const rateLimit = require("express-rate-limit");

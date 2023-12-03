@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "test") {
   DB_URI = "worksnap_test";
 } else {
   DB_URI =
-    process.env.DATABASE_URLconcat("?ssl=true") ||
+    process.env.DATABASE_URL?.concat("?ssl=true") ||
     "postgres://localhost/worksnap";
 }
 
