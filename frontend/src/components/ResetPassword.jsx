@@ -38,6 +38,7 @@ const ResetPassword = ({}) => {
           { headers: { Authorization: `Bearer ${resetToken}` } }
         );
         alert(response?.data?.message);
+        setFormData(INITIAL_STATE);
       } else {
         alert("Passwords must match");
         setFormData(INITIAL_STATE);
