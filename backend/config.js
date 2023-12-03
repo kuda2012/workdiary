@@ -8,7 +8,9 @@ let DB_URI;
 if (process.env.NODE_ENV === "test") {
   DB_URI = "worksnap_test";
 } else {
-  DB_URI = process.env.DATABASE_URL || "postgres://localhost/worksnap";
+  DB_URI =
+    process.env.DATABASE_URLconcat("?ssl=true") ||
+    "postgres://localhost/worksnap";
 }
 
 const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD;
@@ -24,16 +26,6 @@ const ZOHO_EMAIL_PASSWORD = process.env.ZOHO_EMAIL_PASSWORD;
 const BCRYPT_HASH_ROUNDS = 12;
 
 console.log("Using database", DB_URI);
-console.log(
-  PORT,
-  DB_URI,
-  CLIENT_ID,
-  GMAIL_PASSWORD,
-  BCRYPT_HASH_ROUNDS,
-  SECRET_KEY,
-  DEEPGRAM_API_KEY,
-  ZOHO_EMAIL_PASSWORD
-);
 module.exports = {
   PORT,
   DB_URI,

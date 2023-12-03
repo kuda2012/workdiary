@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const jsonschema = require("jsonschema");
-let { SECRET_KEY } = require("../config");
+let { SECRET_KEY } = require("../config").default;
 const userSchema = require("../schema/userschema.json");
 const ExpressError = require("../expressError");
 const rateLimit = require("express-rate-limit");
@@ -10,7 +10,6 @@ const emailResetLimiter = rateLimit({
   message: "Too many requests from this IP, please try again later.",
   handler: (req, res, next, options) => {
     try {
-      console.log("hi");
       return next(new ExpressError(options.message, 429));
     } catch (error) {
       next(error);
