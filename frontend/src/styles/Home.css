@@ -1,0 +1,22 @@
+.center-row {
+  min-height: 100vh; /* Ensure the container takes up the full viewport height */
+  display: flex;
+  justify-content: center; /* Horizontally center content */
+  align-items: center; /* Vertically center content */
+}
+
+.main-container {
+  max-width: 100%;
+}
+.main-container {
+  max-width: 100%;
+}
+.main-container:not(.clickable) {
+  pointer-events: none;
+  /* Additional styles for non-clickable state */
+}
+.unclickable-exception-elements,
+.unclickable-exception-elements * {
+  pointer-events: auto;
+  /* Additional styles for the exception element */
+}

@@ -1,0 +1,19 @@
+nav {
+  border-radius: 8px !important;
+}
+
+.nav-link {
+  text-transform: none;
+  cursor: pointer;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.nav-brand-move-right {
+  position: relative;
+  right: 177px;
+}
