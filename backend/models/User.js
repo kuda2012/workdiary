@@ -203,7 +203,7 @@ class User {
                       <img src="cid:work_diary_image" alt="Work Diary Image" />
                       <p>
                        
-                      <a href="http://localhost:5173/reset-password?token=${token}">
+                      <a href="http://localhost:4173/reset-password?token=${token}">
                         Click here</a>
                          to reset your password. You have about 10 mins until it expires
                     </p>
