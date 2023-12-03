@@ -27,7 +27,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   async function isWorksnapTokenCurrent(worksnap_token) {
     try {
       const response = await fetch(
-        "http://localhost:3000/users/check-worksnap-token",
+        "https://be-workdiary.onrender.com/users/check-worksnap-token",
         {
           method: "GET",
           headers: { Authorization: `Bearer ${worksnap_token}` },
@@ -45,10 +45,13 @@ chrome.runtime.onInstalled.addListener(async () => {
         ? await isWorksnapTokenCurrent(result.worksnap_token)
         : null;
     if (worksnapToken) {
-      const response = await fetch("http://localhost:3000/users/account-info", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${worksnapToken}` },
-      });
+      const response = await fetch(
+        "https://be-workdiary.onrender.com/users/account-info",
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${worksnapToken}` },
+        }
+      );
       const { user } = await response.json();
       await setAlarm(user);
     }

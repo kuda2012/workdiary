@@ -20,7 +20,7 @@ const ContactForm = () => {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:3000/users/contact-us",
+        "https://be-workdiary.onrender.com/users/contact-us",
         { ...formData }
       );
       alert(response?.data?.message);

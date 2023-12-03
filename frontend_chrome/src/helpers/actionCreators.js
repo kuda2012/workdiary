@@ -9,7 +9,7 @@ export function isWorksnapTokenCurrent(worksnap_token) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/users/check-worksnap-token",
+        "https://be-workdiary.onrender.com/users/check-worksnap-token",
         { headers: { Authorization: `Bearer ${worksnap_token}` } }
       );
       dispatch(setWorksnapToken(data.worksnap_token));
@@ -24,7 +24,7 @@ export function loginGoogle(googleAccessToken) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/users/login-google",
+        "https://be-workdiary.onrender.com/users/login-google",
         {
           google_access_token: googleAccessToken,
         }
@@ -40,9 +40,12 @@ export function loginGoogle(googleAccessToken) {
 export function login(formData) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.post("http://localhost:3000/users/login", {
-        ...formData,
-      });
+      const { data } = await axios.post(
+        "https://be-workdiary.onrender.com/users/login",
+        {
+          ...formData,
+        }
+      );
       dispatch(setWorksnapToken(data.worksnap_token));
     } catch (error) {
       dispatch(resetApp());
@@ -55,9 +58,12 @@ export function login(formData) {
 export function signup(formData) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.post("http://localhost:3000/users/signup", {
-        ...formData,
-      });
+      const { data } = await axios.post(
+        "https://be-workdiary.onrender.com/users/signup",
+        {
+          ...formData,
+        }
+      );
       dispatch(setWorksnapToken(data.worksnap_token));
     } catch (error) {
       dispatch(resetApp());
@@ -70,7 +76,7 @@ export function changePassword(worksnap_token, formData) {
   return async function () {
     try {
       const { data } = await axios.patch(
-        "http://localhost:3000/users/change-password",
+        "https://be-workdiary.onrender.com/users/change-password",
         {
           ...formData,
         },
@@ -88,7 +94,7 @@ export function forgotPassword(formData) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/users/forgot-password",
+        "https://be-workdiary.onrender.com/users/forgot-password",
         {
           ...formData,
         }
@@ -105,7 +111,7 @@ export function searchJournal(worksnap_token, query) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/posts/search?query=${query}`,
+        `https://be-workdiary.onrender.com/posts/search?query=${query}`,
         { headers: { Authorization: `Bearer ${worksnap_token}` } }
       );
       if (data.results.length === 0) {
@@ -123,7 +129,7 @@ export function getUserAccountInfo(worksnap_token) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/users/account-info",
+        "https://be-workdiary.onrender.com/users/account-info",
         { headers: { Authorization: `Bearer ${worksnap_token}` } }
       );
       dispatch(setUserAccountInfo(data.user));
@@ -137,7 +143,7 @@ export function deleteAccount(worksnap_token) {
   return async function (dispatch) {
     try {
       await axios
-        .delete("http://localhost:3000/users/delete", {
+        .delete("https://be-workdiary.onrender.com/users/delete", {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         })
         .then(({ data }) => {
@@ -155,7 +161,7 @@ export function deletePost(worksnap_token, date) {
   return async function (dispatch) {
     try {
       await axios
-        .delete(`http://localhost:3000/posts/delete?date=${date}`, {
+        .delete(`https://be-workdiary.onrender.com/posts/delete?date=${date}`, {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         })
         .then(({ data }) => {
@@ -173,7 +179,7 @@ export function getPost(worksnap_token, date) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/posts?date=${date}`,
+        `https://be-workdiary.onrender.com/posts?date=${date}`,
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         }
@@ -197,7 +203,7 @@ export function updatePost(
   return async function (dispatch) {
     try {
       const { data } = await axios.patch(
-        `http://localhost:3000/posts/update`,
+        `https://be-workdiary.onrender.com/posts/update`,
         { worksnap_token, date, summary_text, summary_voice, audio_duration },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
@@ -229,7 +235,7 @@ export function createPost(
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `http://localhost:3000/posts/create`,
+        `https://be-workdiary.onrender.com/posts/create`,
         { worksnap_token, date, summary_text, summary_voice, audio_duration },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
@@ -272,7 +278,7 @@ export function createTabs(worksnap_token, date) {
     try {
       const newTabs = await queryTabs();
       const { data } = await axios.post(
-        `http://localhost:3000/tabs/create`,
+        `https://be-workdiary.onrender.com/tabs/create`,
         { worksnap_token, date, tabs: newTabs },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
@@ -327,7 +333,7 @@ export function createTag(worksnap_token, date, tag) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `http://localhost:3000/tags/create`,
+        `https://be-workdiary.onrender.com/tags/create`,
         { worksnap_token, date, tag },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
@@ -344,7 +350,7 @@ export function deleteTag(worksnap_token, date, tag_id) {
   return async function (dispatch) {
     try {
       const { data } = await axios.delete(
-        `http://localhost:3000/tags/delete?date=${date}&tag_id=${tag_id}`,
+        `https://be-workdiary.onrender.com/tags/delete?date=${date}&tag_id=${tag_id}`,
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         }
@@ -378,7 +384,7 @@ export function bulkDeleteTabs(worksnap_token, date, tabs) {
     try {
       if (tabs) {
         const { data } = await axios.delete(
-          `http://localhost:3000/tabs/bulk-delete?date=${date}&tab_ids=${arrayToCSV(
+          `https://be-workdiary.onrender.com/tabs/bulk-delete?date=${date}&tab_ids=${arrayToCSV(
             tabs[0]?.tab_id !== undefined
               ? tabs.map((tab) => tab?.tab_id)
               : tabs
@@ -399,7 +405,7 @@ export function deleteTab(worksnap_token, date, tab_id) {
   return async function (dispatch) {
     try {
       const { data } = await axios.delete(
-        `http://localhost:3000/tabs/delete?date=${date}&tab_id=${tab_id}`,
+        `https://be-workdiary.onrender.com/tabs/delete?date=${date}&tab_id=${tab_id}`,
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
         }
@@ -416,7 +422,7 @@ export function changeAlarm(worksnap_token, user) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `http://localhost:3000/users/change-alarm`,
+        `https://be-workdiary.onrender.com/users/change-alarm`,
         { ...user },
         {
           headers: { Authorization: `Bearer ${worksnap_token}` },
