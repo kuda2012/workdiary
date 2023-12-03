@@ -8,6 +8,7 @@ const axios = require("axios");
 const { SECRET_KEY, ZOHO_EMAIL_PASSWORD } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
 
+console.log("hello", SECRET_KEY, ZOHO_EMAIL_PASSWORD);
 class User {
   static async createGoogleUser(payload) {
     const getUser = await db.query(
