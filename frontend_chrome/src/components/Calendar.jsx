@@ -8,13 +8,13 @@ import "../styles/Home.css";
 const Calendar = () => {
   const date = useSelector((state) => state.date);
   const allPostDates = useSelector((state) => state?.all_post_dates);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const dispatch = useDispatch();
 
   const handleDateInputChange = (event) => {
     const selectedDate = moment(event.target.value, "MM/DD/YYYY", true);
     if (selectedDate.isValid()) {
-      dispatch(getPost(worksnapToken, selectedDate.format("MM/DD/YYYY")));
+      dispatch(getPost(workdiaryToken, selectedDate.format("MM/DD/YYYY")));
     }
   };
 
@@ -25,7 +25,7 @@ const Calendar = () => {
         selected={date ? moment(date, "MM/DD/YYYY").toDate() : new Date()}
         onChange={(datePickerDate) => {
           dispatch(
-            getPost(worksnapToken, moment(datePickerDate).format("MM/DD/YYYY"))
+            getPost(workdiaryToken, moment(datePickerDate).format("MM/DD/YYYY"))
           );
         }}
         highlightDates={allPostDates?.map((date) =>

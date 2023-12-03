@@ -10,7 +10,7 @@ import "../styles/SearchBar.css";
 
 const SearchBar = ({ toggleSearchBar }) => {
   // State to hold the search input text
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const searchResults = useSelector((state) => state.search_results);
   const query = useSelector((state) => state.query);
 
@@ -27,7 +27,7 @@ const SearchBar = ({ toggleSearchBar }) => {
   const handleSearch = () => {
     // Call the search function with the search input text
     setIsOpen(true);
-    dispatch(searchJournal(worksnapToken, searchText));
+    dispatch(searchJournal(workdiaryToken, searchText));
   };
 
   const handleFormSubmit = (event) => {
@@ -43,7 +43,7 @@ const SearchBar = ({ toggleSearchBar }) => {
     setSearchText(""); // Clear the search input
     if (item && item.date) {
       // Call the getPost function with the selected date
-      dispatch(getPost(worksnapToken, moment(item.date).format("MM/DD/YYYY")));
+      dispatch(getPost(workdiaryToken, moment(item.date).format("MM/DD/YYYY")));
       dispatch(clearSearchResults()); // You need to define the getPost function
       toggleSearchBar();
     }

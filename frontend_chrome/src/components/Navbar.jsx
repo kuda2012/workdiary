@@ -9,7 +9,7 @@ import "../styles/Navbar.css";
 const NavBar = ({ openAuthModal }) => {
   const dispatch = useDispatch();
   const googleAccessToken = useSelector((state) => state.google_access_token);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
 
   useEffect(() => {
     if (googleAccessToken) {
@@ -25,17 +25,17 @@ const NavBar = ({ openAuthModal }) => {
   return (
     <>
       <ReactNavBar color="light" className="navbar-expand-lg">
-        {worksnapToken && (
+        {workdiaryToken && (
           <NavItem className="nav-item" onClick={toggleSearchBar}>
             <NavLink className="nav-link">Search</NavLink>
           </NavItem>
         )}
-        {worksnapToken && isSearchBarVisible && (
+        {workdiaryToken && isSearchBarVisible && (
           <SearchBar toggleSearchBar={toggleSearchBar} />
         )}
         <NavbarBrand
           className={`nav-brand ${
-            worksnapToken && isSearchBarVisible && "nav-brand-move-right"
+            workdiaryToken && isSearchBarVisible && "nav-brand-move-right"
           }`}
         >
           <NavLink to="#" className="nav-link">
@@ -43,7 +43,7 @@ const NavBar = ({ openAuthModal }) => {
           </NavLink>
         </NavbarBrand>
         <Nav navbar>
-          {!worksnapToken && (
+          {!workdiaryToken && (
             <>
               <NavItem>
                 <NavLink
@@ -58,7 +58,7 @@ const NavBar = ({ openAuthModal }) => {
               </NavItem>
             </>
           )}
-          {worksnapToken && (
+          {workdiaryToken && (
             <>
               <NavItem>
                 <NavLink

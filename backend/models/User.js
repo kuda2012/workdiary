@@ -48,7 +48,7 @@ class User {
       );
       if (passwordCorrect) {
         const result = await this.getUser(null, email);
-        return this.generateWorksnapAccessToken({
+        return this.generateWorkdiaryAccessToken({
           id: result.id,
           name: result.name,
           email: result.email,
@@ -325,7 +325,7 @@ class User {
     return data;
   }
 
-  static async generateWorksnapAccessToken(payload) {
+  static async generateWorkdiaryAccessToken(payload) {
     const token = jwt.sign(
       {
         id: payload.sub || payload.id,

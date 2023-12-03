@@ -6,7 +6,7 @@ exports.signup = async (req, res, next) => {
   try {
     await User.create(req.body);
     let token = await User.getLoggedIn(req.body);
-    res.json({ worksnap_token: token });
+    res.json({ workdiary_token: token });
   } catch (error) {
     if (error.code === "23505") {
       error.status = 409;
@@ -30,8 +30,8 @@ exports.loginGoogle = async (req, res, next) => {
         400
       );
     }
-    const token = await User.generateWorksnapAccessToken(payload);
-    res.send({ worksnap_token: token });
+    const token = await User.generateWorkdiaryAccessToken(payload);
+    res.send({ workdiary_token: token });
   } catch (error) {
     next(error);
   }
@@ -40,7 +40,7 @@ exports.loginGoogle = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     let token = await User.getLoggedIn(req.body);
-    res.json({ worksnap_token: token });
+    res.json({ workdiary_token: token });
   } catch (error) {
     next(error);
   }
@@ -101,10 +101,10 @@ exports.changeAlarm = async (req, res, next) => {
 exports.checkedToken = async (req, res, next) => {
   // refreshing token after being verified in tokenIsCurrent
   try {
-    const worksnap_token = await User.generateWorksnapAccessToken(
+    const workdiary_token = await User.generateWorkdiaryAccessToken(
       decodeJwt(req.headers.authorization)
     );
-    res.send({ worksnap_token });
+    res.send({ workdiary_token });
   } catch (error) {
     next(error);
   }

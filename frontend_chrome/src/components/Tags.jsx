@@ -4,14 +4,14 @@ import Tag from "./Tag";
 
 const Tags = () => {
   const date = useSelector((state) => state.date);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const tags = useSelector((state) => state.post?.tags);
   const dispatch = useDispatch();
   function onTagAdd(tag) {
-    dispatch(createTag(worksnapToken, date, tag));
+    dispatch(createTag(workdiaryToken, date, tag));
   }
   function onTagDelete(tag_id) {
-    dispatch(deleteTag(worksnapToken, date, tag_id));
+    dispatch(deleteTag(workdiaryToken, date, tag_id));
   }
   const handleInsertTag = (onUpdate) => {
     const createdTag = prompt("Enter a tag:");

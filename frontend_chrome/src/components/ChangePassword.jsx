@@ -11,7 +11,7 @@ const ChangePassword = ({ closeSettingsModal }) => {
     new_password_copy: "",
   };
   const dispatch = useDispatch();
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const user = useSelector((state) => state.user);
   const [formData, setFormData] = useState(INITIAL_STATE);
   const handleChange = (e) => {
@@ -37,7 +37,7 @@ const ChangePassword = ({ closeSettingsModal }) => {
       e.preventDefault();
       if (formData.new_password === formData.new_password_copy) {
         dispatch(
-          changePassword(worksnapToken, { ...formData, email: user.email })
+          changePassword(workdiaryToken, { ...formData, email: user.email })
         );
         setTimeout(() => {
           setFormData(INITIAL_STATE);

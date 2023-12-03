@@ -1,20 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import { isWorksnapTokenCurrent } from "./helpers/actionCreators";
+import { isWorkdiaryTokenCurrent } from "./helpers/actionCreators";
 import Navbar from "./components/Navbar";
 import Router from "./Router";
 import "./App.css";
 
 function App() {
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const dispatch = useDispatch();
-  if (!worksnapToken && localStorage.getItem("worksnap_token")) {
-    dispatch(isWorksnapTokenCurrent(localStorage.getItem("worksnap_token")));
+  if (!workdiaryToken && localStorage.getItem("workdiary_token")) {
+    dispatch(isWorkdiaryTokenCurrent(localStorage.getItem("workdiary_token")));
   }
 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(
-    !worksnapToken ? true : false
+    !workdiaryToken ? true : false
   );
 
   const [firstLoad, setFirstLoad] = useState(true);
@@ -33,9 +33,8 @@ function App() {
         <>
           <Navbar openAuthModal={openAuthModal} />
           <div
-            id='three-dots-container'
+            id="three-dots-container"
             className="container d-flex justify-content-center align-items-center"
- 
           >
             <div className="row">
               <div className="col">

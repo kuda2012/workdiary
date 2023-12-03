@@ -9,11 +9,11 @@ const MainContainer = ({
   closeHowToModal,
   openHowToModal,
 }) => {
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
 
   return (
     <div
-      className={`container main-container${worksnapToken ? "clickable" : ""}`}
+      className={`container main-container${workdiaryToken ? "clickable" : ""}`}
     >
       <TopRowMain
         isHowToModalOpen={isHowToModalOpen}

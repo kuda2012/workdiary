@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Worksnap",
+  "name": "Work Diary",
   "description": "Base Level Extension",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmMKpGIyuIYhGd36fysoYB5tapYUhPQUtxrheUXDxvrMCUQJ/wOG73pYnhNg5e4vP6VhJ1QAtk+hUcp7BBAH5DpvWtFWkH6gJvsFro8cuxeAGBwYxvYDQNeeJ+KrHJzaYD89w77qEOR+fEapA2nNpmPMx8ZMgfCwveo8eYTe9+zu9dYIcC8K86Kywl32mTVC+WscnRRhYncvfhy+/vjJWhxcdH9WjNDVn2A9Sy22MrvyyEBGMMRD+SyvlbjDkxHt/Zcp7OLgJe4nPU2P03by4OUhBNoU5QgniyBvEAeFTNQJIe0+20lg1SPBWvKe/GL4NE1AxKNog21+MpGn1xFHN2QIDAQAB",
   "version": "1.0.1",
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkZbE3dz3vmkIzbbNYcuvTuzM7Kk7UL59ltpfxNcnJHnWNNMEBVnx7bXigTb/iCe48MkDX2t43Mj4eItJ42GyEaTsfVBl4FKM4nt9zp4n8fELkw0nhTh3+XVDq2LVTu6f/rPdqGoPBJGzBkyVNglvtzV/xmwFFWN2CKtDqdUYs/By/nXUlZ2+s/haYhsrptsDtF/phz8qpJAH2mADQGbcxwhXcRtdodc4yc8FcCb2NvTyRj5/y10JgaPNKDvhslklRJ9UvDB7iDGy5USqZM1tyhPd1pZsmeXjRFUX3vzfT+pvgw7hbce/cACs/JrhC8OcJFJSjgwIU+lRQjD8M5UnfwIDAQAB",
   "action": {
     "default_icon": "/w_extension.png"
   },

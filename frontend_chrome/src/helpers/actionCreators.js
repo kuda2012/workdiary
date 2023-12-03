@@ -5,14 +5,14 @@ export function setGoogleAccessToken(google_access_token) {
     google_access_token,
   };
 }
-export function isWorksnapTokenCurrent(worksnap_token) {
+export function isWorkdiaryTokenCurrent(workdiary_token) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        "https://be-workdiary.onrender.com/users/check-worksnap-token",
-        { headers: { Authorization: `Bearer ${worksnap_token}` } }
+        "https://be-workdiary.onrender.com/users/check-workdiary-token",
+        { headers: { Authorization: `Bearer ${workdiary_token}` } }
       );
-      dispatch(setWorksnapToken(data.worksnap_token));
+      dispatch(setWorkdiaryToken(data.workdiary_token));
       // dispatch(initialLoad());
     } catch (error) {
       dispatch(resetApp());
@@ -29,7 +29,7 @@ export function loginGoogle(googleAccessToken) {
           google_access_token: googleAccessToken,
         }
       );
-      dispatch(setWorksnapToken(data.worksnap_token));
+      dispatch(setWorkdiaryToken(data.workdiary_token));
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message);
@@ -46,7 +46,7 @@ export function login(formData) {
           ...formData,
         }
       );
-      dispatch(setWorksnapToken(data.worksnap_token));
+      dispatch(setWorkdiaryToken(data.workdiary_token));
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message);
@@ -64,7 +64,7 @@ export function signup(formData) {
           ...formData,
         }
       );
-      dispatch(setWorksnapToken(data.worksnap_token));
+      dispatch(setWorkdiaryToken(data.workdiary_token));
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message);
@@ -72,7 +72,7 @@ export function signup(formData) {
     }
   };
 }
-export function changePassword(worksnap_token, formData) {
+export function changePassword(workdiary_token, formData) {
   return async function () {
     try {
       const { data } = await axios.patch(
@@ -80,7 +80,7 @@ export function changePassword(worksnap_token, formData) {
         {
           ...formData,
         },
-        { headers: { Authorization: `Bearer ${worksnap_token}` } }
+        { headers: { Authorization: `Bearer ${workdiary_token}` } }
       );
       alert(data.message);
     } catch (error) {
@@ -107,12 +107,12 @@ export function forgotPassword(formData) {
     }
   };
 }
-export function searchJournal(worksnap_token, query) {
+export function searchJournal(workdiary_token, query) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
         `https://be-workdiary.onrender.com/posts/search?query=${query}`,
-        { headers: { Authorization: `Bearer ${worksnap_token}` } }
+        { headers: { Authorization: `Bearer ${workdiary_token}` } }
       );
       if (data.results.length === 0) {
         alert("No matches for this query");
@@ -125,12 +125,12 @@ export function searchJournal(worksnap_token, query) {
   };
 }
 
-export function getUserAccountInfo(worksnap_token) {
+export function getUserAccountInfo(workdiary_token) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
         "https://be-workdiary.onrender.com/users/account-info",
-        { headers: { Authorization: `Bearer ${worksnap_token}` } }
+        { headers: { Authorization: `Bearer ${workdiary_token}` } }
       );
       dispatch(setUserAccountInfo(data.user));
     } catch (error) {
@@ -139,12 +139,12 @@ export function getUserAccountInfo(worksnap_token) {
   };
 }
 
-export function deleteAccount(worksnap_token) {
+export function deleteAccount(workdiary_token) {
   return async function (dispatch) {
     try {
       await axios
         .delete("https://be-workdiary.onrender.com/users/delete", {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         })
         .then(({ data }) => {
           setTimeout(() => {
@@ -157,12 +157,12 @@ export function deleteAccount(worksnap_token) {
     }
   };
 }
-export function deletePost(worksnap_token, date) {
+export function deletePost(workdiary_token, date) {
   return async function (dispatch) {
     try {
       await axios
         .delete(`https://be-workdiary.onrender.com/posts/delete?date=${date}`, {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         })
         .then(({ data }) => {
           setTimeout(() => {
@@ -175,13 +175,13 @@ export function deletePost(worksnap_token, date) {
     }
   };
 }
-export function getPost(worksnap_token, date) {
+export function getPost(workdiary_token, date) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
         `https://be-workdiary.onrender.com/posts?date=${date}`,
         {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       dispatch(setPost(data.post));
@@ -194,7 +194,7 @@ export function getPost(worksnap_token, date) {
 }
 
 export function updatePost(
-  worksnap_token,
+  workdiary_token,
   date,
   summary_text,
   summary_voice,
@@ -204,9 +204,9 @@ export function updatePost(
     try {
       const { data } = await axios.patch(
         `https://be-workdiary.onrender.com/posts/update`,
-        { worksnap_token, date, summary_text, summary_voice, audio_duration },
+        { workdiary_token, date, summary_text, summary_voice, audio_duration },
         {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       // controls state of "Interpreting" button for when voice is transcribing
@@ -226,7 +226,7 @@ export function updatePost(
 }
 
 export function createPost(
-  worksnap_token,
+  workdiary_token,
   date,
   summary_text,
   summary_voice,
@@ -236,9 +236,9 @@ export function createPost(
     try {
       const { data } = await axios.post(
         `https://be-workdiary.onrender.com/posts/create`,
-        { worksnap_token, date, summary_text, summary_voice, audio_duration },
+        { workdiary_token, date, summary_text, summary_voice, audio_duration },
         {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       if (summary_voice) {
@@ -273,15 +273,15 @@ async function queryTabs() {
   });
 }
 
-export function createTabs(worksnap_token, date) {
+export function createTabs(workdiary_token, date) {
   return async function (dispatch) {
     try {
       const newTabs = await queryTabs();
       const { data } = await axios.post(
         `https://be-workdiary.onrender.com/tabs/create`,
-        { worksnap_token, date, tabs: newTabs },
+        { workdiary_token, date, tabs: newTabs },
         {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       dispatch(setPost(data.post));
@@ -329,14 +329,14 @@ export function openTabs(tabUrls, windowId) {
   };
 }
 
-export function createTag(worksnap_token, date, tag) {
+export function createTag(workdiary_token, date, tag) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
         `https://be-workdiary.onrender.com/tags/create`,
-        { worksnap_token, date, tag },
+        { workdiary_token, date, tag },
         {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       dispatch(setPost(data.post));
@@ -346,13 +346,13 @@ export function createTag(worksnap_token, date, tag) {
     }
   };
 }
-export function deleteTag(worksnap_token, date, tag_id) {
+export function deleteTag(workdiary_token, date, tag_id) {
   return async function (dispatch) {
     try {
       const { data } = await axios.delete(
         `https://be-workdiary.onrender.com/tags/delete?date=${date}&tag_id=${tag_id}`,
         {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       dispatch(setPost(data.post));
@@ -379,7 +379,7 @@ function arrayToCSV(arr) {
   // Join the array elements with commas
   return csvArray.join(",");
 }
-export function bulkDeleteTabs(worksnap_token, date, tabs) {
+export function bulkDeleteTabs(workdiary_token, date, tabs) {
   return async function (dispatch) {
     try {
       if (tabs) {
@@ -390,7 +390,7 @@ export function bulkDeleteTabs(worksnap_token, date, tabs) {
               : tabs
           )} `,
           {
-            headers: { Authorization: `Bearer ${worksnap_token}` },
+            headers: { Authorization: `Bearer ${workdiary_token}` },
           }
         );
         dispatch(setPost(data.post));
@@ -401,13 +401,13 @@ export function bulkDeleteTabs(worksnap_token, date, tabs) {
     }
   };
 }
-export function deleteTab(worksnap_token, date, tab_id) {
+export function deleteTab(workdiary_token, date, tab_id) {
   return async function (dispatch) {
     try {
       const { data } = await axios.delete(
         `https://be-workdiary.onrender.com/tabs/delete?date=${date}&tab_id=${tab_id}`,
         {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       dispatch(setPost(data.post));
@@ -418,14 +418,14 @@ export function deleteTab(worksnap_token, date, tab_id) {
   };
 }
 
-export function changeAlarm(worksnap_token, user) {
+export function changeAlarm(workdiary_token, user) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
         `https://be-workdiary.onrender.com/users/change-alarm`,
         { ...user },
         {
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       dispatch(setUserAccountInfo(data.user));
@@ -493,7 +493,7 @@ export async function setAlarm(user) {
         chrome.notifications.create({
           type: "basic",
           iconUrl: "w_extension.png",
-          title: "Worksnap",
+          title: "Work Diary",
           message: `Reminder to log in your Work Diary (click here to open app)`,
           // Include sound property for the sound file
         });
@@ -509,10 +509,10 @@ export async function setAlarm(user) {
   }
 }
 
-export function setWorksnapToken(worksnap_token) {
+export function setWorkdiaryToken(workdiary_token) {
   return {
-    type: "SET_WORKSNAP_TOKEN",
-    worksnap_token,
+    type: "SET_Workdiary_TOKEN",
+    workdiary_token,
   };
 }
 export function setUserAccountInfo(user) {

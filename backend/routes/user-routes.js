@@ -4,15 +4,15 @@ const UserController = require("../controllers/user-controller");
 const {
   tokenIsCurrent,
   userIsValidated,
-  emailResetLimiter,
+  emailResetLimiter
 } = require("../middleware/userMiddleware");
 
+router.get("/account-info", tokenIsCurrent, UserController.getAccountInfo);
 router.get(
-  "/check-worksnap-token",
+  "/check-workdiary-token",
   tokenIsCurrent,
   UserController.checkedToken
 );
-router.get("/account-info", tokenIsCurrent, UserController.getAccountInfo);
 router.post("/login-google", UserController.loginGoogle);
 router.post("/login", UserController.login);
 router.post("/signup", userIsValidated, UserController.signup);

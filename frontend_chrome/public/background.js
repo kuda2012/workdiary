@@ -24,32 +24,32 @@ chrome.action.onClicked.addListener(function () {
 });
 
 chrome.runtime.onInstalled.addListener(async () => {
-  async function isWorksnapTokenCurrent(worksnap_token) {
+  async function isWorkdiaryTokenCurrent(workdiary_token) {
     try {
       const response = await fetch(
-        "https://be-workdiary.onrender.com/users/check-worksnap-token",
+        "https://be-workdiary.onrender.com/users/check-workdiary-token",
         {
           method: "GET",
-          headers: { Authorization: `Bearer ${worksnap_token}` },
+          headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       const data = await response.json();
-      return data.worksnap_token;
+      return data.workdiary_token;
     } catch (error) {
       console.log(error);
     }
   }
-  await chrome.storage.local.get(["worksnap_token"]).then(async (result) => {
-    const worksnapToken =
-      result?.worksnap_token && typeof result?.worksnap_token === "string"
-        ? await isWorksnapTokenCurrent(result.worksnap_token)
+  await chrome.storage.local.get(["workdiary_token"]).then(async (result) => {
+    const workdiaryToken =
+      result?.workdiary_token && typeof result?.workdiary_token === "string"
+        ? await isWorkdiaryTokenCurrent(result.workdiary_token)
         : null;
-    if (worksnapToken) {
+    if (workdiaryToken) {
       const response = await fetch(
         "https://be-workdiary.onrender.com/users/account-info",
         {
           method: "GET",
-          headers: { Authorization: `Bearer ${worksnapToken}` },
+          headers: { Authorization: `Bearer ${workdiaryToken}` },
         }
       );
       const { user } = await response.json();
@@ -102,13 +102,13 @@ chrome.runtime.onInstalled.addListener(async () => {
       chrome.alarms.create("myAlarm", {
         when: Date.now() + timeDifferenceInSeconds, // Set the alarm to go off in 1 second.
       });
-      chrome.alarms.onAlarm.addListener(async (alarm) => {
+      chrome.alarms.onAlusarm.addListener(async (alarm) => {
         if (alarm.name === "myAlarm") {
           console.log("fire alarm");
           chrome.notifications.create({
             type: "basic",
             iconUrl: "w_extension.png",
-            title: "Worksnap",
+            title: "Work Diary",
             message: `Reminder to write your Work Diary (click here to open app)`,
           });
           chrome.notifications.onClicked.addListener(() => {

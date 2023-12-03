@@ -9,14 +9,14 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const allPostDates = useSelector((state) => state?.all_post_dates);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [confirmation, setConfirmation] = useState("");
 
   const handleDelete = (e) => {
     // Put your delete account logic here
     e.preventDefault();
     if (confirmation === "delete account") {
-      dispatch(deleteAccount(worksnapToken));
+      dispatch(deleteAccount(workdiaryToken));
       setTimeout(() => {
         window.location.reload();
       }, [2000]);

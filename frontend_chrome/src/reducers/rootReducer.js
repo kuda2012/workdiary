@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   google_access_token: "",
-  worksnap_token: "",
+  workdiary_token: "",
   interpreting: false,
   initial_load: true,
   logging_in: false,
@@ -12,12 +12,12 @@ function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case "SET_GOOGLE_ACCESS_TOKEN":
       return { ...state, google_access_token: action.google_access_token };
-    case "SET_WORKSNAP_TOKEN":
-      localStorage.setItem("worksnap_token", action.worksnap_token);
-      chrome.storage.local.set({ worksnap_token: action.worksnap_token });
+    case "SET_Workdiary_TOKEN":
+      localStorage.setItem("workdiary_token", action.workdiary_token);
+      chrome.storage.local.set({ workdiary_token: action.workdiary_token });
       return {
         ...state,
-        worksnap_token: action.worksnap_token,
+        workdiary_token: action.workdiary_token,
       };
     case "SET_USER":
       return {
@@ -42,12 +42,12 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, logging_in: !state.logging_in };
     case "HALF_RESET":
       return {
-        worksnap_token: state.worksnap_token,
+        workdiary_token: state.workdiary_token,
         date: state.date,
         all_post_dates: action.all_post_dates,
       };
     case "FULL_RESET":
-      localStorage.removeItem("worksnap_token");
+      localStorage.removeItem("workdiary_token");
       chrome.storage.local.clear();
       return {};
     default:

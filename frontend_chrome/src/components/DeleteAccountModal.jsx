@@ -24,7 +24,7 @@ const DeleteAccountModal = ({ isOpen, toggleModal, onDelete }) => {
       <ModalBody>
         <p>
           We are sorry to see you go. Deleting this account will only delete
-          your Worksnap account, not your Google account.
+          your Workdiary account, not your Google account.
         </p>
         <Input
           type="text"

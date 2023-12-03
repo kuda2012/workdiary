@@ -8,7 +8,7 @@ import HowTo from "./HowTo";
 import "../styles/Home.css";
 
 const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const openSettingsModal = () => setIsSettingsModalOpen(true);
   const closeSettingsModal = () => setIsSettingsModalOpen(false);
@@ -41,7 +41,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
         <button onClick={() => openSettingsModal()}>
           <img src="/gear-settings.png"></img>
         </button>
-        {isSettingsModalOpen && worksnapToken && (
+        {isSettingsModalOpen && workdiaryToken && (
           <SettingsModal
             isSettingsModalOpen={isSettingsModalOpen}
             closeSettingsModal={closeSettingsModal}

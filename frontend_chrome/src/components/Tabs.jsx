@@ -13,7 +13,7 @@ import "../styles/Tabs.css";
 const Tabs = () => {
   const tabs = useSelector((state) => state.post?.tabs);
   const date = useSelector((state) => state.date);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [windows, setWindows] = useState(null);
   const dispatch = useDispatch();
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
@@ -24,7 +24,7 @@ const Tabs = () => {
       selectingTabs.delete(tab_id);
       return new Map(selectingTabs);
     });
-    dispatch(deleteTab(worksnapToken, date, tab_id));
+    dispatch(deleteTab(workdiaryToken, date, tab_id));
   }
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const Tabs = () => {
             <Button
               id="pull-current-tabs"
               color="primary"
-              onClick={() => dispatch(createTabs(worksnapToken, date))}
+              onClick={() => dispatch(createTabs(workdiaryToken, date))}
             >
               Pull Current tabs
             </Button>
@@ -125,7 +125,7 @@ const Tabs = () => {
                 if (tabsSelected.size > 0) {
                   dispatch(
                     bulkDeleteTabs(
-                      worksnapToken,
+                      workdiaryToken,
                       date,
                       Array.from(tabsSelected.keys())
                     )

@@ -6,7 +6,7 @@ import { Button } from "reactstrap";
 const DeletePost = ({ closeDeletePostModal }) => {
   const date = useSelector((state) => state.date);
   const post = useSelector((state) => state.post);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const dispatch = useDispatch();
   return (
     <div>
@@ -16,7 +16,7 @@ const DeletePost = ({ closeDeletePostModal }) => {
         className="mr-1"
         onClick={() => {
           if (post) {
-            dispatch(deletePost(worksnapToken, date));
+            dispatch(deletePost(workdiaryToken, date));
             closeDeletePostModal();
           } else {
             alert(

@@ -35,7 +35,7 @@ const formats = [
 
 const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const summaryText = useSelector((state) => state?.post?.summary_text);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [localSummaryText, setLocalSummaryText] = useState(summaryText || "");
   const [buttonText, setButtonText] = useState("Save");
   const [initialRender, setInitialRender] = useState(true);
@@ -67,7 +67,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
           data={localSummaryText}
           interval={1500}
           onSave={(data) => {
-            if (localSummaryText !== summaryText && worksnapToken) {
+            if (localSummaryText !== summaryText && workdiaryToken) {
               dispatchUpdatePost(data === "<p><br></p>" ? "" : data);
               setButtonText("Saved");
             }

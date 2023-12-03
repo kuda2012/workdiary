@@ -10,17 +10,17 @@ const Alarm = () => {
   const [buttonText, setButtonText] = useState("Save");
   const user = useSelector((state) => state?.user);
   const alarmDays = useSelector((state) => state?.user?.alarm_days);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [alarmChanged, setAlarmChanged] = useState(false);
 
   const handleSwitchToggle = () => {
     setButtonText("Save");
-    dispatch(changeAlarm(worksnapToken, { alarm_status: !user.alarm_status }));
+    dispatch(changeAlarm(workdiaryToken, { alarm_status: !user.alarm_status }));
   };
 
   const handleTimeChange = (event) => {
     setButtonText("Save");
-    dispatch(changeAlarm(worksnapToken, { alarm_time: event.target.value }));
+    dispatch(changeAlarm(workdiaryToken, { alarm_time: event.target.value }));
   };
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Alarm = () => {
       }
     });
     dispatch(
-      changeAlarm(worksnapToken, {
+      changeAlarm(workdiaryToken, {
         alarm_days: updatedAlarmDays,
       })
     );

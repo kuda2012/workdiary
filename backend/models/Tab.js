@@ -1,6 +1,6 @@
 const db = require("../db");
 const pgp = require("pg-promise")();
-// const dbConnection = pgp("postgres://localhost/worksnap");
+// const dbConnection = pgp("postgres://localhost/workdiary");
 
 class Tab {
   static async create(post, body) {

@@ -12,7 +12,7 @@ import "../styles/Home.css";
 const MiddleRowMain = () => {
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
 
   const [isTagsModalOpen, setIsTagsModalOpen] = useState(false);
   const openTagsModal = () => setIsTagsModalOpen(true);
@@ -27,7 +27,7 @@ const MiddleRowMain = () => {
     if (post) {
       dispatch(
         updatePost(
-          worksnapToken,
+          workdiaryToken,
           date,
           summary_text,
           summary_voice,
@@ -37,7 +37,7 @@ const MiddleRowMain = () => {
     } else {
       dispatch(
         createPost(
-          worksnapToken,
+          workdiaryToken,
           date,
           summary_text,
           summary_voice,

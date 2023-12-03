@@ -13,7 +13,7 @@ const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
   const user = useSelector((state) => state?.user);
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
-  const worksnapToken = useSelector((state) => state.worksnap_token);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
 
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
   const openHowToModal = () => setIsHowToModalOpen(true);
@@ -21,20 +21,20 @@ const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!date && !post && worksnapToken) {
+    if (!date && !post && workdiaryToken) {
       // intial load of journal data
-      dispatch(getPost(worksnapToken, moment().format("MM/DD/YYYY")));
+      dispatch(getPost(workdiaryToken, moment().format("MM/DD/YYYY")));
     }
-    if (!user && worksnapToken) {
-      dispatch(getUserAccountInfo(worksnapToken));
+    if (!user && workdiaryToken) {
+      dispatch(getUserAccountInfo(workdiaryToken));
     }
-  }, [post, date, user, worksnapToken]);
+  }, [post, date, user, workdiaryToken]);
 
   return (
     <div
       id="outer-div"
       onClick={(e) => {
-        !worksnapToken &&
+        !workdiaryToken &&
         !isAuthModalOpen &&
         !isHowToModalOpen &&
         e.target.className !== "unclickable-exception-elements"
@@ -42,7 +42,7 @@ const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
           : null;
       }}
     >
-      {isAuthModalOpen && !worksnapToken && (
+      {isAuthModalOpen && !workdiaryToken && (
         <AuthModal
           isAuthModalOpen={isAuthModalOpen}
           closeAuthModal={closeAuthModal}
