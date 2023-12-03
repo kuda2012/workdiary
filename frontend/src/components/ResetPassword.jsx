@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "reactstrap";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import "../styles/resetPassword.css";
+import "../styles/ResetPassword.css";
 const ResetPassword = ({}) => {
   const INITIAL_STATE = {
     new_password: "",
@@ -30,7 +30,7 @@ const ResetPassword = ({}) => {
       e.preventDefault();
       if (formData.new_password === formData.new_password_copy) {
         const response = await axios.patch(
-          "http://localhost:3000/users/reset-password",
+          "https://be-workdiary.onrender.com/users/reset-password",
           {
             new_password: formData.new_password,
             new_password_copy: formData.new_password_copy,
