@@ -66,6 +66,7 @@ const NavBar = ({ openAuthModal }) => {
                   onClick={(e) => {
                     e.preventDefault();
                     dispatch(resetApp());
+                    chrome.identity.clearAllCachedAuthTokens();
                   }}
                 >
                   Logout
