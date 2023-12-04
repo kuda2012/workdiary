@@ -104,7 +104,7 @@ chrome.runtime.onInstalled.addListener(async () => {
       });
       chrome.alarms.onAlusarm.addListener(async (alarm) => {
         if (alarm.name === "myAlarm") {
-          console.log("fire alarm");
+          console.log("fire alarm - background");
           chrome.notifications.create({
             type: "basic",
             iconUrl: "w_extension.png",
