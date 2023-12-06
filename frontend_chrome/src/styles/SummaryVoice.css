@@ -22,12 +22,18 @@
   margin-right: 5px;
 }
 
-#is-recording-duration {
-  color: green;
+.recording-duration {
+  font-size: 20px;
+}
+#recording-duration-green {
+  color: rgb(26, 211, 26);
 }
 
 #recording-duration-too-long {
-  color: red;
+  color: rgb(192, 0, 0);
+}
+.is-recording {
+  background-color: rgb(192, 0, 0);
 }
 
 @keyframes pulse {
@@ -35,7 +41,7 @@
     transform: scale(1); /* Initial size */
   }
   50% {
-    transform: scale(1.3); /* Larger size */
+    transform: scale(1.4); /* Larger size */
   }
   100% {
     transform: scale(1); /* Back to the original size */
@@ -44,5 +50,5 @@
 
 /* Apply the animation to the text */
 .pulsating-red-dot {
-  animation: pulse 1.5s infinite; /* Use the pulse animation for 2 seconds infinitely */
+  animation: pulse 1.1s infinite; /* Use the pulse animation for 2 seconds infinitely */
 }

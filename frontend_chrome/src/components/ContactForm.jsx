@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
+const { VITE_LOCAL_BACKEND_URL, VITE_CLOUD_BACKEND_URL } = import.meta.env;
 import axios from "axios";
 
 const ContactForm = () => {
@@ -20,7 +21,7 @@ const ContactForm = () => {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "https://be-workdiary.onrender.com/users/contact-us",
+        `${VITE_LOCAL_BACKEND_URL}/users/contact-us`,
         { ...formData }
       );
       alert(response?.data?.message);

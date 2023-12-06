@@ -1,5 +1,4 @@
 const db = require("../db");
-const { v4: uuid } = require("uuid");
 const moment = require("moment");
 const { formatSearchResults } = require("../helpers/formatSearchResults");
 class Post {
@@ -9,21 +8,29 @@ class Post {
        VALUES ($1, $2, $3) RETURNING id, user_id, summary_text, date`,
       [user_id, body.date, body.summary_text]
     );
-
+    const now = moment();
     return {
       ...createdPost[0],
+      last_updated: now.isSame(createdPost[0].last_updated, "day")
+        ? `Today at ${moment(createdPost[0].last_updated).format("h:mm A")}`
+        : moment(createdPost[0].last_updated).format("MM/DD/YY - h:mm A"),
       date: moment(createdPost[0].date).format("MM/DD/YYYY"),
     };
   }
   static async getPost(user_id, date) {
     const post = await db.oneOrNone(
-      `SELECT id, user_id, summary_text, date FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
+      `SELECT id, user_id, summary_text, date, last_updated FROM posts WHERE user_id = $1 AND DATE(date)=$2 `,
       [user_id, date]
     );
+    const now = moment();
     return post
       ? {
           ...post,
           date: moment(post.date).format("MM/DD/YYYY"),
+          // last_updated: `Today at ${moment(post.created_at).format("h:mm A")}`,
+          last_updated: now.isSame(post.last_updated, "day")
+            ? `Today at ${moment(post.last_updated).format("h:mm A")}`
+            : moment(post.last_updated).format("MM/DD/YY - h:mm A"),
         }
       : null;
   }
@@ -47,12 +54,19 @@ class Post {
       queryValues.push(body.summary_text); // Add the value to the parameter array
       queryText += ` summary_text = $${queryValues.length},`; // Add the column to the query
     }
-    queryText = queryText.slice(0, -1);
+    queryText += ` last_updated = CURRENT_TIMESTAMP`;
     queryValues.push(post_id);
-    queryText += ` WHERE id = $${queryValues.length} RETURNING id, user_id, summary_text, date`;
+    queryText += ` WHERE id = $${queryValues.length} RETURNING id, user_id, last_updated, summary_text, date`;
     const result = await db.query(queryText, queryValues);
+    const now = moment();
     return {
       ...result[0],
+      last_updated: now.isSame(result[0].last_updated, "day")
+        ? `Today at ${moment(result[0].last_updated).format("h:mm A")}`
+        : moment(result[0].last_updated).format("MM/DD/YY"),
+      // last_updated: now.isSame(result[0].last_updated, "day")
+      //   ? moment(result[0].last_updated).format("MM/DD/YY")
+      //   : moment(result[0].last_updated).format("MM/DD/YY"),
     };
   }
 

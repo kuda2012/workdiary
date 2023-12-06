@@ -1,8 +1,9 @@
+const { decodeJwt } = require("../helpers/decodeJwt");
+const { speechToText } = require("../helpers/speechToText");
+const moment = require("moment");
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
 const Tag = require("../models/Tag");
-const { decodeJwt } = require("../helpers/decodeJwt");
-const { speechToText } = require("../helpers/speechToText");
 const TranscribeLog = require("../models/TranscribeLog");
 const ExpressError = require("../expressError");
 
@@ -18,14 +19,18 @@ exports.create = async (req, res, next) => {
         if (!getLog) {
           const summaryText = await speechToText(req.body.summary_voice);
           req.body.summary_text = req.body.summary_text
-            ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
-            : `<p>${summaryText}</p>`;
+            ? req.body.summary_text.concat(
+                `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
+              )
+            : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
           updatedLog = await TranscribeLog.create(id);
         } else if (getLog?.count < 10) {
           const summaryText = await speechToText(req.body.summary_voice);
           req.body.summary_text = req.body.summary_text
-            ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
-            : `<p>${summaryText}</p>`;
+            ? req.body.summary_text.concat(
+                `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
+              )
+            : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
           updatedLog = await TranscribeLog.updateLog(id);
         } else {
           throw new ExpressError(
@@ -93,14 +98,18 @@ exports.update = async (req, res, next) => {
       if (!getLog) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
-          ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
-          : `<p>${summaryText}</p>`;
+          ? req.body.summary_text.concat(
+              `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
+            )
+          : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
         updatedLog = await TranscribeLog.create(id);
       } else if (getLog?.count < 10) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
-          ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
-          : `<p>${summaryText}</p>`;
+          ? req.body.summary_text.concat(
+              `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
+            )
+          : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
         updatedLog = await TranscribeLog.updateLog(id);
       } else {
         throw new ExpressError(

@@ -45,7 +45,7 @@ const NavBar = ({ openAuthModal }) => {
         <Nav navbar>
           {!workdiaryToken && (
             <>
-              <NavItem>
+              <NavItem className="nav-item">
                 <NavLink
                   className="nav-link"
                   onClick={(e) => {
@@ -60,7 +60,7 @@ const NavBar = ({ openAuthModal }) => {
           )}
           {workdiaryToken && (
             <>
-              <NavItem>
+              <NavItem className="nav-item">
                 <NavLink
                   className="nav-link"
                   onClick={(e) => {

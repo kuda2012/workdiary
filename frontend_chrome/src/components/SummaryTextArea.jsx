@@ -52,8 +52,13 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
     }
   }, [summaryText]);
 
+  const lastUpdated = useSelector((state) => state?.post?.last_updated);
+
   return (
     <div id="summary-text-container">
+      <span id="last-updated" className="p-0 mb-5" style={{}}>
+        Edited: {lastUpdated}
+      </span>
       <CustomToolBar openTagsModal={openTagsModal} />
       <ReactQuill
         value={localSummaryText}
@@ -61,7 +66,6 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
         modules={modules}
         formats={formats}
       />
-
       {!initialRender && (
         <Autosave
           data={localSummaryText}

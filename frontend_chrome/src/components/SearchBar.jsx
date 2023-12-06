@@ -54,6 +54,7 @@ const SearchBar = ({ toggleSearchBar }) => {
         id="search-input"
         type="text"
         value={searchText}
+        placeholder="Search entries"
         autocomplete="off"
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}

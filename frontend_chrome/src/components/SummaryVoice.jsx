@@ -150,6 +150,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       </h4>
       <div>
         <button
+          className={`${isRecording && "is-recording"}`}
           onClick={
             !isRecording && !isPaused && !audioDuration
               ? startRecording
@@ -160,7 +161,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
           disabled={
             !isPlaybackFinished || (audioDuration && !isPaused && !isRecording)
           }
-          id="recordButton"
+          id="record-button"
         >
           <span
             id="record-red-dot"
@@ -218,14 +219,17 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         </button>
       </div>
       <div
-        id={audioDuration >= 165 && `recording-duration-too-long`}
-        className="m-3"
+        id={audioDuration >= 5 && `recording-duration-too-long`}
+        className="m-3 recording-duration"
       >
-        Recording Duration:{" "}
+        <b>{audioDuration >= 5 && "(180s max) : "}</b>
         <b
           id={
-            (isRecording && `is-recording-duration`) ||
-            (isRecording && audioDuration < 165 && `is-recording-duration`)
+            isRecording &&
+            `recording-duration-green` &&
+            isRecording &&
+            audioDuration < 5 &&
+            `recording-duration-green`
           }
         >
           {audioDuration}s

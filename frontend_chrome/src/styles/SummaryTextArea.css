@@ -17,3 +17,12 @@
   position: relative;
   bottom: 3px;
 }
+
+#last-updated {
+  text-align: center;
+  width: 150px;
+  font-size: 11px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+}

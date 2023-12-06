@@ -1,5 +1,11 @@
 let windowId;
 let tabId;
+const config = {
+  CLOUD_BACKEND_URL: "https://be-workdiary.onrender.com",
+  LOCAL_BACKEND_URL: "http://localhost:3000",
+  // Other configurations...
+};
+
 async function openApp() {
   if (tabId) {
     console.log(tabId);
@@ -27,7 +33,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   async function isWorkdiaryTokenCurrent(workdiary_token) {
     try {
       const response = await fetch(
-        "https://be-workdiary.onrender.com/users/check-workdiary-token",
+        `${config.LOCAL_BACKEND_URL}/users/check-workdiary-token`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${workdiary_token}` },
@@ -46,7 +52,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         : null;
     if (workdiaryToken) {
       const response = await fetch(
-        "https://be-workdiary.onrender.com/users/account-info",
+        `${config.LOCAL_BACKEND_URL}/users/account-info`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${workdiaryToken}` },
