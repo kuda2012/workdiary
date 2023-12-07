@@ -140,6 +140,11 @@ const Tabs = () => {
           </div>
         </div>
         <div className="row">
+          <div className="col-12 m-3">
+            <span>Tab count: {tabs.length}</span>
+          </div>
+        </div>
+        <div className="row">
           <div id="select-all-tabs-column" className="col-6 m-3">
             <input
               type="checkbox"
