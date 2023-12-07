@@ -100,6 +100,16 @@ chrome.runtime.onInstalled.addListener(async () => {
       console.log(error);
     }
   }
+
+  chrome.tabs.onCreated.addListener(function (tab) {
+    // Send a message to alert the extension about the new tab
+    chrome.runtime.sendMessage({ type: "newTabOpened", tab: tab });
+  });
+  chrome.tabs.onRemoved.addListener(function (tab) {
+    // Send a message to alert the extension about the new tab
+    chrome.runtime.sendMessage({ type: "tabClosed", tab: tab });
+  });
+  Con;
   await chrome.storage.local.get(["workdiary_token"]).then(async (result) => {
     const workdiaryToken =
       result?.workdiary_token && typeof result?.workdiary_token === "string"

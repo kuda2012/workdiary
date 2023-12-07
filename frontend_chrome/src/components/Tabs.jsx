@@ -18,6 +18,7 @@ const Tabs = () => {
   const dispatch = useDispatch();
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
   const [tabsSelected, setTabsSelected] = useState(new Map());
+  const [currentTabCount, setCurrentTabsCount] = useState(0);
 
   function onTabDelete(tab_id) {
     setTabsSelected((selectingTabs) => {
@@ -26,7 +27,6 @@ const Tabs = () => {
     });
     dispatch(deleteTab(workdiaryToken, date, tab_id));
   }
-
   useEffect(() => {
     const fetchWindows = async () => {
       try {
@@ -54,6 +54,27 @@ const Tabs = () => {
 
     fetchWindows();
   }, []);
+  useEffect(() => {
+    const handleMessage = async (message) => {
+      if (message.type === "newTabOpened" || message.type === "tabClosed") {
+        // Perform actions in useEffect when a new tab is opened
+        setCurrentTabsCount(Array.from(await chrome.tabs.query({})).length);
+        // Add your logic here based on the newly opened tab
+      }
+    };
+    const getCurrentTabsCount = async () => {
+      setCurrentTabsCount(Array.from(await chrome.tabs.query({})).length);
+    };
+    getCurrentTabsCount();
+    // Adding event listener for messages from the background script
+    chrome.runtime.onMessage.addListener(handleMessage);
+
+    // Clean up the event listener on component unmount
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []); // Empty dependency array to run the effect only once
 
   return (
     <>
@@ -65,7 +86,7 @@ const Tabs = () => {
               color="primary"
               onClick={() => dispatch(createTabs(workdiaryToken, date, tabs))}
             >
-              Pull Current tabs
+              Pull Current tabs ({currentTabCount})
             </Button>
           </div>
         </div>
