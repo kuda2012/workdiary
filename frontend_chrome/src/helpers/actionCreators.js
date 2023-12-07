@@ -259,34 +259,52 @@ export function createPost(
     }
   };
 }
-async function queryTabs() {
+async function queryTabs(currentTabs) {
   return new Promise((resolve, reject) => {
     chrome.tabs.query({}, (tabs) => {
       if (chrome.runtime.lastError) {
         reject(chrome.runtime.lastError);
       } else {
-        const newTabs = tabs.map((tab) => {
-          return { title: tab.title, url: tab.url, icon: tab.favIconUrl };
-        });
-        resolve(newTabs);
+        let newTabs = tabs;
+        if (currentTabs) {
+          newTabs = tabs.filter((tab) => {
+            for (let i = 0; i < currentTabs.length; i++) {
+              if (currentTabs[i].url === tab.url) {
+                return false;
+              }
+            }
+            return true;
+          });
+        }
+        resolve(
+          newTabs.map((tab) => {
+            return {
+              title: tab.title,
+              url: tab.url,
+              icon: tab.favIconUrl,
+            };
+          })
+        );
       }
     });
   });
 }
 
-export function createTabs(workdiary_token, date) {
+export function createTabs(workdiary_token, date, currentTabs) {
   return async function (dispatch) {
     try {
-      const newTabs = await queryTabs();
-      const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/tabs/create`,
-        { workdiary_token, date, tabs: newTabs },
-        {
-          headers: { Authorization: `Bearer ${workdiary_token}` },
-        }
-      );
-      dispatch(setPost(data.post));
-      dispatch(setDate(data.date));
+      const newTabs = await queryTabs(currentTabs);
+      if (newTabs.length > 0) {
+        const { data } = await axios.post(
+          `${VITE_LOCAL_BACKEND_URL}/tabs/create`,
+          { workdiary_token, date, tabs: newTabs },
+          {
+            headers: { Authorization: `Bearer ${workdiary_token}` },
+          }
+        );
+        dispatch(setPost(data.post));
+        dispatch(setDate(data.date));
+      }
     } catch (error) {
       console.log(error);
     }

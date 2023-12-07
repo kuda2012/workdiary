@@ -63,7 +63,7 @@ const Tabs = () => {
             <Button
               id="pull-current-tabs"
               color="primary"
-              onClick={() => dispatch(createTabs(workdiaryToken, date))}
+              onClick={() => dispatch(createTabs(workdiaryToken, date, tabs))}
             >
               Pull Current tabs
             </Button>
