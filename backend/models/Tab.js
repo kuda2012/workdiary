@@ -9,13 +9,12 @@ class Tab {
       title: tab.title,
       url: tab.url,
       icon: tab.icon,
-      screenshot: tab.screenshot,
     }));
     try {
       await db.tx(async (t) => {
         const insert = pgp.helpers.insert(
           tabs,
-          ["post_id", "title", "url", "icon", "screenshot"],
+          ["post_id", "title", "url", "icon"],
           "tabs"
         );
         return t.manyOrNone(insert + " RETURNING *");
@@ -30,9 +29,11 @@ class Tab {
       `SELECT tabs.id as tab_id, post_id, title, url, icon FROM tabs
       JOIN posts ON posts.id = tabs.post_id
       WHERE posts.user_id = $1 AND DATE(date)=$2
+      ORDER BY tab_id DESC
       `,
       [user_id, date]
     );
+    console.log(tabs);
     return tabs;
   }
 
