@@ -56,7 +56,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
 
   return (
     <div id="summary-text-container">
-      <span id="last-updated" className="p-0 mb-5" style={{}}>
+      <span id="last-updated" className="p-0 mb-5">
         Edited: {lastUpdated}
       </span>
       <CustomToolBar openTagsModal={openTagsModal} />
