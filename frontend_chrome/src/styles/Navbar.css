@@ -4,7 +4,7 @@ nav {
 .nav-item {
   list-style-type: none;
 }
-.nav-link {
+.nav-link:hover {
   text-decoration: none;
 }
 

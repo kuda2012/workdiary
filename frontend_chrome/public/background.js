@@ -1,31 +1,86 @@
-let windowId;
-let tabId;
 const config = {
   CLOUD_BACKEND_URL: "https://be-workdiary.onrender.com",
   LOCAL_BACKEND_URL: "http://localhost:3000",
   // Other configurations...
 };
+// let tabId;
 
-async function openApp() {
-  if (tabId) {
-    console.log(tabId);
-    chrome.tabs.remove(tabId);
+// function openApp() {
+//   chrome.tabs.query(
+//     { url: "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html" },
+//     (tabs) => {
+//       if (tabs && tabs.length > 0) {
+//         // If the tab is already open, set the tabId
+//         tabId = tabs[0].id;
+//         console.log(`Extension tab found with ID: ${tabId}`);
+//       } else {
+//         // If the tab is not open, create a new tab
+//         chrome.tabs.create({ url: "/index.html" }, (tab) => {
+//           tabId = tab.id;
+//           console.log(`New tab created with ID: ${tabId}`);
+//         });
+//       }
+//     }
+//   );
+// }
+
+// function closeApp() {
+//   if (tabId) {
+//     chrome.tabs.remove(tabId);
+//     tabId = undefined;
+//     console.log(`Closed tab with ID: ${tabId}`);
+//   }
+// }
+
+// chrome.action.onClicked.addListener(function () {
+//   if (!tabId) {
+//     openApp();
+//   } else {
+//     closeApp();
+//   }
+// });
+let popupWindow;
+
+function isPopupOpen() {
+  return popupWindow && !popupWindow.closed;
+}
+function openPopup() {
+  if (!isPopupOpen()) {
+    chrome.windows.create(
+      {
+        url: "index.html", // Replace with your HTML file's path
+        type: "popup",
+        width: 800, // Set the width and height as desired
+        height: 980,
+        top: 100, // Adjust the window's position as needed
+        left: 200,
+      },
+      function (window) {
+        popupWindow = window;
+      }
+    );
   }
-  chrome.tabs.create({ url: "/index.html" }, (tab) => {
-    tabId = tab.id;
-  });
 }
 
-function closeApp() {
-  chrome.tabs.remove(tabId);
-  tabId = undefined;
+function closePopup() {
+  if (popupWindow) {
+    chrome.windows.remove(popupWindow.id, function () {
+      popupWindow = undefined;
+    });
+  }
 }
 
 chrome.action.onClicked.addListener(function () {
-  if (!tabId) {
-    openApp();
+  if (!isPopupOpen()) {
+    openPopup();
   } else {
-    closeApp();
+    closePopup();
+  }
+});
+
+chrome.windows.onRemoved.addListener(function (windowId) {
+  if (popupWindow && popupWindow.id === windowId) {
+    popupWindow = undefined;
   }
 });
 
@@ -104,11 +159,14 @@ chrome.runtime.onInstalled.addListener(async () => {
         Math.floor(militaryTime - currentTime)
       );
       console.log(currentTime, militaryTimeString);
-      console.log(`Time difference in seconds: ${timeDifferenceInSeconds}`);
+      console.log(
+        "from background.js",
+        `Time difference in seconds: ${timeDifferenceInSeconds}`
+      );
       chrome.alarms.create("myAlarm", {
         when: Date.now() + timeDifferenceInSeconds, // Set the alarm to go off in 1 second.
       });
-      chrome.alarms.onAlusarm.addListener(async (alarm) => {
+      chrome.alarms.onAlarm.addListener(async (alarm) => {
         if (alarm.name === "myAlarm") {
           console.log("fire alarm - background");
           chrome.notifications.create({

@@ -48,8 +48,8 @@ const MiddleRowMain = () => {
   }
   return (
     <div className="row justify-content-around">
-      <div className="col-2"></div>
-      <div className="col-8 d-flex flex-column align-items-center">
+      <div className="col-1"></div>
+      <div className="col-10 d-flex flex-column align-items-center">
         <>
           <SummaryVoice
             summaryText={post?.summary_text}
@@ -62,7 +62,7 @@ const MiddleRowMain = () => {
           />
         </>
       </div>
-      <div className="col-2 d-flex align-items-center justify-content-end px-0">
+      <div className="col-1 d-flex align-items-center justify-content-end px-0">
         <button id="tabs-home" onClick={() => openTabsModal()}>
           <span>Your tabs</span>
         </button>
