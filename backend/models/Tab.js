@@ -33,7 +33,6 @@ class Tab {
       `,
       [user_id, date]
     );
-    console.log(tabs);
     return tabs;
   }
 
