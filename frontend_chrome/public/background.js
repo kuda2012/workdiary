@@ -119,6 +119,26 @@ chrome.runtime.onInstalled.addListener(async () => {
       chrome.runtime.sendMessage({ type: "tabClosed", tab: tab });
     }
   });
+
+  chrome.windows.onFocusChanged.addListener(async (windowId) => {
+    const window = windowId !== -1 ? await chrome.windows.get(windowId) : null;
+    if (window && window?.type !== "popup") {
+      chrome.runtime.sendMessage(
+        {
+          type: "windowMoved",
+          windowId: windowId,
+        },
+        () => {
+          if (chrome.runtime.lastError) {
+            console.error(
+              "Error sending message:",
+              chrome.runtime.lastError.message
+            );
+          }
+        }
+      );
+    }
+  });
   await chrome.storage.local.get(["workdiary_token"]).then(async (result) => {
     const workdiaryToken =
       result?.workdiary_token && typeof result?.workdiary_token === "string"

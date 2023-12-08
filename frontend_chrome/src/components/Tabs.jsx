@@ -51,15 +51,15 @@ const Tabs = () => {
         console.error("Error fetching windows:", error);
       }
     };
-
     fetchWindows();
-  }, []);
-  useEffect(() => {
     const handleMessage = async (message) => {
       if (message.type === "newTabOpened" || message.type === "tabClosed") {
         // Perform actions in useEffect when a new tab is opened
         setCurrentTabsCount(Array.from(await chrome.tabs.query({})).length);
         // Add your logic here based on the newly opened tab
+      } else if (message.type === "windowMoved") {
+        // recalculate who is window1 and window2
+        fetchWindows();
       }
     };
     const getCurrentTabsCount = async () => {
@@ -74,7 +74,7 @@ const Tabs = () => {
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessage);
     };
-  }, []); // Empty dependency array to run the effect only once
+  }, []);
 
   return (
     <>
