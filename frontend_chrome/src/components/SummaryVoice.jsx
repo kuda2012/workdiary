@@ -40,7 +40,9 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         audioUrlRef.current = URL.createObjectURL(audioBlob);
         audioRef.current.src = audioUrlRef.current;
       };
-
+      const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
+      audio.volume = 1; // Get the URL to your sound fil
+      audio.play();
       mediaRecorder.start();
       setIsRecording(true);
       timerRef.current = setInterval(() => {
@@ -48,11 +50,19 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       }, 1000);
     } catch (error) {
       console.error("Error starting recording:", error);
+      if (error.message === "Requested device not found") {
+        alert(
+          "Please check your System Sound Settings to set a microphone input"
+        );
+      }
     }
   };
 
   const pauseRecording = () => {
     if (mediaRecorderRef.current && !isPaused) {
+      const audio = new Audio(chrome.runtime.getURL("stop_sound.mp3"));
+      audio.volume = 1; // Get the URL to your sound fil
+      audio.play();
       mediaRecorderRef.current.pause();
       clearInterval(timerRef.current);
       setIsRecording(false);
@@ -67,6 +77,9 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
 
   const resumeRecording = () => {
     if (mediaRecorderRef.current && isPaused) {
+      const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
+      audio.volume = 1; // Get the URL to your sound fil
+      audio.play();
       mediaRecorderRef.current.resume();
       timerRef.current = setInterval(() => {
         setAudioDuration((duration) => duration + 1);
@@ -87,6 +100,9 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && (isRecording || isPaused)) {
+      const audio = new Audio(chrome.runtime.getURL("stop_sound.mp3"));
+      audio.volume = 1; // Get the URL to your sound fil
+      audio.play();
       mediaRecorderRef.current.stop();
       clearInterval(timerRef.current);
       setIsRecording(false);
