@@ -53,7 +53,7 @@ function openPopup() {
         width: 800, // Set the width and height as desired
         height: 980,
         top: 100, // Adjust the window's position as needed
-        left: 200,
+        left: -500,
       },
       function (window) {
         popupWindow = window;

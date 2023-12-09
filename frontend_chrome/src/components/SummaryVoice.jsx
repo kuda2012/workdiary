@@ -14,6 +14,8 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const audioChunks = useRef([]);
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
+  const mediaRecorderRefForPlayback = useRef(null);
+  const audioStreamRefForPlayback = useRef(null);
   const audioStreamRef = useRef(null);
   const timerRef = useRef(null);
   const audioUrlRef = useRef(null);
@@ -24,10 +26,20 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       audioStreamRef.current = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
+      audioStreamRefForPlayback.current =
+        await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+
       const audioStream = audioStreamRef.current;
+      const audioStreamForPlayback = audioStreamRefForPlayback.current;
 
       mediaRecorderRef.current = new MediaRecorder(audioStream);
+      mediaRecorderRefForPlayback.current = new MediaRecorder(
+        audioStreamForPlayback
+      );
       const mediaRecorder = mediaRecorderRef.current;
+      const mediaRecorderForPlayback = mediaRecorderRefForPlayback.current;
 
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -40,10 +52,25 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         audioUrlRef.current = URL.createObjectURL(audioBlob);
         audioRef.current.src = audioUrlRef.current;
       };
+
+      mediaRecorderForPlayback.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunks.current.push(event.data);
+        }
+      };
+
+      mediaRecorderForPlayback.onstop = () => {
+        const audioBlob = new Blob(audioChunks.current, {
+          type: "audio/wav",
+        });
+        audioUrlRef.current = URL.createObjectURL(audioBlob);
+        audioRef.current.src = audioUrlRef.current;
+      };
       const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
       audio.volume = 1; // Get the URL to your sound fil
       audio.play();
       mediaRecorder.start();
+      mediaRecorderForPlayback.start();
       setIsRecording(true);
       timerRef.current = setInterval(() => {
         setAudioDuration((duration) => duration + 1);
@@ -64,14 +91,15 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       audio.volume = 1; // Get the URL to your sound fil
       audio.play();
       mediaRecorderRef.current.pause();
+      mediaRecorderRefForPlayback.current.stop();
       clearInterval(timerRef.current);
       setIsRecording(false);
       setIsPaused(true);
-      const audioBlob = new Blob(audioChunks.current, {
-        type: "audio/wav",
-      });
-      audioUrlRef.current = URL.createObjectURL(audioBlob);
-      audioRef.current.src = audioUrlRef.current;
+      // const audioBlob = new Blob(audioChunks.current, {
+      //   type: "audio/wav",
+      // });
+      // audioUrlRef.current = URL.createObjectURL(audioBlob);
+      // audioRef.current.src = audioUrlRef.current;
     }
   };
 
@@ -81,6 +109,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       audio.volume = 1; // Get the URL to your sound fil
       audio.play();
       mediaRecorderRef.current.resume();
+      mediaRecorderRefForPlayback.current.start();
       timerRef.current = setInterval(() => {
         setAudioDuration((duration) => duration + 1);
       }, 1000);
@@ -104,6 +133,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       audio.volume = 1; // Get the URL to your sound fil
       audio.play();
       mediaRecorderRef.current.stop();
+      mediaRecorderRefForPlayback.current.stop();
       clearInterval(timerRef.current);
       setIsRecording(false);
       setIsPaused(false);
