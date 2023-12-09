@@ -8,7 +8,6 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const userAccountInfo = useSelector((state) => state?.user);
   const interpreting = useSelector((state) => state.interpreting);
   const [isRecording, setIsRecording] = useState(false);
-  const [isPlaybackFinished, setIsPlaybackFinished] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [audioDuration, setAudioDuration] = useState(0);
   const audioChunks = useRef([]);
@@ -110,6 +109,8 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
       audio.play();
       mediaRecorderRef.current.resume();
       mediaRecorderRefForPlayback.current.start();
+      audioRef.current.pause();
+      audioRef.current.currentTie = 0;
       timerRef.current = setInterval(() => {
         setAudioDuration((duration) => duration + 1);
       }, 1000);
@@ -122,16 +123,12 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     if (audioUrlRef.current) {
       audioRef.current.src = audioUrlRef.current;
       audioRef.current.play();
-      setIsPlaybackFinished(false);
     }
     setIsRecording(false);
   };
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && (isRecording || isPaused)) {
-      const audio = new Audio(chrome.runtime.getURL("stop_sound.mp3"));
-      audio.volume = 1; // Get the URL to your sound fil
-      audio.play();
       mediaRecorderRef.current.stop();
       mediaRecorderRefForPlayback.current.stop();
       clearInterval(timerRef.current);
@@ -140,8 +137,14 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     }
   };
 
-  const resetRecording = () => {
+  const resetRecording = (clickedToReset) => {
     // Reset all the state variables and audio playback
+    if (clickedToReset) {
+      const audio = new Audio(chrome.runtime.getURL("trash.mp3"));
+      audio.volume = 1;
+      audio.play();
+    }
+
     audioRef.current.src = "";
     clearTimeout(timerRef.current);
     setAudioDuration(0);
@@ -150,9 +153,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     setIsRecording(false);
     setIsPaused(false);
   };
-  const handleAudioEnded = () => {
-    setIsPlaybackFinished(true);
-  };
+
   const sendAudioToBackend = () => {
     if (audioChunks.current.length === 0) {
       console.log("No audio data to send.");
@@ -204,9 +205,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
               ? pauseRecording
               : resumeRecording
           }
-          disabled={
-            !isPlaybackFinished || (audioDuration && !isPaused && !isRecording)
-          }
+          disabled={audioDuration && !isPaused && !isRecording}
           id="record-button"
         >
           <span
@@ -224,16 +223,13 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         <button onClick={pauseRecording} disabled={!isRecording}>
           <img src="/pause.png" title="Pause"></img>
         </button>
-        <button onClick={stopRecording} disabled={!audioDuration}>
-          <img src="/stop_1.png" title="Stop Recording"></img>
-        </button>
         <button
           onClick={playRecording}
           disabled={!audioDuration || isRecording}
         >
           <img src="/play_1.png" title="Play"></img>
         </button>
-        <button onClick={resetRecording} disabled={!audioDuration}>
+        <button onClick={() => resetRecording(true)} disabled={!audioDuration}>
           <img src="/trash_1.png" title="Reset"></img>
         </button>
         <button
@@ -282,7 +278,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         </b>
       </div>
       <div className="mb-5">
-        <audio controls ref={audioRef} onEnded={handleAudioEnded} />
+        <audio controls ref={audioRef} />
       </div>
     </div>
   );
