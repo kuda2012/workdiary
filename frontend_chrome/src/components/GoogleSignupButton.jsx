@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
+import { ThreeDots } from "react-loader-spinner";
 import {
   loggingIn,
   resetApp,
@@ -27,9 +28,28 @@ const GoogleLoginButton = ({ isSignup }) => {
     >
       {!signingIn && <img id="google-login-img" src="/Google.png"></img>}
       <span id="google-login-span">
-        {!signingIn
-          ? `${isSignup ? "Sign up" : "Login"} with Google `
-          : "Authenticating..."}
+        {!signingIn ? (
+          `${isSignup ? "Sign up" : "Login"} with Google `
+        ) : (
+          <div
+            id="three-dots-container"
+            className="container d-flex justify-content-center align-items-center"
+          >
+            <div className="row">
+              <div className="col">
+                <ThreeDots
+                  height="24px"
+                  width="35px"
+                  radius="6"
+                  color="white"
+                  ariaLabel="loading"
+                  wrapperStyle
+                  wrapperClass
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </span>
     </Button>
   );

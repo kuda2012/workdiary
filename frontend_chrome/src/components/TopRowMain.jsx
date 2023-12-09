@@ -20,10 +20,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
           onClick={() => openHowToModal()}
           className="unclickable-exception-elements"
         >
-          <img
-            src="/question_mark.png"
-            className="unclickable-exception-elements"
-          ></img>
+          <img src="/info.png" className="unclickable-exception-elements"></img>
         </button>
         {isHowToModalOpen && (
           <HowToModal
