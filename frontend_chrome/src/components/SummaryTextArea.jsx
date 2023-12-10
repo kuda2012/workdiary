@@ -38,7 +38,6 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [localSummaryText, setLocalSummaryText] = useState(summaryText || "");
   const [buttonText, setButtonText] = useState("Save");
-  const [initialRender, setInitialRender] = useState(true);
 
   const handleChange = (value) => {
     setLocalSummaryText(value);
@@ -47,9 +46,6 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
 
   useEffect(() => {
     setLocalSummaryText(summaryText);
-    if (initialRender) {
-      setInitialRender(false);
-    }
   }, [summaryText]);
 
   const lastUpdated = useSelector((state) => state?.post?.last_updated);
@@ -66,18 +62,21 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
         modules={modules}
         formats={formats}
       />
-      {!initialRender && (
+      {
         <Autosave
           data={localSummaryText}
           interval={1500}
           onSave={(data) => {
-            if (localSummaryText !== summaryText && workdiaryToken) {
+            if (
+              localSummaryText !== (summaryText || "<p><br></p>") &&
+              workdiaryToken
+            ) {
               dispatchUpdatePost(data === "<p><br></p>" ? "" : data);
               setButtonText("Saved");
             }
           }}
         />
-      )}
+      }
       <button
         onClick={() => {
           dispatchUpdatePost(

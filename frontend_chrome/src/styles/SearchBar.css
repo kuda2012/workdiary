@@ -1,9 +1,16 @@
 #search-bar-form {
   width: 25%;
   position: relative;
-  right: 135px;
+  right: 75px;
   text-align: left;
 }
+
+/* #search-bar-form {
+  width: 25%;
+  position: relative;
+  right: 135px;
+  text-align: left;
+} */
 
 #search-input {
   width: 100%;

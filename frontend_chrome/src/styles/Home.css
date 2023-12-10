@@ -8,9 +8,8 @@
 }
 #calendar-column {
   position: relative;
-  right: 23px;
+  right: 5px;
 }
-
 #custom-date-picker-input {
   display: flex;
   justify-content: center;
@@ -35,4 +34,19 @@
 #delete-post-button {
   position: relative;
   left: 300px;
+}
+
+#calendar-arrow {
+  position: relative;
+  top: 2px;
+  height: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+#reset-calendar {
+  position: relative;
+  top: 2px;
+  height: 20px;
+  cursor: pointer;
+  user-select: none;
 }

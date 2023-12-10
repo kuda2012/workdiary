@@ -53,6 +53,18 @@ function App() {
         </>
       ) : (
         <>
+          <div className="container">
+            <div className="row justify-content-end align">
+              <div className="col-1">
+                <span
+                  id="refresh-page"
+                  onClick={() => window.location.reload()}
+                >
+                  Refresh
+                </span>
+              </div>
+            </div>
+          </div>
           <Navbar openAuthModal={openAuthModal} />
           <Router
             isAuthModalOpen={isAuthModalOpen}

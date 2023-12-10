@@ -31,7 +31,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
           </HowToModal>
         )}
       </div>
-      <div id="calendar-column" className="col mt-2">
+      <div id="calendar-column" className="col mt-2 d-flex">
         <Calendar />
       </div>
       <div className="col mt-1 d-flex justify-content-end px-0">

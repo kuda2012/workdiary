@@ -9,3 +9,14 @@
 #three-dots-container {
   height: 80%;
 }
+
+#refresh-page {
+  cursor: pointer;
+  position: relative;
+  right: 25px;
+}
+
+#refresh-page:hover {
+  color: #646cff;
+  text-decoration: underline;
+}
