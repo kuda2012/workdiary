@@ -54,7 +54,7 @@ function App() {
       ) : (
         <>
           <div className="container">
-            <div className="row justify-content-end align">
+            <div className="row justify-content-start">
               <div className="col-1">
                 <span
                   id="refresh-page"
