@@ -180,7 +180,7 @@ export function getPost(workdiary_token, date) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${VITE_LOCAL_BACKEND_URL}/posts?date=${date}`,
+        `${VITE_LOCAL_BACKEND_URL}/posts/get-post?date=${date}`,
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }

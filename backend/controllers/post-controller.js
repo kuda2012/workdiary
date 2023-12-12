@@ -77,6 +77,16 @@ exports.getPost = async (req, res, next) => {
   }
 };
 
+exports.listAllPosts = async (req, res, next) => {
+  try {
+    const { id } = decodeJwt(req.headers.authorization);
+    const postsList = await Post.listAllPosts(id, req.query.page_number);
+    res.send({ posts_list: [...postsList] });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.search = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);

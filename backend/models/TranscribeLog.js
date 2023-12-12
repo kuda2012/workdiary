@@ -1,4 +1,4 @@
-const db = require("../db");
+const { db } = require("../db");
 class TranscribeLog {
   static async create(user_id) {
     const createdLog = await db.query(

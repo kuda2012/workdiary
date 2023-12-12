@@ -1,6 +1,6 @@
-const db = require("../db");
-const moment = require("moment");
 const { formatSearchResults } = require("../helpers/formatSearchResults");
+const { db, knex } = require("../db");
+const moment = require("moment");
 class Post {
   static async create(user_id, body) {
     const createdPost = await db.query(
@@ -40,6 +40,43 @@ class Post {
       [user_id]
     );
     return allPostDates.map((date) => date.date);
+  }
+
+  static async listAllPosts(user_id, pageNumber = 1) {
+    function shortenSummaryText(summaryText) {
+      // Extract the first 7 full words
+      const words = summaryText
+        .replace(/<p>|<\/p>/g, "")
+        .match(/\w+/g)
+        ?.slice(0, 7);
+
+      // Check if any words were found
+      if (!words) {
+        return ``;
+      }
+
+      // Join the words back together with spaces and wrap in a paragraph tag
+      return `${
+        words.length < 7 ? words.join(" ") : words.join(" ").concat("...")
+      }`;
+    }
+    const pageSize = 10;
+    const { data } = await knex("posts")
+      .select("date", "summary_text")
+      .where("user_id", user_id)
+      .orderBy("date")
+      .paginate({
+        perPage: pageSize,
+        currentPage: pageNumber,
+      });
+    const posts = data.map((post) => {
+      return {
+        date: post.date,
+        summary_text: shortenSummaryText(post.summary_text),
+      };
+    });
+
+    return posts;
   }
 
   static async delete(post_id) {

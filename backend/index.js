@@ -31,7 +31,6 @@ const postRoutes = require("./routes/post-routes");
 const tabRoutes = require("./routes/tab-routes");
 const tagRoutes = require("./routes/tag-routes");
 
-app.get("/posts", tokenIsCurrent, postController.getPost);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/tabs", tabRoutes);
