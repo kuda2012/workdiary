@@ -13,7 +13,7 @@ class User {
     const getUser = await db.query(
       `INSERT INTO users (id, email, name, auth_provider)
        VALUES ($1, $2, $3, $4) RETURNING id, email, name, auth_provider`,
-      [payload.sub, payload.email, payload.name, "google"]
+      [uuid(), payload.email, payload.name, "google"]
     );
     return getUser[0];
   }
@@ -328,7 +328,7 @@ class User {
   static async generateWorkdiaryAccessToken(payload) {
     const token = jwt.sign(
       {
-        id: payload.sub || payload.id,
+        id: payload.id,
         email: payload.email,
         name: payload.name,
       },

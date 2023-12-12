@@ -18,19 +18,22 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.loginGoogle = async (req, res, next) => {
-  // excused
   try {
     const payload = await User.verifyGoogleToken(req.body.google_access_token);
-    const doesUserExist = await User.getUser(payload.sub, payload.email);
+    const doesUserExist = await User.getUser(null, payload.email);
+    let user;
     if (!doesUserExist) {
-      await User.createGoogleUser(payload);
+      user = await User.createGoogleUser(payload);
     } else if (doesUserExist && doesUserExist.auth_provider !== "google") {
       throw new ExpressError(
         "A user already exists for this email. Please sign in by entering your username and password",
         400
       );
     }
-    const token = await User.generateWorkdiaryAccessToken(payload);
+    console.log(doesUserExist, user);
+    const token = await User.generateWorkdiaryAccessToken(
+      doesUserExist ? doesUserExist : user
+    );
     res.send({ workdiary_token: token });
   } catch (error) {
     next(error);
