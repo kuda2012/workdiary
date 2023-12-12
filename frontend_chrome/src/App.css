@@ -16,6 +16,18 @@
   /* left: 25px; */
 }
 
+#logout {
+  font-size: 15px;
+  cursor: pointer;
+  position: relative;
+  right: 25px;
+}
+
+#logout:hover {
+  color: #646cff;
+  text-decoration: underline;
+}
+
 #refresh-page:hover {
   color: #646cff;
   text-decoration: underline;

@@ -58,7 +58,7 @@ const NavBar = ({ openAuthModal }) => {
               </NavItem>
             </>
           )}
-          {workdiaryToken && (
+          {/* {workdiaryToken && (
             <>
               <NavItem className="nav-item">
                 <NavLink
@@ -70,6 +70,22 @@ const NavBar = ({ openAuthModal }) => {
                   }}
                 >
                   Logout
+                </NavLink>
+              </NavItem>
+            </>
+          )} */}
+          {workdiaryToken && (
+            <>
+              <NavItem className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  onClick={(e) => {
+                    // e.preventDefault();
+                    // dispatch(resetApp());
+                    // chrome.identity.clearAllCachedAuthTokens();
+                  }}
+                >
+                  All posts
                 </NavLink>
               </NavItem>
             </>

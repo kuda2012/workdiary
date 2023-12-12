@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import { isWorkdiaryTokenCurrent } from "./helpers/actionCreators";
+import { isWorkdiaryTokenCurrent, resetApp } from "./helpers/actionCreators";
 import Navbar from "./components/Navbar";
 import Router from "./Router";
 import "./App.css";
@@ -54,7 +54,7 @@ function App() {
       ) : (
         <>
           <div className="container">
-            <div className="row justify-content-start">
+            <div className="row justify-content-between">
               <div className="col-1">
                 <span
                   id="refresh-page"
@@ -63,6 +63,20 @@ function App() {
                   Refresh
                 </span>
               </div>
+              {workdiaryToken && (
+                <div className="col-1">
+                  <span
+                    id="logout"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(resetApp());
+                      // chrome.identity.clearAllCachedAuthTokens();
+                    }}
+                  >
+                    Logout
+                  </span>
+                </div>
+              )}
             </div>
           </div>
           <Navbar openAuthModal={openAuthModal} />
