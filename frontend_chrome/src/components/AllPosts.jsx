@@ -23,6 +23,10 @@ const AllPosts = ({ closeAllPostsModal }) => {
     return [...Array(max - min + 1)].map((_, i) => min + i);
   }
 
+  const startIndex =
+    pagination.currentPage <= 4 ? 1 : Math.max(1, pagination.currentPage - 2);
+  const endIndex = Math.min(pagination.lastPage, startIndex + 4);
+
   return (
     <div className="container">
       <h3>Posts</h3>
@@ -42,16 +46,57 @@ const AllPosts = ({ closeAllPostsModal }) => {
               </li>
             ))}
           </ul>
-          {getNumbersBetween(1, pagination.lastPage).map((num) => (
+          {pagination.currentPage - 5 >= 1 && (
+            <button onClick={() => dispatch(getPostsList(workdiaryToken, 1))}>
+              {"<<"}
+            </button>
+          )}
+          {pagination.currentPage > 2 && (
             <button
-              onClick={() => {
-                dispatch(getPostsList(workdiaryToken, num));
-              }}
+              onClick={() =>
+                dispatch(
+                  getPostsList(
+                    workdiaryToken,
+                    Math.max(1, pagination.currentPage - 5)
+                  )
+                )
+              }
             >
-              {" "}
+              {"<"}
+            </button>
+          )}
+
+          {getNumbersBetween(startIndex, endIndex).map((num) => (
+            <button
+              className={`btn btn-${
+                num === pagination.currentPage ? "primary" : "secondary"
+              }`}
+              key={num}
+              onClick={() => dispatch(getPostsList(workdiaryToken, num))}
+            >
               {num}
             </button>
           ))}
+          {pagination.currentPage < pagination.lastPage - 4 && (
+            <button
+              onClick={() =>
+                dispatch(
+                  getPostsList(workdiaryToken, pagination.currentPage + 5)
+                )
+              }
+            >
+              {">"}
+            </button>
+          )}
+          {pagination.currentPage < pagination.lastPage - 2 && (
+            <button
+              onClick={() =>
+                dispatch(getPostsList(workdiaryToken, pagination.lastPage))
+              }
+            >
+              {">>"}
+            </button>
+          )}
         </div>
       </div>
     </div>

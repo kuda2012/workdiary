@@ -67,7 +67,7 @@ class Post {
       .orderBy("date")
       .paginate({
         perPage: pageSize,
-        currentPage: pageNumber,
+        currentPage: Number(pageNumber),
         isLengthAware: true,
       });
     const posts = response.data.map((post) => {
