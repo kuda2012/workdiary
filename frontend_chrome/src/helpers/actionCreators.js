@@ -259,6 +259,22 @@ export function createPost(
     }
   };
 }
+
+export function getPostsList(workdiary_token, pageNumber = 1) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(
+        `${VITE_LOCAL_BACKEND_URL}/posts/list-all-posts?page_number=${pageNumber}`,
+        {
+          headers: { Authorization: `Bearer ${workdiary_token}` },
+        }
+      );
+      dispatch(setPostsList(data.posts_list, data.pagination));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 async function queryTabs(currentTabs) {
   return new Promise((resolve, reject) => {
     chrome.tabs.query({}, (tabs) => {
@@ -578,6 +594,15 @@ export function setPost(post) {
     post,
   };
 }
+
+export function setPostsList(posts_list, pagination) {
+  return {
+    type: "SET_POSTS_LIST",
+    posts_list,
+    pagination,
+  };
+}
+
 export function setAllPostDates(all_post_dates) {
   return {
     type: "SET_ALL_POST_DATES",

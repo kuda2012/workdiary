@@ -81,7 +81,10 @@ exports.listAllPosts = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
     const postsList = await Post.listAllPosts(id, req.query.page_number);
-    res.send({ posts_list: [...postsList] });
+    res.send({
+      posts_list: [...postsList.posts],
+      pagination: postsList.pagination,
+    });
   } catch (error) {
     next(error);
   }

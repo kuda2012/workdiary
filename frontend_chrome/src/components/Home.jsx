@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getPost, getUserAccountInfo } from "../helpers/actionCreators";
+import {
+  getPost,
+  getPostsList,
+  getUserAccountInfo,
+} from "../helpers/actionCreators";
 import moment from "moment";
 import Auth from "./Auth";
 import AuthModal from "./AuthModal";
@@ -8,8 +12,16 @@ import AuthModalHeader from "./AuthModalHeader";
 import MainContainer from "./MainContainer";
 import "react-quill/dist/quill.snow.css";
 import "../styles/Home.css";
+import AllPostsModal from "./AllPostsModal";
+import AllPosts from "./AllPosts";
 
-const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
+const Home = ({
+  isAuthModalOpen,
+  openAuthModal,
+  closeAuthModal,
+  isAllPostsModalOpen,
+  closeAllPostsModal,
+}) => {
   const user = useSelector((state) => state?.user);
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
@@ -27,6 +39,7 @@ const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
     }
     if (!user && workdiaryToken) {
       dispatch(getUserAccountInfo(workdiaryToken));
+      dispatch(getPostsList(workdiaryToken, 1));
     }
   }, [post, date, user, workdiaryToken]);
 
@@ -50,6 +63,14 @@ const Home = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
           <AuthModalHeader openHowToModal={openHowToModal} />
           <Auth />
         </AuthModal>
+      )}
+      {isAllPostsModalOpen && workdiaryToken && (
+        <AllPostsModal
+          isAllPostsModalOpen={isAllPostsModalOpen}
+          closeAllPostsModal={closeAllPostsModal}
+        >
+          <AllPosts closeAllPostsModal={closeAllPostsModal} />
+        </AllPostsModal>
       )}
       <MainContainer
         isHowToModalOpen={isHowToModalOpen}

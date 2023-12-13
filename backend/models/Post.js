@@ -61,22 +61,23 @@ class Post {
       }`;
     }
     const pageSize = 10;
-    const { data } = await knex("posts")
+    const response = await knex("posts")
       .select("date", "summary_text")
       .where("user_id", user_id)
       .orderBy("date")
       .paginate({
         perPage: pageSize,
         currentPage: pageNumber,
+        isLengthAware: true,
       });
-    const posts = data.map((post) => {
+    const posts = response.data.map((post) => {
       return {
         date: post.date,
         summary_text: shortenSummaryText(post.summary_text),
       };
     });
 
-    return posts;
+    return { posts, pagination: response.pagination };
   }
 
   static async delete(post_id) {

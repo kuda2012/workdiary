@@ -30,6 +30,12 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, all_post_dates: action.all_post_dates };
     case "SET_POST":
       return { ...state, post: action.post };
+    case "SET_POSTS_LIST":
+      return {
+        ...state,
+        posts_list: action.posts_list,
+        pagination: action.pagination,
+      };
     case "SET_SEARCH_RESULTS":
       return { ...state, search_results: action.results, query: action.query };
     case "CLEAR_SEARCH_RESULTS":

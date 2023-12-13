@@ -17,6 +17,8 @@ function App() {
     !workdiaryToken ? true : false
   );
 
+  const [isAllPostsModalOpen, setIsAllPostsModalOpen] = useState(false);
+
   const [firstLoad, setFirstLoad] = useState(true);
   useEffect(() => {
     if (firstLoad) {
@@ -27,6 +29,9 @@ function App() {
   });
   const openAuthModal = () => setIsAuthModalOpen(true);
   const closeAuthModal = () => setIsAuthModalOpen(false);
+
+  const openAllPostsModal = () => setIsAllPostsModalOpen(true);
+  const closeAllPostsModal = () => setIsAllPostsModalOpen(false);
   return (
     <>
       {firstLoad ? (
@@ -79,11 +84,16 @@ function App() {
               )}
             </div>
           </div>
-          <Navbar openAuthModal={openAuthModal} />
+          <Navbar
+            openAuthModal={openAuthModal}
+            openAllPostsModal={openAllPostsModal}
+          />
           <Router
             isAuthModalOpen={isAuthModalOpen}
             openAuthModal={openAuthModal}
             closeAuthModal={closeAuthModal}
+            isAllPostsModalOpen={isAllPostsModalOpen}
+            closeAllPostsModal={closeAllPostsModal}
           />
         </>
       )}

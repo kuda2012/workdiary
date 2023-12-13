@@ -6,7 +6,7 @@ import { loginGoogle, resetApp } from "../helpers/actionCreators";
 import SearchBar from "./SearchBar";
 import "../styles/Navbar.css";
 
-const NavBar = ({ openAuthModal }) => {
+const NavBar = ({ openAuthModal, openAllPostsModal }) => {
   const dispatch = useDispatch();
   const googleAccessToken = useSelector((state) => state.google_access_token);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
@@ -80,9 +80,8 @@ const NavBar = ({ openAuthModal }) => {
                 <NavLink
                   className="nav-link"
                   onClick={(e) => {
-                    // e.preventDefault();
-                    // dispatch(resetApp());
-                    // chrome.identity.clearAllCachedAuthTokens();
+                    e.preventDefault();
+                    openAllPostsModal();
                   }}
                 >
                   All posts

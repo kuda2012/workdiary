@@ -30,7 +30,6 @@ exports.loginGoogle = async (req, res, next) => {
         400
       );
     }
-    console.log(doesUserExist, user);
     const token = await User.generateWorkdiaryAccessToken(
       doesUserExist ? doesUserExist : user
     );

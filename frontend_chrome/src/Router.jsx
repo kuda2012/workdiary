@@ -2,7 +2,13 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 import Home from "./components/Home";
 
-const Router = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
+const Router = ({
+  isAuthModalOpen,
+  openAuthModal,
+  closeAuthModal,
+  isAllPostsModalOpen,
+  closeAllPostsModal,
+}) => {
   return (
     <Routes>
       <Route
@@ -13,6 +19,8 @@ const Router = ({ isAuthModalOpen, openAuthModal, closeAuthModal }) => {
             isAuthModalOpen={isAuthModalOpen}
             openAuthModal={openAuthModal}
             closeAuthModal={closeAuthModal}
+            isAllPostsModalOpen={isAllPostsModalOpen}
+            closeAllPostsModal={closeAllPostsModal}
           />
         }
       />

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleInterpreting } from "../helpers/actionCreators";
+import { getPostsList, toggleInterpreting } from "../helpers/actionCreators";
 import "../styles/SummaryVoice.css";
 import { Blocks } from "react-loader-spinner";
 
@@ -174,6 +174,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     reader.onload = () => {
       const audioBase64 = reader.result;
       dispatchUpdatePost(summaryText, audioBase64, audioDuration);
+      dispatch(getPostsList(workdiaryToken, 1));
       resetRecording();
     };
 

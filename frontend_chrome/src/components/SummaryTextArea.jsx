@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Autosave } from "react-autosave";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReactQuill from "react-quill";
 import CustomToolBar from "./CustomToolbar";
 import "react-quill/dist/quill.snow.css";
 import "../styles/SummaryTextArea.css";
+import { getPostsList } from "../helpers/actionCreators";
 
 const modules = {
   toolbar: {
@@ -38,6 +39,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [localSummaryText, setLocalSummaryText] = useState(summaryText);
   const [buttonText, setButtonText] = useState("Save");
+  const dispatch = useDispatch();
 
   const handleChange = (value) => {
     setLocalSummaryText(value);
@@ -74,6 +76,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
               workdiaryToken
             ) {
               dispatchUpdatePost(data);
+              dispatch(getPostsList(workdiaryToken, 1));
               setButtonText("Saved");
             }
           }}
@@ -81,6 +84,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
       }
       <button
         onClick={() => {
+          dispatch(getPostsList(workdiaryToken, 1));
           dispatchUpdatePost(
             localSummaryText === "<p><br></p>" ? "" : localSummaryText
           );
