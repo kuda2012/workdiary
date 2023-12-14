@@ -1,0 +1,11 @@
+#all-posts-list {
+  min-height: 245px;
+}
+/* .back-next-arrow {
+  width: 25%;
+  height: auto;
+} */
+
+.hidden {
+  opacity: 0.2;
+}

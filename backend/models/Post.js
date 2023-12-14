@@ -64,7 +64,7 @@ class Post {
     const response = await knex("posts")
       .select("date", "summary_text")
       .where("user_id", user_id)
-      .orderBy("date")
+      .orderBy("date", "desc")
       .paginate({
         perPage: pageSize,
         currentPage: Number(pageNumber),
