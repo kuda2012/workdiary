@@ -108,40 +108,32 @@ class Post {
     };
   }
 
-  static async search(user_id, query) {
+  static async search(user_id, query, pageNumber = 1) {
+    const perPage = 10.0;
     let searchResults = await db.query(
       `WITH RankedResults AS (
-    SELECT
+       SELECT 
         p.date,
-        p.summary_text as note,
-        tabs.url as tab,
-        tabs.title as tab_title,
+        p.summary_text AS note,
+        tabs.url AS tab,
+        tabs.title AS tab_title,
         STRING_AGG(tags.text, ', ') AS tag,
-        (CASE
+        CASE
             WHEN tags.text ILIKE '%' || $2 || '%' THEN 'tag'
             WHEN p.summary_text ILIKE '%' || $2 || '%' THEN 'note'
             WHEN tabs.url ILIKE '%' || $2 || '%' THEN 'tab'
             WHEN tabs.title ILIKE '%' || $2 || '%' THEN 'tab_title'
             ELSE 'no_match'
-        END) AS match_source,
-        ROW_NUMBER() OVER (PARTITION BY p.date ORDER BY p.date) AS rn
+        END AS match_source,
+       ROW_NUMBER() OVER (ORDER BY p.date) AS row_num,
+        COUNT(*) OVER () AS total_count
     FROM
         posts AS p
-    LEFT JOIN
-        tags ON p.id = tags.post_id
-    LEFT JOIN
-        tabs ON p.id = tabs.post_id
+    LEFT JOIN tags ON p.id = tags.post_id
+    LEFT JOIN tabs ON p.id = tabs.post_id
     WHERE
         p.user_id = $1
-        AND (
-            tags.text ILIKE '%' || $2 || '%'
-            OR
-            p.summary_text ILIKE '%' || $2 || '%'
-            OR
-            tabs.url ILIKE '%' || $2 || '%'
-            OR
-            tabs.title ILIKE '%' || $2 || '%'
-        )
+        AND (tags.text ILIKE '%' || $2 || '%' OR p.summary_text ILIKE '%' || $2 || '%' OR tabs.url ILIKE '%' || $2 || '%' OR tabs.title ILIKE '%' || $2 || '%')
     GROUP BY
         p.date, p.summary_text, tabs.url, tabs.title, match_source
 )
@@ -151,12 +143,15 @@ SELECT
     tab,
     tab_title,
     tag,
-    match_source
+    match_source, 
+    CEIL(total_count / ${perPage}) AS total_pages,
+    total_count
 FROM RankedResults
-WHERE rn = 1;
+WHERE row_num BETWEEN (($3 - 1) * ${perPage} + 1) AND ($3 * ${perPage})
+ORDER BY date;
 `,
 
-      [user_id, query]
+      [user_id, query, pageNumber]
     );
     return formatSearchResults(searchResults, query);
   }

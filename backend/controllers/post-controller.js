@@ -80,7 +80,10 @@ exports.getPost = async (req, res, next) => {
 exports.listAllPosts = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
-    const postsList = await Post.listAllPosts(id, req.query.page_number);
+    const postsList = await Post.listAllPosts(
+      id,
+      Number(req.query.page_number)
+    );
     res.send({
       posts_list: [...postsList.posts],
       pagination: postsList.pagination,
@@ -93,7 +96,11 @@ exports.listAllPosts = async (req, res, next) => {
 exports.search = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
-    const searchResults = await Post.search(id, req.query.query);
+    const searchResults = await Post.search(
+      id,
+      req.query.query,
+      req.query.page_number
+    );
     res.send({ results: searchResults, query: req.query.query });
   } catch (error) {
     next(error);
