@@ -80,7 +80,7 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
                   searchJournal(
                     workdiaryToken,
                     query,
-                    Math.max(1, pagination.currentPage - 5)
+                    Math.max(1, pagination.currentPage - 4)
                   )
                 )
               }
@@ -116,7 +116,7 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
                   searchJournal(
                     workdiaryToken,
                     query,
-                    pagination.currentPage + 5
+                    pagination.currentPage + 4
                   )
                 )
               }

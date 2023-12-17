@@ -70,7 +70,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
                 dispatch(
                   getPostsList(
                     workdiaryToken,
-                    Math.max(1, pagination.currentPage - 5)
+                    Math.max(1, pagination.currentPage - 4)
                   )
                 )
               }
@@ -101,7 +101,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
               className="p-2"
               onClick={() =>
                 dispatch(
-                  getPostsList(workdiaryToken, pagination.currentPage + 5)
+                  getPostsList(workdiaryToken, pagination.currentPage + 4)
                 )
               }
             >
