@@ -82,7 +82,7 @@ exports.listAllPosts = async (req, res, next) => {
     const { id } = decodeJwt(req.headers.authorization);
     const postsList = await Post.listAllPosts(
       id,
-      Number(req.query.page_number)
+      Number(req.query.current_page || 1)
     );
     res.send({
       posts_list: [...postsList.posts],
@@ -99,13 +99,31 @@ exports.search = async (req, res, next) => {
     const searchResults = await Post.search(
       id,
       req.query.query,
-      req.query.page_number
+      req.query.current_page
     );
-    res.send({ results: searchResults, query: req.query.query });
+    res.send({
+      results: searchResults.results,
+      query: req.query.query,
+      pagination: searchResults.pagination,
+    });
   } catch (error) {
     next(error);
   }
 };
+
+// exports.search = async (req, res, next) => {
+//   try {
+//     const { id } = decodeJwt(req.headers.authorization);
+//     const searchResults = await Post.search(
+//       id,
+//       req.query.query,
+//       req.query.current_page
+//     );
+//     res.send({ results: searchResults, query: req.query.query });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 exports.update = async (req, res, next) => {
   try {

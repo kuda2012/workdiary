@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost } from "../helpers/actionCreators";
+import { deletePost, getPostsList } from "../helpers/actionCreators";
 import { Button } from "reactstrap";
 
 const DeletePost = ({ closeDeletePostModal }) => {
@@ -17,6 +17,7 @@ const DeletePost = ({ closeDeletePostModal }) => {
         onClick={() => {
           if (post) {
             dispatch(deletePost(workdiaryToken, date));
+            dispatch(getPostsList(workdiaryToken, 1));
             closeDeletePostModal();
           } else {
             alert(

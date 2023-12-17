@@ -37,9 +37,21 @@ function rootReducer(state = INITIAL_STATE, action) {
         pagination: action.pagination,
       };
     case "SET_SEARCH_RESULTS":
-      return { ...state, search_results: action.results, query: action.query };
+      return {
+        ...state,
+        search_results: action.results,
+        query: action.query,
+        pagination: action.pagination,
+      };
     case "CLEAR_SEARCH_RESULTS":
-      return { ...state, search_results: [], query: "" };
+      return {
+        ...state,
+        search_results: null,
+        query: "",
+        posts_list: null,
+        pagination: null,
+        fetch_posts_list: true,
+      };
     case "TOGGLE_INTERPRETING":
       return { ...state, interpreting: !state.interpreting };
     case "INITIAL_LOAD":

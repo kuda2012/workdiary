@@ -108,17 +108,17 @@ export function forgotPassword(formData) {
     }
   };
 }
-export function searchJournal(workdiary_token, query) {
+export function searchJournal(workdiary_token, query, current_page = 1) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${VITE_LOCAL_BACKEND_URL}/posts/search?query=${query}`,
+        `${VITE_LOCAL_BACKEND_URL}/posts/search?query=${query}&current_page=${current_page}`,
         { headers: { Authorization: `Bearer ${workdiary_token}` } }
       );
       if (data.results.length === 0) {
         alert("No matches for this query");
       } else {
-        dispatch(setSearchResults(data.results, data.query));
+        dispatch(setSearchResults(data.results, data.query, data.pagination));
       }
     } catch (error) {
       console.log(error);
@@ -260,11 +260,11 @@ export function createPost(
   };
 }
 
-export function getPostsList(workdiary_token, pageNumber = 1) {
+export function getPostsList(workdiary_token, currentPage = 1) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${VITE_LOCAL_BACKEND_URL}/posts/list-all-posts?page_number=${pageNumber}`,
+        `${VITE_LOCAL_BACKEND_URL}/posts/list-all-posts?current_page=${currentPage}`,
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
@@ -564,11 +564,12 @@ export function clearSearchResults() {
     type: "CLEAR_SEARCH_RESULTS",
   };
 }
-export function setSearchResults(results, query) {
+export function setSearchResults(results, query, pagination) {
   return {
     type: "SET_SEARCH_RESULTS",
     results,
     query,
+    pagination,
   };
 }
 export function halfReset(all_post_dates) {

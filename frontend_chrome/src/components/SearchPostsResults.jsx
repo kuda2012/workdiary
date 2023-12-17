@@ -1,20 +1,27 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { getPost, getPostsList } from "../helpers/actionCreators";
+import {
+  clearSearchResults,
+  getPost,
+  searchJournal,
+} from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
 
-const AllPosts = ({ closeAllPostsModal }) => {
+const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
   const dispatch = useDispatch();
   const workdiaryToken = useSelector((state) => state.workdiary_token);
-  const postsList = useSelector((state) => state?.posts_list);
+  const searchResults = useSelector((state) => state.search_results);
   const pagination = useSelector((state) => state?.pagination);
+  const query = useSelector((state) => state.query);
 
   const handlePostClick = (date) => {
     if (date) {
       // Call the getPost function with the selected date
       dispatch(getPost(workdiaryToken, moment(date).format("MM/DD/YYYY")));
       closeAllPostsModal();
+      dispatch(clearSearchResults()); // You need to define the getPost function
+      setShowAllPosts(true);
     }
   };
   function getNumbersBetween(min, max) {
@@ -24,26 +31,28 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const startIndex =
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
+
   return (
     <div className="container">
       <div className="row flex-column align-items-center">
         <div className="col-12">
           <ul id="all-posts-list">
-            {postsList &&
-              postsList.map((post) => (
+            {searchResults &&
+              searchResults.map((result) => (
                 <li>
                   <a
                     href="#"
                     onClick={() => {
-                      handlePostClick(post.date);
+                      handlePostClick(result.date);
                     }}
                   >
-                    {moment(post.date).format("MM/DD/YYYY")} -{" "}
-                    {post.entry ? (
-                      `${post.entry}`
-                    ) : (
-                      <i>*Has only tags and/or tabs*</i>
-                    )}
+                    {moment(result.date).format("MM/DD/YYYY")} -{" "}
+                    {result.match_source !== "entry"
+                      ? result.match_source === "tab_title"
+                        ? "tab title - "
+                        : `${result.match_source} - `
+                      : ""}
+                    {result[result.match_source]}
                   </a>
                 </li>
               ))}
@@ -51,7 +60,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
           {
             <button
               className="p-2"
-              onClick={() => dispatch(getPostsList(workdiaryToken, 1))}
+              onClick={() => dispatch(searchJournal(workdiaryToken, query, 1))}
               disabled={!(pagination.currentPage > 4)}
             >
               <img
@@ -68,8 +77,9 @@ const AllPosts = ({ closeAllPostsModal }) => {
               className="p-2"
               onClick={() =>
                 dispatch(
-                  getPostsList(
+                  searchJournal(
                     workdiaryToken,
+                    query,
                     Math.max(1, pagination.currentPage - 5)
                   )
                 )
@@ -90,7 +100,9 @@ const AllPosts = ({ closeAllPostsModal }) => {
                 num === pagination.currentPage ? "primary" : "secondary"
               }`}
               key={num}
-              onClick={() => dispatch(getPostsList(workdiaryToken, num))}
+              onClick={() =>
+                dispatch(searchJournal(workdiaryToken, query, num))
+              }
             >
               {num}
             </button>
@@ -101,7 +113,11 @@ const AllPosts = ({ closeAllPostsModal }) => {
               className="p-2"
               onClick={() =>
                 dispatch(
-                  getPostsList(workdiaryToken, pagination.currentPage + 5)
+                  searchJournal(
+                    workdiaryToken,
+                    query,
+                    pagination.currentPage + 5
+                  )
                 )
               }
             >
@@ -120,7 +136,9 @@ const AllPosts = ({ closeAllPostsModal }) => {
               disabled={!(pagination.currentPage < pagination.lastPage)}
               className="p-2"
               onClick={() =>
-                dispatch(getPostsList(workdiaryToken, pagination.lastPage))
+                dispatch(
+                  searchJournal(workdiaryToken, query, pagination.lastPage)
+                )
               }
             >
               <img
@@ -139,4 +157,4 @@ const AllPosts = ({ closeAllPostsModal }) => {
   );
 };
 
-export default AllPosts;
+export default SearchPostsResults;

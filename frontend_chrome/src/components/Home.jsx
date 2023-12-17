@@ -14,6 +14,8 @@ import "react-quill/dist/quill.snow.css";
 import "../styles/Home.css";
 import AllPostsModal from "./AllPostsModal";
 import AllPosts from "./AllPosts";
+import AllPostsHeader from "./AllPostsHeader";
+import SearchPostsResults from "./SearchPostsResults";
 
 const Home = ({
   isAuthModalOpen,
@@ -26,10 +28,15 @@ const Home = ({
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const postsList = useSelector((state) => state?.posts_list);
+  const searchResults = useSelector((state) => state.search_results);
+  const fetchPostsList = useSelector((state) => state.fetch_posts_list);
 
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
   const openHowToModal = () => setIsHowToModalOpen(true);
   const closeHowToModal = () => setIsHowToModalOpen(false);
+
+  const [showAllPosts, setShowAllPosts] = useState(true);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,7 +48,10 @@ const Home = ({
       dispatch(getUserAccountInfo(workdiaryToken));
       dispatch(getPostsList(workdiaryToken, 1));
     }
-  }, [post, date, user, workdiaryToken]);
+    if (fetchPostsList) {
+      dispatch(getPostsList(workdiaryToken, 1));
+    }
+  }, [post, date, user, workdiaryToken, fetchPostsList]);
 
   return (
     <div
@@ -69,7 +79,18 @@ const Home = ({
           isAllPostsModalOpen={isAllPostsModalOpen}
           closeAllPostsModal={closeAllPostsModal}
         >
-          <AllPosts closeAllPostsModal={closeAllPostsModal} />
+          <AllPostsHeader
+            setShowAllPosts={setShowAllPosts}
+            closeAllPostsModal={closeAllPostsModal}
+          />
+          {showAllPosts
+            ? postsList && <AllPosts closeAllPostsModal={closeAllPostsModal} />
+            : searchResults && (
+                <SearchPostsResults
+                  setShowAllPosts={setShowAllPosts}
+                  closeAllPostsModal={closeAllPostsModal}
+                />
+              )}
         </AllPostsModal>
       )}
       <MainContainer

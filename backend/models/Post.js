@@ -42,10 +42,10 @@ class Post {
     return allPostDates.map((date) => date.date);
   }
 
-  static async listAllPosts(user_id, pageNumber = 1) {
-    function shortenSummaryText(summaryText) {
+  static async listAllPosts(user_id, currentPage = 1) {
+    function shortenSummaryText(entry) {
       // Extract the first 7 full words
-      const words = summaryText
+      const words = entry
         .replace(/<p>|<\/p>/g, "")
         .match(/\w+/g)
         ?.slice(0, 7);
@@ -62,18 +62,18 @@ class Post {
     }
     const pageSize = 10;
     const response = await knex("posts")
-      .select("date", "summary_text")
+      .select("date", "summary_text as entry")
       .where("user_id", user_id)
       .orderBy("date", "desc")
       .paginate({
         perPage: pageSize,
-        currentPage: Number(pageNumber),
+        currentPage: Number(currentPage),
         isLengthAware: true,
       });
     const posts = response.data.map((post) => {
       return {
         date: post.date,
-        summary_text: shortenSummaryText(post.summary_text),
+        entry: post.entry && shortenSummaryText(post.entry),
       };
     });
 
@@ -108,24 +108,24 @@ class Post {
     };
   }
 
-  static async search(user_id, query, pageNumber = 1) {
+  static async search(user_id, query, currentPage = 1) {
     const perPage = 10.0;
     let searchResults = await db.query(
       `WITH RankedResults AS (
        SELECT 
         p.date,
-        p.summary_text AS note,
+        p.summary_text AS entry,
         tabs.url AS tab,
         tabs.title AS tab_title,
         STRING_AGG(tags.text, ', ') AS tag,
         CASE
             WHEN tags.text ILIKE '%' || $2 || '%' THEN 'tag'
-            WHEN p.summary_text ILIKE '%' || $2 || '%' THEN 'note'
+            WHEN p.summary_text ILIKE '%' || $2 || '%' THEN 'entry'
             WHEN tabs.url ILIKE '%' || $2 || '%' THEN 'tab'
             WHEN tabs.title ILIKE '%' || $2 || '%' THEN 'tab_title'
             ELSE 'no_match'
         END AS match_source,
-       ROW_NUMBER() OVER (ORDER BY p.date) AS row_num,
+       ROW_NUMBER() OVER (ORDER BY p.date DESC) AS row_num,
         COUNT(*) OVER () AS total_count
     FROM
         posts AS p
@@ -139,7 +139,7 @@ class Post {
 )
 SELECT
     date,
-    note,
+    entry,
     tab,
     tab_title,
     tag,
@@ -148,12 +148,18 @@ SELECT
     total_count
 FROM RankedResults
 WHERE row_num BETWEEN (($3 - 1) * ${perPage} + 1) AND ($3 * ${perPage})
-ORDER BY date;
+ORDER BY date DESC;
 `,
 
-      [user_id, query, pageNumber]
+      [user_id, query, currentPage]
     );
-    return formatSearchResults(searchResults, query);
+    return {
+      results: formatSearchResults(searchResults, query),
+      pagination: {
+        currentPage: Number(currentPage),
+        lastPage: searchResults[0]?.total_pages,
+      },
+    };
   }
   // static async getSharedPost(pointerId) {
   //   const { post_id } = await db.oneOrNone(

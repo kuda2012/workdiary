@@ -57,7 +57,7 @@ function formatSearchResults(searchResults, query) {
                 0,
                 indexOfEnding
               )}...${query}`;
-      } else if (result.match_source === "note") {
+      } else if (result.match_source === "entry") {
         result[result.match_source] = result[result.match_source].replace(
           /<[^>]*>/g,
           ""
@@ -75,7 +75,7 @@ function formatSearchResults(searchResults, query) {
       };
     })
     .filter((result) => {
-      if (result.match_source === "note") {
+      if (result.match_source === "entry") {
         if (disallowDuplicates[result.date]) {
           return false;
         } else {
@@ -94,13 +94,13 @@ function generateFinalString(query, fullString) {
     // Case 1: Query at the beginning of the full string
     const words = fullString.split(" ");
     const slicedWords = words.slice(0, 5); // Adjust the number of words to display
-    const finalString = `"${slicedWords.join(" ")}..."`;
+    const finalString = `${slicedWords.join(" ")}...`;
     return finalString;
   } else if (index === fullString.length - query.length) {
     // Case 3: Query at the end of the full string
     const words = fullString.split(" ");
     const slicedWords = words.slice(-5); // Adjust the number of words to display
-    const finalString = `"...${slicedWords.join(" ")}"`;
+    const finalString = `...${slicedWords.join(" ")}`;
     return finalString;
   } else if (index > 0) {
     // Case 2: Query in the middle of the full string
@@ -108,9 +108,9 @@ function generateFinalString(query, fullString) {
     const wordsAfterQuery = fullString.substr(index).split(" ");
     const slicedWordsBefore = wordsBeforeQuery.slice(-3); // Words before query
     const slicedWordsAfter = wordsAfterQuery.slice(0, 3); // Words after query
-    const finalString = `"...${slicedWordsBefore.join(
+    const finalString = `...${slicedWordsBefore.join(
       " "
-    )} ${slicedWordsAfter.join(" ")}..."`;
+    )} ${slicedWordsAfter.join(" ")}...`;
     return finalString;
   } else {
     // Query not found in the full string
