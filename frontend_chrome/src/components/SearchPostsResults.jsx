@@ -31,7 +31,6 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
   const startIndex =
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
-
   return (
     <div className="container">
       <div className="row flex-column align-items-center">
@@ -49,8 +48,11 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
                     {moment(result.date).format("MM/DD/YYYY")} -{" "}
                     {result.match_source !== "entry"
                       ? result.match_source === "tab_title"
-                        ? "tab title - "
-                        : `${result.match_source} - `
+                        ? "Tab Title - "
+                        : `${
+                            result.match_source.charAt(0).toUpperCase() +
+                            result.match_source.slice(1)
+                          } - `
                       : ""}
                     {result[result.match_source]}
                   </a>

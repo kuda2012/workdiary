@@ -7,7 +7,7 @@ import {
   getPostsList,
   searchJournal,
 } from "../helpers/actionCreators";
-import "../styles/SearchBar.css";
+// import "../styles/SearchBar.css";
 
 const AllPostsHeader = ({ setShowAllPosts }) => {
   // State to hold the search input text
@@ -46,28 +46,30 @@ const AllPostsHeader = ({ setShowAllPosts }) => {
   // Handler to select a result item and call getPost
 
   return (
-    <div className="row justify-content-between">
-      <div className="col">
-        <h5>Posts</h5>
-      </div>
-      <div className="col">
-        <form id="search-bar-form" onSubmit={handleFormSubmit}>
-          <span
-            // id="reset-calendar"
-            // className="ms-0 me-1 mt-0 mb-0 p-0"
-            onClick={reset}
-          >
-            🔄
-          </span>
-          <input
-            id="search-input"
-            type="text"
-            value={searchText}
-            placeholder="Search entries"
-            autocomplete="off"
-            onChange={handleInputChange}
-          />
-          {/* {searchResults && (
+    <div className="container">
+      <div className="row justify-content-between">
+        <div className="col">
+          <h5>Posts</h5>
+        </div>
+        <div className="col">
+          <form onSubmit={handleFormSubmit}>
+            <label
+              // id="reset-calendar"
+              // className="ms-0 me-1 mt-0 mb-0 p-0"
+              onClick={reset}
+              for="all-posts-search"
+            >
+              🔄
+            </label>
+            <input
+              id="all-posts-search"
+              type="text"
+              value={searchText}
+              placeholder="Search for anything"
+              autocomplete="off"
+              onChange={handleInputChange}
+            />
+            {/* {searchResults && (
             <div id="search-results-container">
               Date: {result.date} -{" "}
               {result.match_source === "tab_title"
@@ -76,7 +78,8 @@ const AllPostsHeader = ({ setShowAllPosts }) => {
               : {result[result.match_source]}
             </div>
           )} */}
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

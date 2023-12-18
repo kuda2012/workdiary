@@ -145,7 +145,8 @@ SELECT
     tag,
     match_source, 
     CEIL(total_count / ${perPage}) AS total_pages,
-    total_count
+    total_count,
+    row_num
 FROM RankedResults
 WHERE row_num BETWEEN (($3 - 1) * ${perPage} + 1) AND ($3 * ${perPage})
 ORDER BY date DESC;
