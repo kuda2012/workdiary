@@ -112,48 +112,71 @@ class Post {
     const perPage = 10.0;
     let searchResults = await db.query(
       `WITH RankedResults AS (
-       SELECT 
-        p.date,
-        p.summary_text AS entry,
-        tabs.url AS tab,
-        tabs.title AS tab_title,
-        STRING_AGG(tags.text, ', ') AS tag,
-        CASE
-            WHEN tags.text ILIKE '%' || $2 || '%' THEN 'tag'
-            WHEN p.summary_text ILIKE '%' || $2 || '%' THEN 'entry'
-            WHEN tabs.url ILIKE '%' || $2 || '%' THEN 'tab'
-            WHEN tabs.title ILIKE '%' || $2 || '%' THEN 'tab_title'
-            ELSE 'no_match'
-        END AS match_source,
-       ROW_NUMBER() OVER (ORDER BY p.date DESC) AS row_num,
-        COUNT(*) OVER () AS total_count
-    FROM
-        posts AS p
-    LEFT JOIN tags ON p.id = tags.post_id
-    LEFT JOIN tabs ON p.id = tabs.post_id
-    WHERE
-        p.user_id = $1
-        AND (tags.text ILIKE '%' || $2 || '%' OR p.summary_text ILIKE '%' || $2 || '%' OR tabs.url ILIKE '%' || $2 || '%' OR tabs.title ILIKE '%' || $2 || '%')
-    GROUP BY
-        p.date, p.summary_text, tabs.url, tabs.title, match_source
+    SELECT 
+        *,
+        ROW_NUMBER() OVER (PARTITION BY date, match_source ORDER BY date DESC) AS row_num,
+        ROW_NUMBER() OVER (PARTITION BY date, entry ORDER BY date DESC) AS row_num_entry,
+        ROW_NUMBER() OVER (PARTITION BY date, tab ORDER BY date DESC) AS row_num_tab,
+        ROW_NUMBER() OVER (PARTITION BY date, tab_title ORDER BY date DESC) AS row_num_tab_title
+    FROM (
+        SELECT 
+            p.date,
+            p.summary_text AS entry,
+            tabs.url AS tab,
+            tabs.title AS tab_title,
+            STRING_AGG(tags.text, ', ') AS tag,
+            CASE
+                WHEN tags.text ILIKE '%' || $2 || '%' THEN 'tag'
+                WHEN p.summary_text ILIKE '%' || $2 || '%' THEN 'entry'
+                WHEN tabs.url ILIKE '%' || $2 || '%' THEN 'tab'
+                WHEN tabs.title ILIKE '%' || $2 || '%' THEN 'tab_title'
+                ELSE 'no_match'
+            END AS match_source
+        FROM
+            posts AS p
+        LEFT JOIN tags ON p.id = tags.post_id
+        LEFT JOIN tabs ON p.id = tabs.post_id
+        WHERE
+            p.user_id = $1
+            AND (tags.text ILIKE '%' || $2 || '%' OR p.summary_text ILIKE '%' || $2 || '%' OR tabs.url ILIKE '%' || $2 || '%' OR tabs.title ILIKE '%' || $2 || '%')
+        GROUP BY
+            p.date, p.summary_text, tabs.url, tabs.title, match_source
+    ) AS subquery
 )
+
 SELECT
     date,
     entry,
     tab,
-    tab_title,
+    tab_title AS tab_title,
     tag,
     match_source, 
     CEIL(total_count / ${perPage}) AS total_pages,
-    total_count,
-    row_num
-FROM RankedResults
-WHERE row_num BETWEEN (($3 - 1) * ${perPage} + 1) AND ($3 * ${perPage})
-ORDER BY date DESC;
+    total_count
+FROM (
+    SELECT
+        date,
+        entry,
+        tab,
+        tab_title,
+        tag,
+        match_source, 
+        ROW_NUMBER() OVER (PARTITION BY date, match_source ORDER BY CASE WHEN match_source = 'entry' THEN 0 ELSE 1 END, date DESC) AS row_num,
+        COUNT(*) OVER () AS total_count
+    FROM RankedResults
+) RankedFiltered
+WHERE 
+    (match_source <> 'entry' OR row_num = 1)
+    OR (match_source = 'entry' AND row_num = 1)
+ORDER BY date DESC
+LIMIT ${perPage} OFFSET ((${currentPage} - 1) * ${perPage});
+
+
 `,
 
       [user_id, query, currentPage]
     );
+    console.log(searchResults.length);
     return {
       results: formatSearchResults(searchResults, query),
       pagination: {
