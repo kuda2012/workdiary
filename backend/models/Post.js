@@ -109,7 +109,7 @@ class Post {
   }
 
   static async search(user_id, query, currentPage = 1) {
-    const perPage = 10.0;
+    const perPage = 10;
     let searchResults = await db.query(
       `WITH RankedResults AS (
     SELECT 
@@ -148,11 +148,10 @@ SELECT
     date,
     entry,
     tab,
-    tab_title AS tab_title,
+    tab_title,
     tag,
-    match_source, 
-    CEIL(total_count / ${perPage}) AS total_pages,
-    total_count
+    match_source,
+    CEIL(ROUND(COUNT(*) OVER ()) / ${perPage}) AS total_pages
 FROM (
     SELECT
         date,
@@ -161,8 +160,7 @@ FROM (
         tab_title,
         tag,
         match_source, 
-        ROW_NUMBER() OVER (PARTITION BY date, match_source ORDER BY CASE WHEN match_source = 'entry' THEN 0 ELSE 1 END, date DESC) AS row_num,
-        COUNT(*) OVER () AS total_count
+        ROW_NUMBER() OVER (PARTITION BY date, match_source ORDER BY CASE WHEN match_source = 'entry' THEN 0 ELSE 1 END, date DESC) AS row_num
     FROM RankedResults
 ) RankedFiltered
 WHERE 
@@ -170,13 +168,10 @@ WHERE
     OR (match_source = 'entry' AND row_num = 1)
 ORDER BY date DESC
 LIMIT ${perPage} OFFSET ((${currentPage} - 1) * ${perPage});
-
-
 `,
 
       [user_id, query, currentPage]
     );
-    console.log(searchResults.length);
     return {
       results: formatSearchResults(searchResults, query),
       pagination: {
