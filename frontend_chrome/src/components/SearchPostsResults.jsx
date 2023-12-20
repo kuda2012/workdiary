@@ -31,6 +31,8 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
   const startIndex =
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
+
+  console.log(pagination.currentPage, pagination.lastPage);
   return (
     <div className="container">
       <div className="row flex-column align-items-center">
@@ -63,11 +65,11 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
             <button
               className="p-2"
               onClick={() => dispatch(searchJournal(workdiaryToken, query, 1))}
-              disabled={!(pagination.currentPage > 4)}
+              disabled={pagination.currentPage <= 4}
             >
               <img
                 className={`${
-                  !(pagination.currentPage > 4) ? "hidden" : ""
+                  pagination.currentPage <= 4 ? "hidden" : ""
                 } back-next-arrow`}
                 src="back-arrow-2x.png"
               />
@@ -75,7 +77,7 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
           }
           {
             <button
-              disabled={!(pagination.currentPage > 2)}
+              disabled={pagination.currentPage <= 3}
               className="p-2"
               onClick={() =>
                 dispatch(
@@ -89,7 +91,7 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
             >
               <img
                 className={`${
-                  !(pagination.currentPage > 2) ? "hidden" : ""
+                  pagination.currentPage <= 3 ? "hidden" : ""
                 } back-next-arrow`}
                 src="back-arrow.png"
               />
@@ -111,21 +113,21 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
           ))}
           {
             <button
-              disabled={!(pagination.currentPage < pagination.lastPage - 2)}
+              disabled={pagination.currentPage >= pagination.lastPage - 1}
               className="p-2"
               onClick={() =>
                 dispatch(
                   searchJournal(
                     workdiaryToken,
                     query,
-                    pagination.currentPage + 4
+                    Math.min(pagination.currentPage + 4, pagination.lastPage)
                   )
                 )
               }
             >
               <img
                 className={`${
-                  !(pagination.currentPage < pagination.lastPage - 2)
+                  pagination.currentPage >= pagination.lastPage - 1
                     ? "hidden"
                     : ""
                 } back-next-arrow`}
@@ -135,7 +137,7 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
           }
           {
             <button
-              disabled={!(pagination.currentPage < pagination.lastPage)}
+              disabled={pagination.currentPage >= pagination.lastPage - 1}
               className="p-2"
               onClick={() =>
                 dispatch(
@@ -145,7 +147,7 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
             >
               <img
                 className={`${
-                  !(pagination.currentPage < pagination.lastPage)
+                  pagination.currentPage >= pagination.lastPage - 1
                     ? "hidden"
                     : ""
                 } back-next-arrow`}

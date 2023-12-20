@@ -52,11 +52,11 @@ const AllPosts = ({ closeAllPostsModal }) => {
             <button
               className="p-2"
               onClick={() => dispatch(getPostsList(workdiaryToken, 1))}
-              disabled={!(pagination.currentPage > 4)}
+              disabled={pagination.currentPage <= 4}
             >
               <img
                 className={`${
-                  !(pagination.currentPage > 4) ? "hidden" : ""
+                  pagination.currentPage <= 4 ? "hidden" : ""
                 } back-next-arrow`}
                 src="back-arrow-2x.png"
               />
@@ -64,7 +64,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
           }
           {
             <button
-              disabled={!(pagination.currentPage > 2)}
+              disabled={pagination.currentPage <= 3}
               className="p-2"
               onClick={() =>
                 dispatch(
@@ -77,7 +77,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
             >
               <img
                 className={`${
-                  !(pagination.currentPage > 2) ? "hidden" : ""
+                  pagination.currentPage <= 3 ? "hidden" : ""
                 } back-next-arrow`}
                 src="back-arrow.png"
               />
@@ -97,17 +97,20 @@ const AllPosts = ({ closeAllPostsModal }) => {
           ))}
           {
             <button
-              disabled={!(pagination.currentPage < pagination.lastPage - 2)}
+              disabled={pagination.currentPage >= pagination.lastPage - 1}
               className="p-2"
               onClick={() =>
                 dispatch(
-                  getPostsList(workdiaryToken, pagination.currentPage + 4)
+                  getPostsList(
+                    workdiaryToken,
+                    Math.min(pagination.currentPage + 4, pagination.lastPage)
+                  )
                 )
               }
             >
               <img
                 className={`${
-                  !(pagination.currentPage < pagination.lastPage - 2)
+                  pagination.currentPage >= pagination.lastPage - 1
                     ? "hidden"
                     : ""
                 } back-next-arrow`}
@@ -117,7 +120,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
           }
           {
             <button
-              disabled={!(pagination.currentPage < pagination.lastPage)}
+              disabled={pagination.currentPage >= pagination.lastPage - 1}
               className="p-2"
               onClick={() =>
                 dispatch(getPostsList(workdiaryToken, pagination.lastPage))
@@ -125,7 +128,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
             >
               <img
                 className={`${
-                  !(pagination.currentPage < pagination.lastPage)
+                  pagination.currentPage >= pagination.lastPage - 1
                     ? "hidden"
                     : ""
                 } back-next-arrow`}
