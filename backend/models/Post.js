@@ -114,33 +114,57 @@ class Post {
       `WITH RankedResults AS (
     SELECT 
         *,
-        ROW_NUMBER() OVER (PARTITION BY date, match_source ORDER BY date DESC) AS row_num,
-        ROW_NUMBER() OVER (PARTITION BY date, entry ORDER BY date DESC) AS row_num_entry,
-        ROW_NUMBER() OVER (PARTITION BY date, tab ORDER BY date DESC) AS row_num_tab,
-        ROW_NUMBER() OVER (PARTITION BY date, tab_title ORDER BY date DESC) AS row_num_tab_title
+        ROW_NUMBER() OVER (PARTITION BY date, match_source ORDER BY date DESC) AS row_num
     FROM (
         SELECT 
             p.date,
             p.summary_text AS entry,
+            NULL AS tab,
+            NULL AS tab_title,
+            NULL AS tag,
+            'entry' AS match_source
+        FROM posts AS p
+        WHERE p.user_id = $1 AND p.summary_text ILIKE '%' || $2 || '%'
+
+        UNION ALL
+
+        SELECT 
+            p.date,
+            NULL AS entry,
             tabs.url AS tab,
-            tabs.title AS tab_title,
-            STRING_AGG(tags.text, ', ') AS tag,
-            CASE
-                WHEN tags.text ILIKE '%' || $2 || '%' THEN 'tag'
-                WHEN p.summary_text ILIKE '%' || $2 || '%' THEN 'entry'
-                WHEN tabs.url ILIKE '%' || $2 || '%' THEN 'tab'
-                WHEN tabs.title ILIKE '%' || $2 || '%' THEN 'tab_title'
-                ELSE 'no_match'
-            END AS match_source
-        FROM
-            posts AS p
-        LEFT JOIN tags ON p.id = tags.post_id
+            NULL AS tab_title,
+            NULL AS tag,
+            'tab' AS match_source  -- Indicate match on tabs.url
+        FROM posts AS p
         LEFT JOIN tabs ON p.id = tabs.post_id
-        WHERE
-            p.user_id = $1
-            AND (tags.text ILIKE '%' || $2 || '%' OR p.summary_text ILIKE '%' || $2 || '%' OR tabs.url ILIKE '%' || $2 || '%' OR tabs.title ILIKE '%' || $2 || '%')
-        GROUP BY
-            p.date, p.summary_text, tabs.url, tabs.title, match_source
+        WHERE p.user_id = $1 AND tabs.url ILIKE '%' || $2 || '%'
+
+        UNION ALL
+
+        SELECT 
+            p.date,
+            NULL AS entry,
+            NULL AS tab,
+            tabs.title AS tab_title,
+            NULL AS tag,
+            'tab_title' AS match_source
+        FROM posts AS p
+        LEFT JOIN tabs ON p.id = tabs.post_id
+        WHERE p.user_id = $1 AND tabs.title ILIKE '%' || $2 || '%'
+
+        UNION ALL
+
+        SELECT 
+            p.date,
+            NULL AS entry,
+            NULL AS tab,
+            NULL AS tab_title,
+            STRING_AGG(tags.text, ', ') AS tag,
+            'tag' AS match_source
+        FROM posts AS p
+        LEFT JOIN tags ON p.id = tags.post_id
+        WHERE p.user_id = $1 AND tags.text ILIKE '%' || $2 || '%'
+        GROUP BY p.date, tags.post_id
     ) AS subquery
 )
 
@@ -152,26 +176,19 @@ SELECT
     tag,
     match_source,
     CEIL(ROUND(COUNT(*) OVER ()) / ${perPage}) AS total_pages
-FROM (
-    SELECT
-        date,
-        entry,
-        tab,
-        tab_title,
-        tag,
-        match_source, 
-        ROW_NUMBER() OVER (PARTITION BY date, match_source ORDER BY CASE WHEN match_source = 'entry' THEN 0 ELSE 1 END, date DESC) AS row_num
-    FROM RankedResults
-) RankedFiltered
-WHERE 
-    (match_source <> 'entry' OR row_num = 1)
-    OR (match_source = 'entry' AND row_num = 1)
+FROM RankedResults
+WHERE match_source IN ('tab', 'tab_title', 'entry', 'tag')
 ORDER BY date DESC
 LIMIT ${perPage} OFFSET ((${currentPage} - 1) * ${perPage});
-`,
 
+  `,
       [user_id, query, currentPage]
     );
+
+    console.log(searchResults);
+    // WHERE
+    // (match_source <> 'entry' OR row_num = 1)
+    // OR (match_source = 'entry' AND row_num = 1)
     return {
       results: formatSearchResults(searchResults, query),
       pagination: {

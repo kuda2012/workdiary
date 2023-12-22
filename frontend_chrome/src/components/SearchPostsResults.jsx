@@ -48,14 +48,12 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
                     }}
                   >
                     {moment(result.date).format("MM/DD/YYYY")} -{" "}
-                    {result.match_source !== "entry"
-                      ? result.match_source === "tab_title"
-                        ? "Tab Title - "
-                        : `${
-                            result.match_source.charAt(0).toUpperCase() +
-                            result.match_source.slice(1)
-                          } - `
-                      : ""}
+                    {result.match_source === "tab_title"
+                      ? "Tab Title - "
+                      : `${
+                          result.match_source.charAt(0).toUpperCase() +
+                          result.match_source.slice(1)
+                        } - `}
                     {result[result.match_source]}
                   </a>
                 </li>

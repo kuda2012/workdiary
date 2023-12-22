@@ -40,7 +40,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
                   >
                     {moment(post.date).format("MM/DD/YYYY")} -{" "}
                     {post.entry ? (
-                      `${post.entry}`
+                      `Entry - ${post.entry}`
                     ) : (
                       <i>*Has only tags and/or tabs*</i>
                     )}
