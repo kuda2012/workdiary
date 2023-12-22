@@ -3,11 +3,10 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearSearchResults,
-  getPost,
   getPostsList,
   searchJournal,
 } from "../helpers/actionCreators";
-// import "../styles/SearchBar.css";
+import "../styles/AllPosts.css";
 
 const AllPostsHeader = ({ setShowAllPosts }) => {
   // State to hold the search input text
@@ -65,19 +64,10 @@ const AllPostsHeader = ({ setShowAllPosts }) => {
               id="all-posts-search"
               type="text"
               value={searchText}
-              placeholder="Search for anything"
+              placeholder="🔎 all entries, tags, tabs"
               autocomplete="off"
               onChange={handleInputChange}
             />
-            {/* {searchResults && (
-            <div id="search-results-container">
-              Date: {result.date} -{" "}
-              {result.match_source === "tab_title"
-                ? "tab title"
-                : result.match_source}
-              : {result[result.match_source]}
-            </div>
-          )} */}
           </form>
         </div>
       </div>
