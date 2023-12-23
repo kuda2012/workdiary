@@ -6,7 +6,30 @@ import Navbar from "./components/Navbar";
 import Router from "./Router";
 import "./App.css";
 
+function useGlobalErrorHandler() {
+  useEffect(() => {
+    const originalOnError = window.onerror;
+
+    window.onerror = (message, source, lineno, colno, error) => {
+      // Optionally log the error to an error reporting service
+      console.error(message, source, lineno, colno, error);
+
+      // Trigger a refresh if desired
+      window.location.reload();
+
+      if (originalOnError) {
+        originalOnError(message, source, lineno, colno, error);
+      }
+    };
+
+    return () => {
+      window.onerror = originalOnError;
+    };
+  }, []);
+}
+
 function App() {
+  useGlobalErrorHandler();
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const dispatch = useDispatch();
   if (!workdiaryToken && localStorage.getItem("workdiary_token")) {

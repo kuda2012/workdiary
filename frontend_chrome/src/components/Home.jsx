@@ -36,7 +36,6 @@ const Home = ({
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
   const openHowToModal = () => setIsHowToModalOpen(true);
   const closeHowToModal = () => setIsHowToModalOpen(false);
-  console.log(showAllPosts);
 
   const dispatch = useDispatch();
   useEffect(() => {

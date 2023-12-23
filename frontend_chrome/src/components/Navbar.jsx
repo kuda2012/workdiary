@@ -18,9 +18,9 @@ const NavBar = ({ openAuthModal, openAllPostsModal }) => {
 
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
 
-  const toggleSearchBar = () => {
-    setIsSearchBarVisible(!isSearchBarVisible);
-  };
+  // const toggleSearchBar = () => {
+  //   setIsSearchBarVisible(!isSearchBarVisible);
+  // };
   return (
     <>
       <ReactNavBar color="light" className="navbar-expand-lg">
