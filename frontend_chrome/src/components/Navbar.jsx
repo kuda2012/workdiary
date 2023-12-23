@@ -10,7 +10,6 @@ const NavBar = ({ openAuthModal, openAllPostsModal }) => {
   const dispatch = useDispatch();
   const googleAccessToken = useSelector((state) => state.google_access_token);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
-
   useEffect(() => {
     if (googleAccessToken) {
       dispatch(loginGoogle(googleAccessToken));
@@ -25,14 +24,14 @@ const NavBar = ({ openAuthModal, openAllPostsModal }) => {
   return (
     <>
       <ReactNavBar color="light" className="navbar-expand-lg">
-        {workdiaryToken && (
+        {/* {workdiaryToken && (
           <NavItem className="nav-item" onClick={toggleSearchBar}>
             <NavLink className="nav-link">Search</NavLink>
           </NavItem>
         )}
         {workdiaryToken && isSearchBarVisible && (
           <SearchBar toggleSearchBar={toggleSearchBar} />
-        )}
+        )} */}
         <NavbarBrand
           className={`nav-brand ${
             workdiaryToken && isSearchBarVisible && "nav-brand-move-right"
@@ -84,7 +83,7 @@ const NavBar = ({ openAuthModal, openAllPostsModal }) => {
                     openAllPostsModal();
                   }}
                 >
-                  All posts
+                  All posts 🔎
                 </NavLink>
               </NavItem>
             </>

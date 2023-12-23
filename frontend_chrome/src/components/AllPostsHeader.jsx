@@ -47,14 +47,14 @@ const AllPostsHeader = ({ setShowAllPosts }) => {
   return (
     <div className="container">
       <div className="row justify-content-between">
-        <div className="col">
+        <div className="col-2">
           <h5>Posts</h5>
         </div>
-        <div className="col">
+        <div className="col-10 d-flex justify-content-end">
           <form onSubmit={handleFormSubmit}>
             <label
               // id="reset-calendar"
-              // className="ms-0 me-1 mt-0 mb-0 p-0"
+              className="me-1"
               onClick={reset}
               for="all-posts-search"
             >
