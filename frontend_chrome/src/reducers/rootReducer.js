@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   logging_in: false,
   search_results: [],
   query: "",
+  show_all_posts: true,
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
@@ -59,6 +60,8 @@ function rootReducer(state = INITIAL_STATE, action) {
       };
     case "SET_SCROLL_TO":
       return { ...state, clicked_search_result: action.clicked_search_result };
+    case "SET_SHOW_ALL_POSTS":
+      return { ...state, show_all_posts: action.show_all_posts };
     case "TOGGLE_INTERPRETING":
       return { ...state, interpreting: !state.interpreting };
     case "INITIAL_LOAD":
@@ -69,6 +72,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       return {
         workdiary_token: state.workdiary_token,
         date: state.date,
+        show_all_posts: true,
         all_post_dates: action.all_post_dates,
       };
     case "FULL_RESET":

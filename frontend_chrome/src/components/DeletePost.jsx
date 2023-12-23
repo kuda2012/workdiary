@@ -1,6 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost, getPostsList } from "../helpers/actionCreators";
+import {
+  clearScrollTo,
+  clearSearchResults,
+  deletePost,
+  getPostsList,
+  setShowAllPosts,
+} from "../helpers/actionCreators";
 import { Button } from "reactstrap";
 
 const DeletePost = ({ closeDeletePostModal }) => {
@@ -20,6 +26,7 @@ const DeletePost = ({ closeDeletePostModal }) => {
             dispatch(clearSearchResults());
             dispatch(clearScrollTo());
             dispatch(getPostsList(workdiaryToken, 1));
+            dispatch(setShowAllPosts(true));
             closeDeletePostModal();
           } else {
             alert(

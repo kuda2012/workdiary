@@ -117,6 +117,7 @@ export function searchJournal(workdiary_token, query, current_page = 1) {
       );
       if (data.results.length === 0) {
         alert("No matches for this query");
+        dispatch(setShowAllPosts(true));
       } else {
         dispatch(setSearchResults(data.results, data.query, data.pagination));
       }
@@ -637,5 +638,12 @@ export function setScrollTo(clicked_search_result) {
 export function clearScrollTo() {
   return {
     type: "CLEAR_SCROLL_TO",
+  };
+}
+
+export function setShowAllPosts(show_all_posts) {
+  return {
+    type: "SET_SHOW_ALL_POSTS",
+    show_all_posts,
   };
 }

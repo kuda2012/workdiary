@@ -5,10 +5,11 @@ import {
   clearSearchResults,
   getPostsList,
   searchJournal,
+  setShowAllPosts,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
 
-const AllPostsHeader = ({ setShowAllPosts }) => {
+const AllPostsHeader = () => {
   // State to hold the search input text
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const query = useSelector((state) => state.query);
@@ -25,7 +26,7 @@ const AllPostsHeader = ({ setShowAllPosts }) => {
   const handleSearch = () => {
     // Call the search function with the search input text
     dispatch(searchJournal(workdiaryToken, searchText));
-    setShowAllPosts(false);
+    dispatch(setShowAllPosts(false));
   };
 
   const handleFormSubmit = (event) => {
@@ -38,7 +39,7 @@ const AllPostsHeader = ({ setShowAllPosts }) => {
 
   const reset = () => {
     setSearchText("");
-    setShowAllPosts(true);
+    dispatch(setShowAllPosts(true));
     dispatch(clearSearchResults()); // You need to define the getPost function
     dispatch(getPostsList(workdiaryToken, 1));
   };

@@ -6,10 +6,11 @@ import {
   getPost,
   searchJournal,
   setScrollTo,
+  setShowAllPosts,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
 
-const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
+const SearchPostsResults = ({ closeAllPostsModal }) => {
   const dispatch = useDispatch();
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const searchResults = useSelector((state) => state.search_results);
@@ -25,7 +26,7 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
       closeAllPostsModal();
       dispatch(clearSearchResults()); // You need to define the getPost function
       dispatch(setScrollTo(result));
-      setShowAllPosts(true);
+      dispatch(setShowAllPosts(true));
     }
   };
   function getNumbersBetween(min, max) {

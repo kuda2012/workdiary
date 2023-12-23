@@ -28,6 +28,7 @@ const Home = ({
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const showAllPosts = useSelector((state) => state.show_all_posts);
   const postsList = useSelector((state) => state?.posts_list);
   const searchResults = useSelector((state) => state.search_results);
   const fetchPostsList = useSelector((state) => state.fetch_posts_list);
@@ -35,8 +36,7 @@ const Home = ({
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
   const openHowToModal = () => setIsHowToModalOpen(true);
   const closeHowToModal = () => setIsHowToModalOpen(false);
-
-  const [showAllPosts, setShowAllPosts] = useState(true);
+  console.log(showAllPosts);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -78,17 +78,11 @@ const Home = ({
           isAllPostsModalOpen={isAllPostsModalOpen}
           closeAllPostsModal={closeAllPostsModal}
         >
-          <AllPostsHeader
-            setShowAllPosts={setShowAllPosts}
-            closeAllPostsModal={closeAllPostsModal}
-          />
+          <AllPostsHeader closeAllPostsModal={closeAllPostsModal} />
           {showAllPosts
             ? postsList && <AllPosts closeAllPostsModal={closeAllPostsModal} />
             : searchResults && (
-                <SearchPostsResults
-                  setShowAllPosts={setShowAllPosts}
-                  closeAllPostsModal={closeAllPostsModal}
-                />
+                <SearchPostsResults closeAllPostsModal={closeAllPostsModal} />
               )}
         </AllPostsModal>
       )}
