@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../helpers/actionCreators";
 import Tabs from "./Tabs";
@@ -13,6 +13,9 @@ const MiddleRowMain = () => {
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const clickedSearchResult = useSelector(
+    (state) => state.clicked_search_result
+  );
 
   const [isTagsModalOpen, setIsTagsModalOpen] = useState(false);
   const openTagsModal = () => setIsTagsModalOpen(true);
@@ -46,6 +49,27 @@ const MiddleRowMain = () => {
       );
     }
   }
+
+  useEffect(() => {
+    if (
+      clickedSearchResult &&
+      !isTabsModalOpen &&
+      clickedSearchResult?.match_source.includes("tab")
+    ) {
+      setTimeout(() => {
+        openTabsModal();
+      }, [400]);
+    }
+    if (
+      clickedSearchResult &&
+      !isTagsModalOpen &&
+      clickedSearchResult?.match_source.includes("tag")
+    ) {
+      setTimeout(() => {
+        openTagsModal();
+      }, [400]);
+    }
+  }, [clickedSearchResult, isTabsModalOpen]);
   return (
     <div className="row justify-content-around">
       <div className="col-1"></div>

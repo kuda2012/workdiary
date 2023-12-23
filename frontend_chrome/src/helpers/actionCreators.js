@@ -626,3 +626,16 @@ export function loggingIn() {
     type: "LOGGING_IN",
   };
 }
+
+export function setScrollTo(clicked_search_result) {
+  return {
+    type: "SET_SCROLL_TO",
+    clicked_search_result,
+  };
+}
+
+export function clearScrollTo() {
+  return {
+    type: "CLEAR_SCROLL_TO",
+  };
+}

@@ -38,7 +38,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
                       handlePostClick(post.date);
                     }}
                   >
-                    {moment(post.date).format("MM/DD/YYYY")} -{" "}
+                    {moment(post.date, moment.ISO_8601).format("MM/DD/YYYY")} -{" "}
                     {post.entry ? (
                       `Entry - ${post.entry}`
                     ) : (

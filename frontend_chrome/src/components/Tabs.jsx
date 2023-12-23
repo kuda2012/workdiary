@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import {
   bulkDeleteTabs,
+  clearScrollTo,
+  clearSearchResults,
   createTabs,
   deleteTab,
   openTabs,
@@ -14,11 +16,13 @@ const Tabs = () => {
   const tabs = useSelector((state) => state.post?.tabs);
   const date = useSelector((state) => state.date);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+
   const [windows, setWindows] = useState(null);
   const dispatch = useDispatch();
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
   const [tabsSelected, setTabsSelected] = useState(new Map());
   const [currentTabCount, setCurrentTabsCount] = useState(0);
+  const containerRef = useRef(null);
 
   function onTabDelete(tab_id) {
     setTabsSelected((selectingTabs) => {
@@ -26,6 +30,8 @@ const Tabs = () => {
       return new Map(selectingTabs);
     });
     dispatch(deleteTab(workdiaryToken, date, tab_id));
+    dispatch(clearScrollTo());
+    dispatch(clearSearchResults());
   }
   useEffect(() => {
     const fetchWindows = async () => {
@@ -76,6 +82,15 @@ const Tabs = () => {
     };
   }, []);
 
+  function scrollToTab(tabId) {
+    const targetTab = document.getElementById(tabId);
+    if (containerRef.current && targetTab) {
+      const scrollPosition =
+        targetTab.offsetTop - containerRef.current.offsetTop;
+      containerRef.current.scrollTop = scrollPosition;
+    }
+  }
+
   return (
     <>
       <div className="container">
@@ -84,7 +99,11 @@ const Tabs = () => {
             <Button
               id="pull-current-tabs"
               color="primary"
-              onClick={() => dispatch(createTabs(workdiaryToken, date, tabs))}
+              onClick={() => {
+                dispatch(clearScrollTo());
+                dispatch(clearSearchResults());
+                dispatch(createTabs(workdiaryToken, date, tabs));
+              }}
             >
               Pull Current tabs ({currentTabCount})
             </Button>
@@ -151,6 +170,8 @@ const Tabs = () => {
                       Array.from(tabsSelected.keys())
                     )
                   );
+                  dispatch(clearScrollTo());
+                  dispatch(clearSearchResults());
                   setTabsSelected(new Map());
                   setAllBoxesSelected(false);
                 }
@@ -193,19 +214,26 @@ const Tabs = () => {
             </label>
           </div>
         </div>
-        <div id="render-tabs-container" className="container">
+        <div
+          id="render-tabs-container"
+          className="container"
+          ref={containerRef}
+        >
           {tabs &&
-            tabs.map((tab, index) => (
-              <div key={index} className="row">
-                <Tab
-                  tab={tab}
-                  setTabsSelected={setTabsSelected}
-                  setAllBoxesSelected={setAllBoxesSelected}
-                  isSelected={tabsSelected.has(tab.tab_id)}
-                  onTabDelete={onTabDelete}
-                />
-              </div>
-            ))}
+            tabs.map((tab, index) => {
+              return (
+                <div key={index} className="row">
+                  <Tab
+                    scrollToTab={scrollToTab}
+                    tab={tab}
+                    setTabsSelected={setTabsSelected}
+                    setAllBoxesSelected={setAllBoxesSelected}
+                    isSelected={tabsSelected.has(tab.tab_id)}
+                    onTabDelete={onTabDelete}
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
     </>

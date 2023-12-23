@@ -17,6 +17,8 @@ const DeletePost = ({ closeDeletePostModal }) => {
         onClick={() => {
           if (post) {
             dispatch(deletePost(workdiaryToken, date));
+            dispatch(clearSearchResults());
+            dispatch(clearScrollTo());
             dispatch(getPostsList(workdiaryToken, 1));
             closeDeletePostModal();
           } else {

@@ -3,6 +3,7 @@ function formatSearchResults(searchResults, query) {
   let disallowDuplicates = {};
   return searchResults.map((result) => {
     result.date = moment(result.date).format("MM/DD/YYYY");
+    result.original_string = result[result.match_source];
     // if query is findable in first 20 chars of string, add first 20 chars and then ... {query}
     // query is not findable in first 20 chars of string, add first 20 chars and ...
     const popularDomains = [
@@ -68,6 +69,7 @@ function formatSearchResults(searchResults, query) {
       date: result.date,
       [result.match_source]: result[result.match_source],
       match_source: result.match_source,
+      original_string: result.original_string,
     };
   });
   // .filter((result) => {

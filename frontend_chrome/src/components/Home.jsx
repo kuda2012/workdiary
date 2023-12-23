@@ -48,11 +48,10 @@ const Home = ({
       dispatch(getUserAccountInfo(workdiaryToken));
       dispatch(getPostsList(workdiaryToken, 1));
     }
-    if (fetchPostsList) {
+    if (fetchPostsList && !postsList) {
       dispatch(getPostsList(workdiaryToken, 1));
     }
   }, [post, date, user, workdiaryToken, fetchPostsList]);
-
   return (
     <div
       id="outer-div"

@@ -52,6 +52,13 @@ function rootReducer(state = INITIAL_STATE, action) {
         pagination: null,
         fetch_posts_list: true,
       };
+    case "CLEAR_SCROLL_TO":
+      return {
+        ...state,
+        clicked_search_result: null,
+      };
+    case "SET_SCROLL_TO":
+      return { ...state, clicked_search_result: action.clicked_search_result };
     case "TOGGLE_INTERPRETING":
       return { ...state, interpreting: !state.interpreting };
     case "INITIAL_LOAD":

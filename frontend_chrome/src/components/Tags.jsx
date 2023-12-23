@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { createTag, deleteTag } from "../helpers/actionCreators";
+import { clearScrollTo, createTag, deleteTag } from "../helpers/actionCreators";
 import Tag from "./Tag";
 
 const Tags = () => {
@@ -12,6 +12,8 @@ const Tags = () => {
   }
   function onTagDelete(tag_id) {
     dispatch(deleteTag(workdiaryToken, date, tag_id));
+    dispatch(clearSearchResults());
+    dispatch(clearScrollTo());
   }
   const handleInsertTag = (onUpdate) => {
     const createdTag = prompt("Enter a tag:");

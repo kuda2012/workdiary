@@ -27,3 +27,7 @@
   background-color: lightgray;
   border: 1px solid gray;
 }
+
+.highlight-tab {
+  background-color: yellow;
+}

@@ -1,14 +1,36 @@
+import { useEffect, useState } from "react";
 import "../styles/Tab.css";
+import { useSelector } from "react-redux";
 const Tab = ({
   tab,
   onTabDelete,
   setTabsSelected,
   isSelected,
   setAllBoxesSelected,
+  scrollToTab,
 }) => {
+  const [scrollToThisTab, setScrollToThisTab] = useState();
+  const [runOnce, setRunOnce] = useState(true);
+  const clickedSearchResult = useSelector(
+    (state) => state.clicked_search_result
+  );
+  useEffect(() => {
+    if (
+      (clickedSearchResult?.original_string === tab.url &&
+        clickedSearchResult?.match_source === "tab") ||
+      (clickedSearchResult?.tab_title === tab.title &&
+        clickedSearchResult?.match_source === "tab_title")
+    ) {
+      setScrollToThisTab("scrollToThisTab");
+    }
+    if (runOnce && scrollToThisTab) {
+      scrollToTab(scrollToThisTab);
+      setRunOnce(false);
+    }
+  }, [clickedSearchResult, runOnce, scrollToThisTab]);
   return (
     <>
-      <div className="col-md-2">
+      <div className="col-md-2" id={scrollToThisTab ? scrollToThisTab : null}>
         <input
           className="tab-checkbox"
           type="checkbox"
@@ -32,7 +54,11 @@ const Tab = ({
       <div className="col-md-2">
         <img className="tab-icon" src={tab.icon} alt="Tab Icon" />
       </div>
-      <div className="col-md-6 tab-link-column">
+      <div
+        className={`col-md-6 tab-link-column ${
+          clickedSearchResult && scrollToThisTab && "highlight-tab"
+        }`}
+      >
         <b>
           <a
             href={tab.url}
@@ -46,7 +72,13 @@ const Tab = ({
       </div>
 
       <div className="col-md-2">
-        <button className="delete-tab" onClick={() => onTabDelete(tab.tab_id)}>
+        <button
+          className="delete-tab"
+          onClick={() => {
+            setScrollToThisTab(null);
+            onTabDelete(tab.tab_id);
+          }}
+        >
           X
         </button>
       </div>

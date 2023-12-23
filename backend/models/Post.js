@@ -185,7 +185,6 @@ LIMIT ${perPage} OFFSET ((${currentPage} - 1) * ${perPage});
       [user_id, query, currentPage]
     );
 
-    console.log(searchResults);
     // WHERE
     // (match_source <> 'entry' OR row_num = 1)
     // OR (match_source = 'entry' AND row_num = 1)

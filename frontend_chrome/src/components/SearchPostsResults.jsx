@@ -5,6 +5,7 @@ import {
   clearSearchResults,
   getPost,
   searchJournal,
+  setScrollTo,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
 
@@ -15,12 +16,15 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
   const pagination = useSelector((state) => state?.pagination);
   const query = useSelector((state) => state.query);
 
-  const handlePostClick = (date) => {
-    if (date) {
+  const handlePostClick = (result) => {
+    if (result) {
       // Call the getPost function with the selected date
-      dispatch(getPost(workdiaryToken, moment(date).format("MM/DD/YYYY")));
+      dispatch(
+        getPost(workdiaryToken, moment(result.date).format("MM/DD/YYYY"))
+      );
       closeAllPostsModal();
       dispatch(clearSearchResults()); // You need to define the getPost function
+      dispatch(setScrollTo(result));
       setShowAllPosts(true);
     }
   };
@@ -32,7 +36,6 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
 
-  console.log(pagination.currentPage, pagination.lastPage);
   return (
     <div className="container">
       <div className="row flex-column align-items-center">
@@ -44,10 +47,10 @@ const SearchPostsResults = ({ setShowAllPosts, closeAllPostsModal }) => {
                   <a
                     href="#"
                     onClick={() => {
-                      handlePostClick(result.date);
+                      handlePostClick(result);
                     }}
                   >
-                    {moment(result.date).format("MM/DD/YYYY")} -{" "}
+                    {result.date} -{" "}
                     {result.match_source === "tab_title"
                       ? "Tab Title - "
                       : `${
