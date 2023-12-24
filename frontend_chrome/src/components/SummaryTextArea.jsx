@@ -36,21 +36,21 @@ const formats = [
 
 const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const summaryText = useSelector((state) => state?.post?.summary_text);
+  const lastUpdated = useSelector((state) => state?.post?.last_updated);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const date = useSelector((state) => state.date);
   const [localSummaryText, setLocalSummaryText] = useState(summaryText);
   const [buttonText, setButtonText] = useState("Save");
   const dispatch = useDispatch();
 
   const handleChange = (value) => {
     setLocalSummaryText(value);
-    setButtonText("Save");
   };
 
   useEffect(() => {
+    setButtonText("Save");
     setLocalSummaryText(summaryText);
-  }, [summaryText]);
-
-  const lastUpdated = useSelector((state) => state?.post?.last_updated);
+  }, [date]);
 
   return (
     <div id="summary-text-container">

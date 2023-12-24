@@ -15,7 +15,9 @@ function useGlobalErrorHandler() {
       console.error(message, source, lineno, colno, error);
 
       // Trigger a refresh if desired
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
 
       if (originalOnError) {
         originalOnError(message, source, lineno, colno, error);
