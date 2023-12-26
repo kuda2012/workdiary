@@ -60,6 +60,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
       <CustomToolBar openTagsModal={openTagsModal} />
       <ReactQuill
         value={localSummaryText}
+        preserveWhitespace
         onChange={handleChange}
         modules={modules}
         formats={formats}
