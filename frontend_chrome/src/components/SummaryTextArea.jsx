@@ -65,24 +65,22 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
         modules={modules}
         formats={formats}
       />
-      {
-        <Autosave
-          data={localSummaryText}
-          interval={1500}
-          onSave={(data) => {
-            if (
-              localSummaryText &&
-              localSummaryText !== "<p><br></p>" &&
-              localSummaryText !== summaryText &&
-              workdiaryToken
-            ) {
-              dispatchUpdatePost(data);
-              dispatch(getPostsList(workdiaryToken, 1));
-              setButtonText("Saved");
-            }
-          }}
-        />
-      }
+      <Autosave
+        data={localSummaryText}
+        interval={1500}
+        onSave={(data) => {
+          if (
+            localSummaryText &&
+            localSummaryText !== "<p><br></p>" &&
+            localSummaryText !== summaryText &&
+            workdiaryToken
+          ) {
+            dispatchUpdatePost(data);
+            dispatch(getPostsList(workdiaryToken, 1));
+            setButtonText("Saved");
+          }
+        }}
+      />
       <button
         onClick={() => {
           dispatch(getPostsList(workdiaryToken, 1));

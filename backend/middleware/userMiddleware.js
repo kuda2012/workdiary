@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const jsonschema = require("jsonschema");
-let { SECRET_KEY } = require("../config");
+let { VERIFY_ACCOUNT_SECRET_KEY, GENERAL_SECRET_KEY } = require("../config");
 const userSchema = require("../schema/userschema.json");
 const ExpressError = require("../expressError");
 const rateLimit = require("express-rate-limit");
@@ -20,7 +20,22 @@ const emailResetLimiter = rateLimit({
 function tokenIsCurrent(req, res, next) {
   try {
     const { authorization } = req.headers;
-    jwt.verify(authorization.substring(7), SECRET_KEY);
+    jwt.verify(authorization.substring(7), GENERAL_SECRET_KEY);
+    return next();
+  } catch (error) {
+    if (error.message === "jwt expired") {
+      error.message = "Your token has expired";
+    }
+    if (error.message === "invalid token") {
+      error.message = "Your token is invalid";
+    }
+    error.status = 403;
+    next(error);
+  }
+}
+function verifyAccountVerificationToken(req, res, next) {
+  try {
+    jwt.verify(req.query.token, VERIFY_ACCOUNT_SECRET_KEY);
     return next();
   } catch (error) {
     if (error.message === "jwt expired") {
@@ -52,4 +67,5 @@ module.exports = {
   tokenIsCurrent,
   userIsValidated,
   emailResetLimiter,
+  verifyAccountVerificationToken,
 };

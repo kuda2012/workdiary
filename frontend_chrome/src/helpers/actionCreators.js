@@ -65,7 +65,7 @@ export function signup(formData) {
           ...formData,
         }
       );
-      dispatch(setWorkdiaryToken(data.workdiary_token));
+      alert(data.message);
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message);

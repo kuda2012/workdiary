@@ -5,15 +5,19 @@ const bcrypt = require("bcrypt");
 const { v4: uuid } = require("uuid");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
-const { SECRET_KEY, ZOHO_EMAIL_PASSWORD } = require("../config");
+const {
+  VERIFY_ACCOUNT_SECRET_KEY,
+  GENERAL_SECRET_KEY,
+  ZOHO_EMAIL_PASSWORD,
+} = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
 
 class User {
   static async createGoogleUser(payload) {
     const getUser = await db.query(
-      `INSERT INTO users (id, email, name, auth_provider)
-       VALUES ($1, $2, $3, $4) RETURNING id, email, name, auth_provider`,
-      [uuid(), payload.email, payload.name, "google"]
+      `INSERT INTO users (id, email, name, auth_provider, verified, time_verified)
+       VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id, email, name, auth_provider, verified`,
+      [uuid(), payload.email, payload.name, "google", true]
     );
     return getUser[0];
   }
@@ -26,7 +30,7 @@ class User {
     const hashedPassword = await bcrypt.hash(password, BCRYPT_HASH_ROUNDS);
     const newUser = await db.query(
       `INSERT INTO users (id, email, password, name, auth_provider)
-       VALUES ($1, $2, $3, $4, $5) RETURNING id, email, name, auth_provider`,
+       VALUES ($1, $2, $3, $4, $5) RETURNING id, email, name, auth_provider, verified`,
       [uuid(), email.toLowerCase(), hashedPassword, name, "username_password"]
     );
     return newUser[0];
@@ -48,11 +52,16 @@ class User {
       );
       if (passwordCorrect) {
         const result = await this.getUser(null, email);
-        return this.generateWorkdiaryAccessToken({
-          id: result.id,
-          name: result.name,
-          email: result.email,
-        });
+        if (result.verified) {
+          return this.generateWorkdiaryAccessToken({
+            id: result.id,
+            name: result.name,
+            email: result.email,
+          });
+        } else {
+          const response = await this.sendEmailVerification(result);
+          throw new ExpressError(response, 401);
+        }
       } else {
         throw new ExpressError(
           "The email and password combination you have entered do not match any of our records. Please try again.",
@@ -65,6 +74,85 @@ class User {
         "The email and password combination you have entered do not match any of our records. Please try again.",
         400
       );
+    }
+  }
+
+  static async sendEmailVerification(user) {
+    const transporter = nodemailer.createTransport({
+      host: "smtppro.zoho.com",
+      port: 587, // Use port 465 for secure SSL/TLS connection
+      secure: false,
+      auth: {
+        user: "no-reply@workdiary.me", // Your Zoho Mail email address
+        pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
+      },
+    });
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      VERIFY_ACCOUNT_SECRET_KEY,
+      {
+        expiresIn: "20m",
+      }
+    );
+    // const token = jwt.sign({ yes: "add" }, GENERAL_SECRET_KEY, {
+    //   expiresIn: "10m",
+    // });
+    // Email options
+    const mailOptions = {
+      from: "no-reply@workdiary.me",
+      to: user.email,
+      subject: "Work Diary: Account Verification",
+      html: `<div>
+                      <img src="cid:work_diary_image" alt="Work Diary Image" />
+                      <p>
+                      <a href="http://localhost:3000/users/verify-account?token=${token}">
+                        Click here</a>
+                         to verify your account
+                    </p>
+                    <small>Didn't request this? Just ignore</small>
+                    <div>
+                    <small>
+                        <a href="https://chromewebstore.google.com/">
+                            Download app
+                        </a> 
+                    </small>
+                    </div>
+                </div>`,
+      attachments: [
+        {
+          filename: "w_trident.png",
+          path: "./w_trident.png",
+          cid: "work_diary_image", // Same as the src cid in the img tag
+        },
+      ],
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+      } else {
+        console.log("Email sent:", info.response);
+      }
+    });
+    return "A verification link has been sent to your email. Please click on it to finalize the creation of your account!";
+  }
+
+  static async verifyAccount(token) {
+    const user = jwt.decode(token);
+    const { verified } = await this.getUser(user.id);
+    if (!verified) {
+      await db.query(
+        `UPDATE users
+        SET verified= true,
+       time_verified=CURRENT_TIMESTAMP
+      where id=$1 RETURNING id, email, verified, time_verified
+        `,
+        [user.id]
+      );
+      return "Your account has been verified. You can now login into your account!";
+    } else {
+      return "Your account has already been verified. You are free to login into your account!";
     }
   }
   static async changePassword(body, email) {
@@ -188,10 +276,10 @@ class User {
           pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
         },
       });
-      const token = jwt.sign({ user_id: user.id, email }, SECRET_KEY, {
+      const token = jwt.sign({ user_id: user.id, email }, GENERAL_SECRET_KEY, {
         expiresIn: "10m",
       });
-      // const token = jwt.sign({ yes: "add" }, SECRET_KEY, {
+      // const token = jwt.sign({ yes: "add" }, GENERAL_SECRET_KEY, {
       //   expiresIn: "10m",
       // });
       // Email options
@@ -306,7 +394,7 @@ class User {
   }
   static async getUser(id, email) {
     const getUser = await db.oneOrNone(
-      `SELECT id, email, name, alarm_status, alarm_time, alarm_days, auth_provider FROM users
+      `SELECT id, email, name, alarm_status, alarm_time, alarm_days, auth_provider, verified, created_at FROM users
        WHERE id = $1 OR email = $2`,
       [id, email]
     );
@@ -332,7 +420,7 @@ class User {
         email: payload.email,
         name: payload.name,
       },
-      SECRET_KEY,
+      GENERAL_SECRET_KEY,
       {
         expiresIn: "1y",
       }

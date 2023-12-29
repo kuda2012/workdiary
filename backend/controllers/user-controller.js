@@ -1,18 +1,37 @@
 const { decodeJwt } = require("../helpers/decodeJwt");
 const User = require("../models/User");
 const ExpressError = require("../expressError");
+const Post = require("../models/Post");
+const moment = require("moment");
 
 exports.signup = async (req, res, next) => {
   try {
-    await User.create(req.body);
-    let token = await User.getLoggedIn(req.body);
-    res.json({ workdiary_token: token });
-  } catch (error) {
-    if (error.code === "23505") {
-      error.status = 409;
-      error.message =
-        "This email is already taken. Please try a different one or try logging in through Google";
+    let getUser = await User.getUser(null, req.body.email);
+    const checkIfAnyPosts = await Post.getAllPostDates(getUser?.id);
+    if (
+      (getUser &&
+        !getUser?.verified &&
+        moment
+          .duration(moment().diff(moment(getUser?.created_at)))
+          .asMinutes()) > 20 &&
+      checkIfAnyPosts?.length === 0
+    ) {
+      // Delete user if you are trying to create the same account within the last 20 mins since
+      // creating an account but have not verified it yet
+      await User.delete(getUser.id);
+      getUser = await User.getUser(null, req.body.email);
     }
+    if (!getUser) {
+      let user = await User.create(req.body);
+      let message = await User.sendEmailVerification(user);
+      res.json({ message });
+    } else {
+      throw new ExpressError(
+        "This email is already taken. Please use a different one",
+        409
+      );
+    }
+  } catch (error) {
     next(error);
   }
 };
@@ -43,6 +62,15 @@ exports.login = async (req, res, next) => {
   try {
     let token = await User.getLoggedIn(req.body);
     res.json({ workdiary_token: token });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.verifyAccount = async (req, res, next) => {
+  try {
+    let message = await User.verifyAccount(req.query.token);
+    res.json({ message });
   } catch (error) {
     next(error);
   }

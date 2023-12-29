@@ -4,10 +4,16 @@ const UserController = require("../controllers/user-controller");
 const {
   tokenIsCurrent,
   userIsValidated,
-  emailResetLimiter
+  emailResetLimiter,
+  verifyAccountVerificationToken,
 } = require("../middleware/userMiddleware");
 
 router.get("/account-info", tokenIsCurrent, UserController.getAccountInfo);
+router.get(
+  "/verify-account",
+  verifyAccountVerificationToken,
+  UserController.verifyAccount
+);
 router.get(
   "/check-workdiary-token",
   tokenIsCurrent,

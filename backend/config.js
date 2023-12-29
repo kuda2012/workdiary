@@ -17,7 +17,7 @@ const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD;
 
 const CLIENT_ID = process.env.CLIENT_ID;
 
-const SECRET_KEY = process.env.SECRET_KEY;
+const GENERAL_SECRET_KEY = process.env.GENERAL_SECRET_KEY;
 
 const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY;
 
@@ -32,7 +32,7 @@ module.exports = {
   CLIENT_ID,
   GMAIL_PASSWORD,
   BCRYPT_HASH_ROUNDS,
-  SECRET_KEY,
+  GENERAL_SECRET_KEY,
   DEEPGRAM_API_KEY,
   ZOHO_EMAIL_PASSWORD,
 };
