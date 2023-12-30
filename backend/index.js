@@ -1,14 +1,12 @@
-require("dotenv").config();
 const express = require("express");
 var cors = require("cors");
 const bodyParser = require("body-parser");
-const { tokenIsCurrent } = require("./middleware/userMiddleware");
 const ExpressError = require("./expressError");
 const { rateLimit } = require("express-rate-limit");
 const app = express();
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200, // limit each IP to 200 requests per windowMs
+  max: 5, // limit each IP to 200 requests per windowMs
   message: "Too many requests from this IP, please try again later!",
   handler: (req, res, next, options) => {
     try {
