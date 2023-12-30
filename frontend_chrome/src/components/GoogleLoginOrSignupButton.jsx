@@ -8,7 +8,7 @@ import {
 } from "../helpers/actionCreators";
 import "../styles/LoginOrSignup.css";
 
-const GoogleLoginButton = ({ isSignup }) => {
+const GoogleLoginOrSignupButton = ({ isSignup }) => {
   const dispatch = useDispatch();
   const signingIn = useSelector((state) => state.logging_in);
   return (
@@ -55,4 +55,4 @@ const GoogleLoginButton = ({ isSignup }) => {
   );
 };
 
-export default GoogleLoginButton;
+export default GoogleLoginOrSignupButton;

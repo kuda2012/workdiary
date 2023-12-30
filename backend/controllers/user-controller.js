@@ -7,14 +7,12 @@ const moment = require("moment");
 exports.signup = async (req, res, next) => {
   try {
     let getUser = await User.getUser(null, req.body.email);
-    const checkIfAnyPosts = await Post.getAllPostDates(getUser?.id);
     if (
       (getUser &&
         !getUser?.verified &&
         moment
           .duration(moment().diff(moment(getUser?.created_at)))
-          .asMinutes()) > 20 &&
-      checkIfAnyPosts?.length === 0
+          .asMinutes()) > 20
     ) {
       // Delete user if you are trying to create the same account within the last 20 mins since
       // creating an account but have not verified it yet
@@ -36,22 +34,33 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.loginGoogle = async (req, res, next) => {
+exports.loginOrSignupGoogle = async (req, res, next) => {
   try {
     const payload = await User.verifyGoogleToken(req.body.google_access_token);
-    const doesUserExist = await User.getUser(null, payload.email);
-    let user;
-    if (!doesUserExist) {
-      user = await User.createGoogleUser(payload);
-    } else if (doesUserExist && doesUserExist.auth_provider !== "google") {
+    let getUser = await User.getUser(null, payload.email);
+    if (
+      (getUser &&
+        !getUser?.verified &&
+        moment
+          .duration(moment().diff(moment(getUser?.created_at)))
+          .asMinutes()) > 1
+    ) {
+      // Delete user if you are trying to create the same account within the last 20 mins since
+      // creating an account but have not verified it yet
+      await User.delete(getUser.id);
+      getUser = await User.getUser(null, req.body.email);
+      // makes sure it was deleted
+    }
+
+    if (!getUser) {
+      getUser = await User.createGoogleUser(payload);
+    } else if (getUser && getUser.auth_provider !== "google") {
       throw new ExpressError(
         "A user already exists for this email. Please sign in by entering your username and password",
         400
       );
     }
-    const token = await User.generateWorkdiaryAccessToken(
-      doesUserExist ? doesUserExist : user
-    );
+    const token = await User.generateWorkdiaryAccessToken(getUser);
     res.send({ workdiary_token: token });
   } catch (error) {
     next(error);

@@ -39,7 +39,7 @@ function verifyAccountVerificationToken(req, res, next) {
     return next();
   } catch (error) {
     if (error.message === "jwt expired") {
-      error.message = "Your token has expired";
+      error.message = "Your verification link has expired. Please login to have another one sent to you";
     }
     if (error.message === "invalid token") {
       error.message = "Your token is invalid";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import GoogleSignupButton from "./GoogleSignupButton";
+import GoogleLoginOrSignupButton from "./GoogleLoginOrSignupButton";
 import LoginOrSignup from "./LoginOrSignup";
 import ForgotPassword from "./ForgotPassword";
 import "../styles/Auth.css";
@@ -16,7 +16,7 @@ const Auth = () => {
         {!isForgotPassword && (
           <>
             <div className="col-6 mt-3">
-              <GoogleSignupButton isSignup={isSignup} />
+              <GoogleLoginOrSignupButton isSignup={isSignup} />
             </div>
             <div className="col mt-5 mb-4">
               <h5 className="text-center">Or</h5>

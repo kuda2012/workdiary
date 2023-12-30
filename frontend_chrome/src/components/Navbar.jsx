@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar as ReactNavBar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginGoogle, resetApp } from "../helpers/actionCreators";
+import { loginOrSignupGoogle, resetApp } from "../helpers/actionCreators";
 import SearchBar from "./SearchBar";
 import "../styles/Navbar.css";
 
@@ -12,7 +12,7 @@ const NavBar = ({ openAuthModal, openAllPostsModal }) => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   useEffect(() => {
     if (googleAccessToken) {
-      dispatch(loginGoogle(googleAccessToken));
+      dispatch(loginOrSignupGoogle(googleAccessToken));
     }
   }, [googleAccessToken]);
 
