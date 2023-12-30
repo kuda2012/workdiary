@@ -27,7 +27,7 @@ const ZOHO_EMAIL_PASSWORD = process.env.ZOHO_EMAIL_PASSWORD;
 
 const BCRYPT_HASH_ROUNDS = 12;
 
-console.log("Using database", DB_URI);
+console.log("Using database!", DB_URI);
 module.exports = {
   PORT,
   DB_URI,
