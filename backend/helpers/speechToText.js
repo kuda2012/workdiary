@@ -1,5 +1,5 @@
 const { Deepgram } = require("@deepgram/sdk");
-const { DEEPGRAM_API_KEY } = require("../config");
+const { DEEPGRAM_API_KEY } = require("../config").default;
 exports.speechToText = async (base64DataURI) => {
   const base64Data = base64DataURI.split(",")[1];
   const buffer = Buffer.from(base64Data, "base64");
