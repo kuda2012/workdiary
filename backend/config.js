@@ -1,3 +1,4 @@
+require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 
 //Uncomment line below to set NODE_ENV to test
@@ -11,6 +12,7 @@ if (process.env.NODE_ENV === "test") {
     process.env.DATABASE_URL?.concat("?ssl=true") ||
     "postgres://localhost/workdiary";
 }
+console.log("env var is here", process.env.DATABASE_URL);
 
 const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD;
 
