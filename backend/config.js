@@ -12,7 +12,6 @@ if (process.env.NODE_ENV === "test") {
     process.env.DATABASE_URL?.concat("?ssl=true") ||
     "postgres://localhost/workdiary";
 }
-console.log("env var is here", process.env.DATABASE_URL);
 
 const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD;
 
