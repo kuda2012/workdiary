@@ -264,7 +264,7 @@ class User {
     const { email } = body;
     const user = await this.getUser(null, email);
     if (user.auth_provider === "google") {
-      return "If the given email is on file, we have a sent a link there to reset your password";
+      return "If the given email is on file, we have a sent a link there to reset your password. Reminder: If your account is a Google one-click login, you do not have a password. Just login with the Google button!";
     }
     if (user) {
       const transporter = nodemailer.createTransport({
@@ -322,7 +322,7 @@ class User {
         }
       });
     }
-    return "If the given email is on file, we have a sent a link there to reset your password";
+    return "If the given email is on file, we have a sent a link there to reset your password. Reminder: If your account is a Google one-click login, you do not have a password. Just login with the Google button!";
   }
   static async contactUs(body) {
     const transporter = nodemailer.createTransport({

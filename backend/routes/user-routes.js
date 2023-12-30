@@ -19,7 +19,7 @@ router.get(
   tokenIsCurrent,
   UserController.checkedToken
 );
-router.post("/login-or-signup-google", UserController.loginOrSignupGoogle);
+router.post("/login-signup-google", UserController.loginOrSignupGoogle);
 router.post("/login", UserController.login);
 router.post("/signup", userIsValidated, UserController.signup);
 router.post("/change-alarm", tokenIsCurrent, UserController.changeAlarm);

@@ -25,7 +25,7 @@ export function loginOrSignupGoogle(googleAccessToken) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/users/login-or-signup-google`,
+        `${VITE_LOCAL_BACKEND_URL}/users/login-signup-google`,
         {
           google_access_token: googleAccessToken,
         }
