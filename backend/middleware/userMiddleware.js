@@ -7,7 +7,7 @@ const rateLimit = require("express-rate-limit");
 const emailResetLimiter = rateLimit({
   windowMs: 60 * 15 * 1000, // 15 min
   limit: 5, // limit each IP to 100 requests per windowMs
-  message: "Too many email requests from this IP, please try again later.",
+  message: "Too many requests from this IP, please try again later.",
   handler: (req, res, next, options) => {
     try {
       return next(new ExpressError(options.message, 429));
