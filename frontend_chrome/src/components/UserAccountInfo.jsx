@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAccount } from "../helpers/actionCreators";
+import { deleteAccount, resetApp } from "../helpers/actionCreators";
 import ChangePassword from "./ChangePassword";
 import "../styles/UserAccountInfo.css";
 
@@ -17,9 +17,9 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
     e.preventDefault();
     if (confirmation === "delete account") {
       dispatch(deleteAccount(workdiaryToken));
-      setTimeout(() => {
-        window.location.reload();
-      }, [2000]);
+      chrome.identity.clearAllCachedAuthTokens(function () {
+        dispatch(resetApp());
+      });
     } else {
       alert(`Must spell "delete account" correctly`);
     }

@@ -13,7 +13,7 @@ function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case "SET_GOOGLE_ACCESS_TOKEN":
       return { ...state, google_access_token: action.google_access_token };
-    case "SET_Workdiary_TOKEN":
+    case "SET_WORKDIARY_TOKEN":
       localStorage.setItem("workdiary_token", action.workdiary_token);
       chrome.storage.local.set({ workdiary_token: action.workdiary_token });
       return {

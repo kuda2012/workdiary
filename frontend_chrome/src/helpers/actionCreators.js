@@ -38,6 +38,20 @@ export function loginOrSignupGoogle(googleAccessToken) {
     }
   };
 }
+
+export function revokeAccessToken(googleAccessToken) {
+  return async function (dispatch) {
+    try {
+      await axios.get(
+        `https://accounts.google.com/o/oauth2/revoke?token=${googleAccessToken}`
+      );
+    } catch (error) {
+      dispatch(resetApp());
+      alert(error?.response?.data?.message);
+      console.log(error);
+    }
+  };
+}
 export function login(formData) {
   return async function (dispatch) {
     try {
@@ -550,7 +564,7 @@ export async function setAlarm(user) {
 
 export function setWorkdiaryToken(workdiary_token) {
   return {
-    type: "SET_Workdiary_TOKEN",
+    type: "SET_WORKDIARY_TOKEN",
     workdiary_token,
   };
 }
