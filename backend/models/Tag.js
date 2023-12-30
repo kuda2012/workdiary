@@ -3,19 +3,15 @@ const pgp = require("pg-promise")();
 
 class Tag {
   static async create(post, body) {
-    try {
-      await db.tx(async (t) => {
-        const insert = pgp.helpers.insert(
-          { post_id: post.id, text: body.tag },
-          ["post_id", "text"],
-          "tags"
-        );
-        return t.manyOrNone(insert + " RETURNING *");
-      });
-      return this.getTags(post.user_id, body.date);
-    } catch (error) {
-      throw error;
-    }
+    await db.tx(async (t) => {
+      const insert = pgp.helpers.insert(
+        { post_id: post.id, text: body.tag },
+        ["post_id", "text"],
+        "tags"
+      );
+      return t.manyOrNone(insert + " RETURNING *");
+    });
+    return this.getTags(post.user_id, body.date);
   }
   static async getTags(user_id, date) {
     const tags = await db.manyOrNone(

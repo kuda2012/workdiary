@@ -10,19 +10,15 @@ class Tab {
       url: tab.url,
       icon: tab.icon,
     }));
-    try {
-      await db.tx(async (t) => {
-        const insert = pgp.helpers.insert(
-          tabs,
-          ["post_id", "title", "url", "icon"],
-          "tabs"
-        );
-        return t.manyOrNone(insert + " RETURNING *");
-      });
-      return this.getTabs(post.user_id, post.date);
-    } catch (error) {
-      throw error;
-    }
+    await db.tx(async (t) => {
+      const insert = pgp.helpers.insert(
+        tabs,
+        ["post_id", "title", "url", "icon"],
+        "tabs"
+      );
+      return t.manyOrNone(insert + " RETURNING *");
+    });
+    return this.getTabs(post.user_id, post.date);
   }
   static async getTabs(user_id, date) {
     const tabs = await db.manyOrNone(
