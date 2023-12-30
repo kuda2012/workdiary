@@ -1,4 +1,3 @@
-require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 
 //Uncomment line below to set NODE_ENV to test
