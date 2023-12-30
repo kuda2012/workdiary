@@ -5,9 +5,12 @@ const bcrypt = require("bcrypt");
 const { v4: uuid } = require("uuid");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
-const { VERIFY_ACCOUNT_SECRET_KEY, GENERAL_SECRET_KEY, ZOHO_EMAIL_PASSWORD } =
-  require("../config").default;
-const { BCRYPT_HASH_ROUNDS } = require("../config").default;
+const {
+  VERIFY_ACCOUNT_SECRET_KEY,
+  GENERAL_SECRET_KEY,
+  ZOHO_EMAIL_PASSWORD,
+} = require("../config");
+const { BCRYPT_HASH_ROUNDS } = require("../config");
 
 class User {
   static async createGoogleUser(payload) {

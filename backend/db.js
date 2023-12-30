@@ -1,4 +1,4 @@
-const { DB_URI } = require("./config").default;
+const { DB_URI } = require("./config");
 const pgp = require("pg-promise")();
 const db = pgp(DB_URI);
 
