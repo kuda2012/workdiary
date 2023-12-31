@@ -1,30 +1,22 @@
 const { db } = require("../db");
 class TranscribeLog {
-  static async create(user_id) {
+  static async create(user_id, transcription) {
     const createdLog = await db.query(
-      `INSERT INTO transcribe_log (user_id)
-       VALUES ($1) RETURNING *`,
-      [user_id]
+      `INSERT INTO transcribe_log (user_id, transcription)
+       VALUES ($1, $2) RETURNING *`,
+      [user_id, transcription]
     );
     return createdLog[0];
   }
   static async getLog(user_id) {
-    return db.oneOrNone(
-      `SELECT * from transcribe_log
-        WHERE user_id=$1 AND date > (CURRENT_TIMESTAMP - INTERVAL '1 day')`,
+    const result = await db.query(
+      `SELECT CAST(COUNT(*) OVER () AS INTEGER) AS count
+        FROM transcribe_log
+        WHERE user_id = $1 AND created_at > (CURRENT_TIMESTAMP - INTERVAL '1 day');
+`,
       [user_id]
     );
-  }
-  static async updateLog(user_id) {
-    const log = await db.query(
-      `UPDATE transcribe_log
-        SET count = count + 1
-        WHERE user_id=$1 AND date > (CURRENT_TIMESTAMP - INTERVAL '1 day')
-        RETURNING *`,
-      [user_id]
-    );
-
-    return log[0];
+    return result[0];
   }
 }
 module.exports = TranscribeLog;

@@ -17,6 +17,7 @@ export function isWorkdiaryTokenCurrent(workdiary_token) {
       // dispatch(initialLoad());
     } catch (error) {
       dispatch(resetApp());
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -116,8 +117,8 @@ export function forgotPassword(formData) {
       );
       alert(data.message);
     } catch (error) {
-      alert(error?.response?.data?.message);
       dispatch(resetApp());
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -136,6 +137,7 @@ export function searchJournal(workdiary_token, query, current_page = 1) {
         dispatch(setSearchResults(data.results, data.query, data.pagination));
       }
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -150,6 +152,7 @@ export function getUserAccountInfo(workdiary_token) {
       );
       dispatch(setUserAccountInfo(data.user));
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -169,6 +172,7 @@ export function deleteAccount(workdiary_token) {
         });
       dispatch(resetApp());
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -187,6 +191,7 @@ export function deletePost(workdiary_token, date) {
           }, 1000);
         });
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -204,6 +209,7 @@ export function getPost(workdiary_token, date) {
       dispatch(setAllPostDates(data.all_post_dates));
       dispatch(setDate(data.date));
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -236,6 +242,7 @@ export function updatePost(
       if (summary_voice) {
         dispatch(toggleInterpreting());
       }
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -270,6 +277,7 @@ export function createPost(
       if (summary_voice) {
         dispatch(toggleInterpreting());
       }
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -286,6 +294,7 @@ export function getPostsList(workdiary_token, currentPage = 1) {
       );
       dispatch(setPostsList(data.posts_list, data.pagination));
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -337,6 +346,7 @@ export function createTabs(workdiary_token, date, currentTabs) {
         dispatch(setDate(data.date));
       }
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -374,6 +384,7 @@ export function openTabs(tabUrls, windowId) {
         chrome.windows.create({ url: tabUrls });
       }
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -392,6 +403,7 @@ export function createTag(workdiary_token, date, tag) {
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -408,6 +420,7 @@ export function deleteTag(workdiary_token, date, tag_id) {
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -447,6 +460,7 @@ export function bulkDeleteTabs(workdiary_token, date, tabs) {
         dispatch(setDate(data.date));
       }
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -463,6 +477,7 @@ export function deleteTab(workdiary_token, date, tab_id) {
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -480,6 +495,7 @@ export function changeAlarm(workdiary_token, user) {
       );
       dispatch(setUserAccountInfo(data.user));
     } catch (error) {
+      alert(error?.response?.data?.message);
       console.log(error);
     }
   };

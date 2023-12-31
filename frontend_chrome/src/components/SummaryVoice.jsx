@@ -6,6 +6,7 @@ import { Blocks } from "react-loader-spinner";
 
 const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   const userAccountInfo = useSelector((state) => state?.user);
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   const interpreting = useSelector((state) => state.interpreting);
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);

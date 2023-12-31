@@ -49,8 +49,17 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
 
   useEffect(() => {
     setButtonText("Save");
-    setLocalSummaryText(summaryText);
   }, [date]);
+
+  useEffect(() => {
+    setLocalSummaryText(summaryText);
+  }, [summaryText]);
+
+  useEffect(() => {
+    if (localSummaryText !== summaryText) {
+      setButtonText("Save");
+    }
+  }, [localSummaryText]);
 
   return (
     <div id="summary-text-container">
@@ -71,11 +80,10 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
         onSave={(data) => {
           if (
             localSummaryText &&
-            localSummaryText !== "<p><br></p>" &&
             localSummaryText !== summaryText &&
             workdiaryToken
           ) {
-            dispatchUpdatePost(data);
+            dispatchUpdatePost(data === "<p><br></p>" ? "" : data);
             dispatch(getPostsList(workdiaryToken, 1));
             setButtonText("Saved");
           }

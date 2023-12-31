@@ -11,7 +11,6 @@ exports.create = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
     let post = await Post.getPost(id, req.body.date);
-    let updatedLog;
     let getLog;
     if (!post) {
       if (req.body.summary_voice && req.body.audio_duration <= 180) {
@@ -23,15 +22,15 @@ exports.create = async (req, res, next) => {
                 `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
               )
             : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
-          updatedLog = await TranscribeLog.create(id);
-        } else if (getLog?.count < 10) {
+          await TranscribeLog.create(id, summaryText);
+        } else if (getLog?.count < 100) {
           const summaryText = await speechToText(req.body.summary_voice);
           req.body.summary_text = req.body.summary_text
             ? req.body.summary_text.concat(
                 `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
               )
             : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
-          updatedLog = await TranscribeLog.updateLog(id);
+          await TranscribeLog.create(id, summaryText);
         } else {
           throw new ExpressError(
             "You have maxed out the amount of transcriptions you can do per day",
@@ -51,7 +50,6 @@ exports.create = async (req, res, next) => {
       post,
       date: req.body.date,
       all_post_dates: [...allPostDates],
-      log: updatedLog ? updatedLog : getLog,
     });
   } catch (error) {
     next(error);
@@ -129,7 +127,6 @@ exports.update = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
     const post = await Post.getPost(id, req.body.date);
-    let updatedLog;
     let getLog;
     if (req.body.summary_voice && req.body.audio_duration < 180) {
       getLog = await TranscribeLog.getLog(id);
@@ -140,15 +137,15 @@ exports.update = async (req, res, next) => {
               `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
             )
           : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
-        updatedLog = await TranscribeLog.create(id);
-      } else if (getLog?.count < 10) {
+        await TranscribeLog.create(id, summaryText);
+      } else if (getLog?.count < 100) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
           ? req.body.summary_text.concat(
               `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
             )
           : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
-        updatedLog = await TranscribeLog.updateLog(id);
+        await TranscribeLog.create(id, summaryText);
       } else {
         throw new ExpressError(
           "You have maxed out the amount of transcriptions you can do per day",
@@ -176,7 +173,6 @@ exports.update = async (req, res, next) => {
       date: req.body.date,
       post: { ...updatePost },
       all_post_dates: [...allPostDates],
-      log: updatedLog ? updatedLog : getLog,
     });
   } catch (error) {
     next(error);
