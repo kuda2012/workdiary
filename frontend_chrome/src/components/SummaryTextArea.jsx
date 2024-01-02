@@ -34,6 +34,15 @@ const formats = [
   "direction",
 ];
 
+function countWords(htmlString) {
+  // Remove HTML tags from the string
+  if (!htmlString) return;
+  const cleanText = htmlString.replace(/<[^>]+>/g, "");
+
+  // Split the text into words and count them
+  const words = cleanText.trim().split(/\s+/);
+  return words.length;
+}
 const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const summaryText = useSelector((state) => state?.post?.summary_text);
   const lastUpdated = useSelector((state) => state?.post?.last_updated);
@@ -44,7 +53,13 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const dispatch = useDispatch();
 
   const handleChange = (value) => {
-    setLocalSummaryText(value);
+    if (value?.replace(/<[^>]+>/g, "")?.length > 20000) {
+      alert(
+        "Entry is too long (20000 characters). Any more text added after this will not be saved"
+      );
+    } else {
+      setLocalSummaryText(value);
+    }
   };
 
   useEffect(() => {
@@ -64,7 +79,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   return (
     <div id="summary-text-container">
       <span id="last-updated" className="p-0 mb-5">
-        Edited: {lastUpdated}
+        Edited: {lastUpdated} | Word count: {countWords(localSummaryText)}
       </span>
       <CustomToolBar openTagsModal={openTagsModal} />
       <ReactQuill
