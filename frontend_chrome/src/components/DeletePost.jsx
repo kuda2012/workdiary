@@ -28,6 +28,9 @@ const DeletePost = ({ closeDeletePostModal }) => {
             dispatch(getPostsList(workdiaryToken, 1));
             dispatch(setShowAllPosts(true));
             closeDeletePostModal();
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
           } else {
             alert(
               "You have not save anything to this date, there's nothing to delete."
