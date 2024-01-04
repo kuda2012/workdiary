@@ -1,4 +1,6 @@
-var { VITE_LOCAL_BACKEND_URL, VITE_CLOUD_BACKEND_URL } = import.meta.env;
+var { VITE_LOCAL_BACKEND_URL, VITE_CLOUD_BACKEND_URL, VITE_ENCRYPTION_KEY } =
+  import.meta.env;
+import CryptoJS from "crypto-js";
 import axios from "axios";
 export function setGoogleAccessToken(google_access_token) {
   return {
@@ -226,7 +228,18 @@ export function updatePost(
     try {
       const { data } = await axios.patch(
         `${VITE_LOCAL_BACKEND_URL}/posts/update`,
-        { workdiary_token, date, summary_text, summary_voice, audio_duration },
+        {
+          workdiary_token,
+          date,
+          summary_text: summary_text
+            ? CryptoJS.AES.encrypt(
+                summary_text,
+                VITE_ENCRYPTION_KEY // Use a securely stored encryption key
+              ).toString()
+            : summary_text,
+          summary_voice,
+          audio_duration,
+        },
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
@@ -259,7 +272,18 @@ export function createPost(
     try {
       const { data } = await axios.post(
         `${VITE_LOCAL_BACKEND_URL}/posts/create`,
-        { workdiary_token, date, summary_text, summary_voice, audio_duration },
+        {
+          workdiary_token,
+          date,
+          summary_text: summary_text
+            ? CryptoJS.AES.encrypt(
+                summary_text,
+                VITE_ENCRYPTION_KEY // Use a securely stored encryption key
+              ).toString()
+            : summary_text,
+          summary_voice,
+          audio_duration,
+        },
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }

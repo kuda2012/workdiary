@@ -1,5 +1,7 @@
 const { decodeJwt } = require("../helpers/decodeJwt");
 const { speechToText } = require("../helpers/speechToText");
+const { ENCRYPTION_KEY } = require("../config");
+const CryptoJS = require("crypto-js");
 const moment = require("moment");
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
@@ -11,19 +13,15 @@ exports.create = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
     let post = await Post.getPost(id, req.body.date);
-    let getLog;
     if (!post) {
+      req.body.summary_text = req.body.summary_text
+        ? CryptoJS.AES.decrypt(req.body.summary_text, ENCRYPTION_KEY).toString(
+            CryptoJS.enc.Utf8
+          )
+        : null;
       if (req.body.summary_voice && req.body.audio_duration <= 180) {
-        getLog = await TranscribeLog.getLog(id);
-        if (!getLog) {
-          const summaryText = await speechToText(req.body.summary_voice);
-          req.body.summary_text = req.body.summary_text
-            ? req.body.summary_text.concat(
-                `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
-              )
-            : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
-          await TranscribeLog.create(id, summaryText);
-        } else if (getLog?.count < 100) {
+        const getLog = await TranscribeLog.getLog(id);
+        if (!getLog || getLog?.count < 100) {
           const summaryText = await speechToText(req.body.summary_voice);
           req.body.summary_text = req.body.summary_text
             ? req.body.summary_text.concat(
@@ -127,18 +125,14 @@ exports.update = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
     const post = await Post.getPost(id, req.body.date);
-    let getLog;
+    req.body.summary_text = req.body.summary_text
+      ? CryptoJS.AES.decrypt(req.body.summary_text, ENCRYPTION_KEY).toString(
+          CryptoJS.enc.Utf8
+        )
+      : null;
     if (req.body.summary_voice && req.body.audio_duration < 180) {
-      getLog = await TranscribeLog.getLog(id);
-      if (!getLog) {
-        const summaryText = await speechToText(req.body.summary_voice);
-        req.body.summary_text = req.body.summary_text
-          ? req.body.summary_text.concat(
-              `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
-            )
-          : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
-        await TranscribeLog.create(id, summaryText);
-      } else if (getLog?.count < 100) {
+      const getLog = await TranscribeLog.getLog(id);
+      if (!getLog || getLog?.count < 100) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
           ? req.body.summary_text.concat(
