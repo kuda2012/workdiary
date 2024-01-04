@@ -645,6 +645,11 @@ export function setDate(date) {
   };
 }
 export function setPost(post) {
+  post.summary_text = post.summary_text
+    ? CryptoJS.AES.decrypt(post.summary_text, VITE_ENCRYPTION_KEY).toString(
+        CryptoJS.enc.Utf8
+      )
+    : null;
   return {
     type: "SET_POST",
     post,

@@ -41,6 +41,9 @@ exports.create = async (req, res, next) => {
           403
         );
       }
+      req.body.summary_text = req.body.summary_text
+        ? CryptoJS.AES.encrypt(req.body.summary_text, ENCRYPTION_KEY).toString()
+        : null;
       post = await Post.create(id, req.body);
     }
     const allPostDates = await Post.getAllPostDates(id);
@@ -152,7 +155,9 @@ exports.update = async (req, res, next) => {
         403
       );
     }
-
+    req.body.summary_text = req.body.summary_text
+      ? CryptoJS.AES.encrypt(req.body.summary_text, ENCRYPTION_KEY).toString()
+      : null;
     const updatePost = await Post.update(post.id, req.body);
     const tabs = await Tab.getTabs(id, req.body.date);
     const tags = await Tag.getTags(id, req.body.date);
