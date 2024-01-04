@@ -41,6 +41,9 @@ exports.create = async (req, res, next) => {
           403
         );
       }
+      if (req.body?.summary_text?.replace(/<[^>]+>/g, "")?.length > 20000) {
+        throw new ExpressError("Entry is too long (20000 characters)", 403);
+      }
       req.body.summary_text = req.body.summary_text
         ? CryptoJS.AES.encrypt(req.body.summary_text, ENCRYPTION_KEY).toString()
         : null;
@@ -152,6 +155,12 @@ exports.update = async (req, res, next) => {
     } else if (req.body.summary_voice && req.body.audio_duration > 180) {
       throw new ExpressError(
         "You have maxed out the amount of transcriptions you can do per day",
+        403
+      );
+    }
+    if (req.body?.summary_text?.replace(/<[^>]+>/g, "")?.length > 20000) {
+      throw new ExpressError(
+        "Entry is too long (20000 characters). Any extra characters will not be saved",
         403
       );
     }

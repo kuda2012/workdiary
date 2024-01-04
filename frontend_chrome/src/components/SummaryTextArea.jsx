@@ -55,7 +55,7 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
   const handleChange = (value) => {
     if (value?.replace(/<[^>]+>/g, "")?.length > 20000) {
       alert(
-        "Entry is too long (20000 characters). Any more text added after this will not be saved"
+        "Entry is too long (20000 characters). Any extra characters will not be saved"
       );
     } else {
       setLocalSummaryText(value);
