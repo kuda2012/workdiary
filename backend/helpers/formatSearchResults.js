@@ -2,7 +2,7 @@ const moment = require("moment");
 const ExpressError = require("../expressError");
 function formatSearchResults(searchResults, query) {
   return searchResults.map((result) => {
-    result.date = moment(result.date).format("MM/DD/YYYY");
+    result.date = moment(result.date, moment.ISO_8601).format("MM/DD/YYYY");
     result.original_string = result[result.match_source];
     // if query is findable in first 20 chars of string, add first 20 chars and then ... {query}
     // query is not findable in first 20 chars of string, add first 20 chars and ...
