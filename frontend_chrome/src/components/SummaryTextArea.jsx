@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import CustomToolBar from "./CustomToolbar";
 import "react-quill/dist/quill.snow.css";
 import "../styles/SummaryTextArea.css";
-import { getPostsList } from "../helpers/actionCreators";
+import { clearSearchResults, getPostsList } from "../helpers/actionCreators";
 
 const modules = {
   toolbar: {
@@ -99,18 +99,18 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
             workdiaryToken
           ) {
             dispatchUpdatePost(data === "<p><br></p>" ? "" : data);
-            dispatch(getPostsList(workdiaryToken, 1));
             setButtonText("Saved");
+            dispatch(clearSearchResults());
           }
         }}
       />
       <button
         onClick={() => {
-          dispatch(getPostsList(workdiaryToken, 1));
           dispatchUpdatePost(
             localSummaryText === "<p><br></p>" ? "" : localSummaryText
           );
           setButtonText("Saved");
+          dispatch(clearSearchResults());
         }}
       >
         {buttonText === "Saved" && <b>{buttonText}</b>}
