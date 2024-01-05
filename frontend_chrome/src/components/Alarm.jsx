@@ -67,6 +67,7 @@ const Alarm = () => {
         className="dropdown-menu text-center flex-column align-items-center"
         aria-labelledby="alarm-dropdown"
       >
+        <div className="my-2">Set this for the end of your work day!</div>
         <div class="btn-group" role="group" aria-label="Toggle Switch">
           <ButtonGroup>
             <Button

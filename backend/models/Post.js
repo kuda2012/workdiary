@@ -1,5 +1,7 @@
 const { formatSearchResults } = require("../helpers/formatSearchResults");
 const { db, knex } = require("../db");
+const { ENCRYPTION_KEY } = require("../config");
+const CryptoJS = require("crypto-js");
 const moment = require("moment");
 class Post {
   static async create(user_id, body) {
@@ -45,11 +47,16 @@ class Post {
   static async listAllPosts(user_id, currentPage = 1) {
     function shortenSummaryText(entry) {
       // Extract the first 7 full words
-      const words = entry
-        .replace(/<p>|<\/p>/g, "")
-        .match(/\w+/g)
-        ?.slice(0, 7);
+      entry = entry
+        ? CryptoJS.AES.decrypt(entry, ENCRYPTION_KEY).toString(
+            CryptoJS.enc.Utf8
+          )
+        : null;
 
+      const words = entry
+        ?.replace(/<[^>]+>/g, "")
+        ?.match(/\w+/g)
+        ?.slice(0, 7);
       // Check if any words were found
       if (!words) {
         return ``;
@@ -70,10 +77,16 @@ class Post {
         currentPage: Number(currentPage),
         isLengthAware: true,
       });
+
     const posts = response.data.map((post) => {
       return {
         date: post.date,
-        entry: post.entry && shortenSummaryText(post.entry),
+        entry: post.entry
+          ? CryptoJS.AES.encrypt(
+              shortenSummaryText(post.entry),
+              ENCRYPTION_KEY
+            ).toString()
+          : null,
       };
     });
 

@@ -659,9 +659,17 @@ export function setPost(post) {
 }
 
 export function setPostsList(posts_list, pagination) {
+  console.log(posts_list);
   return {
     type: "SET_POSTS_LIST",
-    posts_list,
+    posts_list: posts_list?.map((post) => {
+      post.entry = post?.entry
+        ? CryptoJS.AES.decrypt(post?.entry, VITE_ENCRYPTION_KEY).toString(
+            CryptoJS.enc.Utf8
+          )
+        : null;
+      return post;
+    }),
     pagination,
   };
 }
