@@ -113,20 +113,6 @@ exports.search = async (req, res, next) => {
   }
 };
 
-// exports.search = async (req, res, next) => {
-//   try {
-//     const { id } = decodeJwt(req.headers.authorization);
-//     const searchResults = await Post.search(
-//       id,
-//       req.query.query,
-//       req.query.current_page
-//     );
-//     res.send({ results: searchResults, query: req.query.query });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 exports.update = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
@@ -223,4 +209,18 @@ exports.delete = async (req, res, next) => {
 //     post_id: post.id,
 //     message: "Access to your post has now been revoked from other users",
 //   });
+// };
+
+// exports.search = async (req, res, next) => {
+//   try {
+//     const { id } = decodeJwt(req.headers.authorization);
+//     const searchResults = await Post.search(
+//       id,
+//       req.query.query,
+//       req.query.current_page
+//     );
+//     res.send({ results: searchResults, query: req.query.query });
+//   } catch (error) {
+//     next(error);
+//   }
 // };

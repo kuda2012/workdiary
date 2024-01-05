@@ -37,7 +37,6 @@ function useGlobalErrorHandler() {
 function App() {
   useGlobalErrorHandler();
   const workdiaryToken = useSelector((state) => state.workdiary_token);
-  const googleAccessToken = useSelector((state) => state.google_access_token);
   const dispatch = useDispatch();
   if (!workdiaryToken && localStorage.getItem("workdiary_token")) {
     dispatch(isWorkdiaryTokenCurrent(localStorage.getItem("workdiary_token")));

@@ -1,57 +1,37 @@
 const moment = require("moment");
+const ExpressError = require("../expressError");
 function formatSearchResults(searchResults, query) {
-  let disallowDuplicates = {};
   return searchResults.map((result) => {
     result.date = moment(result.date).format("MM/DD/YYYY");
     result.original_string = result[result.match_source];
     // if query is findable in first 20 chars of string, add first 20 chars and then ... {query}
     // query is not findable in first 20 chars of string, add first 20 chars and ...
-    const popularDomains = [
-      ".com",
-      ".org",
-      ".net",
-      ".gov",
-      ".edu",
-      ".io",
-      ".it",
-      ".co",
-      ".uk",
-      ".za",
-      ".de",
-      ".cn",
-      ".so",
-      ".jp",
-      ".ru",
-      ".mx",
-      ".br",
-      ".fr",
-      ".au",
-      ".ca",
-      ".es",
-      ".it",
-      ".nl",
-      ".us",
-      ".se",
-    ];
-
     if (result.match_source === "tab") {
-      let indexOfEnding = 30;
-      let chosenDomain = popularDomains[0];
-      for (let domain of popularDomains) {
-        if (result[result.match_source].indexOf(domain) !== -1) {
-          // finding what index the .com is located at
-          chosenDomain = domain;
-          indexOfEnding =
-            result[result.match_source].indexOf(domain) + domain.length;
-          break;
-        }
+      // let indexOfEnding = 30;
+      // let chosenDomain = popularDomains[0];
+      let url = result.tab;
+      const regex = /\./g;
+      let match;
+      const indices = [];
+
+      while ((match = regex.exec(url)) !== null) {
+        indices.push(match.index);
       }
-      // setting the appearance of the url string on the front end
+
+      let indexOfDot = indices.length > 0 ? indices[indices.length - 1] : null;
+      if (!indexOfDot) {
+        throw new ExpressError("No . in tab url", 400);
+      }
+
+      url = url.slice(indexOfDot + 1);
+      let index = url.match(/[\/?#:!]/)?.index || url.length;
+      let domain = result.tab.slice(indexOfDot, index + indexOfDot + 1);
+      let indexOfEnding = index + indexOfDot + 1;
       result[result.match_source] =
         result[result.match_source]
           .toLowerCase()
           .indexOf(query.toLowerCase()) <=
-        indexOfEnding - chosenDomain.length + 1
+        indexOfEnding - domain.length + 1
           ? `${result[result.match_source].slice(0, indexOfEnding)}...`
           : `${result[result.match_source].slice(0, indexOfEnding)}...${query}`;
     } else if (result.match_source === "entry") {
@@ -72,17 +52,6 @@ function formatSearchResults(searchResults, query) {
       original_string: result.original_string,
     };
   });
-  // .filter((result) => {
-  //   if (result.match_source === "entry") {
-  //     if (disallowDuplicates[result.date]) {
-  //       return false;
-  //     } else {
-  //       disallowDuplicates[result.date] = true;
-  //       return true;
-  //     }
-  //   }
-  //   return true;
-  // });
 }
 
 function generateFinalString(query, fullString) {
