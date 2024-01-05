@@ -1,6 +1,4 @@
-var { VITE_LOCAL_BACKEND_URL, VITE_CLOUD_BACKEND_URL, VITE_ENCRYPTION_KEY } =
-  import.meta.env;
-import CryptoJS from "crypto-js";
+var { VITE_LOCAL_BACKEND_URL, VITE_CLOUD_BACKEND_URL } = import.meta.env;
 import axios from "axios";
 export function setGoogleAccessToken(google_access_token) {
   return {
@@ -231,12 +229,7 @@ export function updatePost(
         {
           workdiary_token,
           date,
-          summary_text: summary_text
-            ? CryptoJS.AES.encrypt(
-                summary_text,
-                VITE_ENCRYPTION_KEY // Use a securely stored encryption key
-              ).toString()
-            : summary_text,
+          summary_text,
           summary_voice,
           audio_duration,
         },
@@ -275,12 +268,7 @@ export function createPost(
         {
           workdiary_token,
           date,
-          summary_text: summary_text
-            ? CryptoJS.AES.encrypt(
-                summary_text,
-                VITE_ENCRYPTION_KEY // Use a securely stored encryption key
-              ).toString()
-            : summary_text,
+          summary_text,
           summary_voice,
           audio_duration,
         },
@@ -645,13 +633,6 @@ export function setDate(date) {
   };
 }
 export function setPost(post) {
-  if (post) {
-    post.summary_text = post?.summary_text
-      ? CryptoJS.AES.decrypt(post?.summary_text, VITE_ENCRYPTION_KEY).toString(
-          CryptoJS.enc.Utf8
-        )
-      : null;
-  }
   return {
     type: "SET_POST",
     post,
@@ -661,14 +642,7 @@ export function setPost(post) {
 export function setPostsList(posts_list, pagination) {
   return {
     type: "SET_POSTS_LIST",
-    posts_list: posts_list?.map((post) => {
-      post.entry = post?.entry
-        ? CryptoJS.AES.decrypt(post?.entry, VITE_ENCRYPTION_KEY).toString(
-            CryptoJS.enc.Utf8
-          )
-        : null;
-      return post;
-    }),
+    posts_list,
     pagination,
   };
 }

@@ -1,7 +1,5 @@
 const { decodeJwt } = require("../helpers/decodeJwt");
 const { speechToText } = require("../helpers/speechToText");
-const { ENCRYPTION_KEY } = require("../config");
-const CryptoJS = require("crypto-js");
 const moment = require("moment");
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
@@ -14,11 +12,6 @@ exports.create = async (req, res, next) => {
     const { id } = decodeJwt(req.headers.authorization);
     let post = await Post.getPost(id, req.body.date);
     if (!post) {
-      req.body.summary_text = req.body.summary_text
-        ? CryptoJS.AES.decrypt(req.body.summary_text, ENCRYPTION_KEY).toString(
-            CryptoJS.enc.Utf8
-          )
-        : null;
       if (req.body.summary_voice && req.body.audio_duration <= 180) {
         const getLog = await TranscribeLog.getLog(id);
         if (!getLog || getLog?.count < 100) {
@@ -44,9 +37,6 @@ exports.create = async (req, res, next) => {
       if (req.body?.summary_text?.replace(/<[^>]+>/g, "")?.length > 20000) {
         throw new ExpressError("Entry is too long (20000 characters)", 403);
       }
-      req.body.summary_text = req.body.summary_text
-        ? CryptoJS.AES.encrypt(req.body.summary_text, ENCRYPTION_KEY).toString()
-        : null;
       post = await Post.create(id, req.body);
     }
     const allPostDates = await Post.getAllPostDates(id);
@@ -117,11 +107,6 @@ exports.update = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
     const post = await Post.getPost(id, req.body.date);
-    req.body.summary_text = req.body.summary_text
-      ? CryptoJS.AES.decrypt(req.body.summary_text, ENCRYPTION_KEY).toString(
-          CryptoJS.enc.Utf8
-        )
-      : null;
     if (req.body.summary_voice && req.body.audio_duration < 180) {
       const getLog = await TranscribeLog.getLog(id);
       if (!getLog || getLog?.count < 100) {
@@ -150,9 +135,6 @@ exports.update = async (req, res, next) => {
         403
       );
     }
-    req.body.summary_text = req.body.summary_text
-      ? CryptoJS.AES.encrypt(req.body.summary_text, ENCRYPTION_KEY).toString()
-      : null;
     const updatePost = await Post.update(post.id, req.body);
     const tabs = await Tab.getTabs(id, req.body.date);
     const tags = await Tag.getTags(id, req.body.date);
