@@ -51,7 +51,6 @@ function rootReducer(state = INITIAL_STATE, action) {
         query: "",
         posts_list: null,
         pagination: null,
-        fetch_posts_list: true,
       };
     case "CLEAR_SCROLL_TO":
       return {

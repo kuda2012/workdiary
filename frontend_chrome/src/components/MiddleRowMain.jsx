@@ -26,7 +26,11 @@ const MiddleRowMain = () => {
   const closeTabsModal = () => setIsTabsModalOpen(false);
 
   const dispatch = useDispatch();
-  function dispatchUpdatePost(summary_text, summary_voice, audioDuration) {
+  function dispatchCreateOrUpdatePost(
+    summary_text,
+    summary_voice,
+    audioDuration
+  ) {
     if (post) {
       dispatch(
         updatePost(
@@ -77,11 +81,11 @@ const MiddleRowMain = () => {
         <>
           <SummaryVoice
             summaryText={post?.summary_text}
-            dispatchUpdatePost={dispatchUpdatePost}
+            dispatchCreateOrUpdatePost={dispatchCreateOrUpdatePost}
           />
           <SummaryTextArea
             initialContent={post?.summary_text}
-            dispatchUpdatePost={dispatchUpdatePost}
+            dispatchCreateOrUpdatePost={dispatchCreateOrUpdatePost}
             openTagsModal={openTagsModal}
           />
         </>

@@ -281,9 +281,6 @@ export function createPost(
       }
       dispatch(setPost(data.post));
       dispatch(setAllPostDates(data.all_post_dates));
-      if (data.transcription_error_msg) {
-        alert(data.transcription_error_msg);
-      }
       dispatch(setDate(data.date));
     } catch (error) {
       if (summary_voice) {

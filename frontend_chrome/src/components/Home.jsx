@@ -31,7 +31,6 @@ const Home = ({
   const showAllPosts = useSelector((state) => state.show_all_posts);
   const postsList = useSelector((state) => state?.posts_list);
   const searchResults = useSelector((state) => state.search_results);
-  const fetchPostsList = useSelector((state) => state.fetch_posts_list);
 
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
   const openHowToModal = () => setIsHowToModalOpen(true);
@@ -39,18 +38,17 @@ const Home = ({
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!date && !post && workdiaryToken) {
+    if (!date && !post && !user && workdiaryToken) {
       // intial load of journal data
       dispatch(getPost(workdiaryToken, moment().format("MM/DD/YYYY")));
-    }
-    if (!user && workdiaryToken) {
       dispatch(getUserAccountInfo(workdiaryToken));
       dispatch(getPostsList(workdiaryToken, 1));
     }
-    if (fetchPostsList && !postsList) {
+    if (user && !postsList) {
       dispatch(getPostsList(workdiaryToken, 1));
     }
-  }, [post, date, user, workdiaryToken, fetchPostsList]);
+  }, [post, date, user, workdiaryToken]);
+
   return (
     <div
       id="outer-div"

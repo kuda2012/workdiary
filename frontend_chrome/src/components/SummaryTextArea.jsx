@@ -43,7 +43,8 @@ function countWords(htmlString) {
   const words = cleanText.trim().split(/\s+/);
   return words.length;
 }
-const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
+const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
+  const post = useSelector((state) => state?.post);
   const summaryText = useSelector((state) => state?.post?.summary_text);
   const lastUpdated = useSelector((state) => state?.post?.last_updated);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
@@ -98,19 +99,21 @@ const SummaryTextArea = ({ dispatchUpdatePost, openTagsModal }) => {
             localSummaryText !== summaryText &&
             workdiaryToken
           ) {
-            dispatchUpdatePost(data === "<p><br></p>" ? "" : data);
+            dispatchCreateOrUpdatePost(data === "<p><br></p>" ? "" : data);
             setButtonText("Saved");
             dispatch(clearSearchResults());
+            // dispatch(getPostsList(workdiaryToken, 1));
           }
         }}
       />
       <button
         onClick={() => {
-          dispatchUpdatePost(
+          dispatchCreateOrUpdatePost(
             localSummaryText === "<p><br></p>" ? "" : localSummaryText
           );
           setButtonText("Saved");
           dispatch(clearSearchResults());
+          // dispatch(getPostsList(workdiaryToken, 1));
         }}
       >
         {buttonText === "Saved" && <b>{buttonText}</b>}

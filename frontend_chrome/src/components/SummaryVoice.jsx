@@ -4,7 +4,7 @@ import { getPostsList, toggleInterpreting } from "../helpers/actionCreators";
 import "../styles/SummaryVoice.css";
 import { Blocks } from "react-loader-spinner";
 
-const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
+const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
   const user = useSelector((state) => state?.user);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const interpreting = useSelector((state) => state.interpreting);
@@ -182,7 +182,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
     const reader = new FileReader();
     reader.onload = () => {
       const audioBase64 = reader.result;
-      dispatchUpdatePost(summaryText, audioBase64, audioDuration);
+      dispatchCreateOrUpdatePost(summaryText, audioBase64, audioDuration);
       dispatch(getPostsList(workdiaryToken, 1));
       resetRecording();
     };
