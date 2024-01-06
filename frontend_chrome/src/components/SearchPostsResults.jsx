@@ -21,7 +21,10 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
     if (result) {
       // Call the getPost function with the selected date
       dispatch(
-        getPost(workdiaryToken, moment(result.date).format("MM/DD/YYYY"))
+        getPost(
+          workdiaryToken,
+          moment(result.date, moment.ISO_8601).format("MM/DD/YYYY")
+        )
       );
       closeAllPostsModal();
       dispatch(clearSearchResults()); // You need to define the getPost function

@@ -43,7 +43,12 @@ const SearchBar = ({ toggleSearchBar }) => {
     setSearchText(""); // Clear the search input
     if (item && item.date) {
       // Call the getPost function with the selected date
-      dispatch(getPost(workdiaryToken, moment(item.date).format("MM/DD/YYYY")));
+      dispatch(
+        getPost(
+          workdiaryToken,
+          moment(item.date, moment.ISO_8601).format("MM/DD/YYYY")
+        )
+      );
       dispatch(clearSearchResults()); // You need to define the getPost function
       toggleSearchBar();
     }
