@@ -13,7 +13,9 @@ const MainContainer = ({
 
   return (
     <div
-      className={`container main-container${workdiaryToken ? "clickable" : ""}`}
+      className={`container-fluid main-container ${
+        workdiaryToken ? "clickable" : ""
+      }`}
     >
       <TopRowMain
         isHowToModalOpen={isHowToModalOpen}

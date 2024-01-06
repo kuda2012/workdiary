@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { clearScrollTo, createTag, deleteTag } from "../helpers/actionCreators";
+import {
+  clearScrollTo,
+  clearSearchResults,
+  createTag,
+  deleteTag,
+} from "../helpers/actionCreators";
 import Tag from "./Tag";
 
 const Tags = () => {

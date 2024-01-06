@@ -50,10 +50,10 @@ function openPopup() {
       {
         url: "index.html", // Replace with your HTML file's path
         type: "popup",
-        width: 800, // Set the width and height as desired
-        height: 980,
+        width: 859, // Set the width and height as desired
+        height: 1010,
         top: 100, // Adjust the window's position as needed
-        left: -500,
+        left: 100,
       },
       function (window) {
         popupWindow = window;
@@ -212,7 +212,7 @@ chrome.runtime.onInstalled.addListener(async () => {
             type: "basic",
             iconUrl: "w_extension.png",
             title: "Work Diary",
-            message: `Reminder to write your Work Diary (click here to open app)`,
+            message: `Reminder to write in your Work Diary (click here to open app)`,
           });
           chrome.notifications.onClicked.addListener(() => {
             openApp();

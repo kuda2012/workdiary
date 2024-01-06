@@ -589,7 +589,7 @@ export async function setAlarm(user) {
           type: "basic",
           iconUrl: "w_extension.png",
           title: "Work Diary",
-          message: `Reminder to log in your Work Diary (click here to open app)`,
+          message: `Reminder to write in your Work Diary (click here to open app)`,
           // Include sound property for the sound file
         });
 

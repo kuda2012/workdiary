@@ -87,7 +87,7 @@ function App() {
         </>
       ) : (
         <>
-          <div className="container">
+          <div className="container-fluid">
             <div className="row justify-content-between">
               <div className="col-1">
                 <span
