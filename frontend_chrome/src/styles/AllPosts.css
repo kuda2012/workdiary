@@ -1,9 +1,13 @@
 #all-posts-list {
   min-height: 245px;
 }
-/* #all-posts-search {
-  font-size: 9px;
-} */
+.search-links {
+  word-wrap: break-word;
+}
+
+#all-posts-search {
+  width: 235px;
+}
 
 .hidden {
   opacity: 0.2;

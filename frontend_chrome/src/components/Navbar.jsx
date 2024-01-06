@@ -83,7 +83,7 @@ const NavBar = ({ openAuthModal, openAllPostsModal }) => {
                     openAllPostsModal();
                   }}
                 >
-                  All posts 🔎
+                  Search Diary🔎
                 </NavLink>
               </NavItem>
             </>

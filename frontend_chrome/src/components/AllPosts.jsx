@@ -34,6 +34,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
                 <li>
                   <a
                     href="#"
+                    className="search-links"
                     onClick={() => {
                       handlePostClick(post.date);
                     }}

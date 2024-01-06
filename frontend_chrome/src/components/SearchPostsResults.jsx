@@ -45,6 +45,7 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
               searchResults.map((result) => (
                 <li>
                   <a
+                    className="search-links"
                     href="#"
                     onClick={() => {
                       handlePostClick(result);

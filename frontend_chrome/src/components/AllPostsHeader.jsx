@@ -16,6 +16,7 @@ const AllPostsHeader = () => {
 
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("" || query);
+  const [showPlaceholder, setShowPlaceholder] = useState(true);
 
   // Handler to update the search input text
   const handleInputChange = (event) => {
@@ -49,23 +50,29 @@ const AllPostsHeader = () => {
     <div className="container">
       <div className="row justify-content-between">
         <div className="col-2">
-          <h5>Posts</h5>
+          <h5>Your Entries</h5>
         </div>
         <div className="col-10 d-flex justify-content-end">
           <form onSubmit={handleFormSubmit}>
-            <label
+            <span
               // id="reset-calendar"
               className="me-1"
               onClick={reset}
               for="all-posts-search"
             >
               🔄
-            </label>
+            </span>
             <input
               id="all-posts-search"
               type="text"
               value={searchText}
-              placeholder="🔎 all entries, tags, tabs"
+              onFocus={() => {
+                setShowPlaceholder(false);
+              }}
+              onBlur={() => {
+                setShowPlaceholder(true);
+              }}
+              placeholder={showPlaceholder && "Search all entries, tabs, or tags"}
               autocomplete="off"
               onChange={handleInputChange}
             />
