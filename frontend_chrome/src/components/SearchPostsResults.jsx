@@ -20,12 +20,8 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
   const handlePostClick = (result) => {
     if (result) {
       // Call the getPost function with the selected date
-      dispatch(
-        getPost(
-          workdiaryToken,
-          moment(result.date, moment.ISO_8601).format("MM/DD/YYYY")
-        )
-      );
+
+      dispatch(getPost(workdiaryToken, result.date));
       closeAllPostsModal();
       dispatch(clearSearchResults()); // You need to define the getPost function
       dispatch(setScrollTo(result));
