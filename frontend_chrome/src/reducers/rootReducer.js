@@ -73,7 +73,6 @@ function rootReducer(state = INITIAL_STATE, action) {
         workdiary_token: state.workdiary_token,
         date: state.date,
         show_all_posts: true,
-        all_post_dates: action.all_post_dates,
       };
     case "FULL_RESET":
       localStorage.removeItem("workdiary_token");

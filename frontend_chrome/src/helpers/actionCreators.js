@@ -185,10 +185,10 @@ export function deletePost(workdiary_token, date) {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         })
         .then(({ data }) => {
-          setTimeout(() => {
-            alert(data.message);
-            dispatch(halfReset(data.all_post_dates));
-          }, 1000);
+          alert(data.message);
+          window.location.reload();
+          dispatch(halfReset());
+          dispatch(setAllPostDates(data.all_post_dates));
         });
     } catch (error) {
       alert(error?.response?.data?.message || error?.message);
@@ -615,10 +615,9 @@ export function setSearchResults(results, query, pagination) {
     pagination,
   };
 }
-export function halfReset(all_post_dates) {
+export function halfReset() {
   return {
     type: "HALF_RESET",
-    all_post_dates,
   };
 }
 export function resetApp() {
