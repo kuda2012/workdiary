@@ -376,6 +376,10 @@ class User {
       queryValues.push(body.alarm_time); // Add the value to the parameter array
       queryText += ` alarm_time = $${queryValues.length},`; // Add the column to the query
     }
+    if (body.sound_effects !== undefined) {
+      queryValues.push(body.sound_effects); // Add the value to the parameter array
+      queryText += ` sound_effects = $${queryValues.length},`; // Add the column to the query
+    }
     if (body.alarm_days !== undefined) {
       queryValues.push(body.alarm_days); // Add the value to the parameter array
       queryText += ` alarm_days = $${queryValues.length} ::JSONB[],`; // Add the column to the query
@@ -394,7 +398,7 @@ class User {
   }
   static async getUser(id, email) {
     const getUser = await db.oneOrNone(
-      `SELECT id, email, name, alarm_status, alarm_time, alarm_days, auth_provider, verified, created_at FROM users
+      `SELECT id, email, name, alarm_status, alarm_time, alarm_days, sound_effects, auth_provider, verified, created_at FROM users
        WHERE id = $1 OR email = $2`,
       [id, email]
     );

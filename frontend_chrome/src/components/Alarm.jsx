@@ -113,7 +113,7 @@ const Alarm = () => {
         />
         <Autosave
           data={user}
-          interval={2000}
+          interval={1500}
           onSave={() => {
             setAlarmChanged(true);
             setButtonText("Saved");

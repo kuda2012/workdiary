@@ -495,12 +495,29 @@ export function deleteTab(workdiary_token, date, tab_id) {
   };
 }
 
-export function changeAlarm(workdiary_token, user) {
+export function changeAlarm(workdiary_token, alarmChange) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
         `${VITE_LOCAL_BACKEND_URL}/users/change-alarm`,
-        { ...user },
+        { ...alarmChange },
+        {
+          headers: { Authorization: `Bearer ${workdiary_token}` },
+        }
+      );
+      dispatch(setUserAccountInfo(data.user));
+    } catch (error) {
+      alert(error?.response?.data?.message || error?.message);
+      console.log(error);
+    }
+  };
+}
+export function changeOtherSettings(workdiary_token, alarmChange) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.post(
+        `${VITE_LOCAL_BACKEND_URL}/users/other-settings`,
+        { ...alarmChange },
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }

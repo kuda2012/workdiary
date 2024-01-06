@@ -5,7 +5,7 @@ import "../styles/SummaryVoice.css";
 import { Blocks } from "react-loader-spinner";
 
 const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
-  const userAccountInfo = useSelector((state) => state?.user);
+  const user = useSelector((state) => state?.user);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const interpreting = useSelector((state) => state.interpreting);
   const [isRecording, setIsRecording] = useState(false);
@@ -66,9 +66,12 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
         audioUrlRef.current = URL.createObjectURL(audioBlob);
         audioRef.current.src = audioUrlRef.current;
       };
-      const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
-      audio.volume = 1; // Get the URL to your sound fil
-      audio.play();
+      if (user.sound_effects) {
+        const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
+        audio.volume = 1; // Get the URL to your sound fil
+        audio.play();
+      }
+
       mediaRecorder.start();
       mediaRecorderForPlayback.start();
       setIsRecording(true);
@@ -87,9 +90,11 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
 
   const pauseRecording = () => {
     if (mediaRecorderRef.current && !isPaused) {
-      const audio = new Audio(chrome.runtime.getURL("stop_sound.mp3"));
-      audio.volume = 1; // Get the URL to your sound fil
-      audio.play();
+      if (user.sound_effects) {
+        const audio = new Audio(chrome.runtime.getURL("stop_sound.mp3"));
+        audio.volume = 1; // Get the URL to your sound fil
+        audio.play();
+      }
       mediaRecorderRef.current.pause();
       mediaRecorderRefForPlayback.current.stop();
       clearInterval(timerRef.current);
@@ -105,9 +110,12 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
 
   const resumeRecording = () => {
     if (mediaRecorderRef.current && isPaused) {
-      const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
-      audio.volume = 1; // Get the URL to your sound fil
-      audio.play();
+      if (user.sound_effects) {
+        const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
+        audio.volume = 1; // Get the URL to your sound fil
+        audio.play();
+      }
+
       mediaRecorderRef.current.resume();
       mediaRecorderRefForPlayback.current.start();
       audioRef.current.pause();
@@ -140,7 +148,7 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
 
   const resetRecording = (clickedToReset) => {
     // Reset all the state variables and audio playback
-    if (clickedToReset) {
+    if (clickedToReset && user.sound_effects) {
       const audio = new Audio(chrome.runtime.getURL("trash.mp3"));
       audio.volume = 1;
       audio.play();
@@ -191,10 +199,8 @@ const SummaryVoice = ({ summaryText, dispatchUpdatePost }) => {
   return (
     <div className="mt-5" id="summary-voice">
       <h4 className="mb-4">
-        {userAccountInfo
-          ? `Hey, ${
-              userAccountInfo.name.match(/(\w+)/)[0]
-            }. Tell us. How was work today?`
+        {user
+          ? `Hey, ${user.name.match(/(\w+)/)[0]}. Tell us. How was work today?`
           : "Hey, first_name. Tell us. How was work today?"}
       </h4>
       <div>

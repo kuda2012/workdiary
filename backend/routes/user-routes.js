@@ -23,6 +23,7 @@ router.post("/login-signup-google", UserController.loginOrSignupGoogle);
 router.post("/login", UserController.login);
 router.post("/signup", userIsValidated, UserController.signup);
 router.post("/change-alarm", tokenIsCurrent, UserController.changeAlarm);
+router.post("/other-settings", tokenIsCurrent, UserController.otherSettings);
 router.post("/contact-us", UserController.contactUs);
 router.post(
   "/forgot-password",
