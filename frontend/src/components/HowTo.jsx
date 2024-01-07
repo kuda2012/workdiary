@@ -1,6 +1,6 @@
 import React from "react";
 import ContactForm from "./ContactForm";
-const HowTo = () => {
+const HowTo = ({ closeHowToModal }) => {
   return (
     <div className="container">
       <div className="accordion" id="accordionExample">
@@ -161,7 +161,7 @@ const HowTo = () => {
             <div class="accordion-body">
               <div className="row">
                 <div className="col">
-                  <ContactForm />
+                  <ContactForm closeHowToModal={closeHowToModal} />
                 </div>
               </div>
             </div>

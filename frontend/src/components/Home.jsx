@@ -11,7 +11,7 @@ const Home = ({ isHowToModalOpen, closeHowToModal }) => {
             isHowToModalOpen={isHowToModalOpen}
             closeHowToModal={closeHowToModal}
           >
-            <HowTo />
+            <HowTo closeHowToModal={closeHowToModal} />
           </HowToModal>
         )}
         <ResetPassword />

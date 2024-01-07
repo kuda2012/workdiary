@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "reactstrap";
 import axios from "axios";
 
-const ContactForm = () => {
+const ContactForm = ({ closeHowToModal }) => {
   const INITIAL_STATE = {
     name: "",
     email: "",
@@ -24,6 +24,7 @@ const ContactForm = () => {
         { ...formData }
       );
       alert(response?.data?.message);
+      closeHowToModal();
       setFormData(INITIAL_STATE);
     } catch (error) {
       setFormData(INITIAL_STATE);

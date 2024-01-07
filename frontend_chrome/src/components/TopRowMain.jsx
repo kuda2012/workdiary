@@ -27,7 +27,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
             isHowToModalOpen={isHowToModalOpen}
             closeHowToModal={closeHowToModal}
           >
-            <HowTo />
+            <HowTo closeHowToModal={closeHowToModal} />
           </HowToModal>
         )}
       </div>
@@ -35,9 +35,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
         <Calendar />
       </div>
       <div className="col mt-1 d-flex justify-content-end px-0">
-        <button
-          onClick={() => openSettingsModal()}
-        >
+        <button onClick={() => openSettingsModal()}>
           <img src="/gear-settings.png"></img>
         </button>
         {isSettingsModalOpen && workdiaryToken && (
