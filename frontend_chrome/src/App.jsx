@@ -62,7 +62,7 @@ function App() {
   const openAllPostsModal = () => setIsAllPostsModalOpen(true);
   const closeAllPostsModal = () => setIsAllPostsModalOpen(false);
   return (
-    <>
+    <div id="app">
       {firstLoad ? (
         <>
           <Navbar openAuthModal={openAuthModal} />
@@ -127,7 +127,7 @@ function App() {
           />
         </>
       )}
-    </>
+    </div>
   );
 }
 

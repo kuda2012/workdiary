@@ -50,10 +50,10 @@ function openPopup() {
       {
         url: "index.html", // Replace with your HTML file's path
         type: "popup",
-        width: 859, // Set the width and height as desired
-        height: 1010,
-        top: 100, // Adjust the window's position as needed
-        left: 100,
+        width: 869, // Set the width and height as desired
+        height: 900,
+        top: 125, // Adjust the window's position as needed
+        left: 490,
       },
       function (window) {
         popupWindow = window;

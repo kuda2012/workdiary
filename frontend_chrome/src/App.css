@@ -5,7 +5,9 @@
   height: 100vh;
   width: 100vw;
 }
-
+#app {
+  zoom: 85%;
+}
 #three-dots-container {
   height: 80%;
 }
