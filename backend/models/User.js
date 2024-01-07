@@ -9,6 +9,7 @@ const {
   VERIFY_ACCOUNT_SECRET_KEY,
   GENERAL_SECRET_KEY,
   ZOHO_EMAIL_PASSWORD,
+  BACKEND_URL,
 } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
 
@@ -107,7 +108,7 @@ class User {
       html: `<div>
                       <img src="cid:work_diary_image" alt="Work Diary Image" />
                       <p>
-                      <a href="http://localhost:3000/users/verify-account?token=${token}">
+                      <a href="${BACKEND_URL}/users/verify-account?token=${token}">
                         Click here</a>
                          to verify your account
                     </p>
