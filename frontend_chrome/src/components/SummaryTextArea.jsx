@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import { Autosave } from "react-autosave";
 import { useDispatch, useSelector } from "react-redux";
 import ReactQuill from "react-quill";
@@ -77,10 +78,16 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
     }
   }, [localSummaryText]);
 
+  const now = moment();
+  console.log(lastUpdated, now.isSame(lastUpdated, "day"));
   return (
     <div id="summary-text-container">
       <span id="last-updated" className="p-0 mb-5">
-        Edited: {lastUpdated} | Word count: {countWords(localSummaryText)}
+        Edited:{" "}
+        {now.isSame(lastUpdated, "day")
+          ? `Today at ${moment(lastUpdated).format("h:mm A")}`
+          : moment(lastUpdated).format("MM/DD/YY")}{" "}
+        | Word count: {countWords(localSummaryText)}
       </span>
       <CustomToolBar openTagsModal={openTagsModal} />
       <ReactQuill

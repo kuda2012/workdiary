@@ -13,7 +13,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const handlePostClick = (date) => {
     if (date) {
       // Call the getPost function with the selected date
-      dispatch(getPost(workdiaryToken, moment(date).format("MM/DD/YYYY")));
+      dispatch(getPost(workdiaryToken, moment.utc(date).format("MM/DD/YYYY")));
       closeAllPostsModal();
     }
   };
@@ -24,10 +24,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const startIndex =
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
-  console.log(
-    post.date,
-    moment(post.date, moment.ISO_8601).format("MM/DD/YYYY")
-  );
+
   return (
     <div className="container">
       <div className="row flex-column align-items-center">
@@ -36,6 +33,10 @@ const AllPosts = ({ closeAllPostsModal }) => {
             {postsList &&
               postsList.map((post) => (
                 <li>
+                  {console.log(
+                    post.date,
+                    moment.utc(post.date, moment.ISO_8601).format("MM/DD/YYYY")
+                  )}
                   <a
                     href="#"
                     className="search-links"
@@ -43,7 +44,10 @@ const AllPosts = ({ closeAllPostsModal }) => {
                       handlePostClick(post.date);
                     }}
                   >
-                    {moment(post.date, moment.ISO_8601).format("MM/DD/YYYY")} -{" "}
+                    {moment
+                      .utc(post.date, moment.ISO_8601)
+                      .format("MM/DD/YYYY")}{" "}
+                    -{" "}
                     {post.entry ? (
                       `Entry - ${post.entry}`
                     ) : (
