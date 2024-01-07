@@ -19,6 +19,7 @@ class User {
        VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id, email, name, auth_provider, verified`,
       [uuid(), payload.email, payload.name, "google", true]
     );
+    this.sendWelcomeEmail(getUser[0]);
     return getUser[0];
   }
 
@@ -33,6 +34,7 @@ class User {
        VALUES ($1, $2, $3, $4, $5) RETURNING id, email, name, auth_provider, verified`,
       [uuid(), email.toLowerCase(), hashedPassword, name, "username_password"]
     );
+    this.sendWelcomeEmail(newUser[0]);
     return newUser[0];
   }
   static async getLoggedIn(body) {
@@ -80,7 +82,7 @@ class User {
   static async sendEmailVerification(user) {
     const transporter = nodemailer.createTransport({
       host: "smtppro.zoho.com",
-      port: 587, // Use port 465 for secure SSL/TLS connection
+      port: 587,
       secure: false,
       auth: {
         user: "no-reply@workdiary.me", // Your Zoho Mail email address
@@ -130,12 +132,73 @@ class User {
     // Send email
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error("Error sending email:", error);
+        console.error("Error sending verificaton email:", error);
       } else {
-        console.log("Email sent:", info.response);
+        console.log("Verification email sent:", info.response);
       }
     });
     return "A verification link has been sent to your email. Please click on it to finalize the creation of your account!";
+  }
+
+  static async sendWelcomeEmail(user) {
+    const transporter = nodemailer.createTransport({
+      host: "smtppro.zoho.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "no-reply@workdiary.me", // Your Zoho Mail email address
+        pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
+      },
+    });
+
+    const mailOptions = {
+      from: "no-reply@workdiary.me",
+      to: user.email,
+      subject: "Welcome to WorkDiary!",
+      html: `<div>
+                  <img src="cid:work_diary_image" alt="Work Diary Image" />
+                  <p>Hi ${user.name},</p>
+                  <p>Welcome to Workdiary! We're thrilled to have you onboard and help you remember the awesome things you accomplish each day.</p>
+
+                  <h2>Here's how to use the app</h2>
+
+                  <h3>Simple Version:</h3>
+                  <ol>
+                    <li>Press record: Share a quick voice note about your day.</li>
+                    <li>Or, type it out: Whatever works best for you!</li>
+                    <li>That's it. Easy huh?</li>
+                  </ol>
+
+                  <h3>Want a bit more? Here's how to supercharge your Workdiary experience:</h3>
+                  <ol>
+                    <li>Get notified: We'll remind you at 5pm (customizable!) to capture your day.</li>
+                    <li>Voice or text: Share your thoughts, whichever way feels best.</li>
+                    <li>Tag it: Add a quick label to categorize your entries.</li>
+                    <li>Save your tabs: Grab relevant browser tabs to bring back past contexts.</li>
+                  </ol>
+
+                  <p>Have a fantastic day, and enjoy using Workdiary!</p>
+                  <p>The Workdiary Team</p>
+                  <p>P.S. We're always building new features based on user feedback. Share your thoughts with us any time: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
+                </div>`,
+      attachments: [
+        {
+          filename: "w_trident.png",
+          path: "./w_trident.png",
+          cid: "work_diary_image", // Same as the src cid in the img tag
+        },
+      ],
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending welcome email:", error);
+      } else {
+        console.log("Welcome email sent:", info.response);
+      }
+    });
+    return;
   }
 
   static async verifyAccount(token) {
@@ -269,7 +332,7 @@ class User {
     if (user) {
       const transporter = nodemailer.createTransport({
         host: "smtppro.zoho.com",
-        port: 587, // Use port 465 for secure SSL/TLS connection
+        port: 587,
         secure: false,
         auth: {
           user: "no-reply@workdiary.me", // Your Zoho Mail email address
@@ -316,9 +379,9 @@ class User {
       // Send email
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.error("Error sending email:", error);
+          console.error("Error sending forgot password email:", error);
         } else {
-          console.log("Email sent:", info.response);
+          console.log("Forgot password email sent:", info.response);
         }
       });
     }
@@ -349,9 +412,9 @@ class User {
     // Send email
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error("Error sending email:", error);
+        console.error("Error sending contact-us email:", error);
       } else {
-        console.log("Email sent:", info.response);
+        console.log("Contact-us email sent:", info.response);
       }
     });
 
