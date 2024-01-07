@@ -78,7 +78,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
     }
   }, [localSummaryText]);
 
-  const now = moment();
+  const now = moment.utc();
   console.log(lastUpdated, now.isSame(lastUpdated, "day"));
   return (
     <div id="summary-text-container">

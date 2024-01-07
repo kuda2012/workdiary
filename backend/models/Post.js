@@ -10,9 +10,7 @@ class Post {
     );
     return {
       ...createdPost[0],
-      last_updated: moment(createdPost[0].last_updated).format(
-        "MM/DD/YY - h:mm A"
-      ),
+      last_updated: createdPost[0].last_updated,
       date: moment(createdPost[0].date).format("MM/DD/YYYY"),
     };
   }
@@ -25,7 +23,7 @@ class Post {
       ? {
           ...post,
           date: moment(post.date).format("MM/DD/YYYY"),
-          last_updated: moment(post.last_updated).format("MM/DD/YY - h:mm A"),
+          last_updated: post.last_updated,
         }
       : null;
   }
@@ -96,7 +94,7 @@ class Post {
     const result = await db.query(queryText, queryValues);
     return {
       ...result[0],
-      last_updated: moment(result[0].last_updated).format("MM/DD/YY"),
+      last_updated: result[0].last_updated,
     };
   }
 
