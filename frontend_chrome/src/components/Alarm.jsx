@@ -12,6 +12,7 @@ const Alarm = () => {
   const alarmDays = useSelector((state) => state?.user?.alarm_days);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [alarmChanged, setAlarmChanged] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(user.alarm_time);
 
   const handleSwitchToggle = () => {
     setButtonText("Save");
@@ -20,8 +21,14 @@ const Alarm = () => {
 
   const handleTimeChange = (event) => {
     setButtonText("Save");
-    dispatch(changeAlarm(workdiaryToken, { alarm_time: event.target.value }));
+    setSelectedTime(event.target.value);
   };
+
+  useEffect(() => {
+    if (selectedTime !== user.alarm_time) {
+      dispatch(changeAlarm(workdiaryToken, { alarm_time: selectedTime }));
+    }
+  }, [selectedTime, user.alarm_time, dispatch]);
 
   useEffect(() => {
     if (user && alarmChanged) {
@@ -108,7 +115,7 @@ const Alarm = () => {
           type="time"
           className="form-control mt-3"
           id="time-picker"
-          value={user.alarm_time}
+          value={selectedTime}
           onChange={handleTimeChange}
         />
         <Autosave
@@ -119,6 +126,7 @@ const Alarm = () => {
             setButtonText("Saved");
           }}
         />
+
         <button
           className="mt-4"
           id="save-alarm"

@@ -153,7 +153,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         }
       );
       const { user } = await response.json();
-      await setAlarm(user);
+      if (user) await setAlarm(user);
     }
   });
 
