@@ -198,12 +198,12 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
   }, [audioDuration]);
   return (
     <div className="mt-5" id="summary-voice">
-      <h4 className="mb-4">
+      <h4 className="mb-4" id="summary-voice-header">
         {user
           ? `Hey, ${user.name.match(/(\w+)/)[0]}. Tell us. How was work today?`
           : "Hey, first_name. Tell us. How was work today?"}
       </h4>
-      <div>
+      <div id="summary-voice-media-button">
         <button
           className={`${isRecording && "is-recording"}`}
           onClick={
@@ -267,26 +267,26 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
             />
           )}
         </button>
-      </div>
-      <div
-        id={audioDuration >= 5 && `recording-duration-too-long`}
-        className="m-3 recording-duration"
-      >
-        <b>{audioDuration >= 5 && "(180s max) : "}</b>
-        <b
-          id={
-            isRecording &&
-            `recording-duration-green` &&
-            isRecording &&
-            audioDuration < 5 &&
-            `recording-duration-green`
-          }
+        <div
+          id={audioDuration >= 5 && `recording-duration-too-long`}
+          className="m-3 recording-duration"
         >
-          {audioDuration}s
-        </b>
-      </div>
-      <div className="mb-5">
-        <audio controls ref={audioRef} />
+          <b>{audioDuration >= 5 && "(180s max) : "}</b>
+          <b
+            id={
+              isRecording &&
+              `recording-duration-green` &&
+              isRecording &&
+              audioDuration < 5 &&
+              `recording-duration-green`
+            }
+          >
+            {audioDuration}s
+          </b>
+        </div>
+        <div className="mb-5">
+          <audio controls ref={audioRef} />
+        </div>
       </div>
     </div>
   );

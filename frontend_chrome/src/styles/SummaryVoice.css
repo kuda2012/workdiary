@@ -8,7 +8,13 @@
 } */
 #summary-voice {
   position: relative;
-  right: 5px;
+}
+/* #summary-voice-header {
+  position: relative;
+} */
+#summary-voice-media-buttons {
+  position: relative;
+  right: 15px;
 }
 .send {
   background-color: rgb(83, 173, 106);
