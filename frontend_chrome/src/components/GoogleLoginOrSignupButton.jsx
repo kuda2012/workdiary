@@ -2,33 +2,52 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { ThreeDots } from "react-loader-spinner";
 import {
-  loggingIn,
+  loggingIn as loggingInFunction,
   resetApp,
   setGoogleAccessToken,
 } from "../helpers/actionCreators";
 import "../styles/LoginOrSignup.css";
+import { useEffect, useState } from "react";
 
 const GoogleLoginOrSignupButton = ({ isSignup }) => {
   const dispatch = useDispatch();
-  const signingIn = useSelector((state) => state.logging_in);
+  const loggingInVar = useSelector((state) => state.logging_in);
+  const [loginButtonActive, setloginButtonActive] = useState(false);
+
+  useEffect(() => {
+    if (!loggingInVar && loginButtonActive) {
+      setloginButtonActive(false);
+    }
+  }, [loggingInVar]);
   return (
     <Button
       id="google-login-button"
       color="primary"
-      onClick={() => {
+      onClick={async () => {
         try {
-          dispatch(loggingIn());
-          chrome.identity.getAuthToken({ interactive: true }, function (token) {
-            dispatch(setGoogleAccessToken(token));
-          });
+          if (!loginButtonActive && !loggingInVar) {
+            setloginButtonActive(true);
+            dispatch(loggingInFunction(true));
+            const authTokenResult = await chrome.identity.getAuthToken({
+              interactive: true,
+            });
+            if (authTokenResult.token) {
+              dispatch(setGoogleAccessToken(authTokenResult.token));
+            }
+          } else if (loginButtonActive && loggingInVar) {
+            setloginButtonActive(false);
+            dispatch(loggingInFunction(false));
+          }
         } catch (error) {
-          dispatch(resetApp());
+          setloginButtonActive(false);
+          dispatch(loggingInFunction(false));
+          console.error(error);
         }
       }}
     >
-      {!signingIn && <img id="google-login-img" src="/Google.png"></img>}
+      {!loginButtonActive && <img id="google-login-img" src="/Google.png"></img>}
       <span id="google-login-span">
-        {!signingIn ? (
+        {!loginButtonActive ? (
           `${isSignup ? "Sign up" : "Login"} with Google `
         ) : (
           <div

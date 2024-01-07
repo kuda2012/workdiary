@@ -32,6 +32,7 @@ export function loginOrSignupGoogle(googleAccessToken) {
         }
       );
       dispatch(setWorkdiaryToken(data.workdiary_token));
+      dispatch(loggingIn(false));
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message || error?.message);
@@ -63,6 +64,7 @@ export function login(formData) {
         }
       );
       dispatch(setWorkdiaryToken(data.workdiary_token));
+      dispatch(loggingIn(false));
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message || error?.message);
@@ -81,6 +83,7 @@ export function signup(formData) {
         }
       );
       alert(data.message);
+      dispatch(loggingIn(false));
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message || error?.message);
@@ -677,9 +680,10 @@ export function initialLoad() {
   };
 }
 
-export function loggingIn() {
+export function loggingIn(logging_in) {
   return {
     type: "LOGGING_IN",
+    logging_in,
   };
 }
 

@@ -66,7 +66,7 @@ function rootReducer(state = INITIAL_STATE, action) {
     case "INITIAL_LOAD":
       return { ...state, initial_load: !state.initial_load };
     case "LOGGING_IN":
-      return { ...state, logging_in: !state.logging_in };
+      return { ...state, logging_in: action.logging_in };
     case "HALF_RESET":
       return {
         workdiary_token: state.workdiary_token,

@@ -1,11 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import {
-  isWorkdiaryTokenCurrent,
-  resetApp,
-  revokeAccessToken,
-} from "./helpers/actionCreators";
+import { isWorkdiaryTokenCurrent, resetApp } from "./helpers/actionCreators";
 import Navbar from "./components/Navbar";
 import Router from "./Router";
 import "./App.css";
