@@ -24,6 +24,10 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const startIndex =
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
+  console.log(
+    post.date,
+    moment(post.date, moment.ISO_8601).format("MM/DD/YYYY")
+  );
   return (
     <div className="container">
       <div className="row flex-column align-items-center">

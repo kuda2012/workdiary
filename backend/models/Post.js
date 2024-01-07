@@ -23,7 +23,6 @@ class Post {
       [user_id, date]
     );
     const now = moment();
-    console.log(now);
     return post
       ? {
           ...post,
@@ -78,6 +77,8 @@ class Post {
         entry: post.entry && shortenSummaryText(post.entry),
       };
     });
+
+    console.log(posts);
 
     return { posts, pagination: response.pagination };
   }
