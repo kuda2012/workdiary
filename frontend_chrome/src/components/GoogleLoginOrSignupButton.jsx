@@ -45,7 +45,9 @@ const GoogleLoginOrSignupButton = ({ isSignup }) => {
         }
       }}
     >
-      {!loginButtonActive && <img id="google-login-img" src="/Google.png"></img>}
+      {!loginButtonActive && (
+        <img id="google-login-img" src="/Google.png"></img>
+      )}
       <span id="google-login-span">
         {!loginButtonActive ? (
           `${isSignup ? "Sign up" : "Login"} with Google `

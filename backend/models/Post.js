@@ -23,6 +23,7 @@ class Post {
       [user_id, date]
     );
     const now = moment();
+    console.log(now);
     return post
       ? {
           ...post,
