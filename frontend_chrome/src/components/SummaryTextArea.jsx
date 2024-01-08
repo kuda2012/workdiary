@@ -60,7 +60,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         "Entry is too long (20000 characters). Any extra characters will not be saved"
       );
     } else {
-      setLocalSummaryText(value !== "<p><br></p>" ? value : "");
+      setLocalSummaryText(value !== "<p><br></p>" ? value : undefined);
     }
   };
 
@@ -70,7 +70,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
 
   useEffect(() => {
     setLocalSummaryText(summaryText);
-  }, [summaryText]);
+  }, [date]);
 
   useEffect(() => {
     if (localSummaryText !== summaryText) {
@@ -79,7 +79,6 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
   }, [localSummaryText]);
 
   const now = moment();
-  console.log(lastUpdated);
   return (
     <div id="summary-text-container">
       <span id="last-updated" className="p-0 mb-5">
@@ -100,13 +99,10 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         data={localSummaryText}
         interval={1500}
         onSave={(data) => {
-          console.log("local", localSummaryText);
-          console.log("local", summaryText);
-          if (localSummaryText !== summaryText) {
+          if (workdiaryToken && localSummaryText !== summaryText) {
             dispatchCreateOrUpdatePost(data);
             setButtonText("Saved");
             dispatch(clearSearchResults());
-            // dispatch(getPostsList(workdiaryToken, 1));
           }
         }}
       />
@@ -115,7 +111,6 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
           dispatchCreateOrUpdatePost(localSummaryText);
           setButtonText("Saved");
           dispatch(clearSearchResults());
-          // dispatch(getPostsList(workdiaryToken, 1));
         }}
       >
         {buttonText === "Saved" && <b>{buttonText}</b>}

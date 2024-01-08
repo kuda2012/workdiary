@@ -71,8 +71,6 @@ class Post {
       };
     });
 
-    console.log(posts);
-
     return { posts, pagination: response.pagination };
   }
 
