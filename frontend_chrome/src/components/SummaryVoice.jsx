@@ -68,7 +68,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
       };
       if (user.sound_effects) {
         const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
-        audio.volume = 1; // Get the URL to your sound fil
+        audio.volume = 0.25; // Get the URL to your sound fil
         audio.play();
       }
 
@@ -92,7 +92,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
     if (mediaRecorderRef.current && !isPaused) {
       if (user.sound_effects) {
         const audio = new Audio(chrome.runtime.getURL("stop_sound.mp3"));
-        audio.volume = 1; // Get the URL to your sound fil
+        audio.volume = 0.25; // Get the URL to your sound fil
         audio.play();
       }
       mediaRecorderRef.current.pause();
@@ -150,7 +150,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
     // Reset all the state variables and audio playback
     if (clickedToReset && user.sound_effects) {
       const audio = new Audio(chrome.runtime.getURL("trash.mp3"));
-      audio.volume = 1;
+      audio.volume = 0.25;
       audio.play();
     }
 
@@ -268,17 +268,13 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
           )}
         </button>
         <div
-          id={audioDuration >= 5 && `recording-duration-too-long`}
+          id={audioDuration >= 160 && `recording-duration-too-long`}
           className="m-3 recording-duration"
         >
-          <b>{audioDuration >= 5 && "(180s max) : "}</b>
+          <b>{audioDuration >= 160 && "(180s max) : "}</b>
           <b
             id={
-              isRecording &&
-              `recording-duration-green` &&
-              isRecording &&
-              audioDuration < 5 &&
-              `recording-duration-green`
+              isRecording && audioDuration < 160 && `recording-duration-green`
             }
           >
             {audioDuration}s
