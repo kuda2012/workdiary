@@ -60,7 +60,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         "Entry is too long (20000 characters). Any extra characters will not be saved"
       );
     } else {
-      setLocalSummaryText(value);
+      setLocalSummaryText(value !== "<p><br></p>" ? value : "");
     }
   };
 
@@ -79,13 +79,14 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
   }, [localSummaryText]);
 
   const now = moment();
+  console.log(lastUpdated);
   return (
     <div id="summary-text-container">
       <span id="last-updated" className="p-0 mb-5">
         {now.isSame(lastUpdated, "day")
-          ? lastUpdated && `Today at ${moment(lastUpdated).format("h:mm A")}`
-          : lastUpdated && moment(lastUpdated).format("MM/DD/YY")}
-        | Word count: {countWords(localSummaryText)}
+          ? lastUpdated && `Today at ${moment(lastUpdated).format("h:mm A")} | `
+          : lastUpdated && `${moment(lastUpdated).format("MM/DD/YY")} | `}
+        Word count: {countWords(localSummaryText)}
       </span>
       <CustomToolBar openTagsModal={openTagsModal} />
       <ReactQuill
@@ -99,12 +100,10 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         data={localSummaryText}
         interval={1500}
         onSave={(data) => {
-          if (
-            localSummaryText &&
-            localSummaryText !== summaryText &&
-            workdiaryToken
-          ) {
-            dispatchCreateOrUpdatePost(data === "<p><br></p>" ? "" : data);
+          console.log("local", localSummaryText);
+          console.log("local", summaryText);
+          if (localSummaryText !== summaryText) {
+            dispatchCreateOrUpdatePost(data);
             setButtonText("Saved");
             dispatch(clearSearchResults());
             // dispatch(getPostsList(workdiaryToken, 1));
@@ -113,9 +112,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
       />
       <button
         onClick={() => {
-          dispatchCreateOrUpdatePost(
-            localSummaryText === "<p><br></p>" ? "" : localSummaryText
-          );
+          dispatchCreateOrUpdatePost(localSummaryText);
           setButtonText("Saved");
           dispatch(clearSearchResults());
           // dispatch(getPostsList(workdiaryToken, 1));

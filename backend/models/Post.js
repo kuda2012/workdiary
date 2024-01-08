@@ -5,7 +5,7 @@ class Post {
   static async create(user_id, body) {
     const createdPost = await db.query(
       `INSERT INTO posts (user_id, date, summary_text)
-       VALUES ($1, $2, $3) RETURNING id, user_id, summary_text, date`,
+       VALUES ($1, $2, $3) RETURNING id, user_id, summary_text, last_updated, date`,
       [user_id, body.date, body.summary_text]
     );
     return {
