@@ -33,10 +33,6 @@ const AllPosts = ({ closeAllPostsModal }) => {
             {postsList &&
               postsList.map((post) => (
                 <li>
-                  {console.log(
-                    post.date,
-                    moment.utc(post.date, moment.ISO_8601).format("MM/DD/YYYY")
-                  )}
                   <a
                     href="#"
                     className="search-links"

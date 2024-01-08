@@ -78,15 +78,13 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
     }
   }, [localSummaryText]);
 
-  const now = moment.utc();
-  console.log(lastUpdated, now.isSame(lastUpdated, "day"));
+  const now = moment();
   return (
     <div id="summary-text-container">
       <span id="last-updated" className="p-0 mb-5">
-        Edited:{" "}
         {now.isSame(lastUpdated, "day")
-          ? `Today at ${moment(lastUpdated).format("h:mm A")}`
-          : moment(lastUpdated).format("MM/DD/YY")}{" "}
+          ? lastUpdated && `Today at ${moment(lastUpdated).format("h:mm A")}`
+          : lastUpdated && moment(lastUpdated).format("MM/DD/YY")}
         | Word count: {countWords(localSummaryText)}
       </span>
       <CustomToolBar openTagsModal={openTagsModal} />
