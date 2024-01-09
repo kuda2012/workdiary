@@ -215,7 +215,7 @@ chrome.runtime.onInstalled.addListener(async () => {
             message: `Reminder to write in your Work Diary (click here to open app)`,
           });
           chrome.notifications.onClicked.addListener(() => {
-            openApp();
+            openPopup();
           });
         }
       });

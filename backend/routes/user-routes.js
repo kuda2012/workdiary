@@ -31,7 +31,12 @@ router.post(
   UserController.forgotPassword
 );
 router.patch("/change-password", tokenIsCurrent, UserController.changePassword);
-router.patch("/reset-password", tokenIsCurrent, UserController.resetPassword);
+router.patch(
+  "/reset-password",
+  tokenIsCurrent,
+  emailResetLimiter,
+  UserController.resetPassword
+);
 router.delete("/delete", tokenIsCurrent, UserController.delete);
 
 module.exports = router;

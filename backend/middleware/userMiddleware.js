@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const jsonschema = require("jsonschema");
-let { VERIFY_ACCOUNT_SECRET_KEY, GENERAL_SECRET_KEY } = require("../config");
 const userSchema = require("../schema/userschema.json");
 const ExpressError = require("../expressError");
 const rateLimit = require("express-rate-limit");
+let { VERIFY_ACCOUNT_SECRET_KEY, GENERAL_SECRET_KEY } = require("../config");
 const emailResetLimiter = rateLimit({
   windowMs: 60 * 15 * 1000, // 15 min
   limit: 5, // limit each IP to 100 requests per windowMs
