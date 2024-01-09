@@ -580,7 +580,8 @@ export async function setAlarm(user) {
     console.log(currentTime, militaryTimeString);
     console.log(
       "from actionCreator.js",
-      `Time difference in seconds: ${timeDifferenceInSeconds}`
+      `Time difference in seconds: ${timeDifferenceInSeconds}`,
+      "actionCreator"
     );
     chrome.alarms.create("myAlarm", {
       when: Date.now() + timeDifferenceInSeconds, // Set the alarm to go off in 1 second.
