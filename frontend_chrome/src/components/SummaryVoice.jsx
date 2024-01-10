@@ -238,7 +238,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
           <img src="/play_1.png" title="Play"></img>
         </button>
         <button onClick={() => resetRecording(true)} disabled={!audioDuration}>
-          <img src="/trash_1.png" title="Reset"></img>
+          <img src="/trash.png" title="Reset"></img>
         </button>
         <button
           className={`${
