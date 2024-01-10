@@ -28,7 +28,6 @@ const ZOHO_EMAIL_PASSWORD = process.env.ZOHO_EMAIL_PASSWORD;
 const BCRYPT_HASH_ROUNDS = 12;
 
 console.log("Using database!", DB_URI);
-console.log("RPT config", RESET_PASSWORD_SECRET_KEY);
 
 module.exports = {
   PORT,

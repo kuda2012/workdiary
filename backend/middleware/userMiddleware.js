@@ -55,9 +55,8 @@ function verifyAccountVerificationToken(req, res, next) {
 }
 function resetPasswordToken(req, res, next) {
   try {
-    console.log("RPT userMiddleware", RESET_PASSWORD_SECRET_KEY);
-    jwt.verify(req.query.token, RESET_PASSWORD_SECRET_KEY);
-    console.log("RPT");
+    const { authorization } = req.headers;
+    jwt.verify(authorization.substring(7), RESET_PASSWORD_SECRET_KEY);
     return next();
   } catch (error) {
     if (error.message === "jwt expired") {

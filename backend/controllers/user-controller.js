@@ -99,11 +99,6 @@ exports.changePassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
   try {
     const { email, user_id } = decodeJwt(req.headers.authorization);
-    console.log(
-      "user-controller",
-      decodeJwt(req.headers.authorization),
-      req.headers.authorization
-    );
     const message = await User.resetPassword(
       req.body,
       user_id,
