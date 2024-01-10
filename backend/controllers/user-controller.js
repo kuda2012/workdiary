@@ -1,12 +1,12 @@
 const { decodeJwt } = require("../helpers/decodeJwt");
 const User = require("../models/User");
 const ExpressError = require("../expressError");
-const Post = require("../models/Post");
 const moment = require("moment");
 
 exports.signup = async (req, res, next) => {
   try {
     let getUser = await User.getUser(null, req.body.email);
+    let userDeleted = false;
     if (
       (getUser &&
         !getUser?.verified &&
@@ -17,9 +17,9 @@ exports.signup = async (req, res, next) => {
       // Delete user if you are trying to create the same account within the last 20 mins since
       // creating an account but have not verified it yet
       await User.delete(getUser.id);
-      getUser = await User.getUser(null, req.body.email);
+      userDeleted = true;
     }
-    if (!getUser) {
+    if (!getUser || userDeleted) {
       let user = await User.create(req.body);
       let message = await User.sendEmailVerification(user);
       res.json({ message });

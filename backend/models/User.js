@@ -21,6 +21,7 @@ class User {
       [uuid(), payload.email, payload.name, "google", true]
     );
     this.sendWelcomeEmail(getUser[0]);
+    console.log("hello", getUser[0]);
     return getUser[0];
   }
 
