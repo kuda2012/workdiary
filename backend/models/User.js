@@ -1,12 +1,13 @@
 const { db } = require("../db");
-const ExpressError = require("../expressError");
+const { v4: uuid } = require("uuid");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { v4: uuid } = require("uuid");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
+const ExpressError = require("../expressError");
 const {
   VERIFY_ACCOUNT_SECRET_KEY,
+  RESET_PASSWORD_SECRET_KEY,
   GENERAL_SECRET_KEY,
   ZOHO_EMAIL_PASSWORD,
   BACKEND_URL,
@@ -26,9 +27,6 @@ class User {
 
   static async create(body) {
     const { email, password, name } = body;
-    // if (body.password !== body.password_copy) {
-    //   throw new ExpressError("Passwords do not match", 400);
-    // }
     const hashedPassword = await bcrypt.hash(password, BCRYPT_HASH_ROUNDS);
     const newUser = await db.query(
       `INSERT INTO users (id, email, password, name, auth_provider)
@@ -97,9 +95,6 @@ class User {
         expiresIn: "20m",
       }
     );
-    // const token = jwt.sign({ yes: "add" }, GENERAL_SECRET_KEY, {
-    //   expiresIn: "10m",
-    // });
     // Email options
     const mailOptions = {
       from: "no-reply@workdiary.me",
@@ -222,7 +217,7 @@ class User {
   static async changePassword(body, email) {
     const { password } = body;
     const { auth_provider } = await db.oneOrNone(
-      `SELECT auth_provider from users WHERE email =$1`,
+      `SELECT auth_provider from users WHERE email=$1`,
       [email.toLowerCase()]
     );
     if (auth_provider === "google") {
@@ -293,8 +288,8 @@ class User {
     }
 
     const tokenAlreadyUsed = await db.oneOrNone(
-      `Select token from invalid_tokens
-    WHERE token = $1`,
+      `SELECT token from invalid_tokens
+        WHERE token = $1`,
       [token]
     );
 
@@ -309,13 +304,13 @@ class User {
     if (newPassword) {
       await db.query(
         `UPDATE users
-                        SET password=$1
-                        where email=$2`,
+            SET password=$1
+            where email=$2`,
         [newPassword, email]
       );
       await db.query(
         `INSERT INTO invalid_tokens (user_id, token)
-        VALUES ($1, $2)`,
+          VALUES ($1, $2)`,
         [user_id, token]
       );
       return "Password has been changed";
@@ -340,12 +335,14 @@ class User {
           pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
         },
       });
-      const token = jwt.sign({ user_id: user.id, email }, GENERAL_SECRET_KEY, {
-        expiresIn: "10m",
-      });
-      // const token = jwt.sign({ yes: "add" }, GENERAL_SECRET_KEY, {
-      //   expiresIn: "10m",
-      // });
+      const token = jwt.sign(
+        { user_id: user.id, email },
+        RESET_PASSWORD_SECRET_KEY,
+        {
+          expiresIn: "10m",
+        }
+      );
+
       // Email options
       const mailOptions = {
         from: "no-reply@workdiary.me",
@@ -447,10 +444,6 @@ class User {
     if (body.alarm_days !== undefined) {
       queryValues.push(body.alarm_days); // Add the value to the parameter array
       queryText += ` alarm_days = $${queryValues.length} ::JSONB[],`; // Add the column to the query
-    }
-    if (body.auto_pull_tabs !== undefined) {
-      queryValues.push(body.auto_pull_tabs); // Add the value to the parameter array
-      queryText += ` auto_pull_tabs = $${queryValues.length},`; // Add the column to the query
     }
     queryText = queryText.slice(0, -1);
     queryValues.push(user_id);
