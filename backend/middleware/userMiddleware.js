@@ -8,9 +8,21 @@ let {
   GENERAL_SECRET_KEY,
   RESET_PASSWORD_SECRET_KEY,
 } = require("../config");
-const routeSpecificRateLimiter = rateLimit({
+const forgotPasswordRateLimiter = rateLimit({
   windowMs: 60 * 15 * 1000, // 15 min
-  limit: 5, // limit each IP to 100 requests per windowMs
+  limit: 4, // limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again later.",
+  handler: (req, res, next, options) => {
+    try {
+      return next(new ExpressError(options.message, 429));
+    } catch (error) {
+      next(error);
+    }
+  },
+});
+const resetPasswordRateLimiter = rateLimit({
+  windowMs: 60 * 15 * 1000, // 15 min
+  limit: 3, // limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again later.",
   handler: (req, res, next, options) => {
     try {
@@ -88,7 +100,8 @@ function userIsValidated(req, res, next) {
 module.exports = {
   tokenIsCurrent,
   userIsValidated,
-  routeSpecificRateLimiter,
+  forgotPasswordRateLimiter,
+  resetPasswordRateLimiter,
   verifyAccountVerificationToken,
   resetPasswordToken,
 };

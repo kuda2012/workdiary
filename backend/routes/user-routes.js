@@ -4,7 +4,8 @@ const UserController = require("../controllers/user-controller");
 const {
   tokenIsCurrent,
   userIsValidated,
-  routeSpecificRateLimiter,
+  forgotPasswordRateLimiter,
+  resetPasswordRateLimiter,
   verifyAccountVerificationToken,
   resetPasswordToken,
 } = require("../middleware/userMiddleware");
@@ -28,14 +29,14 @@ router.post("/other-settings", tokenIsCurrent, UserController.otherSettings);
 router.post("/contact-us", UserController.contactUs);
 router.post(
   "/forgot-password",
-  routeSpecificRateLimiter,
+  forgotPasswordRateLimiter,
   UserController.forgotPassword
 );
 router.patch("/change-password", tokenIsCurrent, UserController.changePassword);
 router.patch(
   "/reset-password",
   resetPasswordToken,
-  routeSpecificRateLimiter,
+  resetPasswordRateLimiter,
   UserController.resetPassword
 );
 router.delete("/delete", tokenIsCurrent, UserController.delete);
