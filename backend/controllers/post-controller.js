@@ -1,6 +1,5 @@
 const { decodeJwt } = require("../helpers/decodeJwt");
 const { speechToText } = require("../helpers/speechToText");
-const moment = require("moment");
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
 const Tag = require("../models/Tag");
@@ -14,13 +13,11 @@ exports.create = async (req, res, next) => {
     if (!post) {
       if (req.body.summary_voice && req.body.audio_duration <= 180) {
         const getLog = await TranscribeLog.getLog(id);
-        if (!getLog || getLog?.count < 100) {
+        if (!getLog || getLog?.count < 10) {
           const summaryText = await speechToText(req.body.summary_voice);
           req.body.summary_text = req.body.summary_text
-            ? req.body.summary_text.concat(
-                `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
-              )
-            : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
+            ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
+            : `<p>${summaryText}</p>`;
           await TranscribeLog.create(id, summaryText);
         } else {
           throw new ExpressError(
@@ -109,13 +106,11 @@ exports.update = async (req, res, next) => {
     const post = await Post.getPost(id, req.body.date);
     if (req.body.summary_voice && req.body.audio_duration < 180) {
       const getLog = await TranscribeLog.getLog(id);
-      if (!getLog || getLog?.count < 100) {
+      if (!getLog || getLog?.count < 10) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
-          ? req.body.summary_text.concat(
-              `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`
-            )
-          : `<p>[${moment().format("h:mm A")}] ${summaryText}</p>`;
+          ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
+          : `<p>${summaryText}</p>`;
         await TranscribeLog.create(id, summaryText);
       } else {
         throw new ExpressError(

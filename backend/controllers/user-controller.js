@@ -1,7 +1,7 @@
 const { decodeJwt } = require("../helpers/decodeJwt");
+const moment = require("moment");
 const User = require("../models/User");
 const ExpressError = require("../expressError");
-const moment = require("moment");
 
 exports.signup = async (req, res, next) => {
   try {
@@ -38,6 +38,7 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
   try {
     const payload = await User.verifyGoogleToken(req.body.google_access_token);
     let getUser = await User.getUser(null, payload.email);
+    let userDeleted = false;
     if (
       (getUser &&
         !getUser?.verified &&
@@ -48,11 +49,10 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
       // Delete user if you are trying to create the same account within the last 20 mins since
       // creating an account but have not verified it yet
       await User.delete(getUser.id);
-      getUser = await User.getUser(null, req.body.email);
-      // makes sure it was deleted
+      userDeleted = true;
     }
 
-    if (!getUser) {
+    if (!getUser || userDeleted) {
       getUser = await User.createGoogleUser(payload);
     } else if (getUser && getUser.auth_provider !== "google") {
       throw new ExpressError(
