@@ -108,7 +108,9 @@ const ResetPassword = ({}) => {
           </div>
         </div>
       ) : (
-        <h5>Your password has been reset. You can return to the app now :)</h5>
+        <h5 className="mt-2">
+          Your password has been reset. You can return to the app now :)
+        </h5>
       )}
     </>
   );
