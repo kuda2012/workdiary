@@ -12,7 +12,7 @@ const Alarm = () => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [buttonText, setButtonText] = useState("Save");
   const [alarmChanged, setAlarmChanged] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(user.alarm_time);
+  const [selectedTime, setSelectedTime] = useState(user?.alarm_time);
 
   const handleSwitchToggle = () => {
     setButtonText("Save");
@@ -28,7 +28,7 @@ const Alarm = () => {
     if (selectedTime !== user.alarm_time) {
       dispatch(changeAlarm(workdiaryToken, { alarm_time: selectedTime }));
     }
-  }, [selectedTime, user.alarm_time, dispatch]);
+  }, [selectedTime, user?.alarm_time, dispatch]);
 
   useEffect(() => {
     if (user && alarmChanged) {

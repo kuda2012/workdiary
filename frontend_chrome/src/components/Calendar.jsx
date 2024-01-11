@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPost } from "../helpers/actionCreators";
 import { ThreeDots } from "react-loader-spinner";
@@ -13,6 +13,8 @@ const Calendar = () => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const datePickerRef = useRef();
   const inputRef = useRef(null);
 
   const handleSubmit = (event) => {
@@ -31,8 +33,6 @@ const Calendar = () => {
   const handleInputChange = (value) => {
     setInputValue(value);
   };
-  const datePickerRef = useRef();
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const handleToggleCalendar = (status) => {
     if (status) {
@@ -44,6 +44,9 @@ const Calendar = () => {
     }
   };
 
+  useEffect(() => {
+    handleToggleCalendar(false);
+  }, [date]);
   return (
     <>
       <span
@@ -79,13 +82,11 @@ const Calendar = () => {
               <CustomDatePickerInput
                 value={inputValue}
                 onChange={handleInputChange}
-                onFocus={() => handleToggleCalendar(true)}
-                onBlur={() => handleToggleCalendar(false)}
+                isCalendarOpen={isCalendarOpen}
+                handleToggleCalendar={handleToggleCalendar}
                 inputRef={inputRef}
               />
             }
-            onFocus={() => handleToggleCalendar(true)}
-            onBlur={() => handleToggleCalendar(false)}
             onSelect={(datePickerDate) => {
               dispatch(
                 getPost(
@@ -98,7 +99,7 @@ const Calendar = () => {
           />
         </form>
         {inputValue === "loading" && (
-          <div style={{ position: "relative", right: "8px" }}>
+          <div id="three-dots">
             <ThreeDots
               height="10px"
               width="15px"
@@ -121,25 +122,29 @@ const Calendar = () => {
     </>
   );
 };
+// ...
 
 const CustomDatePickerInput = ({
   value,
   onChange,
-  onFocus,
-  onBlur,
   inputRef,
+  isCalendarOpen,
+  handleToggleCalendar,
 }) => {
   return (
     <input
       id="custom-date-picker-input"
       type="text"
       value={value}
+      onClick={() => {
+        handleToggleCalendar(!isCalendarOpen);
+      }}
       onChange={onChange}
-      onFocus={onFocus}
-      onBlur={onBlur}
       ref={inputRef}
     />
   );
 };
+
+// ...
 
 export default Calendar;
