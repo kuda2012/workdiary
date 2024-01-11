@@ -55,7 +55,7 @@ const ResetPassword = ({}) => {
   return (
     <>
       {!resetDone ? (
-        <div className="card mt-3" style={{ width: "600px" }}>
+        <div className="card mt-3">
           <div className="card-body">
             <form onSubmit={handleSubmit}>
               <div className="reset-password-form-items form-group">
