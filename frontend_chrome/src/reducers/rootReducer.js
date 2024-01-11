@@ -4,7 +4,6 @@ const INITIAL_STATE = {
   interpreting: false,
   initial_load: true,
   logging_in: false,
-  search_results: [],
   query: "",
   show_all_posts: true,
 };

@@ -14,8 +14,8 @@ const AllPostsModal = ({
   };
   return isAllPostsModalOpen
     ? ReactDOM.createPortal(
-        <div className="allposts-modal-overlay" onClick={handleOverlayClick}>
-          <div className="allposts-modal">{children}</div>
+        <div className="all-posts-modal-overlay" onClick={handleOverlayClick}>
+          <div className="all-posts-modal">{children}</div>
         </div>,
         document.body
       )

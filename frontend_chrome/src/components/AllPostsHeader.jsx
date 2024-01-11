@@ -10,6 +10,7 @@ import "../styles/AllPosts.css";
 
 const AllPostsHeader = () => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const searchResults = useSelector((state) => state.search_results);
   const query = useSelector((state) => state.query);
   const [searchText, setSearchText] = useState(query);
   const [showPlaceholder, setShowPlaceholder] = useState(true);
@@ -34,10 +35,12 @@ const AllPostsHeader = () => {
   };
 
   const reset = () => {
-    setSearchText("");
-    dispatch(setShowAllPosts(true));
-    dispatch(clearSearchResults());
-    dispatch(getPostsList(workdiaryToken, 1));
+    if (searchResults) {
+      setSearchText("");
+      dispatch(setShowAllPosts(true));
+      dispatch(clearSearchResults());
+      dispatch(getPostsList(workdiaryToken, 1));
+    }
   };
 
   return (
@@ -48,7 +51,12 @@ const AllPostsHeader = () => {
         </div>
         <div className="col-10 d-flex justify-content-end">
           <form onSubmit={handleFormSubmit}>
-            <span className="me-1" onClick={reset} for="all-posts-search">
+            <span
+              className="me-1"
+              onClick={reset}
+              for="all-posts-search"
+              id="all-posts-search-reset"
+            >
               🔄
             </span>
             <input

@@ -8,6 +8,9 @@
 #all-posts-search {
   width: 235px;
 }
+#all-posts-search-reset {
+  cursor: pointer;
+}
 
 .hidden {
   opacity: 0.2;
