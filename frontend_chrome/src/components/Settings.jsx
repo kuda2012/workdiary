@@ -1,4 +1,3 @@
-import React from "react";
 import Alarm from "./Alarm";
 import UserAccountInfo from "./UserAccountInfo";
 import OtherSettings from "./OtherSettings";

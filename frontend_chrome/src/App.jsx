@@ -13,11 +13,11 @@ function useGlobalErrorHandler() {
     window.onerror = (message, source, lineno, colno, error) => {
       // Optionally log the error to an error reporting service
       console.error(message, source, lineno, colno, error);
+      alert(
+        `Error: ${message}. Please email contact@workdiary.me to report this issue`
+      );
 
       // Trigger a refresh if desired
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
 
       if (originalOnError) {
         originalOnError(message, source, lineno, colno, error);

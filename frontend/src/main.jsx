@@ -4,7 +4,6 @@ import App from "./App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootswatch/dist/lux/bootstrap.min.css";
-// import "bootswatch/dist/darkly/bootstrap.min.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 

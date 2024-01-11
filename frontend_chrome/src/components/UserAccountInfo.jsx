@@ -13,7 +13,6 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
   const [confirmation, setConfirmation] = useState("");
 
   const handleDelete = (e) => {
-    // Put your delete account logic here
     e.preventDefault();
     if (confirmation === "delete account") {
       dispatch(deleteAccount(workdiaryToken));

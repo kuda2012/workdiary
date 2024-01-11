@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { getPost, getPostsList } from "../helpers/actionCreators";
@@ -12,7 +11,6 @@ const AllPosts = ({ closeAllPostsModal }) => {
 
   const handlePostClick = (date) => {
     if (date) {
-      // Call the getPost function with the selected date
       dispatch(getPost(workdiaryToken, moment.utc(date).format("MM/DD/YYYY")));
       closeAllPostsModal();
     }
@@ -53,42 +51,37 @@ const AllPosts = ({ closeAllPostsModal }) => {
                 </li>
               ))}
           </ul>
-          {
-            <button
-              className="p-2"
-              onClick={() => dispatch(getPostsList(workdiaryToken, 1))}
-              disabled={pagination.currentPage <= 4}
-            >
-              <img
-                className={`${
-                  pagination.currentPage <= 4 ? "hidden" : ""
-                } back-next-arrow`}
-                src="back-arrow-2x.png"
-              />
-            </button>
-          }
-          {
-            <button
-              disabled={pagination.currentPage <= 3}
-              className="p-2"
-              onClick={() =>
-                dispatch(
-                  getPostsList(
-                    workdiaryToken,
-                    Math.max(1, pagination.currentPage - 4)
-                  )
+          <button
+            className="p-2"
+            onClick={() => dispatch(getPostsList(workdiaryToken, 1))}
+            disabled={pagination.currentPage <= 4}
+          >
+            <img
+              className={`${
+                pagination.currentPage <= 4 ? "hidden" : ""
+              } back-next-arrow`}
+              src="back-arrow-2x.png"
+            />
+          </button>
+          <button
+            disabled={pagination.currentPage <= 3}
+            className="p-2"
+            onClick={() =>
+              dispatch(
+                getPostsList(
+                  workdiaryToken,
+                  Math.max(1, pagination.currentPage - 4)
                 )
-              }
-            >
-              <img
-                className={`${
-                  pagination.currentPage <= 3 ? "hidden" : ""
-                } back-next-arrow`}
-                src="back-arrow.png"
-              />
-            </button>
-          }
-
+              )
+            }
+          >
+            <img
+              className={`${
+                pagination.currentPage <= 3 ? "hidden" : ""
+              } back-next-arrow`}
+              src="back-arrow.png"
+            />
+          </button>
           {getNumbersBetween(startIndex, endIndex).map((num) => (
             <button
               className={`p-2 btn btn-${
@@ -100,47 +93,43 @@ const AllPosts = ({ closeAllPostsModal }) => {
               {num}
             </button>
           ))}
-          {
-            <button
-              disabled={pagination.currentPage >= pagination.lastPage - 1}
-              className="p-2"
-              onClick={() =>
-                dispatch(
-                  getPostsList(
-                    workdiaryToken,
-                    Math.min(pagination.currentPage + 4, pagination.lastPage)
-                  )
+          <button
+            disabled={pagination.currentPage >= pagination.lastPage - 1}
+            className="p-2"
+            onClick={() =>
+              dispatch(
+                getPostsList(
+                  workdiaryToken,
+                  Math.min(pagination.currentPage + 4, pagination.lastPage)
                 )
-              }
-            >
-              <img
-                className={`${
-                  pagination.currentPage >= pagination.lastPage - 1
-                    ? "hidden"
-                    : ""
-                } back-next-arrow`}
-                src="next-arrow.png"
-              />
-            </button>
-          }
-          {
-            <button
-              disabled={pagination.currentPage >= pagination.lastPage - 1}
-              className="p-2"
-              onClick={() =>
-                dispatch(getPostsList(workdiaryToken, pagination.lastPage))
-              }
-            >
-              <img
-                className={`${
-                  pagination.currentPage >= pagination.lastPage - 1
-                    ? "hidden"
-                    : ""
-                } back-next-arrow`}
-                src="next-arrow-2x.png"
-              />
-            </button>
-          }
+              )
+            }
+          >
+            <img
+              className={`${
+                pagination.currentPage >= pagination.lastPage - 1
+                  ? "hidden"
+                  : ""
+              } back-next-arrow`}
+              src="next-arrow.png"
+            />
+          </button>
+          <button
+            disabled={pagination.currentPage >= pagination.lastPage - 1}
+            className="p-2"
+            onClick={() =>
+              dispatch(getPostsList(workdiaryToken, pagination.lastPage))
+            }
+          >
+            <img
+              className={`${
+                pagination.currentPage >= pagination.lastPage - 1
+                  ? "hidden"
+                  : ""
+              } back-next-arrow`}
+              src="next-arrow-2x.png"
+            />
+          </button>
         </div>
       </div>
     </div>

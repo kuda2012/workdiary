@@ -6,7 +6,7 @@ import ReactQuill from "react-quill";
 import CustomToolBar from "./CustomToolbar";
 import "react-quill/dist/quill.snow.css";
 import "../styles/SummaryTextArea.css";
-import { clearSearchResults, getPostsList } from "../helpers/actionCreators";
+import { clearSearchResults } from "../helpers/actionCreators";
 
 const modules = {
   toolbar: {
@@ -83,8 +83,10 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
     <div id="summary-text-container">
       <span id="last-updated" className="p-0 mb-5">
         {now.isSame(lastUpdated, "day")
-          ? lastUpdated && `Today at ${moment(lastUpdated).format("h:mm A")} | `
-          : lastUpdated && `${moment(lastUpdated).format("MM/DD/YY")} | `}
+          ? lastUpdated &&
+            `Last updated: Today at ${moment(lastUpdated).format("h:mm A")} | `
+          : lastUpdated &&
+            `Last updated: ${moment(lastUpdated).format("MM/DD/YY")} | `}
         Word count: {countWords(localSummaryText)}
       </span>
       <CustomToolBar openTagsModal={openTagsModal} />

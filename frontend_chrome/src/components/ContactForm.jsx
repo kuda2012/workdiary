@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "reactstrap";
-const { VITE_LOCAL_BACKEND_URL, VITE_CLOUD_BACKEND_URL } = import.meta.env;
 import axios from "axios";
+const { VITE_LOCAL_BACKEND_URL } = import.meta.env;
 
 const ContactForm = ({ closeHowToModal }) => {
   const INITIAL_STATE = {

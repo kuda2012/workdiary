@@ -10,12 +10,12 @@ import Auth from "./Auth";
 import AuthModal from "./AuthModal";
 import AuthModalHeader from "./AuthModalHeader";
 import MainContainer from "./MainContainer";
-import "react-quill/dist/quill.snow.css";
-import "../styles/Home.css";
 import AllPostsModal from "./AllPostsModal";
 import AllPosts from "./AllPosts";
 import AllPostsHeader from "./AllPostsHeader";
 import SearchPostsResults from "./SearchPostsResults";
+import "react-quill/dist/quill.snow.css";
+import "../styles/Home.css";
 
 const Home = ({
   isAuthModalOpen,

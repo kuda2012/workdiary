@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import {
   clearSearchResults,
   getPost,
@@ -20,10 +18,9 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
   const handlePostClick = (result) => {
     if (result) {
       // Call the getPost function with the selected date
-
       dispatch(getPost(workdiaryToken, result.date));
       closeAllPostsModal();
-      dispatch(clearSearchResults()); // You need to define the getPost function
+      dispatch(clearSearchResults());
       dispatch(setScrollTo(result));
       dispatch(setShowAllPosts(true));
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { changePassword } from "../helpers/actionCreators";
@@ -45,7 +45,6 @@ const ChangePassword = ({ closeSettingsModal }) => {
         }, 2000);
       } else {
         alert("Passwords must match");
-        // setFormData(INITIAL_STATE);
       }
     } catch (error) {
       setFormData(INITIAL_STATE);

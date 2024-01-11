@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import "../styles/TagsModal.css"; // You can create your own CSS for styling
 import { useDispatch, useSelector } from "react-redux";

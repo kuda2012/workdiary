@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import "../styles/HowToModal.css"; // You can create your own CSS for styling
 

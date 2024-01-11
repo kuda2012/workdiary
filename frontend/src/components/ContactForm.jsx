@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "reactstrap";
 import axios from "axios";
+const { VITE_LOCAL_BACKEND_URL } = import.meta.env;
 
 const ContactForm = ({ closeHowToModal }) => {
   const INITIAL_STATE = {
@@ -20,7 +21,7 @@ const ContactForm = ({ closeHowToModal }) => {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:3000/users/contact-us",
+        `${VITE_LOCAL_BACKEND_URL}/users/contact-us`,
         { ...formData }
       );
       alert(response?.data?.message);

@@ -22,37 +22,35 @@ const ForgotPassword = () => {
       setFormData(INITIAL_STATE);
     } catch (error) {
       setFormData(INITIAL_STATE);
-      alert(error[0]);
+      console.log(error);
     }
   };
 
   return (
-    <>
-      <div className="card">
-        <div className="card-body">
-          <form onSubmit={handleSubmit}>
-            <div className="forgot-password-form-items form-group">
-              <label htmlFor="email" className="mb-2">
-                <h5>Send Reset Link</h5>
-              </label>
-              <input
-                required={true}
-                type="text"
-                id="email"
-                placeholder="Email"
-                className="form-control"
-                name="email"
-                onChange={handleChange}
-                value={formData.email}
-              />
-              <Button color="primary" className="forgot-password-submit mt-4">
-                Send
-              </Button>
-            </div>
-          </form>
-        </div>
+    <div className="card">
+      <div className="card-body">
+        <form onSubmit={handleSubmit}>
+          <div className="forgot-password-form-items form-group">
+            <label htmlFor="email" className="mb-2">
+              <h5>Send Reset Link</h5>
+            </label>
+            <input
+              required={true}
+              type="text"
+              id="email"
+              placeholder="Email"
+              className="form-control"
+              name="email"
+              onChange={handleChange}
+              value={formData.email}
+            />
+            <Button color="primary" className="forgot-password-submit mt-4">
+              Send
+            </Button>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

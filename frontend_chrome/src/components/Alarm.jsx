@@ -7,10 +7,10 @@ import "../styles/Alarm.css";
 
 const Alarm = () => {
   const dispatch = useDispatch();
-  const [buttonText, setButtonText] = useState("Save");
   const user = useSelector((state) => state?.user);
   const alarmDays = useSelector((state) => state?.user?.alarm_days);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const [buttonText, setButtonText] = useState("Save");
   const [alarmChanged, setAlarmChanged] = useState(false);
   const [selectedTime, setSelectedTime] = useState(user.alarm_time);
 
@@ -78,14 +78,12 @@ const Alarm = () => {
         <div class="btn-group" role="group" aria-label="Toggle Switch">
           <ButtonGroup>
             <Button
-              // className={`btn btn-${user.alarm_status ? success : secondary}`}
               color={user.alarm_status ? "success" : "secondary"}
               onClick={() => handleSwitchToggle(user.alarm_status)}
             >
               On
             </Button>
             <Button
-              // className={`btn btn-${user.alarm_status ? secondary : danger}`}
               color={user.alarm_status ? "secondary" : "danger"}
               onClick={() => handleSwitchToggle(user.alarm_status)}
             >

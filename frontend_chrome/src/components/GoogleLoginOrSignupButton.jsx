@@ -1,13 +1,12 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { ThreeDots } from "react-loader-spinner";
 import {
   loggingIn as loggingInFunction,
-  resetApp,
   setGoogleAccessToken,
 } from "../helpers/actionCreators";
 import "../styles/LoginOrSignup.css";
-import { useEffect, useState } from "react";
 
 const GoogleLoginOrSignupButton = ({ isSignup }) => {
   const dispatch = useDispatch();

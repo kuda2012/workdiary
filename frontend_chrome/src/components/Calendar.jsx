@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPost } from "../helpers/actionCreators";
 import { ThreeDots } from "react-loader-spinner";
@@ -13,16 +12,19 @@ const Calendar = () => {
   const allPostDates = useSelector((state) => state?.all_post_dates);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState(date ? date : "");
+  const [inputValue, setInputValue] = useState("");
+  const inputRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const selectedDate = moment(inputValue, "MM/DD/YYYY", true);
     if (selectedDate.isValid()) {
+      handleToggleCalendar(false);
       setInputValue("loading");
+      dispatch(getPost(workdiaryToken, selectedDate.format("MM/DD/YYYY")));
       setTimeout(() => {
-        dispatch(getPost(workdiaryToken, selectedDate.format("MM/DD/YYYY")));
-        setInputValue("");
+        setInputValue(selectedDate.format("MM/DD/YYYY"));
+        inputRef.current.blur();
       }, 500);
     }
   };
@@ -57,47 +59,58 @@ const Calendar = () => {
       >
         🔄
       </span>
-      <form onSubmit={handleSubmit}>
-        {inputValue === "loading" && (
-          <ThreeDots
-            height="10px"
-            width="15px"
-            radius="6"
-            color="gray"
-            ariaLabel="loading"
-            wrapperStyle
-            wrapperClass
+      <div className="d-flex flex-column align-items-center">
+        <form onSubmit={handleSubmit}>
+          <DatePicker
+            ref={datePickerRef}
+            disabledKeyboardNavigation={true}
+            selected={
+              inputValue !== "loading"
+                ? date
+                  ? moment(date, "MM/DD/YYYY").toDate()
+                  : new Date()
+                : null
+            }
+            onChange={handleInputChange}
+            highlightDates={allPostDates?.map((date) =>
+              moment(date, "YYYY-MM-DD").toDate()
+            )}
+            customInput={
+              <CustomDatePickerInput
+                value={inputValue}
+                onChange={handleInputChange}
+                onFocus={() => handleToggleCalendar(true)}
+                onBlur={() => handleToggleCalendar(false)}
+                inputRef={inputRef}
+              />
+            }
+            onFocus={() => handleToggleCalendar(true)}
+            onBlur={() => handleToggleCalendar(false)}
+            onSelect={(datePickerDate) => {
+              dispatch(
+                getPost(
+                  workdiaryToken,
+                  moment(datePickerDate).format("MM/DD/YYYY")
+                )
+              );
+              handleToggleCalendar(false);
+            }}
           />
-        )}
-        <DatePicker
-          ref={datePickerRef}
-          disabledKeyboardNavigation={true}
-          selected={date ? moment(date, "MM/DD/YYYY").toDate() : new Date()}
-          onChange={handleInputChange}
-          highlightDates={allPostDates?.map((date) =>
-            moment(date, "YYYY-MM-DD").toDate()
-          )}
-          customInput={
-            <CustomDatePickerInput
-              value={inputValue}
-              onChange={handleInputChange}
-              onFocus={() => handleToggleCalendar(true)}
-              onBlur={() => handleToggleCalendar(false)}
+        </form>
+        {inputValue === "loading" && (
+          <div style={{ position: "relative", right: "8px" }}>
+            <ThreeDots
+              height="10px"
+              width="15px"
+              radius="6"
+              color="gray"
+              ariaLabel="loading"
+              wrapperStyle
+              wrapperClass
             />
-          }
-          onFocus={() => handleToggleCalendar(true)}
-          onBlur={() => handleToggleCalendar(false)}
-          onSelect={(datePickerDate) => {
-            dispatch(
-              getPost(
-                workdiaryToken,
-                moment(datePickerDate).format("MM/DD/YYYY")
-              )
-            );
-            handleToggleCalendar(false);
-          }}
-        />
-      </form>
+          </div>
+        )}
+      </div>
       <span
         id="calendar-arrow"
         className="ms-1 me-0 mt-0 mb-0 p-0"
@@ -109,7 +122,13 @@ const Calendar = () => {
   );
 };
 
-const CustomDatePickerInput = ({ value, onChange, onFocus, onBlur }) => {
+const CustomDatePickerInput = ({
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+  inputRef,
+}) => {
   return (
     <input
       id="custom-date-picker-input"
@@ -118,6 +137,7 @@ const CustomDatePickerInput = ({ value, onChange, onFocus, onBlur }) => {
       onChange={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
+      ref={inputRef}
     />
   );
 };

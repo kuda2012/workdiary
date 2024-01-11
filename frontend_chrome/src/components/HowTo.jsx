@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/HowTo.css";
 import ContactForm from "./ContactForm";
 
