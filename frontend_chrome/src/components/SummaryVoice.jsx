@@ -1,21 +1,21 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsList, toggleInterpreting } from "../helpers/actionCreators";
-import "../styles/SummaryVoice.css";
 import { Blocks } from "react-loader-spinner";
+import "../styles/SummaryVoice.css";
 
 const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
   const user = useSelector((state) => state?.user);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const interpreting = useSelector((state) => state.interpreting);
   const [isRecording, setIsRecording] = useState(false);
+  const [isFinalized, setIsFinalized] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [playbackPaused, setPlaybackPaused] = useState(true);
   const [audioDuration, setAudioDuration] = useState(0);
   const audioChunks = useRef([]);
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
-  const mediaRecorderRefForPlayback = useRef(null);
-  const audioStreamRefForPlayback = useRef(null);
   const audioStreamRef = useRef(null);
   const timerRef = useRef(null);
   const audioUrlRef = useRef(null);
@@ -26,20 +26,11 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
       audioStreamRef.current = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
-      audioStreamRefForPlayback.current =
-        await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        });
-
       const audioStream = audioStreamRef.current;
-      const audioStreamForPlayback = audioStreamRefForPlayback.current;
 
       mediaRecorderRef.current = new MediaRecorder(audioStream);
-      mediaRecorderRefForPlayback.current = new MediaRecorder(
-        audioStreamForPlayback
-      );
+
       const mediaRecorder = mediaRecorderRef.current;
-      const mediaRecorderForPlayback = mediaRecorderRefForPlayback.current;
 
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -51,21 +42,12 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
         const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
         audioUrlRef.current = URL.createObjectURL(audioBlob);
         audioRef.current.src = audioUrlRef.current;
-      };
 
-      mediaRecorderForPlayback.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunks.current.push(event.data);
-        }
-      };
-
-      mediaRecorderForPlayback.onstop = () => {
-        const audioBlob = new Blob(audioChunks.current, {
-          type: "audio/wav",
+        audioRef.current.addEventListener("ended", () => {
+          setPlaybackPaused(true);
         });
-        audioUrlRef.current = URL.createObjectURL(audioBlob);
-        audioRef.current.src = audioUrlRef.current;
       };
+
       if (user.sound_effects) {
         const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
         audio.volume = 0.25; // Get the URL to your sound fil
@@ -73,7 +55,6 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
       }
 
       mediaRecorder.start();
-      mediaRecorderForPlayback.start();
       setIsRecording(true);
       timerRef.current = setInterval(() => {
         setAudioDuration((duration) => duration + 1);
@@ -96,15 +77,22 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
         audio.play();
       }
       mediaRecorderRef.current.pause();
-      mediaRecorderRefForPlayback.current.stop();
       clearInterval(timerRef.current);
       setIsRecording(false);
       setIsPaused(true);
-      // const audioBlob = new Blob(audioChunks.current, {
-      //   type: "audio/wav",
-      // });
-      // audioUrlRef.current = URL.createObjectURL(audioBlob);
-      // audioRef.current.src = audioUrlRef.current;
+    }
+  };
+
+  const pausePlayback = () => {
+    if (audioUrlRef.current) {
+      audioRef.current.pause();
+      setPlaybackPaused(true);
+    }
+  };
+  const playPlayback = () => {
+    if (audioUrlRef.current) {
+      audioRef.current.play();
+      setPlaybackPaused(false);
     }
   };
 
@@ -115,11 +103,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
         audio.volume = 1; // Get the URL to your sound fil
         audio.play();
       }
-
       mediaRecorderRef.current.resume();
-      mediaRecorderRefForPlayback.current.start();
-      audioRef.current.pause();
-      audioRef.current.currentTie = 0;
       timerRef.current = setInterval(() => {
         setAudioDuration((duration) => duration + 1);
       }, 1000);
@@ -128,20 +112,12 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
     }
   };
 
-  const playRecording = () => {
-    if (audioUrlRef.current) {
-      audioRef.current.src = audioUrlRef.current;
-      audioRef.current.play();
-    }
-    setIsRecording(false);
-  };
-
   const stopRecording = () => {
     if (mediaRecorderRef.current && (isRecording || isPaused)) {
       mediaRecorderRef.current.stop();
-      mediaRecorderRefForPlayback.current.stop();
       clearInterval(timerRef.current);
       setIsRecording(false);
+      setIsFinalized(true);
       setIsPaused(false);
     }
   };
@@ -158,8 +134,9 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
     clearTimeout(timerRef.current);
     setAudioDuration(0);
     audioChunks.current = [];
-    mediaRecorderRef.current = [];
+    mediaRecorderRef.current = null;
     setIsRecording(false);
+    setIsFinalized(false);
     setIsPaused(false);
   };
 
@@ -184,7 +161,6 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
       const audioBase64 = reader.result;
       dispatchCreateOrUpdatePost(summaryText, audioBase64, audioDuration);
       dispatch(getPostsList(workdiaryToken, 1));
-      resetRecording();
     };
 
     // Read the Blob as a data URL (Base64)
@@ -196,6 +172,12 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
       stopRecording();
     }
   }, [audioDuration]);
+
+  useEffect(() => {
+    if (!interpreting) {
+      resetRecording();
+    }
+  }, [interpreting]);
   return (
     <div className="mt-5" id="summary-voice">
       <h4 className="mb-4" id="summary-voice-header">
@@ -204,48 +186,58 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
           : "Hey, first_name. Tell us. How was work today?"}
       </h4>
       <div id="summary-voice-media-button">
-        <button
-          className={`${isRecording && "is-recording"}`}
-          onClick={
-            !isRecording && !isPaused && !audioDuration
-              ? startRecording
-              : isRecording && !isPaused
-              ? pauseRecording
-              : resumeRecording
-          }
-          disabled={audioDuration && !isPaused && !isRecording}
-          id="record-button"
-        >
-          <span
-            id="record-red-dot"
-            className={`${isRecording && "pulsating-red-dot"}`}
-          />
-          <span>
-            {!isRecording && !isPaused && !audioDuration
-              ? "RECORD"
-              : isRecording && !isPaused
-              ? "RECORDING"
-              : "RESUME"}
-          </span>
-        </button>
-        <button onClick={pauseRecording} disabled={!isRecording}>
-          <img src="/pause.png" title="Pause"></img>
-        </button>
-        <button
-          onClick={playRecording}
-          disabled={!audioDuration || isRecording}
-        >
-          <img src="/play_1.png" title="Play"></img>
-        </button>
-        <button onClick={() => resetRecording(true)} disabled={!audioDuration}>
-          <img src="/trash.png" title="Reset"></img>
-        </button>
+        {!isFinalized && (
+          <button
+            className={`${isRecording && "is-recording"}`}
+            onClick={
+              !isRecording && !isPaused && !audioDuration
+                ? startRecording
+                : stopRecording
+            }
+            id="record-button"
+          >
+            <span
+              id="record-red-dot"
+              className={`${isRecording && "pulsating-red-dot"}`}
+            />
+            <span>
+              {!isRecording && !isPaused && !audioDuration
+                ? "RECORD"
+                : !isPaused
+                ? "RECORDING"
+                : "END TO LISTEN"}
+            </span>
+          </button>
+        )}
+        {isFinalized && (
+          <div className="m-3 recording-duration">
+            <b>Duration: {audioDuration}s</b>
+          </div>
+        )}
+        {!isFinalized && (
+          <button onClick={!isPaused ? pauseRecording : resumeRecording}>
+            {isPaused ? (
+              <span className={`${isPaused && "resume-pulse"}`}>RESUME</span>
+            ) : (
+              <img src="/pause.png" title="Pause"></img>
+            )}
+          </button>
+        )}
+        {isFinalized && (
+          <button onClick={playbackPaused ? playPlayback : pausePlayback}>
+            {playbackPaused ? (
+              <img src="/play.png" title="Play"></img>
+            ) : (
+              <img src="/pause.png" title="Pause"></img>
+            )}
+          </button>
+        )}
         <button
           className={`${
-            audioDuration && !isRecording && !interpreting && "send"
+            mediaRecorderRef.current && !isRecording && !interpreting && "send"
           }`}
           onClick={() => {
-            if (audioDuration) {
+            if (mediaRecorderRef.current) {
               dispatch(toggleInterpreting());
               stopRecording();
               setTimeout(() => {
@@ -267,20 +259,30 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
             />
           )}
         </button>
-        <div
-          id={audioDuration >= 160 && `recording-duration-too-long`}
-          className="m-3 recording-duration"
+
+        <button
+          onClick={() => resetRecording(true)}
+          disabled={!mediaRecorderRef.current || interpreting}
         >
-          <b>{audioDuration >= 160 && "(180s max) : "}</b>
-          <b
-            id={
-              isRecording && audioDuration < 160 && `recording-duration-green`
-            }
+          <img src="/trash.png" title="Reset"></img>
+        </button>
+
+        {!isFinalized && (
+          <div
+            id={audioDuration >= 160 && `recording-duration-too-long`}
+            className="m-3 recording-duration"
           >
-            {audioDuration}s
-          </b>
-        </div>
-        <div className="mb-5">
+            <b>{audioDuration >= 160 && "(180s max) : "}</b>
+            <b
+              id={
+                isRecording && audioDuration < 160 && `recording-duration-green`
+              }
+            >
+              Duration: {audioDuration}s
+            </b>
+          </div>
+        )}
+        <div className="mt-3 mb-3">
           <audio controls ref={audioRef} />
         </div>
       </div>

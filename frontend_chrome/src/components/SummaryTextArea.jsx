@@ -70,7 +70,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
 
   useEffect(() => {
     setLocalSummaryText(summaryText);
-  }, [date]);
+  }, [summaryText, date]);
 
   useEffect(() => {
     if (localSummaryText !== summaryText) {
