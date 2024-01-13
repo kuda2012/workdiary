@@ -36,18 +36,21 @@ const formats = [
 ];
 
 function countWords(htmlString) {
-  // Remove HTML tags from the string
-  if (!htmlString) return;
-  const cleanText = htmlString.replace(/<[^>]+>/g, "");
+  // Remove HTML tags and normalize spaces from the string
+  if (!htmlString) return 0;
+  const cleanText = htmlString
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
   // Split the text into words and count them
-  const words = cleanText.trim().split(/\s+/);
+  const words = cleanText.split(/\s+/);
   return words.length;
 }
 const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
-  const post = useSelector((state) => state?.post);
   const summaryText = useSelector((state) => state?.post?.summary_text);
   const lastUpdated = useSelector((state) => state?.post?.last_updated);
+  const interpreting = useSelector((state) => state.interpreting);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const date = useSelector((state) => state.date);
   const [localSummaryText, setLocalSummaryText] = useState(summaryText);
@@ -70,7 +73,10 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
 
   useEffect(() => {
     setLocalSummaryText(summaryText);
-  }, [summaryText, date]);
+  }, [date]);
+  useEffect(() => {
+    setLocalSummaryText(summaryText);
+  }, [interpreting]);
 
   useEffect(() => {
     if (localSummaryText !== summaryText) {
