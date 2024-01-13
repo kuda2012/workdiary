@@ -13,7 +13,7 @@ exports.create = async (req, res, next) => {
     if (!post) {
       if (req.body.summary_voice && req.body.audio_duration <= 180) {
         const getLog = await TranscribeLog.getLog(id);
-        if (!getLog || getLog?.count < 10) {
+        if (!getLog || getLog?.count < 100) {
           const summaryText = await speechToText(req.body.summary_voice);
           req.body.summary_text = req.body.summary_text
             ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
@@ -27,7 +27,7 @@ exports.create = async (req, res, next) => {
         }
       } else if (req.body.summary_voice && req.body.audio_duration > 180) {
         throw new ExpressError(
-          "Your voice transcription is too long. It must be less than 180s",
+          "Your voice note is too long. It must be less than 180s",
           403
         );
       }
@@ -106,7 +106,7 @@ exports.update = async (req, res, next) => {
     const post = await Post.getPost(id, req.body.date);
     if (req.body.summary_voice && req.body.audio_duration < 180) {
       const getLog = await TranscribeLog.getLog(id);
-      if (!getLog || getLog?.count < 10) {
+      if (!getLog || getLog?.count < 100) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
           ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
@@ -120,7 +120,7 @@ exports.update = async (req, res, next) => {
       }
     } else if (req.body.summary_voice && req.body.audio_duration > 180) {
       throw new ExpressError(
-        "You have maxed out the amount of transcriptions you can do per day",
+        "Your voice note is too long. It must be less than 180s",
         403
       );
     }
