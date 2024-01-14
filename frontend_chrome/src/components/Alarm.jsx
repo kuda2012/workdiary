@@ -111,7 +111,6 @@ const Alarm = () => {
           data={selectedTime}
           interval={1500}
           onSave={() => {
-            setAlarmChanged(true);
             setButtonText("Saved");
             dispatch(changeAlarm(workdiaryToken, { alarm_time: selectedTime }));
           }}
