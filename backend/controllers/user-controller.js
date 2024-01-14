@@ -158,7 +158,6 @@ exports.checkedToken = async (req, res, next) => {
     console.log("userExist", userStillExist);
     console.log("ip", req.ip);
     console.log(req.body.source);
-    console.log("full request", req);
     if (userStillExist?.verified) {
       const workdiary_token = await User.generateWorkdiaryAccessToken(userInfo);
       res.send({ workdiary_token });
