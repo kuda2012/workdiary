@@ -447,7 +447,7 @@ class User {
     }
     queryText = queryText.slice(0, -1);
     queryValues.push(user_id);
-    queryText += ` WHERE id = $${queryValues.length} RETURNING *`;
+    queryText += ` WHERE id = $${queryValues.length} returning id, email, name, alarm_status, alarm_time, alarm_days, sound_effects, auth_provider, verified`;
     const result = await db.query(queryText, queryValues);
     return {
       ...result[0],
