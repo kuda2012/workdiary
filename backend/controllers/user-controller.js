@@ -155,15 +155,19 @@ exports.checkedToken = async (req, res, next) => {
   // refreshing token after being verified in tokenIsCurrent
   try {
     const userInfo = decodeJwt(req.headers.authorization);
-    const userStillExist = await User.getUser(userInfo.id);
-    console.log("userExist", userStillExist);
-    console.log("ip", req.ip);
-    console.log(req.body.source);
-    if (userStillExist?.verified) {
+    const userExists = await User.getUser(userInfo.id);
+    if (userExists?.verified) {
       await db.query(
-        `INSERT INTO user_logins (user_id, login_time, file_source, ip_address, user_agent)
-       VALUES ($1, CURRENT_TIMESTAMP, $2, $3, $4)`,
-        [userStillExist.id, req.body.source, req.ip, req.headers["user-agent"]]
+        `INSERT INTO user_logins (user_id, email, name, login_time, file_source, ip_address, user_agent)
+       VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4, $5, $6)`,
+        [
+          userExists.id,
+          userExists.email,
+          userExists.name,
+          req.body.source,
+          req.ip,
+          req.headers["user-agent"],
+        ]
       );
       const workdiary_token = await User.generateWorkdiaryAccessToken(userInfo);
       res.send({ workdiary_token });
