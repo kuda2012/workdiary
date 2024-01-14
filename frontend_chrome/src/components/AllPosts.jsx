@@ -24,26 +24,31 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
 
   return (
-    <div className="container">
+    <div className="container mt-2">
       <div className="row flex-column align-items-center">
         <div className="col-12">
           <ul id="all-posts-list">
             {postsList &&
               postsList.map((post) => (
-                <li>
+                <li className="posts-list-li">
                   <a
                     href="#"
-                    className="search-links"
+                    className="posts-list-anchor-tags"
                     onClick={() => {
                       handlePostClick(post.date);
                     }}
                   >
-                    {moment
-                      .utc(post.date, moment.ISO_8601)
-                      .format("MM/DD/YYYY")}{" "}
+                    <b>
+                      {moment
+                        .utc(post.date, moment.ISO_8601)
+                        .format("MM/DD/YYYY")}
+                    </b>{" "}
                     -{" "}
                     {post.entry ? (
-                      `Entry - ${post.entry}`
+                      <>
+                        <b>Entry: </b>
+                        {post.entry}
+                      </>
                     ) : (
                       <i>*Has only tags and/or tabs*</i>
                     )}

@@ -40,21 +40,23 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
           <ul id="all-posts-list">
             {searchResults &&
               searchResults.map((result) => (
-                <li>
+                <li className="posts-list-li">
                   <a
-                    className="search-links"
+                    className="posts-list-anchor-tags"
                     href="#"
                     onClick={() => {
                       handlePostClick(result);
                     }}
                   >
-                    {result.date} -{" "}
-                    {result.match_source === "tab_title"
-                      ? "Tab Title - "
-                      : `${
-                          result.match_source.charAt(0).toUpperCase() +
-                          result.match_source.slice(1)
-                        } - `}
+                    <b>{result.date}</b> -{" "}
+                    <b>
+                      {result.match_source === "tab_title"
+                        ? "Tab Title: "
+                        : `${
+                            result.match_source.charAt(0).toUpperCase() +
+                            result.match_source.slice(1)
+                          }:  `}
+                    </b>
                     {result[result.match_source]}
                   </a>
                 </li>

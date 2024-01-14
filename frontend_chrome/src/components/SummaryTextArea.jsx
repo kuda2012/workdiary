@@ -63,7 +63,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         "Entry is too long (20000 characters). Any extra characters will not be saved"
       );
     } else {
-      setLocalSummaryText(value !== "<p><br></p>" ? value : undefined);
+      setLocalSummaryText(value !== "<p><br></p>" ? value : "");
     }
   };
 

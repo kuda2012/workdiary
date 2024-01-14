@@ -1,8 +1,20 @@
 #all-posts-list {
   min-height: 500px;
+  list-style-type: none;
 }
-.search-links {
+.posts-list-anchor-tags {
   word-wrap: break-word;
+  text-decoration: none; /* Remove default underline */
+  color: inherit; /* Use the default text color */
+}
+
+.posts-list-anchor-tags :hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.posts-list-li {
+  border: 1px solid lightgray;
+  padding: 5px 5px; /* Padding around the content */
 }
 
 #all-posts-search {
