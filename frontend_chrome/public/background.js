@@ -91,6 +91,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         `${config.LOCAL_BACKEND_URL}/users/check-workdiary-token`,
         {
           method: "POST",
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${workdiary_token}`,
