@@ -116,9 +116,11 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
       />
       <button
         onClick={() => {
-          dispatchCreateOrUpdatePost(localSummaryText);
-          setButtonText("Saved");
-          dispatch(clearSearchResults());
+          if (workdiaryToken && localSummaryText !== summaryText) {
+            dispatchCreateOrUpdatePost(localSummaryText);
+            setButtonText("Saved");
+            dispatch(clearSearchResults());
+          }
         }}
       >
         {buttonText === "Saved" && <b>{buttonText}</b>}

@@ -11,7 +11,6 @@ const Alarm = () => {
   const alarmDays = useSelector((state) => state?.user?.alarm_days);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [buttonText, setButtonText] = useState("Save");
-  const [alarmChanged, setAlarmChanged] = useState(false);
   const [selectedTime, setSelectedTime] = useState(user?.alarm_time);
 
   const handleSwitchToggle = () => {
@@ -25,17 +24,9 @@ const Alarm = () => {
   };
 
   useEffect(() => {
-    if (selectedTime !== user.alarm_time) {
-      dispatch(changeAlarm(workdiaryToken, { alarm_time: selectedTime }));
-    }
-  }, [selectedTime, user?.alarm_time, dispatch]);
-
-  useEffect(() => {
-    if (user && alarmChanged) {
-      setAlarm(user);
-      setAlarmChanged(false);
-    }
-  }, [user, alarmChanged]);
+    setAlarm(user);
+    setButtonText("Saved");
+  }, [user]);
 
   const handleDayCheckboxChange = (changedDay) => {
     let updatedAlarmDays = alarmDays.map((day) => {
@@ -117,11 +108,12 @@ const Alarm = () => {
           onChange={handleTimeChange}
         />
         <Autosave
-          data={user}
+          data={selectedTime}
           interval={1500}
           onSave={() => {
             setAlarmChanged(true);
             setButtonText("Saved");
+            dispatch(changeAlarm(workdiaryToken, { alarm_time: selectedTime }));
           }}
         />
 

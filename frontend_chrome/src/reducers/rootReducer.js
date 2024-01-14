@@ -75,6 +75,7 @@ function rootReducer(state = INITIAL_STATE, action) {
     case "FULL_RESET":
       localStorage.removeItem("workdiary_token");
       chrome.storage.local.clear();
+      chrome.storage.session.clear();
       return {};
     default:
       return state;

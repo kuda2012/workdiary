@@ -153,72 +153,82 @@ chrome.runtime.onInstalled.addListener(async () => {
         }
       );
       const { user } = await response.json();
-      if (user) await setAlarm(user);
+      if (user) {
+        chrome.storage.session.set({ user });
+        await setAlarm(user);
+      }
     }
   });
 
-  async function setAlarm(user) {
-    // In your content script or background script that has access to the tabId:
-    await chrome.alarms.clearAll();
-    // Get the current date
-    const currentDate = new Date();
-    // Define the day you want to check (e.g., "mon")
-    // Get the current day of the week as a string (e.g., "mon")
-    const currentDay = currentDate
-      .toLocaleString("en-us", { weekday: "short" })
-      .toLowerCase();
-    // Check if today is the specified day
-    let shouldSetAlarm = false;
-    for (let day of user.alarm_days) {
-      const currentTime = new Date().toLocaleTimeString("en-US", {
-        hour12: false,
+  chrome.alarms.onAlarm.addListener(async (alarm) => {
+    const { user } = await chrome.storage.session.get(["user"]);
+    const { action_creator_alarm_set } = await chrome.storage.session.get([
+      "action_creator_alarm_set",
+    ]);
+    if (
+      alarm.name.startsWith("myAlarm_") &&
+      user.alarm_status &&
+      !action_creator_alarm_set
+    ) {
+      // Check for alarms with day-specific names
+      console.log("fire alarm - background.js", alarm.name);
+      // Trigger notification and reset alarm as before
+      chrome.notifications.create({
+        type: "basic",
+        iconUrl: "w_extension.png",
+        title: "Work Diary",
+        message: `Reminder to write in your Work Diary (click here to open app)`,
+        // Include sound property for the sound file
       });
-      if (
-        user.alarm_status &&
-        currentDay === day.day &&
-        day.value &&
-        currentTime < user.alarm_time
-      ) {
-        shouldSetAlarm = (await chrome.alarms.get("myAlarm")) ? false : true;
-        break;
-      }
+      await setAlarm(user);
     }
-    if (shouldSetAlarm) {
-      // Get the current time
-      const currentTime = new Date();
-      // Parse the military time string "17:00" and set it to today's date
-      const militaryTimeString = user.alarm_time;
-      const militaryTimeArray = militaryTimeString.split(":");
-      const militaryTime = new Date();
-      militaryTime.setHours(parseInt(militaryTimeArray[0], 10));
-      militaryTime.setMinutes(parseInt(militaryTimeArray[1], 10));
-      militaryTime.setSeconds(0);
-      // Calculate the time difference in seconds
-      const timeDifferenceInSeconds = Number(
-        Math.floor(militaryTime - currentTime)
-      );
-      console.log(currentTime, militaryTimeString);
-      console.log(
-        "from background.js",
-        `Time difference in seconds: ${timeDifferenceInSeconds}`
-      );
-      chrome.alarms.create("myAlarm", {
-        when: Date.now() + timeDifferenceInSeconds, // Set the alarm to go off in 1 second.
-      });
-      chrome.alarms.onAlarm.addListener(async (alarm) => {
-        if (alarm.name === "myAlarm") {
-          console.log("fire alarm - background");
-          chrome.notifications.create({
-            type: "basic",
-            iconUrl: "w_extension.png",
-            title: "Work Diary",
-            message: `Reminder to write in your Work Diary (click here to open app)`,
-          });
-          chrome.notifications.onClicked.addListener(() => {
-            openPopup();
-          });
+  });
+
+  chrome.windows.onRemoved.addListener(function () {
+    chrome.storage.session.remove("action_creator_alarm_set");
+  });
+
+  async function setAlarm(user) {
+    await chrome.alarms.clearAll();
+
+    const DAYS_OF_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+    // Get the current day's index
+    const currentDayIndex = DAYS_OF_WEEK.indexOf(
+      new Date().toLocaleString("en-us", { weekday: "short" }).toLowerCase()
+    );
+
+    // Get the current time
+    const currentTime = new Date();
+
+    // Set alarms for today and the next 6 days
+    for (let i = currentDayIndex; i < currentDayIndex + 7; i++) {
+      const day = DAYS_OF_WEEK[i % 7]; // Handle wrapping around to the beginning of the week
+      if (
+        user.alarm_days.find((dayObj) => dayObj.day === day && dayObj.value)
+      ) {
+        // Check if the day is enabled
+
+        // Set alarm for this day
+        const nextOccurrence = new Date();
+        nextOccurrence.setDate(
+          nextOccurrence.getDate() + (i - currentDayIndex)
+        ); // Adjust for the current day
+
+        // Set the time based on the user's specified alarm time
+        nextOccurrence.setHours(user.alarm_time.split(":")[0]);
+        nextOccurrence.setMinutes(user.alarm_time.split(":")[1]);
+        nextOccurrence.setSeconds(0);
+
+        // If the alarm time for today has already passed, set the alarm for the same day next week
+        if (currentTime >= nextOccurrence) {
+          nextOccurrence.setDate(nextOccurrence.getDate() + 7);
         }
-      });
+        console.log("background", nextOccurrence, day);
+
+        chrome.alarms.create(`myAlarm_${day}`, {
+          when: nextOccurrence.getTime(),
+        });
+      }
     }
   }
 });
