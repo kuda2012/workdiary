@@ -163,7 +163,7 @@ exports.checkedToken = async (req, res, next) => {
       await db.query(
         `INSERT INTO user_logins (user_id, login_time, file_source, ip_address, user_agent)
        VALUES ($1, CURRENT_TIMESTAMP, $2, $3, $4)`,
-        [userStillExist.id, req.body.source, req.ip, req["user-agent"]]
+        [userStillExist.id, req.body.source, req.ip, req.headers["user-agent"]]
       );
       const workdiary_token = await User.generateWorkdiaryAccessToken(userInfo);
       res.send({ workdiary_token });
