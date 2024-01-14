@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const ExpressError = require("./expressError");
 const { rateLimit } = require("express-rate-limit");
 const app = express();
+app.set("trust proxy", 1);
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 300, // limit each IP to 300 requests per windowMs
