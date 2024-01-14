@@ -50,7 +50,7 @@ class Post {
 
       // Join the words back together with spaces and wrap in a paragraph tag
       return `${
-        words.length < 7 ? words.join(" ") : words.join(" ").concat("...")
+        words?.length < 7 ? words.join(" ") : words.join(" ").concat("...")
       }`;
     }
     const pageSize = 10;
