@@ -154,7 +154,7 @@ exports.checkedToken = async (req, res, next) => {
   // refreshing token after being verified in tokenIsCurrent
   try {
     const userInfo = decodeJwt(req.headers.authorization);
-    const userStillExist = await getUser(userInfo.id);
+    const userStillExist = await User.getUser(userInfo.id);
     console.log("userExist", userStillExist);
     console.log("ip", req.ip);
     console.log(req.body.source);
