@@ -16,7 +16,7 @@ router.get(
   verifyAccountVerificationToken,
   UserController.verifyAccount
 );
-router.get(
+router.post(
   "/check-workdiary-token",
   tokenIsCurrent,
   UserController.checkedToken

@@ -9,12 +9,18 @@ export function setGoogleAccessToken(google_access_token) {
 export function isWorkdiaryTokenCurrent(workdiary_token) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.get(
+      const { data } = await axios.post(
         `${VITE_LOCAL_BACKEND_URL}/users/check-workdiary-token`,
-        { headers: { Authorization: `Bearer ${workdiary_token}` } }
+        { source: "actionCreator.js" },
+        {
+          headers: { Authorization: `Bearer ${workdiary_token}` },
+        }
       );
-      dispatch(setWorkdiaryToken(data.workdiary_token));
-      // dispatch(initialLoad());
+      if (data.workdiary_token) {
+        dispatch(setWorkdiaryToken(data.workdiary_token));
+      } else {
+        dispatch(resetApp());
+      }
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message || error?.message);

@@ -90,8 +90,9 @@ chrome.runtime.onInstalled.addListener(async () => {
       const response = await fetch(
         `${config.LOCAL_BACKEND_URL}/users/check-workdiary-token`,
         {
-          method: "GET",
+          method: "POST",
           headers: { Authorization: `Bearer ${workdiary_token}` },
+          body: JSON.stringify({ source: "background.js" }),
         }
       );
       const data = await response.json();
@@ -144,15 +145,13 @@ chrome.runtime.onInstalled.addListener(async () => {
       result?.workdiary_token && typeof result?.workdiary_token === "string"
         ? await isWorkdiaryTokenCurrent(result.workdiary_token)
         : null;
+    let response = null;
     if (workdiaryToken) {
-      const response = await fetch(
-        `${config.LOCAL_BACKEND_URL}/users/account-info`,
-        {
-          method: "GET",
-          headers: { Authorization: `Bearer ${workdiaryToken}` },
-        }
-      );
-      const { user } = await response.json();
+      response = await fetch(`${config.LOCAL_BACKEND_URL}/users/account-info`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${workdiaryToken}` },
+      });
+      const { user } = response ? await response.json() : null;
       if (user) {
         chrome.storage.session.set({ user });
         await setAlarm(user);

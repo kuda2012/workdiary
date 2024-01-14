@@ -153,10 +153,18 @@ exports.otherSettings = async (req, res, next) => {
 exports.checkedToken = async (req, res, next) => {
   // refreshing token after being verified in tokenIsCurrent
   try {
-    const workdiary_token = await User.generateWorkdiaryAccessToken(
-      decodeJwt(req.headers.authorization)
-    );
-    res.send({ workdiary_token });
+    const userInfo = decodeJwt(req.headers.authorization);
+    const userStillExist = await getUser(userInfo.id);
+    console.log("userExist", userStillExist);
+    console.log("ip", req.ip);
+    console.log(req.body.source);
+    console.log("full request", req);
+    if (userStillExist?.verified) {
+      const workdiary_token = await User.generateWorkdiaryAccessToken(userInfo);
+      res.send({ workdiary_token });
+    } else {
+      res.send({ workdiary_token: "" });
+    }
   } catch (error) {
     next(error);
   }
