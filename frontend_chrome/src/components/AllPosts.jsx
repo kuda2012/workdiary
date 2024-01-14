@@ -27,7 +27,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
     <div className="container mt-2">
       <div className="row flex-column align-items-center">
         <div className="col-12">
-          <ul id="all-posts-list">
+          <ul id="posts-list">
             {postsList &&
               postsList.map((post) => (
                 <li className="posts-list-li">

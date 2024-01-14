@@ -37,7 +37,7 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
     <div className="container">
       <div className="row flex-column align-items-center">
         <div className="col-12">
-          <ul id="all-posts-list">
+          <ul id="posts-list">
             {searchResults &&
               searchResults.map((result) => (
                 <li className="posts-list-li">
