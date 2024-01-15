@@ -4,11 +4,18 @@ const Tag = ({ tag, onTagDelete }) => {
   const clickedSearchResult = useSelector(
     (state) => state.clicked_search_result
   );
+
+  const isTagMatch =
+    clickedSearchResult?.tag &&
+    tag.text && // Ensure tag.text is also defined
+    clickedSearchResult.tag
+      .split(",")
+      .some((csvTag) => csvTag.trim() === tag.text);
+
   return (
     <span
       className={`tag bg-${
-        clickedSearchResult?.tag === tag.text &&
-        clickedSearchResult?.match_source === "tag"
+        isTagMatch && clickedSearchResult?.match_source === "tag"
           ? "warning"
           : "info"
       } text-center m-1 ps-3 pe-1 py-1`}
@@ -16,8 +23,7 @@ const Tag = ({ tag, onTagDelete }) => {
       <b className="text-white">{tag.text}</b>
       <button
         className={`btn btn-${
-          clickedSearchResult?.tag === tag.text &&
-          clickedSearchResult?.match_source === "tag"
+          isTagMatch && clickedSearchResult?.match_source === "tag"
             ? "warning"
             : "info"
         } delete-tag text-dark p-1 mx-1`}

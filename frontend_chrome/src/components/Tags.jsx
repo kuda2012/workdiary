@@ -22,9 +22,23 @@ const Tags = () => {
     dispatch(clearScrollTo());
   }
   const handleInsertTag = (onUpdate) => {
-    const createdTag = prompt("Enter a tag:");
-    if (createdTag) {
-      onUpdate(createdTag); // Call the callback to add the new tag
+    while (true) {
+      const createdTag = prompt("Enter a tag:");
+
+      if (!createdTag) {
+        // User canceled the prompt, break the loop
+        break;
+      }
+
+      // Validate for non-alphanumeric characters
+      if (/^[a-zA-Z0-9]+$/.test(createdTag)) {
+        // Tag is valid, proceed to add it
+        onUpdate(createdTag);
+        break; // Exit the loop
+      } else {
+        // Tag is invalid, alert (but don't reprompt immediately)
+        alert("Tag cannot be empty and can only contain letters and numbers.");
+      }
     }
   };
   return (
