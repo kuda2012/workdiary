@@ -35,10 +35,18 @@ const ChangePassword = ({ closeSettingsModal }) => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      if (formData.new_password === formData.new_password_copy) {
+      if (
+        formData?.new_password?.length < 8 ||
+        formData?.new_password?.length > 25
+      ) {
+        alert(
+          "Password length must be at least 8 characters but not longer than 25"
+        );
+      } else if (formData.new_password === formData.new_password_copy) {
         dispatch(
           changePassword(workdiaryToken, { ...formData, email: user.email })
         );
+        console.log("dont fire");
         setTimeout(() => {
           setFormData(INITIAL_STATE);
           closeSettingsModal();

@@ -30,6 +30,8 @@
       "title": "The password schema",
       "description": "An explanation about the purpose of this instance.",
       "default": "",
+      "minLength": 8,
+      "maxLength": 25,
       "examples": ["hotdog32"]
     },
     "name": {

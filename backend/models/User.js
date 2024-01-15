@@ -27,6 +27,12 @@ class User {
 
   static async create(body) {
     const { email, password, name } = body;
+    if (password.length < 8 || password.length > 25) {
+      throw new ExpressError(
+        "Password length must be at least 8 characters but not longer than 25",
+        400
+      );
+    }
     const hashedPassword = await bcrypt.hash(password, BCRYPT_HASH_ROUNDS);
     const newUser = await db.query(
       `INSERT INTO users (id, email, password, name, auth_provider)
@@ -226,9 +232,9 @@ class User {
         400
       );
     }
-    if (body.new_password.length < 5 || body.new_password.length > 25) {
+    if (body.new_password.length < 8 || body.new_password.length > 25) {
       throw new ExpressError(
-        "Password length must be longer than 4 characters but less than 26",
+        "Password length must be at least 8 characters but not longer than 25",
         400
       );
     }
@@ -277,9 +283,9 @@ class User {
         400
       );
     }
-    if (body.new_password.length < 5 || body.new_password.length > 25) {
+    if (body.new_password.length < 8 || body.new_password.length > 25) {
       throw new ExpressError(
-        "Password length must be longer than 4 characters but less than 26",
+        "Password length must be at least 8 characters but not longer than 25",
         400
       );
     }

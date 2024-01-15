@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const jsonschema = require("jsonschema");
-const userSchema = require("../schema/userschema.json");
+const userSchema = require("../schema/userSchema.json");
+const resetPasswordSchema = require("../schema/resetPasswordSchema.json");
+const changePasswordSchema = require("../schema/changePasswordSchema.json");
+
 const ExpressError = require("../expressError");
 const rateLimit = require("express-rate-limit");
 let {
@@ -82,7 +85,7 @@ function resetPasswordToken(req, res, next) {
     next(error);
   }
 }
-function userIsValidated(req, res, next) {
+function userIsValidatedSignup(req, res, next) {
   try {
     const result = jsonschema.validate(req.body, userSchema);
     if (result.valid) {
@@ -97,9 +100,40 @@ function userIsValidated(req, res, next) {
   }
 }
 
+function resetPasswordValidated(req, res, next) {
+  try {
+    const result = jsonschema.validate(req.body, resetPasswordSchema);
+    if (result.valid) {
+      return next();
+    } else {
+      const listOfErrors = result.errors.map((error) => error.stack);
+      const err = new ExpressError(listOfErrors, 400);
+      return next(err);
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+function changePasswordValidated(req, res, next) {
+  try {
+    const result = jsonschema.validate(req.body, changePasswordSchema);
+    if (result.valid) {
+      return next();
+    } else {
+      const listOfErrors = result.errors.map((error) => error.stack);
+      const err = new ExpressError(listOfErrors, 400);
+      return next(err);
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   tokenIsCurrent,
-  userIsValidated,
+  userIsValidatedSignup,
+  changePasswordValidated,
+  resetPasswordValidated,
   forgotPasswordRateLimiter,
   resetPasswordRateLimiter,
   verifyAccountVerificationToken,

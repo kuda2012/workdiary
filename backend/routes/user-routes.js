@@ -3,11 +3,13 @@ const router = express.Router();
 const UserController = require("../controllers/user-controller");
 const {
   tokenIsCurrent,
-  userIsValidated,
   forgotPasswordRateLimiter,
   resetPasswordRateLimiter,
   verifyAccountVerificationToken,
   resetPasswordToken,
+  userIsValidatedSignup,
+  changePasswordValidated,
+  resetPasswordValidated,
 } = require("../middleware/userMiddleware");
 
 router.get("/account-info", tokenIsCurrent, UserController.getAccountInfo);
@@ -23,7 +25,7 @@ router.post(
 );
 router.post("/login-signup-google", UserController.loginOrSignupGoogle);
 router.post("/login", UserController.login);
-router.post("/signup", userIsValidated, UserController.signup);
+router.post("/signup", userIsValidatedSignup, UserController.signup);
 router.post("/change-alarm", tokenIsCurrent, UserController.changeAlarm);
 router.post("/other-settings", tokenIsCurrent, UserController.otherSettings);
 router.post("/contact-us", UserController.contactUs);
@@ -32,10 +34,16 @@ router.post(
   forgotPasswordRateLimiter,
   UserController.forgotPassword
 );
-router.patch("/change-password", tokenIsCurrent, UserController.changePassword);
+router.patch(
+  "/change-password",
+  tokenIsCurrent,
+  changePasswordValidated,
+  UserController.changePassword
+);
 router.patch(
   "/reset-password",
   resetPasswordToken,
+  resetPasswordValidated,
   resetPasswordRateLimiter,
   UserController.resetPassword
 );

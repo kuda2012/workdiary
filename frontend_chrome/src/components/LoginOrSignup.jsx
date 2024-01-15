@@ -38,6 +38,11 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (formData?.password?.length < 8 || formData?.password?.length > 25) {
+        alert(
+          "Password length must be at least 8 characters but not longer than 25"
+        );
+      }
       if (!loadingDotsActive && !loggingInVar) {
         setloadingDotsActive(true);
         dispatch(isSignup ? signup(formData) : login(formData));

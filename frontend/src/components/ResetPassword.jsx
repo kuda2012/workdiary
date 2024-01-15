@@ -30,7 +30,14 @@ const ResetPassword = ({}) => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      if (formData.new_password === formData.new_password_copy) {
+      if (
+        formData?.new_password?.length < 8 ||
+        formData?.new_password?.length > 25
+      ) {
+        alert(
+          "Password length must be at least 8 characters but not longer than 25"
+        );
+      } else if (formData.new_password === formData.new_password_copy) {
         const response = await axios.patch(
           `${VITE_LOCAL_BACKEND_URL}/users/reset-password`,
           {
@@ -44,7 +51,6 @@ const ResetPassword = ({}) => {
         setFormData(INITIAL_STATE);
       } else {
         alert("Passwords must match");
-        setFormData(INITIAL_STATE);
       }
     } catch (error) {
       setFormData(INITIAL_STATE);
