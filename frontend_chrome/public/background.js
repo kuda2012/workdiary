@@ -77,14 +77,7 @@ chrome.runtime.onInstalled.addListener(async () => {
       tab.pendingUrl !==
       "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
     ) {
-      chrome.runtime.sendMessage({ type: "newTabOpened", tab: tab }, () => {
-        if (chrome.runtime.lastError) {
-          console.error(
-            "Error sending message:newTabOpened - ",
-            chrome.runtime.lastError.message
-          );
-        }
-      });
+      chrome.runtime.sendMessage({ type: "newTabOpened", tab: tab });
     }
   });
   chrome.tabs.onRemoved.addListener(function (tab) {
@@ -93,34 +86,17 @@ chrome.runtime.onInstalled.addListener(async () => {
       tab.pendingUrl !==
       "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
     ) {
-      chrome.runtime.sendMessage({ type: "tabClosed", tab: tab }, () => {
-        if (chrome.runtime.lastError) {
-          console.error(
-            "Error sending message:tabClosed - ",
-            chrome.runtime.lastError.message
-          );
-        }
-      });
+      chrome.runtime.sendMessage({ type: "tabClosed", tab: tab });
     }
   });
 
   chrome.windows.onFocusChanged.addListener(async (windowId) => {
     const window = windowId !== -1 ? await chrome.windows.get(windowId) : null;
     if (window && window?.type !== "popup") {
-      chrome.runtime.sendMessage(
-        {
-          type: "windowMoved",
-          windowId: windowId,
-        },
-        () => {
-          if (chrome.runtime.lastError) {
-            console.error(
-              "Error sending message:windowMoved - ",
-              chrome.runtime.lastError.message
-            );
-          }
-        }
-      );
+      chrome.runtime.sendMessage({
+        type: "windowMoved",
+        windowId: windowId,
+      });
     }
   });
   await chrome.storage.local.get(["workdiary_token"]).then(async (result) => {

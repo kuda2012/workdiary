@@ -383,24 +383,10 @@ function bulkOpenTabs(tabURLs, windowId) {
   }
 }
 
-// export function bulkOpenTabs(tabURLs, windowId) {
-//   chrome.tabs.query({ windowId }, function (tabs) {
-//     const secondToLastIndex = tabs.length - 1; // Index of the second to last tab
-
-//     for (let i = 0; i < tabURLs.length; i++) {
-//       chrome.tabs.create({
-//         url: tabURLs[i],
-//         windowId: windowId, // Specify the ID of the target window
-//         index: secondToLastIndex, // Set the index to open tabs as the second to last
-//         active: false, // Set 'active' to false to open tabs in the background
-//       });
-//     }
-//   });
-// }
 export function openTabs(tabUrls, windowId) {
   return async function (dispatch) {
     try {
-      if (windowId) {
+      if (windowId && tabUrls.length > 0) {
         bulkOpenTabs(tabUrls, windowId);
       } else {
         chrome.windows.create({ url: tabUrls });
