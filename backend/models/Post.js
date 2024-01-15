@@ -151,7 +151,7 @@ class Post {
             'tag' AS match_source
         FROM posts AS p
         LEFT JOIN tags ON p.id = tags.post_id
-        WHERE p.user_id = $1 AND tags.text ILIKE '%' || $2 || '%'
+        WHERE p.user_id = $1 AND WHERE tags.text ILIKE '%' || '\#' || $2 || '%' 
         GROUP BY p.date, tags.post_id
     ) AS subquery
 )
