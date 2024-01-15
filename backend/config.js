@@ -5,6 +5,8 @@ const PORT = process.env.PORT || 3000;
 // let NODE_ENV = "test"
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+
 const DB_URI =
   process.env.DATABASE_URL?.concat("?ssl=true") ||
   "postgres://localhost/workdiary";
@@ -35,6 +37,7 @@ module.exports = {
   CLIENT_ID,
   GMAIL_PASSWORD,
   BACKEND_URL,
+  FRONTEND_URL,
   ENCRYPTION_KEY,
   BCRYPT_HASH_ROUNDS,
   GENERAL_SECRET_KEY,

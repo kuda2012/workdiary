@@ -10,6 +10,7 @@ const {
   RESET_PASSWORD_SECRET_KEY,
   GENERAL_SECRET_KEY,
   ZOHO_EMAIL_PASSWORD,
+  FRONTEND_URL,
   BACKEND_URL,
 } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
@@ -358,7 +359,7 @@ class User {
                       <img src="cid:work_diary_image" alt="Work Diary Image" />
                       <p>
                        
-                      <a href="https://fe-workdiary.onrender.com/reset-password?token=${token}">
+                      <a href="${FRONTEND_URL}/?token=${token}">
                         Click here</a>
                          to reset your password. You have about 10 mins until it expires
                     </p>
