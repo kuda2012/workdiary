@@ -63,16 +63,8 @@ function formatSearchResults(searchResults, searched_query) {
 }
 
 function generateFinalString(searched_query, fullString) {
-  const regex = new RegExp(`\\b${searched_query.toLowerCase()}\\b`, "g");
-  const matches = fullString.toLowerCase().match(regex);
+  const index = fullString.toLowerCase().indexOf(searched_query.toLowerCase());
   const ELLIPSIS = "...";
-
-  if (!matches) {
-    // No matches found
-    return "";
-  }
-
-  const index = matches.index;
 
   if (index === 0) {
     // Case 1: searched_query at the beginning of the full string
@@ -98,11 +90,8 @@ function generateFinalString(searched_query, fullString) {
     )} ${slicedWordsAfter.join(" ")}${ELLIPSIS}`;
     return finalString;
   } else {
-    // Unreachable case (handled by the initial `if (!matches)`)
-    throw new ExpressError(
-      "Unexpected match state in generateFinalString",
-      400
-    );
+    // searched_query not found in the full string
+    return "";
   }
 }
 
