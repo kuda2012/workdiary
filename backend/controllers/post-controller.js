@@ -34,7 +34,8 @@ exports.create = async (req, res, next) => {
       if (req.body?.summary_text?.replace(/<[^>]+>/g, "")?.length > 20000) {
         throw new ExpressError("Entry is too long (20000 characters)", 403);
       }
-      post = await Post.create(id, req.body);
+      const createdByAddingText = true;
+      post = await Post.create(id, req.body, createdByAddingText);
     }
     const allPostDates = await Post.getAllPostDates(id);
     res.send({

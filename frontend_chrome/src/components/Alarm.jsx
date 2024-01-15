@@ -25,7 +25,7 @@ const Alarm = () => {
 
   useEffect(() => {
     setAlarm(user);
-    setButtonText("Saved");
+    setButtonText("Saved ✔");
   }, [user]);
 
   const handleDayCheckboxChange = (changedDay) => {
@@ -111,7 +111,6 @@ const Alarm = () => {
           data={selectedTime}
           interval={1500}
           onSave={() => {
-            setButtonText("Saved");
             dispatch(changeAlarm(workdiaryToken, { alarm_time: selectedTime }));
           }}
         />
@@ -121,10 +120,10 @@ const Alarm = () => {
           id="save-alarm"
           color="secondary"
           onClick={() => {
-            setButtonText("Saved");
+            setButtonText("Saved ✔");
           }}
         >
-          {buttonText === "Saved" && <b>{buttonText}</b>}
+          {buttonText === "Saved ✔" && <b>{buttonText}</b>}
           {buttonText === "Save" && <>{buttonText}</>}
         </button>
       </div>

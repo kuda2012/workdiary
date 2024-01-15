@@ -2,12 +2,22 @@ const { formatSearchResults } = require("../helpers/formatSearchResults");
 const { db, knex } = require("../db");
 const moment = require("moment");
 class Post {
-  static async create(user_id, body) {
-    const createdPost = await db.query(
-      `INSERT INTO posts (user_id, date, summary_text)
+  static async create(user_id, body, createdByAddingText) {
+    let createdPost;
+    if (createdByAddingText) {
+      createdPost = await db.query(
+        `INSERT INTO posts (user_id, date, summary_text, last_updated)
+       VALUES ($1, $2, $3, CURRENT_TIMESTAMP) RETURNING id, user_id, summary_text, last_updated, date`,
+        [user_id, body.date, body.summary_text]
+      );
+    } else {
+      createdPost = await db.query(
+        `INSERT INTO posts (user_id, date, summary_text)
        VALUES ($1, $2, $3) RETURNING id, user_id, summary_text, last_updated, date`,
-      [user_id, body.date, body.summary_text]
-    );
+        [user_id, body.date, body.summary_text]
+      );
+    }
+
     return {
       ...createdPost[0],
       last_updated: createdPost[0].last_updated,

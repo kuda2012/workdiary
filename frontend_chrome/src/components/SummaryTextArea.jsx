@@ -48,12 +48,12 @@ function countWords(htmlString) {
   return words.length;
 }
 const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
-  const summaryText = useSelector((state) => state?.post?.summary_text);
+  const summaryText = useSelector((state) => state?.post?.summary_text || "");
   const lastUpdated = useSelector((state) => state?.post?.last_updated);
   const interpreting = useSelector((state) => state.interpreting);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const date = useSelector((state) => state.date);
-  const [localSummaryText, setLocalSummaryText] = useState(summaryText);
+  const [localSummaryText, setLocalSummaryText] = useState(summaryText || "");
   const [buttonText, setButtonText] = useState("Save");
   const dispatch = useDispatch();
 
@@ -109,7 +109,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         onSave={(data) => {
           if (workdiaryToken && localSummaryText !== summaryText) {
             dispatchCreateOrUpdatePost(data);
-            setButtonText("Saved");
+            setButtonText("Saved ✔");
             dispatch(clearSearchResults());
           }
         }}
@@ -118,12 +118,12 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         onClick={() => {
           if (workdiaryToken && localSummaryText !== summaryText) {
             dispatchCreateOrUpdatePost(localSummaryText);
-            setButtonText("Saved");
+            setButtonText("Saved ✔");
             dispatch(clearSearchResults());
           }
         }}
       >
-        {buttonText === "Saved" && <b>{buttonText}</b>}
+        {buttonText === "Saved ✔" && <b>{buttonText}</b>}
         {buttonText === "Save" && <>{buttonText}</>}
       </button>
     </div>

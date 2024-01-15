@@ -56,7 +56,7 @@ CREATE TABLE "posts" (
   "summary_text" text,
   "summary_voice" bytea,
   "created_at" timestamp DEFAULT (CURRENT_TIMESTAMP),
-  "last_updated" timestamp DEFAULT (CURRENT_TIMESTAMP)
+  "last_updated" timestamp
 );
 
 CREATE TABLE "tags" (
