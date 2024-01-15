@@ -65,15 +65,16 @@ function formatSearchResults(searchResults, searched_query) {
 function generateFinalString(searched_query, fullString) {
   const index = fullString.toLowerCase().indexOf(searched_query.toLowerCase());
   const ELLIPSIS = "...";
+
   if (index === 0) {
     // Case 1: searched_query at the beginning of the full string
-    const words = fullString.split(" ");
+    const words = fullString.split(/\b/); // Split on word boundaries
     const slicedWords = words.slice(0, 5); // Adjust the number of words to display
     const finalString = `${slicedWords.join(" ")}${ELLIPSIS}`;
     return finalString;
   } else if (index === fullString.length - searched_query.length) {
     // Case 3: searched_query at the end of the full string
-    const words = fullString.split(" ");
+    const words = fullString.split(/\b/); // Split on word boundaries
     const slicedWords = words.slice(-5); // Adjust the number of words to display
     const finalString = `${ELLIPSIS}${slicedWords.join(" ")}`;
     return finalString;
