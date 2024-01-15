@@ -56,7 +56,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
       <div className="card">
         <div className="card-body">
           {!loadingDotsActive ? (
-            <form onSubmit={handleSubmit}>
+            <form name="login-or-signup-form" onSubmit={handleSubmit}>
               <div className="signup-form-items form-group">
                 <input
                   required={true}

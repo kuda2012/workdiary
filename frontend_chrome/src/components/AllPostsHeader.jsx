@@ -50,7 +50,7 @@ const AllPostsHeader = () => {
           <h5>Your Entries</h5>
         </div>
         <div className="col-10 d-flex justify-content-end">
-          <form onSubmit={handleFormSubmit}>
+          <form name="search-posts-form" onSubmit={handleFormSubmit}>
             <span
               className="me-1"
               onClick={reset}

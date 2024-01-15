@@ -63,7 +63,7 @@ const Calendar = () => {
         🔄
       </span>
       <div className="d-flex flex-column align-items-center">
-        <form onSubmit={handleSubmit}>
+        <form name="date-picker-form" onSubmit={handleSubmit}>
           <DatePicker
             ref={datePickerRef}
             disabledKeyboardNavigation={true}

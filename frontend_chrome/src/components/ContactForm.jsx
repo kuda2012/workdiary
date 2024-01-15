@@ -42,7 +42,7 @@ const ContactForm = ({ closeHowToModal }) => {
           Have a question, need assistance, or just wanna say hi? Contact us
           here or send an email to{" "}
           <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>
-          <form onSubmit={handleSubmit}>
+          <form name="contact-email-form" onSubmit={handleSubmit}>
             <div className="signup-form-items form-group">
               <label htmlFor="name">Name:</label>
               <input

@@ -55,7 +55,7 @@ const ChangePassword = ({ closeSettingsModal }) => {
   return (
     <div className="card mt-3">
       <div className="card-body">
-        <form onSubmit={handleSubmit}>
+        <form name="change-password-form" onSubmit={handleSubmit}>
           <div className="change-password-form-items form-group">
             <label htmlFor="password" className="mb-2">
               <h5>Change Password</h5>

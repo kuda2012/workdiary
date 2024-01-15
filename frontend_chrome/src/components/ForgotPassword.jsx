@@ -29,7 +29,7 @@ const ForgotPassword = () => {
   return (
     <div className="card">
       <div className="card-body">
-        <form onSubmit={handleSubmit}>
+        <form name="forgot-password-form" onSubmit={handleSubmit}>
           <div className="forgot-password-form-items form-group">
             <label htmlFor="email" className="mb-2">
               <h5>Send Reset Link</h5>

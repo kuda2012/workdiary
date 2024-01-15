@@ -126,7 +126,7 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
                 data-bs-parent="#accordionExample"
               >
                 <div class="accordion-body">
-                  <form onSubmit={handleDelete}>
+                  <form name="delete-account-form" onSubmit={handleDelete}>
                     <p>
                       We are sorry to see you go. If this is the truly the end,
                       we hope to see you again in the future.{" "}
