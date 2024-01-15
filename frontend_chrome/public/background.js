@@ -3,42 +3,7 @@ const config = {
   LOCAL_BACKEND_URL: "https://be-workdiary.onrender.com",
   // Other configurations...
 };
-// let tabId;
 
-// function openApp() {
-//   chrome.tabs.query(
-//     { url: "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html" },
-//     (tabs) => {
-//       if (tabs && tabs.length > 0) {
-//         // If the tab is already open, set the tabId
-//         tabId = tabs[0].id;
-//         console.log(`Extension tab found with ID: ${tabId}`);
-//       } else {
-//         // If the tab is not open, create a new tab
-//         chrome.tabs.create({ url: "/index.html" }, (tab) => {
-//           tabId = tab.id;
-//           console.log(`New tab created with ID: ${tabId}`);
-//         });
-//       }
-//     }
-//   );
-// }
-
-// function closeApp() {
-//   if (tabId) {
-//     chrome.tabs.remove(tabId);
-//     tabId = undefined;
-//     console.log(`Closed tab with ID: ${tabId}`);
-//   }
-// }
-
-// chrome.action.onClicked.addListener(function () {
-//   if (!tabId) {
-//     openApp();
-//   } else {
-//     closeApp();
-//   }
-// });
 let popupWindow;
 
 function isPopupOpen() {
@@ -112,7 +77,14 @@ chrome.runtime.onInstalled.addListener(async () => {
       tab.pendingUrl !==
       "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
     ) {
-      chrome.runtime.sendMessage({ type: "newTabOpened", tab: tab });
+      chrome.runtime.sendMessage({ type: "newTabOpened", tab: tab }, () => {
+        if (chrome.runtime.lastError) {
+          console.error(
+            "Error sending message:newTabOpened - ",
+            chrome.runtime.lastError.message
+          );
+        }
+      });
     }
   });
   chrome.tabs.onRemoved.addListener(function (tab) {
@@ -121,7 +93,14 @@ chrome.runtime.onInstalled.addListener(async () => {
       tab.pendingUrl !==
       "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
     ) {
-      chrome.runtime.sendMessage({ type: "tabClosed", tab: tab });
+      chrome.runtime.sendMessage({ type: "tabClosed", tab: tab }, () => {
+        if (chrome.runtime.lastError) {
+          console.error(
+            "Error sending message:tabClosed - ",
+            chrome.runtime.lastError.message
+          );
+        }
+      });
     }
   });
 
@@ -136,7 +115,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         () => {
           if (chrome.runtime.lastError) {
             console.error(
-              "Error sending message:",
+              "Error sending message:windowMoved - ",
               chrome.runtime.lastError.message
             );
           }
@@ -193,6 +172,7 @@ chrome.runtime.onInstalled.addListener(async () => {
 
   async function setAlarm(user) {
     await chrome.alarms.clearAll();
+    if (!user.alarm_status) return;
 
     const DAYS_OF_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
     // Get the current day's index

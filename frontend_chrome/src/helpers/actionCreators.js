@@ -564,6 +564,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 
 export async function setAlarm(user) {
   await chrome.alarms.clearAll();
+  if (!user.alarm_status) return;
 
   // Get the current day's index
   const currentDayIndex = DAYS_OF_WEEK.indexOf(
