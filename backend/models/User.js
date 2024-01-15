@@ -359,7 +359,7 @@ class User {
                       <img src="cid:work_diary_image" alt="Work Diary Image" />
                       <p>
                        
-                      <a href="${FRONTEND_URL}/?token=${token}">
+                      <a href="${FRONTEND_URL}/reset-password?token=${token}">
                         Click here</a>
                          to reset your password. You have about 10 mins until it expires
                     </p>
