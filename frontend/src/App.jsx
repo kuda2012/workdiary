@@ -14,6 +14,8 @@ function useGlobalErrorHandler() {
         `Error: ${message}. Please email contact@workdiary.me to report this issue`
       );
 
+      window.location.reload();
+
       // Trigger a refresh if desired
 
       if (originalOnError) {

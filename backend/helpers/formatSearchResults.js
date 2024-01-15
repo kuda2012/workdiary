@@ -18,7 +18,12 @@ function formatSearchResults(searchResults, searched_query) {
 
       let indexOfDot = indices.length > 0 ? indices[indices.length - 1] : null;
       if (!indexOfDot) {
-        throw new ExpressError("No . in tab url", 400);
+        return {
+          date: result.date,
+          [result.match_source]: result[result.match_source],
+          match_source: result.match_source,
+          original_string: result.original_string,
+        };
       }
 
       // decide where to add ellipsis
