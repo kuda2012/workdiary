@@ -37,7 +37,6 @@ const AllPostsHeader = () => {
   const reset = () => {
     if (searchResults) {
       setSearchText("");
-      dispatch(setShowAllPosts(true));
       dispatch(clearSearchResults());
       dispatch(getPostsList(workdiaryToken, 1));
     }

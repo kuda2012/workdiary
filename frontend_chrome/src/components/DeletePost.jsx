@@ -4,7 +4,6 @@ import {
   clearSearchResults,
   deletePost,
   getPostsList,
-  setShowAllPosts,
 } from "../helpers/actionCreators";
 import { Button } from "reactstrap";
 
@@ -25,7 +24,6 @@ const DeletePost = ({ closeDeletePostModal }) => {
             dispatch(clearSearchResults());
             dispatch(clearScrollTo());
             dispatch(getPostsList(workdiaryToken, 1));
-            dispatch(setShowAllPosts(true));
             closeDeletePostModal();
           } else {
             alert(

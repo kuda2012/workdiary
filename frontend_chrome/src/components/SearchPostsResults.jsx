@@ -4,7 +4,6 @@ import {
   getPost,
   searchJournal,
   setScrollTo,
-  setShowAllPosts,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
 
@@ -22,7 +21,6 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
       closeAllPostsModal();
       dispatch(clearSearchResults());
       dispatch(setScrollTo(result));
-      dispatch(setShowAllPosts(true));
     }
   };
   function getNumbersBetween(min, max) {
