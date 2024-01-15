@@ -79,8 +79,9 @@ function generateFinalString(searched_query, fullString) {
     return finalString;
   } else if (index > 0) {
     // Case 2: searched_query in the middle of the full string
-    const wordsBeforesearched_query = fullString.substr(0, index).split(" ");
-    const wordsAftersearched_query = fullString.substr(index).split(" ");
+    const words = fullString.split(/\b/); // Split on word boundaries
+    const wordsBeforesearched_query = words.slice(0, index);
+    const wordsAftersearched_query = words.slice(index);
     const slicedWordsBefore = wordsBeforesearched_query.slice(-3); // Words before searched_query
     const slicedWordsAfter = wordsAftersearched_query.slice(0, 3); // Words after searched_query
     const finalString = `${ELLIPSIS}${slicedWordsBefore.join(
