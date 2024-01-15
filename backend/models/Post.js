@@ -37,20 +37,22 @@ class Post {
 
   static async listAllPosts(user_id, currentPage = 1) {
     function shortenSummaryText(entry) {
-      // Extract the first 7 full words
+      // 1. Remove HTML tags:
+      const textWithoutTags = entry?.replace(/<[^>]+>/g, "");
 
-      const words = entry
-        ?.replace(/<[^>]+>/g, "")
-        ?.match(/\w+/g)
-        ?.slice(0, 7);
-      // Check if any words were found
-      if (!words) {
-        return ``;
+      // 2. Extract the first 7 words or characters, including non-word characters:
+      const wordsAndCharacters = textWithoutTags?.match(/\S+/g)?.slice(0, 7);
+
+      // 3. Check for words or characters:
+      if (!wordsAndCharacters) {
+        return "";
       }
 
-      // Join the words back together with spaces and wrap in a paragraph tag
+      // 4. Join the extracted words/characters with spaces and add "..." if needed:
       return `${
-        words?.length < 7 ? words.join(" ") : words.join(" ").concat("...")
+        wordsAndCharacters.length < 7
+          ? wordsAndCharacters.join(" ")
+          : wordsAndCharacters.join(" ").concat("...")
       }`;
     }
     const pageSize = 10;
@@ -151,7 +153,7 @@ class Post {
             'tag' AS match_source
         FROM posts AS p
         LEFT JOIN tags ON p.id = tags.post_id
-        WHERE p.user_id = $1 AND tags.text ILIKE '%' || '\#' || $2 || '%' 
+        WHERE p.user_id = $1 AND tags.text ILIKE '%' || $2 || '%'
         GROUP BY p.date, tags.post_id
     ) AS subquery
 )
