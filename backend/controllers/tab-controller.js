@@ -39,6 +39,16 @@ exports.bulkDelete = async (req, res, next) => {
     const { id } = decodeJwt(req.headers.authorization);
     const post = await Post.getPost(id, req.query.date);
     const updatedTabs = await Tab.bulkDelete(post, req.query.tab_ids);
+    const postDeleted = await Post.deletePostIfEmpty(id, req.query.date);
+    const allPostDates = await Post.getAllPostDates(id);
+    if (postDeleted) {
+      return res.send({
+        date: req.query.date,
+        post: null,
+        message: "Your tabs have been deleted",
+        all_post_dates: [...allPostDates],
+      });
+    }
     const tags = await Tag.getTags(id, req.query.date);
     if (post && tags.length > 0) {
       post.tags = tags;
@@ -63,6 +73,16 @@ exports.delete = async (req, res, next) => {
       req.query.tab_id,
       req.query.date
     );
+    const postDeleted = await Post.deletePostIfEmpty(id, req.query.date);
+    const allPostDates = await Post.getAllPostDates(id);
+    if (postDeleted) {
+      return res.send({
+        date: req.query.date,
+        post: null,
+        message: "Your tab has been deleted",
+        all_post_dates: [...allPostDates],
+      });
+    }
     const tags = await Tag.getTags(id, req.query.date);
     if (post && tags.length > 0) {
       post.tags = tags;

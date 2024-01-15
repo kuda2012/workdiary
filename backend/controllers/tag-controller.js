@@ -44,6 +44,16 @@ exports.delete = async (req, res, next) => {
       req.query.tag_id,
       req.query.date
     );
+    const postDeleted = await Post.deletePostIfEmpty(id, req.query.date);
+    const allPostDates = await Post.getAllPostDates(id);
+    if (postDeleted) {
+      return res.send({
+        date: req.query.date,
+        post: null,
+        message: "Your tag has been deleted",
+        all_post_dates: [...allPostDates],
+      });
+    }
     const tabs = await Tab.getTabs(id, req.query.date);
     if (post && tabs.length > 0) {
       post.tabs = tabs;

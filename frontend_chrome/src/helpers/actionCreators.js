@@ -425,6 +425,9 @@ export function deleteTag(workdiary_token, date, tag_id) {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
+      if (data.all_post_dates) {
+        dispatch(setAllPostDates(data.all_post_dates));
+      }
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {
@@ -464,6 +467,9 @@ export function bulkDeleteTabs(workdiary_token, date, tabs) {
             headers: { Authorization: `Bearer ${workdiary_token}` },
           }
         );
+        if (data.all_post_dates) {
+          dispatch(setAllPostDates(data.all_post_dates));
+        }
         dispatch(setPost(data.post));
         dispatch(setDate(data.date));
       }
@@ -482,6 +488,9 @@ export function deleteTab(workdiary_token, date, tab_id) {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
+      if (data.all_post_dates) {
+        dispatch(setAllPostDates(data.all_post_dates));
+      }
       dispatch(setPost(data.post));
       dispatch(setDate(data.date));
     } catch (error) {

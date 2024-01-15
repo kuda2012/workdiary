@@ -27,6 +27,28 @@ class Post {
         }
       : null;
   }
+
+  static async deletePostIfEmpty(user_id, date) {
+    const post = await db.query(
+      `SELECT posts.id as post_id, summary_text, url, text as tags_text FROM posts
+        LEFT JOIN TAGS
+        ON posts.id = tags.post_id
+        LEFT JOIN tabs
+        ON posts.id = tabs.post_id
+        WHERE user_id = $1 AND DATE(date)=$2`,
+      [user_id, date]
+    );
+    if (
+      post[0]?.post_id &&
+      (post[0]?.summary_text || post[0]?.url || post[0]?.tags_text)
+    ) {
+      return false;
+    } else if (post[0]?.post_id) {
+      await this.delete(post[0]?.post_id);
+      return true;
+    }
+    return false;
+  }
   static async getAllPostDates(user_id) {
     const allPostDates = await db.query(
       `SELECT date FROM posts WHERE user_id = $1`,

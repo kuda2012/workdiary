@@ -14,6 +14,7 @@ const Tags = () => {
   const dispatch = useDispatch();
   function onTagAdd(tag) {
     dispatch(createTag(workdiaryToken, date, tag));
+    dispatch(clearSearchResults());
   }
   function onTagDelete(tag_id) {
     dispatch(deleteTag(workdiaryToken, date, tag_id));

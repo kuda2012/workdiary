@@ -131,6 +131,15 @@ exports.update = async (req, res, next) => {
       );
     }
     const updatePost = await Post.update(post.id, req.body);
+    const postDeleted = await Post.deletePostIfEmpty(id, req.body.date);
+    const allPostDates = await Post.getAllPostDates(id);
+    if (postDeleted) {
+      return res.send({
+        date: req.body.date,
+        post: null,
+        all_post_dates: [...allPostDates],
+      });
+    }
     const tabs = await Tab.getTabs(id, req.body.date);
     const tags = await Tag.getTags(id, req.body.date);
     if (updatePost && tabs.length > 0) {
@@ -139,7 +148,6 @@ exports.update = async (req, res, next) => {
     if (updatePost && tags.length > 0) {
       updatePost.tags = tags;
     }
-    const allPostDates = await Post.getAllPostDates(id);
     res.send({
       date: req.body.date,
       post: { ...updatePost },
