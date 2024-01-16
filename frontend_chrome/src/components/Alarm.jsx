@@ -12,6 +12,7 @@ const Alarm = () => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [buttonText, setButtonText] = useState("Save");
   const [selectedTime, setSelectedTime] = useState(user?.alarm_time);
+  const [initialRender, setInitialRender] = useState(true);
 
   const handleSwitchToggle = () => {
     setButtonText("Save");
@@ -25,6 +26,10 @@ const Alarm = () => {
 
   useEffect(() => {
     setAlarm(user);
+    if (initialRender) {
+      setInitialRender(false);
+      return;
+    }
     setButtonText("Saved ✔");
   }, [user]);
 
