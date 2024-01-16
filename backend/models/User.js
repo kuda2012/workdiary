@@ -140,7 +140,7 @@ class User {
         console.log("Verification email sent:", info.response);
       }
     });
-    return "A verification link has been sent to your email. Please click on it to finalize the creation of your account!";
+    return "A verification link has been sent to your email. Please click on it to finalize the creation of your account! Check your spam folder if need be";
   }
 
   static async sendWelcomeEmail(user) {
@@ -390,7 +390,7 @@ class User {
         }
       });
     }
-    return "If the given email is on file, we have a sent a link there to reset your password. Reminder: If your account is a Google one-click login, you do not have a password. Just login with the Google button!";
+    return "If the given email is on file, we have a sent a link there to reset your password. Check your spam folder if need be. Reminder: If your account is a Google one-click login, you do not have a password. Just login with the Google button!";
   }
   static async contactUs(body) {
     const transporter = nodemailer.createTransport({
