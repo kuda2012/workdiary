@@ -43,10 +43,7 @@ const ChangePassword = ({ closeSettingsModal }) => {
           "Password length must be at least 8 characters but not longer than 25"
         );
       } else if (formData.new_password === formData.new_password_copy) {
-        dispatch(
-          changePassword(workdiaryToken, { ...formData, email: user.email })
-        );
-        console.log("dont fire");
+        dispatch(changePassword(workdiaryToken, { ...formData }));
         setTimeout(() => {
           setFormData(INITIAL_STATE);
           closeSettingsModal();

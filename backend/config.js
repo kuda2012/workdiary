@@ -6,7 +6,6 @@ const PORT = process.env.PORT || 3000;
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
-
 const DB_URI =
   process.env.DATABASE_URL?.concat("?ssl=true") ||
   "postgres://localhost/workdiary";
