@@ -174,6 +174,22 @@ exports.delete = async (req, res, next) => {
   }
 };
 
+exports.multiDelete = async (req, res, next) => {
+  try {
+    const { id } = decodeJwt(req.headers.authorization);
+    await Post.multiDelete(id, req.query.dates);
+    const postsList = await Post.listAllPosts(id, 1);
+    const allPostDates = await Post.getAllPostDates(id);
+    res.send({
+      all_post_dates: [...allPostDates],
+      posts_list: [...postsList.posts],
+      pagination: postsList.pagination,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // exports.getSharedPost = async (req, res, next) => {
 //   const post = await Post.getSharedPost(req.params.pointerId);
 //   const tabs = await Tab.getTabs(post.user_id, post.date);

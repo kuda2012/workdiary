@@ -47,6 +47,10 @@ const Calendar = () => {
   useEffect(() => {
     handleToggleCalendar(false);
   }, [date]);
+
+  useEffect(() => {
+    handleToggleCalendar(false);
+  }, [allPostDates]);
   return (
     <>
       <span

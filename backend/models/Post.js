@@ -1,5 +1,6 @@
 const { formatSearchResults } = require("../helpers/formatSearchResults");
 const { db, knex } = require("../db");
+const pgp = require("pg-promise")();
 const moment = require("moment");
 class Post {
   static async create(user_id, body, createdByAddingText) {
@@ -111,6 +112,25 @@ class Post {
   static async delete(post_id) {
     const post = await db.query(`DELETE FROM posts WHERE id = $1`, [post_id]);
     return post;
+  }
+
+  static async multiDelete(user_id, dates) {
+    const datesToDelete = dates.split(",");
+    try {
+      await db.tx(async (t) => {
+        const deleteQuery = pgp.as.format(
+          "DELETE FROM POSTS WHERE date IN ($1:csv) AND user_id=$2",
+          [datesToDelete, user_id]
+        );
+
+        return t.none(deleteQuery);
+      });
+
+      // Return a success message or other response if needed
+      return "success";
+    } catch (error) {
+      throw error;
+    }
   }
 
   static async update(post_id, body) {

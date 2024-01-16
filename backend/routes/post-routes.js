@@ -24,6 +24,7 @@ router.patch(
   postController.update
 );
 router.delete("/delete", tokenIsCurrent, postController.delete);
+router.delete("/multi-delete", tokenIsCurrent, postController.multiDelete);
 
 // router.get("/shared-post/:pointerId", postController.getSharedPost);
 // router.post(

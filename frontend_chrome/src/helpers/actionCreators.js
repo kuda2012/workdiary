@@ -1,5 +1,6 @@
 var { VITE_LOCAL_BACKEND_URL } = import.meta.env;
 import axios from "axios";
+import moment from "moment";
 export function setGoogleAccessToken(google_access_token) {
   return {
     type: "SET_GOOGLE_ACCESS_TOKEN",
@@ -472,6 +473,27 @@ export function bulkDeleteTabs(workdiary_token, date, tabs) {
         }
         dispatch(setPost(data.post));
         dispatch(setDate(data.date));
+      }
+    } catch (error) {
+      alert(error?.response?.data?.message || error?.message);
+      console.log(error);
+    }
+  };
+}
+
+export function multiDeletePosts(workdiary_token, dates, currentDate) {
+  return async function (dispatch) {
+    try {
+      const convertDatesArrToCsv = arrayToCSV(dates);
+      if (dates) {
+        const { data } = await axios.delete(
+          `${VITE_LOCAL_BACKEND_URL}/posts/multi-delete?dates=${convertDatesArrToCsv} `,
+          {
+            headers: { Authorization: `Bearer ${workdiary_token}` },
+          }
+        );
+        await dispatch(getPost(workdiary_token, currentDate));
+        dispatch(setPostsList(data.posts_list, data.pagination));
       }
     } catch (error) {
       alert(error?.response?.data?.message || error?.message);

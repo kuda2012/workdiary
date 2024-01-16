@@ -53,6 +53,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
   const interpreting = useSelector((state) => state.interpreting);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const date = useSelector((state) => state.date);
+  const allPostDates = useSelector((state) => state?.all_post_dates);
   const [localSummaryText, setLocalSummaryText] = useState(summaryText || "");
   const [buttonText, setButtonText] = useState("Save");
   const dispatch = useDispatch();

@@ -1,14 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { getPost, getPostsList } from "../helpers/actionCreators";
+import {
+  getPost,
+  getPostsList,
+  multiDeletePosts,
+} from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
+import { useState } from "react";
 
 const AllPosts = ({ closeAllPostsModal }) => {
   const dispatch = useDispatch();
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const postsList = useSelector((state) => state?.posts_list);
   const pagination = useSelector((state) => state?.pagination);
-
+  const date = useSelector((state) => state.date);
+  const [allBoxesSelected, setAllBoxesSelected] = useState(false);
+  const [postsSelected, setPostsSelected] = useState(new Set());
   const handlePostClick = (date) => {
     if (date) {
       dispatch(getPost(workdiaryToken, moment.utc(date).format("MM/DD/YYYY")));
@@ -31,6 +38,25 @@ const AllPosts = ({ closeAllPostsModal }) => {
             {postsList &&
               postsList.map((post) => (
                 <li className="posts-list-li">
+                  <input
+                    className="tab-checkbox"
+                    type="checkbox"
+                    checked={postsSelected.has(post.date)}
+                    onChange={() => {
+                      if (postsSelected.has(post.date)) {
+                        setAllBoxesSelected(false);
+                        setPostsSelected((postsSelected) => {
+                          postsSelected.delete(post.date);
+                          return new Set(postsSelected);
+                        });
+                      } else {
+                        setPostsSelected((postsSelected) => {
+                          postsSelected.add(post.date);
+                          return new Set(postsSelected);
+                        });
+                      }
+                    }}
+                  />
                   <a
                     href="#"
                     className="posts-list-anchor-tags"
@@ -55,6 +81,20 @@ const AllPosts = ({ closeAllPostsModal }) => {
                   </a>
                 </li>
               ))}
+            <button
+              onClick={() => {
+                if (postsSelected.size > 0)
+                  dispatch(
+                    multiDeletePosts(
+                      workdiaryToken,
+                      Array.from(postsSelected),
+                      date
+                    )
+                  );
+              }}
+            >
+              Delete Selected Entries
+            </button>
           </ul>
           <button
             className="p-2"
