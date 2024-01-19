@@ -132,7 +132,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
           if (workdiaryToken && !hasSavedOnce) {
             if (earlyTyping) {
               dispatchCreateOrUpdatePost(localSummaryText);
-              setButtonText("Saved ✔");
+              // setButtonText("Saved ✔");
               dispatch(clearSearchResults());
             }
             if (!hasSavedOnce) {

@@ -18,6 +18,9 @@ function useGlobalErrorHandler() {
       );
 
       // Trigger a refresh if desired
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 1000);
 
       if (originalOnError) {
         originalOnError(message, source, lineno, colno, error);

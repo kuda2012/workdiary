@@ -10,12 +10,13 @@ import "../styles/Home.css";
 const Calendar = () => {
   const date = useSelector((state) => state.date);
   const allPostDates = useSelector((state) => state?.all_post_dates);
+  const summaryText = useSelector((state) => state?.post?.summary_text);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
-  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const datePickerRef = useRef();
   const inputRef = useRef(null);
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,7 +51,8 @@ const Calendar = () => {
 
   useEffect(() => {
     handleToggleCalendar(false);
-  }, [allPostDates]);
+  }, [allPostDates, summaryText]);
+
   return (
     <>
       <span
@@ -79,6 +81,11 @@ const Calendar = () => {
                 : null
             }
             onChange={handleInputChange}
+            onCalendarClose={() => {
+              setTimeout(() => {
+                if (isCalendarOpen) handleToggleCalendar(false);
+              }, 150);
+            }}
             highlightDates={allPostDates?.map((date) =>
               moment(date, "YYYY-MM-DD").toDate()
             )}
@@ -119,14 +126,17 @@ const Calendar = () => {
       <span
         id="calendar-arrow"
         className="ms-1 me-0 mt-0 mb-0 p-0"
-        onClick={() => handleToggleCalendar(!isCalendarOpen)}
+        onClick={() => {
+          isCalendarOpen
+            ? handleToggleCalendar(false)
+            : handleToggleCalendar(true);
+        }}
       >
         {isCalendarOpen ? "🔼" : "🔽"}
       </span>
     </>
   );
 };
-// ...
 
 const CustomDatePickerInput = ({
   value,
@@ -141,14 +151,14 @@ const CustomDatePickerInput = ({
       type="text"
       value={value}
       onClick={() => {
-        handleToggleCalendar(!isCalendarOpen);
+        isCalendarOpen
+          ? handleToggleCalendar(false)
+          : handleToggleCalendar(true);
       }}
       onChange={onChange}
       ref={inputRef}
     />
   );
 };
-
-// ...
 
 export default Calendar;
