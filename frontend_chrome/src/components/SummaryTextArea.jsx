@@ -53,8 +53,6 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
   const interpreting = useSelector((state) => state.interpreting);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const date = useSelector((state) => state.date);
-  const [hasSavedOnce, setHasSavedOnce] = useState(false);
-  const [earlyTyping, setEarlyTyping] = useState(false);
   const [localSummaryText, setLocalSummaryText] = useState(summaryText || "");
   const [buttonText, setButtonText] = useState("Save");
   const dispatch = useDispatch();
@@ -64,12 +62,9 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
       alert(
         "Entry is too long (20000 characters). Any extra characters will not be saved"
       );
-    } else {
-      if (!hasSavedOnce) {
-        setEarlyTyping(true);
-      }
-      setLocalSummaryText(value !== "<p><br></p>" ? value : "");
+      return;
     }
+    setLocalSummaryText(value !== "<p><br></p>" ? value : "");
   };
 
   useEffect(() => {
@@ -78,8 +73,6 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
 
   useEffect(() => {
     setLocalSummaryText(summaryText);
-    setHasSavedOnce(false);
-    setEarlyTyping(false);
   }, [date]);
   useEffect(() => {
     setLocalSummaryText(summaryText);
@@ -114,11 +107,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         data={localSummaryText}
         interval={1500}
         onSave={(data) => {
-          if (
-            workdiaryToken &&
-            localSummaryText !== summaryText &&
-            hasSavedOnce
-          ) {
+          if (workdiaryToken && localSummaryText !== summaryText) {
             dispatchCreateOrUpdatePost(data);
             setButtonText("Saved ✔");
             dispatch(clearSearchResults());
@@ -126,19 +115,13 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
         }}
       />
       <Autosave
-        data={earlyTyping}
-        interval={500}
-        onSave={(data) => {
-          if (workdiaryToken && !hasSavedOnce) {
-            if (earlyTyping) {
-              dispatchCreateOrUpdatePost(localSummaryText);
-              // setButtonText("Saved ✔");
-              dispatch(clearSearchResults());
-            }
-            if (!hasSavedOnce) {
-              setHasSavedOnce(true);
-              setEarlyTyping(false);
-            }
+        data={date}
+        interval={3000}
+        onSave={() => {
+          if (workdiaryToken && localSummaryText !== summaryText) {
+            dispatchCreateOrUpdatePost(localSummaryText);
+            setButtonText("Saved ✔");
+            dispatch(clearSearchResults());
           }
         }}
       />
@@ -148,10 +131,6 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
             dispatchCreateOrUpdatePost(localSummaryText);
             setButtonText("Saved ✔");
             dispatch(clearSearchResults());
-            if (!hasSavedOnce) {
-              setHasSavedOnce(true);
-              setEarlyTyping(false);
-            }
           }
         }}
       >

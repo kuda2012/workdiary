@@ -82,6 +82,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
                 </li>
               ))}
             <button
+              className="btn btn-danger"
               onClick={() => {
                 if (postsSelected.size > 0)
                   dispatch(
