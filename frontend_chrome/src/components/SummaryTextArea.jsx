@@ -50,6 +50,8 @@ function countWords(htmlString) {
 const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
   const summaryText = useSelector((state) => state?.post?.summary_text || "");
   const lastUpdated = useSelector((state) => state?.post?.last_updated);
+  const postsList = useSelector((state) => state?.posts_list);
+  const post = useSelector((state) => state?.post);
   const interpreting = useSelector((state) => state.interpreting);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const date = useSelector((state) => state.date);
@@ -70,6 +72,13 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
   useEffect(() => {
     setButtonText("Save");
   }, [date]);
+
+  useEffect(() => {
+    if (!post) {
+      setButtonText("Save");
+      setLocalSummaryText(summaryText);
+    }
+  }, [post]);
 
   useEffect(() => {
     setLocalSummaryText(summaryText);

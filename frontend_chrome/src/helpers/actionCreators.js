@@ -315,7 +315,11 @@ export function getPostsList(workdiary_token, currentPage = 1) {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
-      dispatch(setPostsList(data.posts_list, data.pagination));
+      if (data?.posts_list?.length > 0) {
+        dispatch(setPostsList(data.posts_list, data.pagination));
+      } else if (data?.posts_list?.length === 0) {
+        dispatch(setPostsList(null, data.pagination));
+      }
     } catch (error) {
       alert(error?.response?.data?.message || error?.message);
       console.log(error);
@@ -493,7 +497,11 @@ export function multiDeletePosts(workdiary_token, dates, currentDate) {
           }
         );
         await dispatch(getPost(workdiary_token, currentDate));
-        dispatch(setPostsList(data.posts_list, data.pagination));
+        if (data?.posts_list?.length > 0) {
+          dispatch(setPostsList(data.posts_list, data.pagination));
+        } else if (data?.posts_list?.length === 0) {
+          dispatch(setPostsList(null, data.pagination));
+        }
       }
     } catch (error) {
       alert(error?.response?.data?.message || error?.message);

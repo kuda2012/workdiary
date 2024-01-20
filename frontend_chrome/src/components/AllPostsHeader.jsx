@@ -46,7 +46,7 @@ const AllPostsHeader = () => {
     <div className="container">
       <div className="row justify-content-between">
         <div className="col-2">
-          <h5>Your Entries</h5>
+          {searchResults ? <h5>Your Everything</h5> : <h5>Your Entries</h5>}
         </div>
         <div className="col-10 d-flex justify-content-end">
           <form name="search-posts-form" onSubmit={handleFormSubmit}>

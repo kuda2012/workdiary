@@ -6,7 +6,7 @@ import {
   multiDeletePosts,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AllPosts = ({ closeAllPostsModal }) => {
   const dispatch = useDispatch();
@@ -32,15 +32,16 @@ const AllPosts = ({ closeAllPostsModal }) => {
 
   return (
     <div className="container mt-2">
-      <div className="row flex-column align-items-center">
+      <div className="row">
         <div className="col-12">
           <ul id="posts-list">
             {postsList &&
               postsList.map((post) => (
                 <li className="posts-list-li">
                   <input
-                    className="tab-checkbox"
+                    className="posts-checkbox me-2 ms-1"
                     type="checkbox"
+                    name="select-all-posts-input"
                     checked={postsSelected.has(post.date)}
                     onChange={() => {
                       if (postsSelected.has(post.date)) {
@@ -81,22 +82,65 @@ const AllPosts = ({ closeAllPostsModal }) => {
                   </a>
                 </li>
               ))}
-            <button
-              className="btn btn-danger"
-              onClick={() => {
-                if (postsSelected.size > 0)
-                  dispatch(
-                    multiDeletePosts(
-                      workdiaryToken,
-                      Array.from(postsSelected),
-                      date
-                    )
-                  );
-              }}
-            >
-              Delete Selected Entries
-            </button>
+            <div className="row justify-content-start">
+              <div className="col-8">
+                {postsList && (
+                  <>
+                    <div className="mt-2">
+                      <input
+                        id="select-all-posts-input"
+                        className="posts-checkbox me-2 ms-1"
+                        type="checkbox"
+                        checked={allBoxesSelected}
+                        onChange={() => {
+                          if (!postsList || postsList?.length === 0) return;
+                          setAllBoxesSelected(!allBoxesSelected);
+                          if (allBoxesSelected) {
+                            setPostsSelected(new Set());
+                          } else if (postsList?.length !== postsSelected.size) {
+                            setPostsSelected((selectingAllPosts) => {
+                              postsList.map((addPost) => {
+                                selectingAllPosts.add(addPost.date);
+                              });
+                              return new Set(selectingAllPosts);
+                            });
+                          }
+                        }}
+                      />
+                      <label
+                        id="select-all-posts-label"
+                        for="select-all-posts-input"
+                      >
+                        <span className="ms-2">
+                          Select all (this page only)
+                        </span>
+                      </label>
+                    </div>{" "}
+                    <button
+                      className="btn btn-primary mt-2"
+                      onClick={() => {
+                        if (postsSelected.size > 0) {
+                          dispatch(
+                            multiDeletePosts(
+                              workdiaryToken,
+                              Array.from(postsSelected),
+                              date
+                            )
+                          );
+                          setPostsSelected(new Set());
+                          setAllBoxesSelected(false);
+                        }
+                      }}
+                    >
+                      Delete Selected
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
           </ul>
+        </div>
+        <div>
           <button
             className="p-2"
             onClick={() => dispatch(getPostsList(workdiaryToken, 1))}

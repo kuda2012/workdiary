@@ -24,6 +24,15 @@
   cursor: pointer;
 }
 
+#select-all-posts-input {
+  position: relative;
+  left: 6px;
+}
+
+#select-all-posts-label {
+  font-size: small;
+}
+
 .hidden {
   opacity: 0.2;
 }
