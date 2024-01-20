@@ -6,42 +6,82 @@ function formatSearchResults(searchResults, searched_query) {
     result.original_string = result[result.match_source];
     // if searched_query is findable in first 20 chars of string, add first 20 chars and then ... {searched_query}
     // searched_query is not findable in first 20 chars of string, add first 20 chars and ...
-    if (result.match_source === "tab") {
-      let url = result.tab;
-      const regex = /\./g;
-      let match;
-      const indices = [];
+    if (result.match_source === "tab_title") {
+      let sourceText = result.tab_title.toLowerCase();
+      let searchText = searched_query.toLowerCase();
 
-      while ((match = regex.exec(url)) !== null) {
-        indices.push(match.index);
+      // Find the match within the entire sourceText
+      let indexOfMatch = sourceText.indexOf(searchText);
+
+      // Determine the context window size in terms of words
+      const CONTEXT_WORD_COUNT = 6;
+
+      // Adjust startIndex and endIndex to word boundaries, considering full string
+      let startIndex = Math.max(
+        0,
+        sourceText.lastIndexOf(" ", indexOfMatch - CONTEXT_WORD_COUNT) + 1
+      ); // Find previous space
+      let endIndex =
+        sourceText.indexOf(
+          " ",
+          indexOfMatch + searchText.length + CONTEXT_WORD_COUNT
+        ) || sourceText.length; // Find next space after context window
+
+      // Extract the highlighted section
+      let highlightedText = sourceText.slice(startIndex, endIndex);
+
+      // Apply ellipsis if necessary, considering full string length
+      if (startIndex > 0 || endIndex < sourceText.length) {
+        highlightedText = `${startIndex > 0 ? "..." : ""}${highlightedText}${
+          endIndex < sourceText.length ? "..." : ""
+        }`;
       }
 
-      let indexOfDot = indices.length > 0 ? indices[indices.length - 1] : null;
-      if (!indexOfDot) {
-        return {
-          date: result.date,
-          [result.match_source]: result[result.match_source],
-          match_source: result.match_source,
-          original_string: result.original_string,
-        };
+      // Update the source with the highlighted section
+      result[result.match_source] = highlightedText;
+    } else if (result.match_source === "tab") {
+      let url = new URL(result.tab);
+
+      // Extract the origin of the URL using url.origin
+      let primaryUrl = url.origin.toLowerCase();
+
+      let sourceText = result[result.match_source].toLowerCase();
+      let searchText = searched_query.toLowerCase();
+
+      // Find the first (and hopefully only) occurrence of the search query
+      let indexOfMatch = sourceText.indexOf(searchText);
+
+      // Determine the context window size (maximum characters to show before and after the match)
+      const CONTEXT_WINDOW_SIZE = 20;
+
+      // Calculate the starting and ending indices of the highlighted section
+      let startIndex = Math.max(0, indexOfMatch - CONTEXT_WINDOW_SIZE + 1); // Ensure not out of bounds
+      let endIndex = Math.min(
+        sourceText.length,
+        indexOfMatch + searchText.length + CONTEXT_WINDOW_SIZE - 1
+      );
+
+      // Extract the highlighted section
+      let highlightedText = sourceText.slice(startIndex, endIndex);
+
+      // Apply ellipsis if necessary
+      if (startIndex > 0 || endIndex < sourceText.length) {
+        highlightedText = `${startIndex > 0 ? "..." : ""}${highlightedText}${
+          endIndex < sourceText.length ? "..." : ""
+        }`;
       }
 
-      // decide where to add ellipsis
-      const ELLIPSIS = "...";
-      url = url.slice(indexOfDot + 1);
-      let index = url.match(/[\/?#:!]/)?.index || url.length;
-      let domain = result.tab.slice(indexOfDot, index + indexOfDot + 1);
-      let indexOfEnding = index + indexOfDot + 1;
-      result[result.match_source] =
-        result[result.match_source]
-          .toLowerCase()
-          .indexOf(searched_query.toLowerCase()) <=
-        indexOfEnding - domain.length + 1
-          ? `${result[result.match_source].slice(0, indexOfEnding)}${ELLIPSIS}`
-          : `${result[result.match_source].slice(
-              0,
-              indexOfEnding
-            )}${ELLIPSIS}${searched_query}`;
+      // Wrap the matched portion in a span with a specific class for styling
+
+      // Update the source with the highlighted section
+      if (primaryUrl.toLowerCase().includes(searchText)) {
+        // If the origin already contains the match, use it directly
+        result[result.match_source] = primaryUrl;
+      } else {
+        // Otherwise, append only the non-origin part of the highlighted text
+        result[result.match_source] =
+          primaryUrl + highlightedText.slice(primaryUrl.length);
+      }
     } else if (result.match_source === "entry") {
       result[result.match_source] = result[result.match_source].replace(
         /<[^>]*>/g,
@@ -52,12 +92,12 @@ function formatSearchResults(searchResults, searched_query) {
         result[result.match_source]
       );
     }
-
     return {
       date: result.date,
       [result.match_source]: result[result.match_source],
       match_source: result.match_source,
       original_string: result.original_string,
+      searched_query,
     };
   });
 }

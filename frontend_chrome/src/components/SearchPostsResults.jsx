@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearSearchResults,
@@ -20,7 +21,12 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
       dispatch(getPost(workdiaryToken, result.date));
       closeAllPostsModal();
       dispatch(clearSearchResults());
-      dispatch(setScrollTo(result));
+      dispatch(
+        setScrollTo({
+          ...result,
+          [result.match_source]: result.original_string,
+        })
+      );
     }
   };
   function getNumbersBetween(min, max) {

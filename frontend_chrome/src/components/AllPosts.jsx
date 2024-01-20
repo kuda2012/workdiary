@@ -6,7 +6,7 @@ import {
   multiDeletePosts,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const AllPosts = ({ closeAllPostsModal }) => {
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
                     {post.entry ? (
                       <>
                         <b>Entry: </b>
-                        {post.entry}
+                        <span>{post.entry}</span>
                       </>
                     ) : (
                       <i>*Has only tags and/or tabs*</i>
