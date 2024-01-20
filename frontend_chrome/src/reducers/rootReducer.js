@@ -69,6 +69,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, logging_in: action.logging_in };
     case "HALF_RESET":
       return {
+        ...INITIAL_STATE,
         workdiary_token: state.workdiary_token,
         date: state.date,
         show_all_posts: true,
@@ -77,7 +78,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       localStorage.removeItem("workdiary_token");
       chrome.storage.local.clear();
       chrome.storage.session.clear();
-      return {};
+      return { ...INITIAL_STATE };
     default:
       return state;
   }
