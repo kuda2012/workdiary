@@ -42,46 +42,28 @@ function formatSearchResults(searchResults, searched_query) {
     } else if (result.match_source === "tab") {
       let url = new URL(result.tab);
 
-      // Extract the origin of the URL using url.origin
+      // Extract the origin of the URL and convert to lowercase
       let primaryUrl = url.origin.toLowerCase();
 
-      let sourceText = result[result.match_source].toLowerCase();
-      let searchText = searched_query.toLowerCase();
+      let formattedUrl = url.href;
 
-      // Find the first (and hopefully only) occurrence of the search query
-      let indexOfMatch = sourceText.indexOf(searchText);
-
-      // Determine the context window size (maximum characters to show before and after the match)
-      const CONTEXT_WINDOW_SIZE = 20;
-
-      // Calculate the starting and ending indices of the highlighted section
-      let startIndex = Math.max(0, indexOfMatch - CONTEXT_WINDOW_SIZE + 1); // Ensure not out of bounds
-      let endIndex = Math.min(
-        sourceText.length,
-        indexOfMatch + searchText.length + CONTEXT_WINDOW_SIZE - 1
-      );
-
-      // Extract the highlighted section
-      let highlightedText = sourceText.slice(startIndex, endIndex);
-
-      // Apply ellipsis if necessary
-      if (startIndex > 0 || endIndex < sourceText.length) {
-        highlightedText = `${startIndex > 0 ? "..." : ""}${highlightedText}${
-          endIndex < sourceText.length ? "..." : ""
-        }`;
-      }
-
-      // Wrap the matched portion in a span with a specific class for styling
-
-      // Update the source with the highlighted section
-      if (primaryUrl.toLowerCase().includes(searchText)) {
-        // If the origin already contains the match, use it directly
-        result[result.match_source] = primaryUrl;
+      if (url.protocol === "chrome-extension:") {
+        formattedUrl = url.href;
+      } else if (url.pathname.includes(".html")) {
+        formattedUrl = primaryUrl + "..." + ".html";
+      } else if (primaryUrl.includes(searched_query)) {
+        // Check if the match is within the primary URL
+        // If so, just use the primary URL with ellipsis
+        formattedUrl = primaryUrl + "...";
       } else {
-        // Otherwise, append only the non-origin part of the highlighted text
-        result[result.match_source] =
-          primaryUrl + highlightedText.slice(primaryUrl.length);
+        // Otherwise, construct the full formatted URL with ellipsis
+        let pathnameAndSearch =
+          url.pathname.slice(primaryUrl.length) + searched_query;
+        formattedUrl = primaryUrl + "..." + pathnameAndSearch + "...";
       }
+
+      // Update the source with the formatted URL
+      result[result.match_source] = formattedUrl;
     } else if (result.match_source === "entry") {
       result[result.match_source] = result[result.match_source].replace(
         /<[^>]*>/g,
