@@ -28,7 +28,11 @@ function formatSearchResults(searchResults, searched_query) {
         ) || sourceText.length; // Find next space after context window
 
       // Extract the highlighted section
-      let highlightedText = sourceText.slice(startIndex, endIndex);
+      // let highlightedText = sourceText.slice(startIndex, endIndex);
+      let highlightedText = result.tab_title.slice(
+        0,
+        sourceText.slice(startIndex, endIndex).length
+      );
 
       // Apply ellipsis if necessary, considering full string length
       if (startIndex > 0 || endIndex < sourceText.length) {
@@ -49,8 +53,8 @@ function formatSearchResults(searchResults, searched_query) {
 
       if (url.protocol === "chrome-extension:") {
         formattedUrl = url.href;
-      } else if (url.pathname.includes(".html")) {
-        formattedUrl = primaryUrl + "..." + ".html";
+      } else if (searched_query.includes("html")) {
+        formattedUrl = primaryUrl + "..." + "html";
       } else if (primaryUrl.includes(searched_query)) {
         // Check if the match is within the primary URL
         // If so, just use the primary URL with ellipsis
