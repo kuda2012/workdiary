@@ -32,7 +32,7 @@ const Tab = ({
     <>
       <div className="col-md-2" id={scrollToThisTab ? scrollToThisTab : null}>
         <input
-          className="tab-checkbox"
+          className="tab-checkbox form-check-input"
           type="checkbox"
           checked={isSelected}
           onChange={() => {

@@ -42,6 +42,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
         alert(
           "Password length must be at least 8 characters but not longer than 25"
         );
+        return;
       }
       if (!loadingDotsActive && !loggingInVar) {
         setloadingDotsActive(true);
@@ -65,6 +66,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
               <div className="signup-form-items form-group">
                 <input
                   required={true}
+                  autocomplete={isSignup ? "off" : "on"}
                   type="text"
                   id="email"
                   placeholder="Email"
@@ -77,6 +79,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
               {isSignup && (
                 <div className="signup-form-items form-group">
                   <input
+                    autocomplete={isSignup ? "off" : "on"}
                     required={true}
                     type="text"
                     placeholder="Full Name"
@@ -92,7 +95,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
               <div className="signup-form-items form-group">
                 <div className="input-password">
                   <input
-                    autoComplete="new-password"
+                    autocomplete={isSignup ? "off" : "on"}
                     placeholder="Password"
                     type={showPassword1 ? "text" : "password"}
                     required={true}

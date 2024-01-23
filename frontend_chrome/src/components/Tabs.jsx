@@ -193,6 +193,7 @@ const Tabs = () => {
             <input
               type="checkbox"
               id="select-all-tabs-input"
+              className="form-check-input"
               checked={allBoxesSelected}
               onChange={async () => {
                 if (!tabs || tabs?.length === 0) return;

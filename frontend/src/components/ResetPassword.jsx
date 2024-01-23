@@ -37,6 +37,7 @@ const ResetPassword = ({}) => {
         alert(
           "Password length must be at least 8 characters but not longer than 25"
         );
+        return;
       } else if (formData.new_password === formData.new_password_copy) {
         const response = await axios.patch(
           `${VITE_LOCAL_BACKEND_URL}/users/reset-password`,
@@ -70,7 +71,7 @@ const ResetPassword = ({}) => {
                 </label>
                 <div className="input-password">
                   <input
-                    autoComplete="password-copy"
+                    autoComplete="off"
                     placeholder="New Password"
                     id="new_password"
                     type={showPassword1 ? "text" : "password"}
@@ -90,7 +91,7 @@ const ResetPassword = ({}) => {
                 </div>
                 <div className="input-password">
                   <input
-                    autoComplete="password-copy"
+                    autocomplete="off"
                     id="new_password_copy"
                     placeholder="Enter new password again"
                     type={showPassword2 ? "text" : "password"}

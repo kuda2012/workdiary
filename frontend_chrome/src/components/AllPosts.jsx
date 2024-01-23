@@ -38,7 +38,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
               postsList.map((post) => (
                 <li className="posts-list-li">
                   <input
-                    className="posts-checkbox me-2 ms-1"
+                    className="posts-checkbox me-2 ms-1 form-check-input"
                     type="checkbox"
                     name="select-all-posts-input"
                     checked={postsSelected.has(post.date)}
@@ -88,7 +88,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
                     <div className="mt-2">
                       <input
                         id="select-all-posts-input"
-                        className="posts-checkbox me-2 ms-1"
+                        className="posts-checkbox me-2 ms-1 form-check-input"
                         type="checkbox"
                         checked={allBoxesSelected}
                         onChange={() => {
