@@ -95,7 +95,7 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
               <div className="signup-form-items form-group">
                 <div className="input-password">
                   <input
-                    autocomplete={isSignup ? "off" : "on"}
+                    autocomplete="off"
                     placeholder="Password"
                     type={showPassword1 ? "text" : "password"}
                     required={true}

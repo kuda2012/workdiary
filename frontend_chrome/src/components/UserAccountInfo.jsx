@@ -27,7 +27,7 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
   return (
     <div className="dropdown">
       <button
-        className="dropdown-toggle"
+        className="dropdown-toggle dropdown-toggle-settings-modal-buttons"
         id="user-info-dropdown-button"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"

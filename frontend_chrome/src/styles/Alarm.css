@@ -4,9 +4,7 @@
 #save-alarm:hover {
   border: 1.5px solid #646cff !important;
 }
-.dropdown-menu {
-  border-radius: 8px !important;
-}
+
 #alarm-dropdown {
   text-align: center;
 }
@@ -14,4 +12,11 @@
 #time-picker {
   margin: auto;
   width: 200px;
+}
+
+.dropdown-menu {
+  border-radius: 8px !important;
+}
+.dropdown-toggle-settings-modal-buttons {
+  width: 100%;
 }

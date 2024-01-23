@@ -18,7 +18,7 @@ const OtherSettings = () => {
   return (
     <div className="dropdown">
       <button
-        className="dropdown-toggle"
+        className="dropdown-toggle dropdown-toggle-settings-modal-buttons"
         id="other-settings-dropdown-button"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"
@@ -27,7 +27,7 @@ const OtherSettings = () => {
         aria-expanded="false"
       >
         <img src="/settings-dark.png"></img>
-        <div>Other Settings</div>
+        <div>Settings</div>
       </button>
       <div
         id="other-settings-dropdown-menu"

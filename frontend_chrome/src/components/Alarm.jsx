@@ -52,7 +52,7 @@ const Alarm = () => {
   return (
     <div className="dropdown">
       <button
-        className="dropdown-toggle"
+        className="dropdown-toggle dropdown-toggle-settings-modal-buttons"
         id="alarm-dropdown"
         data-bs-toggle="dropdown"
         data-bs-auto-close="outside"

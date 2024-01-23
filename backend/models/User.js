@@ -140,7 +140,7 @@ class User {
         console.log("Verification email sent:", info.response);
       }
     });
-    return "A verification link has been sent to your email. Please click on it to finalize the creation of your account! Check your spam folder if need be";
+    return "A verification link has been sent to your email. Please click on it to finalize the creation of your account! Check your spam folder if need be.";
   }
 
   static async sendWelcomeEmail(user) {
@@ -163,16 +163,16 @@ class User {
                   <p>Hi ${user.name},</p>
                   <p>Welcome to Workdiary! We're thrilled to have you onboard and help you remember the awesome things you accomplish each day.</p>
 
-                  <h2>Here's how to use the app</h2>
+                  <h3>Here's how to use the app</h3>
 
-                  <h3>Simple Version:</h3>
+                  <h4>Simple Version:</h4>
                   <ol>
                     <li>Press record: Share a quick voice note about your day.</li>
                     <li>Or, type it out: Whatever works best for you!</li>
                     <li>That's it. Easy huh?</li>
                   </ol>
 
-                  <h3>Want a bit more? Here's how to supercharge your Workdiary experience:</h3>
+                  <h4>Want a bit more? Here's how to supercharge your Workdiary experience:</h4>
                   <ol>
                     <li>Get notified: We'll remind you at 5pm (customizable!) to capture your day.</li>
                     <li>Voice or text: Share your thoughts, whichever way feels best.</li>
@@ -329,9 +329,7 @@ class User {
   static async forgotPassword(body) {
     const { email } = body;
     const user = await this.getUser(null, email);
-    if (user.auth_provider === "google") {
-      return "If the given email is on file, we have a sent a link there to reset your password. Reminder: If your account is a Google one-click login, you do not have a password. Just login with the Google button!";
-    }
+
     if (user) {
       const transporter = nodemailer.createTransport({
         host: "smtppro.zoho.com",
@@ -346,22 +344,22 @@ class User {
         { user_id: user.id, email },
         RESET_PASSWORD_SECRET_KEY,
         {
-          expiresIn: "10m",
+          expiresIn: "30m",
         }
       );
 
       // Email options
-      const mailOptions = {
-        from: "no-reply@workdiary.me",
-        to: email,
-        subject: "Work Diary: Password Reset",
-        html: `<div>
+      const mailOptions =
+        user.auth_provider === "google"
+          ? {
+              from: "no-reply@workdiary.me",
+              to: email,
+              subject: "Work Diary: Password Reset",
+              html: `<div>
                       <img src="cid:work_diary_image" alt="Work Diary Image" />
                       <p>
-                       
-                      <a href="${FRONTEND_URL}/reset-password?token=${token}">
-                        Click here</a>
-                         to reset your password. You have about 10 mins until it expires
+                      Your account is a Google one-click login. You cannot reset your password.
+                      Just click the Google login button on the Login/Signup page to login!
                     </p>
                     <small>Didn't request this? Just ignore</small>
                     <div>
@@ -372,15 +370,43 @@ class User {
                     </small>
                     </div>
                 </div>`,
-        attachments: [
-          {
-            filename: "w_trident.png",
-            path: "./w_trident.png",
-            cid: "work_diary_image", // Same as the src cid in the img tag
-          },
-        ],
-      };
-
+              attachments: [
+                {
+                  filename: "w_trident.png",
+                  path: "./w_trident.png",
+                  cid: "work_diary_image", // Same as the src cid in the img tag
+                },
+              ],
+            }
+          : {
+              from: "no-reply@workdiary.me",
+              to: email,
+              subject: "Work Diary: Password Reset",
+              html: `<div>
+                      <img src="cid:work_diary_image" alt="Work Diary Image" />
+                      <p>
+                       
+                      <a href="${FRONTEND_URL}/reset-password?token=${token}">
+                        Click here</a>
+                         to reset your password. You have 30 mins until it expires.
+                    </p>
+                    <small>Didn't request this? Just ignore</small>
+                    <div>
+                    <small>
+                        <a href="https://chromewebstore.google.com/">
+                            Download app
+                        </a> 
+                    </small>
+                    </div>
+                </div>`,
+              attachments: [
+                {
+                  filename: "w_trident.png",
+                  path: "./w_trident.png",
+                  cid: "work_diary_image", // Same as the src cid in the img tag
+                },
+              ],
+            };
       // Send email
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -390,7 +416,7 @@ class User {
         }
       });
     }
-    return "If the given email is on file, we have a sent a link there to reset your password. Check your spam folder if need be. Reminder: If your account is a Google one-click login, you do not have a password. Just login with the Google button!";
+    return "If the given email is on file, we have a sent a link there to reset your password. Check your spam folder if need be.";
   }
   static async contactUs(body) {
     const transporter = nodemailer.createTransport({

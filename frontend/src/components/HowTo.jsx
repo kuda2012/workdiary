@@ -58,16 +58,12 @@ const HowTo = ({ closeHowToModal }) => {
             <div className="accordion-body">
               <ul>
                 <li>
+                  To recall what you did over the months so you can prepare for
+                  a performance review (or plan your exit accordingly ;))
+                </li>
+                <li>
                   To pick up where you left off in solving an old problem/bug
                   (So make sure to save your relevant tabs to a given work day!)
-                </li>
-                <li>
-                  To recall what you did over the months so you can prepare for
-                  a performance review
-                </li>
-                <li>
-                  To recall how you truly feel about your employment at a given
-                  company and plan your exit accordingly ;)
                 </li>
               </ul>
             </div>
@@ -95,18 +91,19 @@ const HowTo = ({ closeHowToModal }) => {
             <div className="accordion-body">
               <div className="row">
                 <div className="col text-center">
-                  Hi, My name is Kuda Mwakutuya. I made this app because as a
-                  Software engineer, each day when I would open my laptop to
-                  start work, I felt like it was a disorganized hassle to
-                  remember where I left from yesterday. Too many open tabs, no
-                  recall of what I did yesterday, etc. Another reasons is that
-                  it would be time for performance reviews or 1 on 1's with my
-                  manager, and I would feel like I had done so much work over
-                  the months but had no proof to show for it. Like sure, I added
-                  a feature to the app, but there was a buttload of work that
-                  went into making that. Where's the evidence for all of this
-                  backend work ?? This app will help you to be prepared to show
-                  up for yourself
+                  Hi, My name is Kuda Mwakutuya. I made this app because I felt
+                  a sense of dis-ease about how many months could go by at work
+                  with little hard proof of what I've been up to this whole
+                  time. This app gives you that security to say "Okay, I have
+                  been working hard. Look at what I was involved in each day."
+                  Use it to prepare for your performance reviews. If you've been
+                  pulling in your tabs each day, use it to hop back into a old
+                  problem you were solving. Ultimately, use it to give yourself
+                  peace of mind that you've not just been lollygagging at work
+                  all day. Many people have personal diaries...you spend most of
+                  your waking hours working...Why wouldn't it be good to have a
+                  Work Diary then? Of course it would be. Let me know how it
+                  goes. ✌
                 </div>
               </div>
               <div className="row justify-content-around mt-2">

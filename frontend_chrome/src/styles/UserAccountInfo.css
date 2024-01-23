@@ -1,9 +1,15 @@
 #user-info-dropdown-button {
   text-align: center;
 }
+
+#user-info-dropdown-menu {
+  width: 400px;
+}
+
 .dropdown-menu {
   border-radius: 8px !important;
 }
-#user-info-dropdown-menu {
-  width: 400px;
+
+.dropdown-toggle-settings-modal-buttons {
+  width: 100%;
 }

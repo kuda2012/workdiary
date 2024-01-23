@@ -8,8 +8,7 @@
   border-radius: 0px 0px 5px 5px;
 }
 .ql-editor {
-  min-height: 300px;
-  max-height: 400px;
+  height: 350px;
   overflow-y: auto;
 }
 .ql-editor strong {

@@ -182,7 +182,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
     <div className="mt-5" id="summary-voice">
       <h4 className="mb-4" id="summary-voice-header">
         {user
-          ? `Hey, ${user.name.match(/(\w+)/)[0]}. Tell us. How was work today?`
+          ? `Hey, ${user.name?.match(/(\w+)/)[0]}. Tell us. How was work today?`
           : "Hey, first_name. Tell us. How was work today?"}
       </h4>
       <div id="summary-voice-media-button">

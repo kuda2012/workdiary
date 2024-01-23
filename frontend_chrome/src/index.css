@@ -75,6 +75,10 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.form-check-input {
+  border: 1px gray solid !important;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -109,9 +113,5 @@ button:focus-visible {
   }
   .ql-editor {
     color: black;
-  }
-
-  .form-check-input {
-    border: 1px gray solid !important;
   }
 }
