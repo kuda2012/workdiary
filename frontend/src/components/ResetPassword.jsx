@@ -91,7 +91,7 @@ const ResetPassword = ({}) => {
                 </div>
                 <div className="input-password">
                   <input
-                    autocomplete="off"
+                    autoComplete="off"
                     id="new_password_copy"
                     placeholder="Enter new password again"
                     type={showPassword2 ? "text" : "password"}

@@ -1,17 +1,7 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import { useEffect } from "react";
 
-const Router = ({ isHowToModalOpen, closeHowToModal }) => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    if (currentPath !== "/reset-password") {
-      navigate("/reset-password", { replace: true });
-    }
-  }, [navigate]);
-
+const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
   return (
     <Routes>
       <Route
@@ -19,6 +9,16 @@ const Router = ({ isHowToModalOpen, closeHowToModal }) => {
         element={
           <Home
             isHowToModalOpen={isHowToModalOpen}
+            closeHowToModal={closeHowToModal}
+          />
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <Home
+            isHowToModalOpen={isHowToModalOpen}
+            openHowToModal={openHowToModal}
             closeHowToModal={closeHowToModal}
           />
         }

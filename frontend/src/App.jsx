@@ -38,6 +38,7 @@ function App() {
       <Navbar openHowToModal={openHowToModal} />
       <Router
         isHowToModalOpen={isHowToModalOpen}
+        openHowToModal={openHowToModal}
         closeHowToModal={closeHowToModal}
       />
     </>

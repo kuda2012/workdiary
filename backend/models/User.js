@@ -118,7 +118,7 @@ class User {
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/">
-                            Download app
+                            Get the app
                         </a> 
                     </small>
                     </div>
@@ -157,11 +157,11 @@ class User {
     const mailOptions = {
       from: "no-reply@workdiary.me",
       to: user.email,
-      subject: "Welcome to WorkDiary!",
+      subject: "Welcome to Work Diary!",
       html: `<div>
                   <img src="cid:work_diary_image" alt="Work Diary Image" />
                   <p>Hi ${user.name},</p>
-                  <p>Welcome to Workdiary! We're thrilled to have you onboard and help you remember the awesome things you accomplish each day.</p>
+                  <p>Welcome to Work Diary! We're thrilled to have you onboard and help you remember the awesome things you accomplish each day.</p>
 
                   <h3>Here's how to use the app</h3>
 
@@ -172,7 +172,7 @@ class User {
                     <li>That's it. Easy huh?</li>
                   </ol>
 
-                  <h4>Want a bit more? Here's how to supercharge your Workdiary experience:</h4>
+                  <h4>Want a bit more? Here's how to supercharge your WorkDiary experience:</h4>
                   <ol>
                     <li>Get notified: We'll remind you at 5pm (customizable!) to capture your day.</li>
                     <li>Voice or text: Share your thoughts, whichever way feels best.</li>
@@ -180,8 +180,8 @@ class User {
                     <li>Save your tabs: Grab relevant browser tabs to bring back past contexts.</li>
                   </ol>
 
-                  <p>Have a fantastic day, and enjoy using Workdiary!</p>
-                  <p>The Workdiary Team</p>
+                  <p>Have a fantastic day, and enjoy using Work Diary!</p>
+                  <p>The Work Diary Team</p>
                   <p>P.S. We're always building new features based on user feedback. Share your thoughts with us any time: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
                 </div>`,
       attachments: [
@@ -366,7 +366,7 @@ class User {
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/">
-                            Download app
+                            Get the app
                         </a> 
                     </small>
                     </div>
@@ -395,7 +395,7 @@ class User {
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/">
-                            Download app
+                            Get the app
                         </a> 
                     </small>
                     </div>

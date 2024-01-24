@@ -135,10 +135,10 @@ const HowTo = ({ closeHowToModal }) => {
             </div>
           </div>
         </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingFour">
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingFour">
             <button
-              class="accordion-button collapsed"
+              className="accordion-button collapsed"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseFour"
@@ -150,11 +150,11 @@ const HowTo = ({ closeHowToModal }) => {
           </h2>
           <div
             id="collapseFour"
-            class="accordion-collapse collapse"
+            className="accordion-collapse collapse"
             aria-labelledby="headingFour"
             data-bs-parent="#accordionExample"
           >
-            <div class="accordion-body">
+            <div className="accordion-body">
               <div className="row">
                 <div className="col">
                   <ContactForm closeHowToModal={closeHowToModal} />
