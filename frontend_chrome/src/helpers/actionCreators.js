@@ -1,6 +1,5 @@
 var { VITE_LOCAL_BACKEND_URL } = import.meta.env;
 import axios from "axios";
-import moment from "moment";
 export function setGoogleAccessToken(google_access_token) {
   return {
     type: "SET_GOOGLE_ACCESS_TOKEN",
@@ -389,7 +388,7 @@ function bulkOpenTabs(tabURLs, windowId) {
 }
 
 export function openTabs(tabUrls, windowId) {
-  return async function (dispatch) {
+  return async function () {
     try {
       if (windowId && tabUrls.length > 0) {
         bulkOpenTabs(tabUrls, windowId);

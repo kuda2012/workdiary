@@ -13,6 +13,7 @@ class Tag {
     });
     return this.getTags(post.user_id, body.date);
   }
+
   static async getTags(user_id, date) {
     const tags = await db.manyOrNone(
       `SELECT tags.id as tag_id, post_id, text FROM tags
@@ -40,7 +41,6 @@ class Tag {
         [post_id, tag_id]
       );
     }
-
     return this.getTags(user_id, date);
   }
 }

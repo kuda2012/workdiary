@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../helpers/actionCreators";
 import Tabs from "./Tabs";
@@ -7,12 +8,12 @@ import SummaryVoice from "./SummaryVoice";
 import TagsModal from "./TagsModal";
 import TabsModal from "./TabsModal";
 import SummaryTextArea from "./SummaryTextArea";
-import "../styles/Home.css";
 
 const MiddleRowMain = () => {
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const tabs = useSelector((state) => state.post?.tabs);
   const clickedSearchResult = useSelector(
     (state) => state.clicked_search_result
   );
@@ -74,6 +75,13 @@ const MiddleRowMain = () => {
       }, [400]);
     }
   }, [clickedSearchResult, isTabsModalOpen]);
+  const popoverContent = (
+    <Popover id="popover-content-tabs-modal">
+      Pull in your browser tabs. Delete the ones that don't pertain to the
+      narrative of today's work. Come back in the future and you can use these
+      tabs to restart an old problem.
+    </Popover>
+  );
   return (
     <div className="row justify-content-around">
       <div className="col-1"></div>
@@ -102,6 +110,18 @@ const MiddleRowMain = () => {
             <div className="row justify-content-between">
               <div className="col">
                 <h2>Tabs</h2>
+              </div>
+              <div className="col d-flex justify-content-end mb-2">
+                <OverlayTrigger
+                  rootClose={true}
+                  trigger="click"
+                  placement={tabs?.length < 3 || !tabs ? "top" : "bottom"}
+                  overlay={popoverContent}
+                >
+                  <button id="info-button-tabs-modal" className="px-3">
+                    <img src="/info_1.png" alt="info-icon" className="" />
+                  </button>
+                </OverlayTrigger>
               </div>
             </div>
             <Tabs />

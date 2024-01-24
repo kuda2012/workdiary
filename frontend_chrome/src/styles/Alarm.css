@@ -1,6 +1,7 @@
 #save-alarm {
   border: 1px solid gray;
 }
+
 #save-alarm:hover {
   border: 1.5px solid #646cff !important;
 }
@@ -17,6 +18,7 @@
 .dropdown-menu {
   border-radius: 8px !important;
 }
+
 .dropdown-toggle-settings-modal-buttons {
   width: 100%;
 }

@@ -10,6 +10,7 @@
 #bold-auth-toggler {
   text-decoration: underline;
 }
+
 #bold-auth-toggler:hover {
   color: #007bff;
 }

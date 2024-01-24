@@ -1,5 +1,4 @@
 const moment = require("moment");
-const ExpressError = require("../expressError");
 function formatSearchResults(searchResults, searched_query) {
   return searchResults.map((result) => {
     result.date = moment(result.date, moment.ISO_8601).format("MM/DD/YYYY");

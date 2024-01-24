@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import {
@@ -6,7 +7,6 @@ import {
   multiDeletePosts,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
-import { useState } from "react";
 
 const AllPosts = ({ closeAllPostsModal }) => {
   const dispatch = useDispatch();

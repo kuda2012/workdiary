@@ -1,4 +1,21 @@
-/* Modal.css */
+#header-how-to-auth-modal-header {
+  text-transform: none;
+}
+
+#span-how-to-auth-modal-header {
+  cursor: pointer;
+  position: relative;
+  left: 150px;
+}
+
+#bold-how-to-auth-modal-header {
+  text-decoration: underline;
+}
+
+#bold-how-to-auth-modal-header:hover {
+  color: #007bff;
+}
+
 .auth-modal-overlay {
   position: fixed;
   top: 0;
@@ -18,19 +35,4 @@
   border-radius: 8px;
   position: relative;
   width: 500px;
-}
-#header-how-to-auth-modal-header {
-  text-transform: none;
-}
-#span-how-to-auth-modal-header {
-  cursor: pointer;
-  position: relative;
-  left: 150px;
-}
-
-#bold-how-to-auth-modal-header {
-  text-decoration: underline;
-}
-#bold-how-to-auth-modal-header:hover {
-  color: #007bff;
 }

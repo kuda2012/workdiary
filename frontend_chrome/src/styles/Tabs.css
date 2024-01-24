@@ -22,3 +22,17 @@
   max-height: 400px;
   overflow-y: auto;
 }
+
+#popover-content-tabs-modal {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  color: black;
+  font-weight: 450;
+}
+
+#info-button-tabs-modal {
+  background-color: rgb(240, 240, 240);
+  position: relative;
+  bottom: 10px;
+}

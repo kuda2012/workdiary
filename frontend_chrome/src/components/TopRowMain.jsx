@@ -18,7 +18,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
       <div className="col mt-1 d-flex justify-content-start px-0">
         <button
           onClick={() => openHowToModal()}
-          className="unclickable-exception-elements"
+          className="top-row-buttons unclickable-exception-elements"
         >
           <img src="/info.png" className="unclickable-exception-elements"></img>
         </button>
@@ -35,8 +35,8 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
         <Calendar />
       </div>
       <div className="col mt-1 d-flex justify-content-end px-0">
-        <button onClick={() => openSettingsModal()}>
-          <img src="/gear-settings.png"></img>
+        <button className="top-row-buttons" onClick={() => openSettingsModal()}>
+          <img src="/settings_2.png"></img>
         </button>
         {isSettingsModalOpen && workdiaryToken && (
           <SettingsModal

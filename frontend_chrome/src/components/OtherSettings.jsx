@@ -26,7 +26,7 @@ const OtherSettings = () => {
         aria-haspopup="true"
         aria-expanded="false"
       >
-        <img src="/settings-dark.png"></img>
+        <img src="/settings-dark-1.png"></img>
         <div>Settings</div>
       </button>
       <div

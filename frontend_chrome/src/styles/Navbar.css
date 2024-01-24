@@ -12,12 +12,3 @@ nav {
   font-size: 1.5rem;
   text-transform: none;
 }
-
-.nav-brand-move-right {
-  position: relative;
-  right: 113px;
-}
-/* .nav-brand-move-right {
-  position: relative;
-  right: 173px;
-} */

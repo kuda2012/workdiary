@@ -1,9 +1,7 @@
 #summary-voice {
   position: relative;
 }
-/* #summary-voice-header {
-  position: relative;
-} */
+
 #summary-voice-media-buttons {
   position: relative;
   right: 15px;
@@ -48,7 +46,7 @@
 
 /* Apply the animation to the text */
 .pulsating-red-dot {
-  animation: pulse 1.1s infinite; /* Use the pulse animation for 2 seconds infinitely */
+  animation: pulse 1.1s infinite; /* Use the pulse animation for 1.1 seconds infinitely */
 }
 
 @keyframes pulse-visibility {

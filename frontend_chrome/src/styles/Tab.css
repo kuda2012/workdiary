@@ -2,12 +2,12 @@
   white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  max-width: 100%; /* Ensure it doesn't exceed the container's width */
+  max-width: 100%;
 }
 
 .tab-link {
   display: inline-block;
-  max-width: 100%; /* Ensure the link doesn't exceed its parent's width */
+  max-width: 100%;
 }
 
 .tab-checkbox {

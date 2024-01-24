@@ -1,12 +1,9 @@
 const Tab = require("../models/Tab");
 const Tag = require("../models/Tag");
 const Post = require("../models/Post");
-
 const { decodeJwt } = require("../helpers/decodeJwt");
 
 exports.create = async (req, res, next) => {
-  // if posts exist for the day, add tabs to the day
-  // if post does not exist for the day, create post for the day, and then add tabs
   try {
     const { id } = decodeJwt(req.headers.authorization);
     let post = await Post.getPost(id, req.body.date);

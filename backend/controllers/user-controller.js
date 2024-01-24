@@ -1,8 +1,8 @@
-const { decodeJwt } = require("../helpers/decodeJwt");
-const { db } = require("../db");
-const moment = require("moment");
 const User = require("../models/User");
 const ExpressError = require("../expressError");
+const moment = require("moment");
+const { decodeJwt } = require("../helpers/decodeJwt");
+const { db } = require("../db");
 
 exports.signup = async (req, res, next) => {
   try {
@@ -97,6 +97,7 @@ exports.changePassword = async (req, res, next) => {
     next(error);
   }
 };
+
 exports.resetPassword = async (req, res, next) => {
   try {
     const { email, user_id } = decodeJwt(req.headers.authorization);
@@ -188,6 +189,7 @@ exports.getAccountInfo = async (req, res, next) => {
     next(error);
   }
 };
+
 exports.contactUs = async (req, res, next) => {
   try {
     const message = await User.contactUs(req.body);

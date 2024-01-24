@@ -4,6 +4,7 @@
   justify-content: space-evenly;
   padding: 0px;
 }
+
 .input-password {
   display: flex;
   flex-direction: row;
@@ -13,13 +14,16 @@
 .signup-password {
   margin-right: 5px;
 }
+
 .password-button {
   width: 40%;
   margin-left: 10px;
 }
+
 .signup-form-items {
   margin: 8px 0px;
 }
+
 .signup-submit {
   margin: 8px 0px 0px 0px;
 }
@@ -34,10 +38,12 @@
   position: relative;
   right: 40px;
 }
+
 #google-login-img {
   position: relative;
   right: 50px;
 }
+
 #google-login-span {
   position: relative;
   right: 12px;

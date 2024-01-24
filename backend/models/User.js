@@ -273,6 +273,7 @@ class User {
       );
     }
   }
+
   static async resetPassword(body, user_id, email, token) {
     const { auth_provider } = await db.oneOrNone(
       `SELECT auth_provider from users WHERE email =$1`,
@@ -418,6 +419,7 @@ class User {
     }
     return "If the given email is on file, we have a sent a link there to reset your password. Check your spam folder if need be.";
   }
+
   static async contactUs(body) {
     const transporter = nodemailer.createTransport({
       host: "smtppro.zoho.com",
@@ -451,6 +453,7 @@ class User {
 
     return "Sent your email!";
   }
+
   static async delete(user_id) {
     const getUser = await db.query(
       `DELETE FROM USERS
@@ -459,6 +462,7 @@ class User {
     );
     return getUser;
   }
+
   static async update(body, user_id) {
     let queryText = "UPDATE users SET";
     const queryValues = [];

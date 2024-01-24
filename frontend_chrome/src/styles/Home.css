@@ -2,18 +2,22 @@
 .unclickable-exception-elements * {
   pointer-events: auto;
 }
+
 .main-container:not(.clickable) {
   pointer-events: none;
   /* Additional styles for non-clickable state */
 }
+
 #calendar-column {
   position: relative;
   left: 18px;
 }
+
 #three-dots {
   position: relative;
   right: 7px;
 }
+
 #custom-date-picker-input {
   display: flex;
   justify-content: center;
@@ -35,6 +39,10 @@
   border: 1.5px solid #646cff !important;
 }
 
+/* .top-row-buttons {
+  background-color: rgb(240, 240, 240);
+} */
+
 #delete-post-button {
   position: relative;
   left: 300px;
@@ -47,6 +55,7 @@
   cursor: pointer;
   user-select: none;
 }
+
 #reset-calendar {
   position: relative;
   top: 2px;

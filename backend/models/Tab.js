@@ -19,6 +19,7 @@ class Tab {
     });
     return this.getTabs(post.user_id, post.date);
   }
+
   static async getTabs(user_id, date) {
     const tabs = await db.manyOrNone(
       `SELECT tabs.id as tab_id, post_id, title, url, icon FROM tabs
@@ -49,6 +50,7 @@ class Tab {
 
     return this.getTabs(user_id, date);
   }
+  
   static async bulkDelete(post, tab_ids) {
     const tabIdsToDelete = tab_ids.split(",").map(Number);
 
