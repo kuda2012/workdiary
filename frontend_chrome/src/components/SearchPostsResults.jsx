@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearSearchResults,
   getPost,
-  searchJournal,
+  searchDiary,
   setScrollTo,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
@@ -69,7 +69,7 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
           {
             <button
               className="p-2"
-              onClick={() => dispatch(searchJournal(workdiaryToken, query, 1))}
+              onClick={() => dispatch(searchDiary(workdiaryToken, query, 1))}
               disabled={pagination.currentPage <= 4}
             >
               <img
@@ -86,7 +86,7 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
               className="p-2"
               onClick={() =>
                 dispatch(
-                  searchJournal(
+                  searchDiary(
                     workdiaryToken,
                     query,
                     Math.max(1, pagination.currentPage - 4)
@@ -109,9 +109,7 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
                 num === pagination.currentPage ? "primary" : "secondary"
               }`}
               key={num}
-              onClick={() =>
-                dispatch(searchJournal(workdiaryToken, query, num))
-              }
+              onClick={() => dispatch(searchDiary(workdiaryToken, query, num))}
             >
               {num}
             </button>
@@ -122,7 +120,7 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
               className="p-2"
               onClick={() =>
                 dispatch(
-                  searchJournal(
+                  searchDiary(
                     workdiaryToken,
                     query,
                     Math.min(pagination.currentPage + 4, pagination.lastPage)
@@ -146,7 +144,7 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
               className="p-2"
               onClick={() =>
                 dispatch(
-                  searchJournal(workdiaryToken, query, pagination.lastPage)
+                  searchDiary(workdiaryToken, query, pagination.lastPage)
                 )
               }
             >

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import {
   clearSearchResults,
   getPostsList,
-  searchJournal,
+  searchDiary,
   setShowAllPosts,
 } from "../helpers/actionCreators";
 import "../styles/AllPosts.css";
@@ -23,7 +24,7 @@ const AllPostsHeader = () => {
 
   // Handler to dispatch the search contents to the search function
   const handleSearch = () => {
-    dispatch(searchJournal(workdiaryToken, searchText));
+    dispatch(searchDiary(workdiaryToken, searchText));
     dispatch(setShowAllPosts(false));
   };
 
@@ -41,6 +42,12 @@ const AllPostsHeader = () => {
       dispatch(getPostsList(workdiaryToken, 1));
     }
   };
+
+  const popoverContent = (
+    <Popover id="popover-content-all-posts-search" className="text-center">
+      Search for anything in your diary. Words. Tabs. Tags. Anything.
+    </Popover>
+  );
 
   return (
     <div className="container">
@@ -74,6 +81,19 @@ const AllPostsHeader = () => {
               autocomplete="off"
               onChange={handleInputChange}
             />
+            <OverlayTrigger
+              rootClose={true}
+              trigger="click"
+              placement={"top"}
+              overlay={popoverContent}
+            >
+              <button
+                id="info-button-all-posts-search"
+                className="py-0 px-1 ms-2 mb-1"
+              >
+                <img src="/info_1.png" alt="info-icon" className="" />
+              </button>
+            </OverlayTrigger>
           </form>
         </div>
       </div>

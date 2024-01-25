@@ -39,7 +39,7 @@ const Home = ({
   const dispatch = useDispatch();
   useEffect(() => {
     if (!date && !post && !user && workdiaryToken) {
-      // intial load of journal data
+      // intial load of diary data
       dispatch(getPost(workdiaryToken, moment().format("MM/DD/YYYY")));
       dispatch(getUserAccountInfo(workdiaryToken));
       dispatch(getPostsList(workdiaryToken, 1));

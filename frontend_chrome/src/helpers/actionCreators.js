@@ -132,7 +132,7 @@ export function forgotPassword(formData) {
     }
   };
 }
-export function searchJournal(workdiary_token, query, current_page = 1) {
+export function searchDiary(workdiary_token, query, current_page = 1) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(

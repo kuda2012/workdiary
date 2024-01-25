@@ -76,7 +76,9 @@ const AllPosts = ({ closeAllPostsModal }) => {
                         <span>{post.entry}</span>
                       </>
                     ) : (
-                      <i>*Has only tags and/or tabs*</i>
+                      <i id="has-only-tabs-or-tags">
+                        *Has only tabs and/or tags*
+                      </i>
                     )}
                   </a>
                 </li>

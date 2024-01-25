@@ -20,6 +20,21 @@
   font-size: small;
 }
 
+#has-only-tabs-or-tags {
+  color: rgb(177, 177, 177);
+}
+
+#popover-content-all-posts-search {
+  padding: 5px;
+  border-radius: 8px;
+  color: black;
+  font-weight: 400;
+}
+
+#info-button-all-posts-search {
+  background-color: rgb(240, 240, 240);
+}
+
 .posts-list-anchor-tags {
   word-wrap: break-word;
   text-decoration: none; /* Remove default underline */
