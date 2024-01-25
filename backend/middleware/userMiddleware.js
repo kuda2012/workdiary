@@ -14,7 +14,7 @@ let {
 const forgotPasswordRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000 * 24, // 24 hours
   limit: 4, // limit each IP to 4 requests per day
-  message: "Too many requests from this IP, please try again later.",
+  message: "Too many requests from this IP.",
   handler: (req, res, next, options) => {
     try {
       return next(new ExpressError(options.message, 429));
@@ -27,7 +27,7 @@ const forgotPasswordRateLimiter = rateLimit({
 const resetPasswordRateLimiter = rateLimit({
   windowMs: 60 * 15 * 1000, // 15 min
   limit: 5, // limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again later.",
+  message: "Too many requests from this IP.",
   handler: (req, res, next, options) => {
     try {
       return next(new ExpressError(options.message, 429));
