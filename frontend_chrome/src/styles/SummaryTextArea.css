@@ -1,5 +1,5 @@
 #summary-text-container {
-  width: 500px;
+  width: 520px;
 }
 
 #toolbar {
@@ -27,7 +27,7 @@
 #last-updated {
   text-align: center;
   width: 150px;
-  font-size: 11px;
+  font-size: 13px;
   position: relative;
   white-space: nowrap;
   overflow: hidden;

@@ -12,8 +12,8 @@ let {
 } = require("../config");
 
 const forgotPasswordRateLimiter = rateLimit({
-  windowMs: 60 * 15 * 1000, // 15 min
-  limit: 4, // limit each IP to 100 requests per windowMs
+  windowMs: 60 * 60 * 1000 * 24, // 24 hours
+  limit: 4, // limit each IP to 4 requests per day
   message: "Too many requests from this IP, please try again later.",
   handler: (req, res, next, options) => {
     try {
@@ -26,7 +26,7 @@ const forgotPasswordRateLimiter = rateLimit({
 
 const resetPasswordRateLimiter = rateLimit({
   windowMs: 60 * 15 * 1000, // 15 min
-  limit: 3, // limit each IP to 100 requests per windowMs
+  limit: 5, // limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again later.",
   handler: (req, res, next, options) => {
     try {

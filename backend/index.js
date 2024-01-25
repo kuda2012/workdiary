@@ -7,7 +7,7 @@ const app = express();
 app.set("trust proxy", 1);
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // limit each IP to 300 requests per windowMs
+  max: 200, // limit each IP to 200 requests per windowMs
   message: "Too many requests from this IP, please try again later!",
   handler: (req, res, next, options) => {
     try {
