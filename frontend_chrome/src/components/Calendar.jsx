@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Autosave } from "react-autosave";
 import { getPost } from "../helpers/actionCreators";
 import { ThreeDots } from "react-loader-spinner";
 import DatePicker from "react-datepicker";
@@ -19,7 +20,7 @@ const Calendar = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event && event.preventDefault();
     const selectedDate = moment(inputValue, "MM/DD/YYYY", true);
     if (selectedDate.isValid()) {
       handleToggleCalendar(false);
@@ -52,7 +53,6 @@ const Calendar = () => {
   useEffect(() => {
     handleToggleCalendar(false);
   }, [allPostDates, summaryText]);
-
   return (
     <>
       <span
@@ -134,6 +134,15 @@ const Calendar = () => {
       >
         {isCalendarOpen ? "🔼" : "🔽"}
       </span>
+      <Autosave
+        data={inputValue}
+        interval={1500}
+        onSave={(data) => {
+          if (date !== moment(data, "MM/DD/YYYY").format("MM/DD/YYYY")) {
+            handleSubmit();
+          }
+        }}
+      />
     </>
   );
 };
