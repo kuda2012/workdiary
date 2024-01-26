@@ -13,7 +13,8 @@ const Calendar = () => {
   const allPostDates = useSelector((state) => state?.all_post_dates);
   const summaryText = useSelector((state) => state?.post?.summary_text);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(new Date());
+
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const datePickerRef = useRef();
   const inputRef = useRef(null);
@@ -91,8 +92,6 @@ const Calendar = () => {
             )}
             customInput={
               <CustomDatePickerInput
-                value={inputValue}
-                onChange={handleInputChange}
                 isCalendarOpen={isCalendarOpen}
                 handleToggleCalendar={handleToggleCalendar}
                 inputRef={inputRef}
@@ -136,7 +135,7 @@ const Calendar = () => {
       </span>
       <Autosave
         data={inputValue}
-        interval={1500}
+        interval={1400}
         onSave={(data) => {
           if (date !== moment(data, "MM/DD/YYYY").format("MM/DD/YYYY")) {
             handleSubmit();
