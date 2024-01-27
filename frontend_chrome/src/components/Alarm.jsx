@@ -34,7 +34,7 @@ const Alarm = () => {
   }, [user]);
 
   const handleDayCheckboxChange = (changedDay) => {
-    let updatedAlarmDays = alarmDays.map((day) => {
+    let updatedAlarmDays = alarmDays?.map((day) => {
       if (changedDay.day === day.day) {
         return { day: changedDay.day, value: !day.value };
       } else {
@@ -88,7 +88,7 @@ const Alarm = () => {
           </ButtonGroup>
         </div>
         <div className="d-flex mt-4">
-          {alarmDays.map((day) => (
+          {alarmDays?.map((day) => (
             <div key={day.day} className="mx-2">
               <div className="form-check">
                 <input

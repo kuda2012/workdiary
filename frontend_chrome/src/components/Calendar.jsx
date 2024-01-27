@@ -39,10 +39,10 @@ const Calendar = () => {
 
   const handleToggleCalendar = (status) => {
     if (status) {
-      datePickerRef.current.setOpen(true);
+      datePickerRef?.current?.setOpen(true);
       setIsCalendarOpen(true);
     } else {
-      datePickerRef.current.setOpen(false);
+      datePickerRef?.current?.setOpen(false);
       setIsCalendarOpen(false);
     }
   };

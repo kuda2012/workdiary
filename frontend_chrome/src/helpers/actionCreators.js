@@ -179,11 +179,10 @@ export function deleteAccount(workdiary_token) {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         })
         .then(({ data }) => {
-          setTimeout(() => {
-            alert(data.message);
-          }, 1000);
+          alert(data.message);
+          dispatch(resetApp());
+          window.location.reload();
         });
-      dispatch(resetApp());
     } catch (error) {
       alert(error?.response?.data?.message || error?.message);
       console.log(error);

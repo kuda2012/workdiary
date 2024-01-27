@@ -507,7 +507,7 @@ class User {
     const getInfo = await axios.get(
       `https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses&access_token=${google_access_token}`
     );
-    data.name = getInfo.data.names[0].displayName;
+    data.name = getInfo.data.names[0].givenName;
     return data;
   }
 

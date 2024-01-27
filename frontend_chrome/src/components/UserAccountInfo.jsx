@@ -16,9 +16,7 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
     e.preventDefault();
     if (confirmation === "delete account") {
       dispatch(deleteAccount(workdiaryToken));
-      chrome.identity.clearAllCachedAuthTokens(function () {
-        dispatch(resetApp());
-      });
+      chrome.identity.clearAllCachedAuthTokens();
     } else {
       alert(`Must spell "delete account" correctly`);
     }
