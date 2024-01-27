@@ -1,30 +1,37 @@
 const config = {
-  CLOUD_BACKEND_URL: "http://localhost:3000",
-  LOCAL_BACKEND_URL: "https://be-workdiary.onrender.com",
+  CLOUD_BACKEND_URL: "https://be-workdiary.onrender.com",
+  LOCAL_BACKEND_URL: "http://localhost:3000",
   // Other configurations...
 };
 
 let popupWindow;
 
 function isPopupOpen() {
-  return popupWindow && !popupWindow.closed;
+  return popupWindow;
 }
-function openPopup() {
-  if (!isPopupOpen()) {
-    chrome.windows.create(
-      {
-        url: "index.html", // Replace with your HTML file's path
-        type: "popup",
-        width: 869, // Set the width and height as desired
-        height: 900,
-        top: 125, // Adjust the window's position as needed
-        left: 490,
-      },
-      function (window) {
-        popupWindow = window;
-      }
-    );
+
+function togglePopup() {
+  if (isPopupOpen()) {
+    closePopup();
+  } else {
+    openPopup();
   }
+}
+
+function openPopup() {
+  chrome.windows.create(
+    {
+      url: "index.html", // Replace with your HTML file's path
+      type: "popup",
+      width: 869, // Set the width and height as desired
+      height: 900,
+      top: 125, // Adjust the window's position as needed
+      left: 490,
+    },
+    function (window) {
+      popupWindow = window;
+    }
+  );
 }
 
 function closePopup() {
@@ -36,11 +43,7 @@ function closePopup() {
 }
 
 chrome.action.onClicked.addListener(function () {
-  if (!isPopupOpen()) {
-    openPopup();
-  } else {
-    closePopup();
-  }
+  togglePopup();
 });
 
 chrome.windows.onRemoved.addListener(function (windowId) {
@@ -137,6 +140,9 @@ chrome.runtime.onInstalled.addListener(async () => {
         title: "Work Diary",
         message: `Reminder to write in your Work Diary (click here to open app)`,
         // Include sound property for the sound file
+      });
+      chrome.notifications.onClicked.addListener(() => {
+        openPopup();
       });
       await setAlarm(user);
     }

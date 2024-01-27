@@ -39,9 +39,9 @@
   border: 1.5px solid #646cff !important;
 }
 
-/* .top-row-buttons {
-  background-color: rgb(240, 240, 240);
-} */
+.top-row-buttons {
+  background-color: rgb(244, 244, 244);
+}
 
 #delete-post-button {
   position: relative;

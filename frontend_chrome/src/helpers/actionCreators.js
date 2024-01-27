@@ -579,7 +579,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
       type: "basic",
       iconUrl: "w_extension.png",
       title: "Work Diary",
-      message: `Reminder to write in your Work Diary (click here to open app)`,
+      message: `Reminder to write in your Work Diary`,
       // Include sound property for the sound file
     });
     await setAlarm(user);
