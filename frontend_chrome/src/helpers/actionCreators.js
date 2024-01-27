@@ -571,7 +571,7 @@ export function changeOtherSettings(workdiary_token, alarmChange) {
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   const { user } = await chrome.storage.session.get(["user"]);
-  if (alarm.name.startsWith("myAlarm_") && user.alarm_status) {
+  if (alarm.name.startsWith("myAlarm_") && user?.alarm_status) {
     // Check for alarms with day-specific names
     console.log("fire alarm - actionCreator", alarm.name);
     // Trigger notification and reset alarm as before

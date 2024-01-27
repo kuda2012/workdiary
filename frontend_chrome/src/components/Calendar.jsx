@@ -135,7 +135,7 @@ const Calendar = () => {
       </span>
       <Autosave
         data={inputValue}
-        interval={1400}
+        interval={2000}
         onSave={(data) => {
           if (date !== moment(data, "MM/DD/YYYY").format("MM/DD/YYYY")) {
             handleSubmit();

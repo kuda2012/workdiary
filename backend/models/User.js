@@ -172,7 +172,7 @@ class User {
                     <li>That's it. Easy huh?</li>
                   </ol>
 
-                  <h4>Want a bit more? Here's how to supercharge your WorkDiary experience:</h4>
+                  <h4>Want a bit more? Here's how to supercharge your Work Diary experience:</h4>
                   <ol>
                     <li>Get notified: We'll remind you at 5pm (customizable!) to capture your day.</li>
                     <li>Voice or text: Share your thoughts, whichever way feels best.</li>

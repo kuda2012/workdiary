@@ -17,9 +17,9 @@ function useGlobalErrorHandler() {
         `Error: ${message}. Please email contact@workdiary.me to report this issue`
       );
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2500);
 
       if (originalOnError) {
         originalOnError(message, source, lineno, colno, error);

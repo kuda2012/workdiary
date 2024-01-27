@@ -128,7 +128,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     ]);
     if (
       alarm.name.startsWith("myAlarm_") &&
-      user.alarm_status &&
+      user?.alarm_status &&
       !action_creator_alarm_set
     ) {
       // Check for alarms with day-specific names
