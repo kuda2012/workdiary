@@ -4,7 +4,7 @@
 
 #summary-voice-media-buttons {
   position: relative;
-  right: 15px;
+  /* right: 15px; */
 }
 .send {
   background-color: rgb(83, 173, 106);

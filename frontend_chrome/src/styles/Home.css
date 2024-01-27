@@ -10,7 +10,7 @@
 
 #calendar-column {
   position: relative;
-  left: 18px;
+  right: 8px;
 }
 
 #three-dots {
@@ -28,7 +28,7 @@
 
 #tabs-home {
   transform: rotate(-90deg);
-  border: 0.5px solid gray;
+  border: 0.5px solid rgb(117, 117, 117);
   position: relative;
   top: 25px;
   font-size: 1.25rem;

@@ -1,6 +1,6 @@
 const config = {
-  CLOUD_BACKEND_URL: "https://be-workdiary.onrender.com",
-  LOCAL_BACKEND_URL: "http://localhost:3000",
+  CLOUD_BACKEND_URL: "http://localhost:3000",
+  LOCAL_BACKEND_URL: "https://be-workdiary.onrender.com",
   // Other configurations...
 };
 
