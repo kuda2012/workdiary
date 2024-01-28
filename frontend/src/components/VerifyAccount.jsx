@@ -7,32 +7,37 @@ const { VITE_LOCAL_BACKEND_URL } = import.meta.env;
 
 const VerifyAccount = ({}) => {
   const [accountVerificationCalled, setAccountVerificationCalled] =
-    useState("");
+    useState(false);
+  const [verificationMessage, setVerificationMessage] = useState("");
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const verificationToken = searchParams.get("token");
   useEffect(() => {
     async function fetchData() {
       try {
-        if (!accountVerificationCalled && verificationToken) {
+        if (!accountVerificationCalled) {
           const { data } = await axios.get(
             `${VITE_LOCAL_BACKEND_URL}/users/verify-account?token=${verificationToken}`
           );
+          setAccountVerificationCalled(true);
           if (data.message) {
-            setAccountVerificationCalled(data.message);
+            setVerificationMessage(data.message);
           }
         }
       } catch (error) {
         alert(error?.response?.data?.message || error?.message);
         // prevents another request to the backend
         setAccountVerificationCalled(true);
+        setVerificationMessage(
+          error?.response?.data?.message || error?.message
+        );
       }
     }
     fetchData();
-  }, [accountVerificationCalled]);
+  }, []);
   return (
     <>
-      <h5 className="mt-2">{accountVerificationCalled}</h5>
+      <h5 className="mt-2">{verificationMessage}</h5>
     </>
   );
 };
