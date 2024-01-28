@@ -21,7 +21,7 @@ const BottomRowMain = () => {
               openDeletePostModal();
             } else {
               alert(
-                "You have not save anything to this date, there's nothing to delete."
+                "You have not saved anything to this date, there's nothing to delete."
               );
             }
           }}
