@@ -2,6 +2,7 @@ import ResetPassword from "./ResetPassword";
 import HowTo from "./HowTo";
 import HowToModal from "./HowToModal";
 import { useEffect } from "react";
+import VerifyAccount from "./VerifyAccount";
 
 const Home = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
   useEffect(() => {
@@ -24,6 +25,7 @@ const Home = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
           <h5 className="mt-2">Welcome! Click "about" to learn more :)</h5>
         )}
         {window.location.pathname === "/reset-password" && <ResetPassword />}
+        {window.location.pathname === "/verify-account" && <VerifyAccount />}
       </div>
     </div>
   );

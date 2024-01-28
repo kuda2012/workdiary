@@ -14,6 +14,15 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
         }
       />
       <Route
+        path="/verify-account"
+        element={
+          <Home
+            isHowToModalOpen={isHowToModalOpen}
+            closeHowToModal={closeHowToModal}
+          />
+        }
+      />
+      <Route
         path="/"
         element={
           <Home

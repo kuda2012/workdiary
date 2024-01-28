@@ -14,6 +14,7 @@ const {
   BACKEND_URL,
 } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
+const { get } = require("../routes/user-routes");
 
 class User {
   static async createGoogleUser(payload) {
@@ -110,7 +111,7 @@ class User {
       html: `<div>
                       <img src="cid:work_diary_image" alt="Work Diary Image" />
                       <p>
-                      <a href="${BACKEND_URL}/users/verify-account?token=${token}">
+                      <a href="${FRONTEND_URL}/verify-account?token=${token}">
                         Click here</a>
                          to verify your account
                     </p>
@@ -206,8 +207,8 @@ class User {
 
   static async verifyAccount(token) {
     const user = jwt.decode(token);
-    const { verified } = await this.getUser(user.id);
-    if (!verified) {
+    const getUser = await this.getUser(user.id);
+    if (getUser && !getUser?.verified) {
       await db.query(
         `UPDATE users
         SET verified= true,
@@ -217,8 +218,10 @@ class User {
         [user.id]
       );
       return "Your account has been verified. You can now login into your account!";
-    } else {
+    } else if (getUser?.verified) {
       return "Your account has already been verified. You are free to login into your account!";
+    } else {
+      return "Our apologies. Please restart the sign up process.";
     }
   }
   static async changePassword(body, email) {
