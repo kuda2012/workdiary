@@ -14,7 +14,6 @@ const {
   BACKEND_URL,
 } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
-const { get } = require("../routes/user-routes");
 
 class User {
   static async createGoogleUser(payload) {
@@ -126,8 +125,8 @@ class User {
                 </div>`,
       attachments: [
         {
-          filename: "w_trident.png",
-          path: "./w_trident.png",
+          filename: "work_diary_0.png",
+          path: "./work_diary_0.png",
           cid: "work_diary_image", // Same as the src cid in the img tag
         },
       ],
@@ -187,8 +186,8 @@ class User {
                 </div>`,
       attachments: [
         {
-          filename: "w_trident.png",
-          path: "./w_trident.png",
+          filename: "work_diary_0.png",
+          path: "./work_diary_0.png",
           cid: "work_diary_image", // Same as the src cid in the img tag
         },
       ],
@@ -376,8 +375,8 @@ class User {
                 </div>`,
               attachments: [
                 {
-                  filename: "w_trident.png",
-                  path: "./w_trident.png",
+                  filename: "work_diary_0.png",
+                  path: "./work_diary_0.png",
                   cid: "work_diary_image", // Same as the src cid in the img tag
                 },
               ],
@@ -405,8 +404,8 @@ class User {
                 </div>`,
               attachments: [
                 {
-                  filename: "w_trident.png",
-                  path: "./w_trident.png",
+                  filename: "work_diary_0.png",
+                  path: "./work_diary_0.png",
                   cid: "work_diary_image", // Same as the src cid in the img tag
                 },
               ],

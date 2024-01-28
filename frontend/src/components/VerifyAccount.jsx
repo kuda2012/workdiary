@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button } from "reactstrap";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-// import "../styles/VerifyAccount.css";
+import "../styles/VerifyAccount.css";
 const { VITE_LOCAL_BACKEND_URL } = import.meta.env;
 
 const VerifyAccount = ({}) => {
@@ -37,7 +36,7 @@ const VerifyAccount = ({}) => {
   }, []);
   return (
     <>
-      <h5 className="mt-2">{verificationMessage}</h5>
+      <h5 className="mt-2" id='verify-account'>{verificationMessage}</h5>
     </>
   );
 };
