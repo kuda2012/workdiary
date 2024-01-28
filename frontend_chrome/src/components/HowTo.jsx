@@ -27,25 +27,27 @@ const HowTo = ({ closeHowToModal }) => {
             <ol>
               <li>
                 Record a voice note of how your work day went (or just type it
-                out). You can speak how you normally would, it will add
-                punctuation.
+                out)
               </li>
               <li>
-                Click the green button to have your voice turned into text
-              </li>
-              <li>Add a tag to your note</li>
-              <li>
-                Pull your tabs for today (delete the ones you don't want to
-                keep)
+                Archive your browser tabs for today (delete the ones that don't
+                have to do with today's work)
               </li>
               <li>
-                Set your alarm so you can remember to come back tomorrow (it's
-                already pre-set for 5pm)
+                Set up your in-app reminder to come back tomorrow (it's already
+                pre-set for 5pm)
+                <ul>
+                  <li clas>
+                    <b>Note: </b>Turn on your <i>both</i> Google Chrome
+                    notifications in your Computer's system settings to allow
+                    for the reminder notification to come through. This is very
+                    important to remember to come back everyday. I promise it
+                    won't be annoying and you can easily turn it off if you
+                    want.
+                  </li>
+                </ul>
               </li>
-              <li>
-                If you like the app, Right Click this tab in the browswer and
-                "pin" this app to your window for easy access
-              </li>
+              <li>That's it! Run it back tomorrow 🤝</li>
             </ol>
           </div>
         </div>
