@@ -14,10 +14,12 @@ const Calendar = () => {
   const summaryText = useSelector((state) => state?.post?.summary_text);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const [inputValue, setInputValue] = useState(new Date());
-
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isInputActive, setIsInputActive] = useState(false);
   const datePickerRef = useRef();
   const inputRef = useRef(null);
+  const timeoutRef = useRef(null);
+
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
@@ -54,6 +56,29 @@ const Calendar = () => {
   useEffect(() => {
     handleToggleCalendar(false);
   }, [allPostDates, summaryText]);
+
+  useEffect(() => {
+    const handleInputActivity = () => {
+      setIsInputActive(true);
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        setIsInputActive(false);
+      }, 2000); // Adjust timeout duration as needed
+
+      return () => clearTimeout(timeoutRef.current);
+    };
+
+    inputRef.current.addEventListener("input", handleInputActivity);
+    inputRef.current.addEventListener("click", handleInputActivity);
+    inputRef.current.addEventListener("keydown", handleInputActivity);
+
+    return () => {
+      inputRef.current.removeEventListener("input", handleInputActivity);
+      inputRef.current.removeEventListener("click", handleInputActivity);
+      inputRef.current.addEventListener("keydown", handleInputActivity);
+    };
+  }, []);
+
   return (
     <>
       <span
@@ -134,10 +159,13 @@ const Calendar = () => {
         {isCalendarOpen ? "🔼" : "🔽"}
       </span>
       <Autosave
-        data={inputValue}
-        interval={2000}
-        onSave={(data) => {
-          if (date !== moment(data, "MM/DD/YYYY").format("MM/DD/YYYY")) {
+        data={isInputActive}
+        interval={0}
+        onSave={() => {
+          if (
+            !isInputActive &&
+            date !== moment(inputValue, "MM/DD/YYYY").format("MM/DD/YYYY")
+          ) {
             handleSubmit();
           }
         }}

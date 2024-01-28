@@ -30,6 +30,10 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
     }
   }, [loggingInVar]);
 
+  useEffect(() => {
+    setFormData(INITIAL_STATE);
+  }, [isSignup]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((data) => ({ ...data, [name]: value }));
