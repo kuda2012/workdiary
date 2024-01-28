@@ -23,6 +23,7 @@ const Auth = () => {
             </div>
             <div className="col">
               <LoginOrSignup
+                setIsSignup={setIsSignup}
                 isSignup={isSignup}
                 isForgotPassword={isForgotPassword}
                 setIsForgotPassword={setIsForgotPassword}

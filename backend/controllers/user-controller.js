@@ -173,7 +173,10 @@ exports.checkedToken = async (req, res, next) => {
       const workdiary_token = await User.generateWorkdiaryAccessToken(userInfo);
       res.send({ workdiary_token });
     } else {
-      res.send({ workdiary_token: "" });
+      throw new ExpressError(
+        "User is not verified. Send an email to contact@workdiary.me",
+        401
+      );
     }
   } catch (error) {
     next(error);

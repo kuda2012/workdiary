@@ -9,7 +9,7 @@ import {
 } from "../helpers/actionCreators";
 import "../styles/LoginOrSignup.css";
 
-const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
+const LoginOrSignup = ({ setIsSignup, isSignup, setIsForgotPassword }) => {
   const dispatch = useDispatch();
   const INITIAL_STATE = {
     email: "",
@@ -52,12 +52,14 @@ const LoginOrSignup = ({ isSignup, setIsForgotPassword }) => {
         setloadingDotsActive(true);
         dispatch(isSignup ? signup(formData) : login(formData));
         dispatch(loggingInFunction(true));
+        setIsSignup(false);
         setFormData(INITIAL_STATE);
       }
     } catch (error) {
       setloadingDotsActive(false);
       dispatch(loggingInFunction(false));
       setFormData(INITIAL_STATE);
+      setIsSignup(true);
       console.error(error);
     }
   };

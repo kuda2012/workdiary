@@ -46,7 +46,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
             isSettingsModalOpen={isSettingsModalOpen}
             closeSettingsModal={closeSettingsModal}
           >
-            <h5>Settings</h5>
+            <h5>Your Account</h5>
             <Settings closeSettingsModal={closeSettingsModal} />
           </SettingsModal>
         )}
