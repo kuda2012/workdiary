@@ -1,0 +1,8 @@
+.accordion-item {
+  border-radius: 8px !important;
+}
+
+#privacy-policy {
+  overflow-y: auto;
+  max-height: 500px;
+}
