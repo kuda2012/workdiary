@@ -23,6 +23,16 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
         }
       />
       <Route
+        path="/privacy-policy"
+        element={
+          <Home
+            openHowToModal={openHowToModal}
+            isHowToModalOpen={isHowToModalOpen}
+            closeHowToModal={closeHowToModal}
+          />
+        }
+      />
+      <Route
         path="/"
         element={
           <Home

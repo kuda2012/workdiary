@@ -1,13 +1,18 @@
 import ResetPassword from "./ResetPassword";
 import HowTo from "./HowTo";
 import HowToModal from "./HowToModal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import VerifyAccount from "./VerifyAccount";
 
 const Home = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
+  const [openToPrivacyPolicy, setOpenToPrivacyPolicy] = useState(false);
   useEffect(() => {
     if (window.location.pathname === "/" && !isHowToModalOpen) {
       openHowToModal();
+    }
+    if (window.location.pathname === "/privacy-policy" && !isHowToModalOpen) {
+      openHowToModal();
+      setOpenToPrivacyPolicy(true);
     }
   }, [window.location.pathname]);
   return (
@@ -18,7 +23,10 @@ const Home = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
             isHowToModalOpen={isHowToModalOpen}
             closeHowToModal={closeHowToModal}
           >
-            <HowTo closeHowToModal={closeHowToModal} />
+            <HowTo
+              closeHowToModal={closeHowToModal}
+              openToPrivacyPolicy={openToPrivacyPolicy}
+            />
           </HowToModal>
         )}
         {window.location.pathname === "/" && (

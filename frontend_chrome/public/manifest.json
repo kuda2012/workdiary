@@ -5,24 +5,16 @@
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmMKpGIyuIYhGd36fysoYB5tapYUhPQUtxrheUXDxvrMCUQJ/wOG73pYnhNg5e4vP6VhJ1QAtk+hUcp7BBAH5DpvWtFWkH6gJvsFro8cuxeAGBwYxvYDQNeeJ+KrHJzaYD89w77qEOR+fEapA2nNpmPMx8ZMgfCwveo8eYTe9+zu9dYIcC8K86Kywl32mTVC+WscnRRhYncvfhy+/vjJWhxcdH9WjNDVn2A9Sy22MrvyyEBGMMRD+SyvlbjDkxHt/Zcp7OLgJe4nPU2P03by4OUhBNoU5QgniyBvEAeFTNQJIe0+20lg1SPBWvKe/GL4NE1AxKNog21+MpGn1xFHN2QIDAQAB",
   "version": "1.0.1",
   "action": {
-    "default_icon": "icon128.png"
+    "default_icon": "./icon128.png"
   },
   "permissions": [
     "tabs",
     "windows",
     "activeTab",
-    "scripting",
     "identity",
     "notifications",
     "alarms",
     "storage"
-  ],
-  "host_permissions": ["*://*/"],
-  "web_accessible_resources": [
-    {
-      "resources": ["public/game-alarm.wav"],
-      "matches": ["<all_urls>"]
-    }
   ],
   "background": {
     "service_worker": "background.js"
@@ -31,7 +23,6 @@
     "client_id": "217103780375-1mqagu0bod0a1u228td60g566qm4ivo8.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/userinfo.email",
-      "https://www.googleapis.com/auth/contacts.readonly",
       "https://www.googleapis.com/auth/userinfo.profile"
     ]
   }

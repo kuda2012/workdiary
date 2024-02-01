@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import { isWorkdiaryTokenCurrent, resetApp } from "./helpers/actionCreators";
+import {
+  isWorkdiaryTokenCurrent,
+  resetApp,
+  revokeAccessToken,
+} from "./helpers/actionCreators";
 import Navbar from "./components/Navbar";
 import Router from "./Router";
 import "./App.css";
@@ -35,6 +39,7 @@ function useGlobalErrorHandler() {
 function App() {
   useGlobalErrorHandler();
   const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const googleAccessToken = useSelector((state) => state.google_access_token);
   const dispatch = useDispatch();
   if (!workdiaryToken && localStorage.getItem("workdiary_token")) {
     dispatch(isWorkdiaryTokenCurrent(localStorage.getItem("workdiary_token")));
@@ -59,6 +64,7 @@ function App() {
 
   const openAllPostsModal = () => setIsAllPostsModalOpen(true);
   const closeAllPostsModal = () => setIsAllPostsModalOpen(false);
+
   return (
     <div id="app">
       {firstLoad ? (
@@ -101,6 +107,7 @@ function App() {
                     id="logout"
                     onClick={(e) => {
                       e.preventDefault();
+                      // dispatch(revokeAccessToken(googleAccessToken));
                       chrome.identity.clearAllCachedAuthTokens(function () {
                         dispatch(resetApp());
                       });
