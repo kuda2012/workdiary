@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GoogleLoginOrSignupButton from "./GoogleLoginOrSignupButton";
 import LoginOrSignup from "./LoginOrSignup";
 import ForgotPassword from "./ForgotPassword";
@@ -7,6 +7,23 @@ import "../styles/Auth.css";
 const Auth = () => {
   const [isSignup, setIsSignup] = useState(true);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await chrome.storage.local.get(["repeat_user"]);
+        if (result.repeat_user) {
+          setIsSignup(false);
+        } else {
+          setIsSignup(true);
+        }
+      } catch (error) {
+        console.error("Error fetching data from chrome storage:", error);
+        // Handle error if needed
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className="container">
       <div className="row flex-column align-items-center">

@@ -10,8 +10,8 @@ exports.speechToText = async (base64DataURI) => {
   };
   const response = await deepgram.transcription.preRecorded(source, {
     smart_format: true,
-    model: "nova",
-    summarize: "v2",
+    model: "nova-2",
+    detect_language: true,
   });
   return response.results.channels[0].alternatives[0].transcript;
 };

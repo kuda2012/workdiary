@@ -139,8 +139,8 @@ chrome.runtime.onInstalled.addListener(async () => {
       chrome.notifications.create({
         type: "basic",
         iconUrl: "w_extension.png",
-        title: "Work Diary",
-        message: `Reminder to write in your Work Diary (click here to open app)`,
+        title: "Workdiary",
+        message: `Reminder to write in your Workdiary!`,
         // Include sound property for the sound file
       });
       chrome.notifications.onClicked.addListener(() => {
@@ -151,7 +151,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   });
 
   chrome.windows.onRemoved.addListener(function () {
-    chrome.storage.session.remove("action_creator_alarm_set");
+    emove("action_creator_alarm_set");
   });
 
   async function setAlarm(user) {

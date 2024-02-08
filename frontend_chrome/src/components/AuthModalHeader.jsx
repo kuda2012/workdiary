@@ -4,7 +4,7 @@ const AuthModalHeader = ({ openHowToModal }) => {
   return (
     <div className="row justify-content-between">
       <div className="col">
-        <h1 id="header-how-to-auth-modal-header">Work Diary</h1>
+        <h1 id="header-how-to-auth-modal-header">Workdiary</h1>
       </div>
       <div className="col">
         <span

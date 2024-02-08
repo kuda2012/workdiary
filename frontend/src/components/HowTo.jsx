@@ -62,7 +62,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               <ul>
                 <li>
                   To recall what you did over the months so you can prepare for
-                  a performance review (or plan your exit accordingly ;))
+                  a performance review (or plan your exit accordingly ;)
                 </li>
                 <li>
                   To pick up where you left off in solving an old problem/bug
@@ -105,7 +105,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                   peace of mind that you've not just been lollygagging at work
                   all day. Many people have personal diaries...you spend most of
                   your waking hours working...Why wouldn't it be good to have a
-                  Work Diary then? Of course it would be. Let me know how it
+                  Workdiary then? Of course it would be. Let me know how it
                   goes. ✌
                 </div>
               </div>
@@ -190,7 +190,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
             <div className="accordion-body">
               <div className="row">
                 <div className="col" id="privacy-policy">
-                  <h2>Privacy Policy of Work Diary</h2>
+                  <h2>Privacy Policy of Workdiary</h2>
 
                   <p>The owner operates the Workdiary.me chrome extension</p>
 
@@ -198,7 +198,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                     This page is used to inform website visitors regarding our
                     policies with the collection, use, and disclosure of
                     Personal Information if anyone decided to use our app, the
-                    Work Diary website.
+                    Workdiary website.
                   </p>
 
                   <p>

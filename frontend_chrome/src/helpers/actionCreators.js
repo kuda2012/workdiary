@@ -180,7 +180,7 @@ export function deleteAccount(workdiary_token) {
         })
         .then(({ data }) => {
           alert(data.message);
-          dispatch(resetApp());
+          dispatch(resetApp("delete-account"));
           window.location.reload();
         });
     } catch (error) {
@@ -577,8 +577,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     chrome.notifications.create({
       type: "basic",
       iconUrl: "w_extension.png",
-      title: "Work Diary",
-      message: `Reminder to write in your Work Diary`,
+      title: "Workdiary",
+      message: `Reminder to write in your Workdiary!`,
       // Include sound property for the sound file
     });
     await setAlarm(user);
@@ -659,9 +659,10 @@ export function halfReset() {
     type: "HALF_RESET",
   };
 }
-export function resetApp() {
+export function resetApp(delete_account) {
   return {
     type: "FULL_RESET",
+    delete_account,
   };
 }
 export function setDate(date) {

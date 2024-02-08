@@ -138,7 +138,7 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
                       we hope to see you again in the future.{" "}
                       {user.auth_provider === "google" &&
                         ` Deleting this account will only
-                      delete your Work Diary account, not your Google account.`}
+                      delete your Workdiary account, not your Google account.`}
                     </p>
                     <Input
                       type="text"

@@ -11,7 +11,7 @@ const NavBar = ({ openHowToModal }) => {
   return (
     <ReactNavBar color="light" className="navbar-expand-lg">
       <NavbarBrand className="nav-brand" to="/">
-        Work Diary
+        Workdiary
       </NavbarBrand>
       <Nav className="me-auto">
         <NavItem className="nav-item">

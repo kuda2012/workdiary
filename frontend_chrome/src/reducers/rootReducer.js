@@ -14,7 +14,10 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, google_access_token: action.google_access_token };
     case "SET_WORKDIARY_TOKEN":
       localStorage.setItem("workdiary_token", action.workdiary_token);
-      chrome.storage.local.set({ workdiary_token: action.workdiary_token });
+      chrome.storage.local.set({
+        workdiary_token: action.workdiary_token,
+        repeat_user: true,
+      });
       return {
         ...state,
         workdiary_token: action.workdiary_token,
@@ -76,8 +79,11 @@ function rootReducer(state = INITIAL_STATE, action) {
       };
     case "FULL_RESET":
       localStorage.removeItem("workdiary_token");
-      chrome.storage.local.clear();
+      chrome.storage.local.remove("workdiary_token");
       chrome.storage.session.clear();
+      if (action.delete_account) {
+        chrome.storage.local.clear();
+      }
       return { ...INITIAL_STATE };
     default:
       return state;

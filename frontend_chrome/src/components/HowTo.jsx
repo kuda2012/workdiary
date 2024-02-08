@@ -117,7 +117,7 @@ const HowTo = ({ closeHowToModal }) => {
                 were solving. Ultimately, use it to give yourself peace of mind
                 that you've not just been lollygagging at work all day. Many
                 people have personal diaries...you spend most of your waking
-                hours working...Why wouldn't it be good to have a Work Diary
+                hours working...Why wouldn't it be good to have a Workdiary
                 then? Of course it would be. Let me know how it goes. ✌
               </div>
             </div>
@@ -200,14 +200,14 @@ const HowTo = ({ closeHowToModal }) => {
           <div className="accordion-body">
             <div className="row">
               <div className="col" id="privacy-policy">
-                <h2>Privacy Policy of Work Diary</h2>
+                <h2>Privacy Policy of Workdiary</h2>
 
                 <p>The owner operates the Workdiary.me chrome extension</p>
 
                 <p>
                   This page is used to inform website visitors regarding our
                   policies with the collection, use, and disclosure of Personal
-                  Information if anyone decided to use our app, the Work Diary
+                  Information if anyone decided to use our app, the Workdiary
                   website.
                 </p>
 
