@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const ExpressError = require("../expressError");
 const moment = require("moment");
+const jwt = require("jsonwebtoken");
 const { decodeJwt } = require("../helpers/decodeJwt");
 const { db } = require("../db");
 
@@ -40,6 +41,7 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
     const payload = await User.verifyGoogleToken(req.body.google_access_token);
     let getUser = await User.getUser(null, payload.email);
     let userDeleted = false;
+    let first_time_login;
     if (
       (getUser &&
         !getUser?.verified &&
@@ -55,6 +57,7 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
 
     if (!getUser || userDeleted) {
       getUser = await User.createGoogleUser(payload);
+      first_time_login = true;
     } else if (getUser && getUser.auth_provider !== "google") {
       throw new ExpressError(
         "A user already exists for this email. Please sign in by entering your username and password",
@@ -62,7 +65,7 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
       );
     }
     const token = await User.generateWorkdiaryAccessToken(getUser);
-    res.send({ workdiary_token: token });
+    res.send({ workdiary_token: token, first_time_login });
   } catch (error) {
     next(error);
   }
@@ -71,7 +74,24 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     let token = await User.getLoggedIn(req.body);
-    res.json({ workdiary_token: token });
+    // log the login
+    // tell query the logins table, if there are no previous logins with matching user_id and email, return "first_time_login : true"
+    let first_time_login;
+    let { id, email, name } = jwt.decode(token);
+    let logins = await db.query(
+      `SELECT * from user_logins
+      WHERE user_id=$1 AND email=$2`,
+      [id, email]
+    );
+    if (logins.length === 0) {
+      first_time_login = true;
+    }
+    await db.query(
+      `INSERT INTO user_logins (user_id, email, name, login_time, file_source, ip_address, user_agent)
+       VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4, $5, $6)`,
+      [id, email, name, req.body.source, req.ip, req.headers["user-agent"]]
+    );
+    res.json({ workdiary_token: token, first_time_login });
   } catch (error) {
     next(error);
   }

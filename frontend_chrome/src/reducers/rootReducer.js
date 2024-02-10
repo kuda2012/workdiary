@@ -64,6 +64,8 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, clicked_search_result: action.clicked_search_result };
     case "SET_SHOW_ALL_POSTS":
       return { ...state, show_all_posts: action.show_all_posts };
+    case "SHOW_HOW_TO_MODAL":
+      return { ...state, first_time_login: action.first_time_login };
     case "TOGGLE_INTERPRETING":
       return { ...state, interpreting: !state.interpreting };
     case "INITIAL_LOAD":

@@ -30,7 +30,7 @@ const HowTo = ({ closeHowToModal }) => {
                 out)
               </li>
               <li>
-                Archive your browser tabs for today (delete the ones that don't
+                Store your browser tabs from today (delete the ones that don't
                 have to do with today's work)
               </li>
               <li>
