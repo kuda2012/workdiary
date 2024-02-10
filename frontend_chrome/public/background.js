@@ -48,12 +48,6 @@ chrome.action.onClicked.addListener(function () {
   togglePopup();
 });
 
-chrome.windows.onRemoved.addListener(function (windowId) {
-  if (popupWindow && popupWindow.id === windowId) {
-    popupWindow = undefined;
-  }
-});
-
 chrome.runtime.onInstalled.addListener(async () => {
   async function isWorkdiaryTokenCurrent(workdiary_token) {
     try {
@@ -75,6 +69,38 @@ chrome.runtime.onInstalled.addListener(async () => {
       console.log(error);
     }
   }
+  async function setUpBackground() {
+    await chrome.storage.local.get(["workdiary_token"]).then(async (result) => {
+      const workdiaryToken =
+        result?.workdiary_token && typeof result?.workdiary_token === "string"
+          ? await isWorkdiaryTokenCurrent(result.workdiary_token)
+          : null;
+      let response = null;
+      if (workdiaryToken) {
+        response = await fetch(
+          `${config.LOCAL_BACKEND_URL}/users/account-info`,
+          {
+            method: "GET",
+            headers: { Authorization: `Bearer ${workdiaryToken}` },
+          }
+        );
+        const { user } = response ? await response.json() : null;
+        if (user) {
+          chrome.storage.session.set({ user });
+          await setAlarm(user);
+        }
+      }
+    });
+  }
+  setUpBackground();
+
+  chrome.windows.onRemoved.addListener(async function (windowId) {
+    if (popupWindow && popupWindow.id === windowId) {
+      popupWindow = undefined;
+      await chrome.storage.session.remove("action_creator_alarm_set");
+      setUpBackground();
+    }
+  });
 
   chrome.tabs.onCreated.addListener(function (tab) {
     // Send a message to alert the extension about the new tab
@@ -104,30 +130,13 @@ chrome.runtime.onInstalled.addListener(async () => {
       });
     }
   });
-  await chrome.storage.local.get(["workdiary_token"]).then(async (result) => {
-    const workdiaryToken =
-      result?.workdiary_token && typeof result?.workdiary_token === "string"
-        ? await isWorkdiaryTokenCurrent(result.workdiary_token)
-        : null;
-    let response = null;
-    if (workdiaryToken) {
-      response = await fetch(`${config.LOCAL_BACKEND_URL}/users/account-info`, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${workdiaryToken}` },
-      });
-      const { user } = response ? await response.json() : null;
-      if (user) {
-        chrome.storage.session.set({ user });
-        await setAlarm(user);
-      }
-    }
-  });
 
   chrome.alarms.onAlarm.addListener(async (alarm) => {
     const { user } = await chrome.storage.session.get(["user"]);
     const { action_creator_alarm_set } = await chrome.storage.session.get([
       "action_creator_alarm_set",
     ]);
+
     if (
       alarm.name.startsWith("myAlarm_") &&
       user?.alarm_status &&
