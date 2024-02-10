@@ -36,9 +36,9 @@ const VerifyAccount = ({}) => {
   }, []);
   return (
     <>
-      <h4 className="mt-2" id="verify-account">
+      <h5 className="mt-2" id="verify-account">
         {verificationMessage}
-      </h4>
+      </h5>
     </>
   );
 };
