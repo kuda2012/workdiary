@@ -9,7 +9,7 @@ import {
 import ChangePassword from "./ChangePassword";
 import "../styles/UserAccountInfo.css";
 
-const UserAccountInfo = ({ closeSettingsModal }) => {
+const UserAccountInfo = ({ closeAccountStuffModal }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const allPostDates = useSelector((state) => state?.all_post_dates);
@@ -107,7 +107,9 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
                   data-bs-parent="#accordionExample"
                 >
                   <div class="accordion-body">
-                    <ChangePassword closeSettingsModal={closeSettingsModal} />
+                    <ChangePassword
+                      closeAccountStuffModal={closeAccountStuffModal}
+                    />
                   </div>
                 </div>
               </div>
@@ -157,7 +159,7 @@ const UserAccountInfo = ({ closeSettingsModal }) => {
                           </button>
                           <button
                             className="btn btn-primary"
-                            onClick={closeSettingsModal}
+                            onClick={closeAccountStuffModal}
                           >
                             Cancel
                           </button>

@@ -34,31 +34,6 @@ const HowTo = ({ closeHowToModal }) => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
             ></iframe>
-            <ol>
-              {/* <li>
-                Record a voice note of how your work day went (or just type it
-                out)
-              </li>
-              <li>
-                Store your browser tabs from today (delete the ones that don't
-                have to do with today's work)
-              </li>
-              <li>
-                Set up your in-app reminder to come back tomorrow (it's already
-                pre-set for 5pm)
-                <ul>
-                  <li clas>
-                    <b>Note: </b>Turn on your <i>both</i> Google Chrome
-                    notifications in your Computer's system settings to allow
-                    for the reminder notification to come through. This is very
-                    important to remember to come back everyday. I promise it
-                    won't be annoying and you can easily turn it off if you
-                    want.
-                  </li>
-                </ul>
-              </li>
-              <li>That's it! Run it back tomorrow 🤝</li> */}
-            </ol>
           </div>
         </div>
       </div>

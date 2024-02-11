@@ -81,20 +81,20 @@ const AllPostsHeader = () => {
               autocomplete="off"
               onChange={handleInputChange}
             />
-            <OverlayTrigger
-              rootClose={true}
-              trigger="click"
-              placement={"top"}
-              overlay={popoverContent}
-            >
-              <button
-                id="info-button-all-posts-search"
-                className="py-0 px-1 ms-2 mb-1"
-              >
-                <img src="/info_1.png" alt="info-icon" className="" />
-              </button>
-            </OverlayTrigger>
           </form>
+          <OverlayTrigger
+            rootClose={true}
+            trigger="click"
+            placement={"top"}
+            overlay={popoverContent}
+          >
+            <button
+              id="info-button-all-posts-search"
+              className="pt-0 pb-1 px-1 ms-2 mb-4"
+            >
+              <img src="/info_1.png" alt="info-icon" className="p-0 m-0" />
+            </button>
+          </OverlayTrigger>
         </div>
       </div>
     </div>

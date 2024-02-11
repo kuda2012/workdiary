@@ -21,19 +21,30 @@ function togglePopup() {
 }
 
 function openPopup() {
-  chrome.windows.create(
-    {
-      url: "index.html", // Replace with your HTML file's path
-      type: "popup",
-      width: 869, // Set the width and height as desired
-      height: 900,
-      top: 125, // Adjust the window's position as needed
-      left: 490,
-    },
-    function (window) {
-      popupWindow = window;
-    }
-  );
+  chrome.windows.getCurrent(null, function (currentWindow) {
+    const screenWidth = currentWindow.width;
+    const screenHeight = currentWindow.height;
+
+    const popupWidth = 869; // Set the width and height as desired
+    const popupHeight = 900;
+
+    const left = Math.max(0, Math.floor((screenWidth - popupWidth) / 2));
+    const top = Math.max(0, Math.floor((screenHeight - popupHeight) / 2));
+
+    chrome.windows.create(
+      {
+        url: "index.html", // Replace with your HTML file's path
+        type: "popup",
+        width: popupWidth,
+        height: popupHeight,
+        top: top,
+        left: left,
+      },
+      function (window) {
+        popupWindow = window;
+      }
+    );
+  });
 }
 
 function closePopup() {

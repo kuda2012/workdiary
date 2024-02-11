@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 import { changePassword } from "../helpers/actionCreators";
 import "../styles/ChangePassword.css";
 
-const ChangePassword = ({ closeSettingsModal }) => {
+const ChangePassword = ({ closeAccountStuffModal }) => {
   const INITIAL_STATE = {
     password: "",
     new_password: "",
@@ -46,7 +46,7 @@ const ChangePassword = ({ closeSettingsModal }) => {
         dispatch(changePassword(workdiaryToken, { ...formData }));
         setTimeout(() => {
           setFormData(INITIAL_STATE);
-          closeSettingsModal();
+          closeAccountStuffModal();
         }, 2000);
       } else {
         alert("Passwords must match");

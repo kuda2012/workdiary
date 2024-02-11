@@ -11,7 +11,6 @@ const {
   GENERAL_SECRET_KEY,
   ZOHO_EMAIL_PASSWORD,
   FRONTEND_URL,
-  BACKEND_URL,
 } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
 

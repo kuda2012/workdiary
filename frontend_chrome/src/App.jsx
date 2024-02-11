@@ -4,7 +4,7 @@ import { ThreeDots } from "react-loader-spinner";
 import {
   isWorkdiaryTokenCurrent,
   resetApp,
-  revokeAccessToken,
+  // revokeAccessToken,
 } from "./helpers/actionCreators";
 import Navbar from "./components/Navbar";
 import Router from "./Router";
@@ -21,9 +21,9 @@ function useGlobalErrorHandler() {
         `Error: ${message}. Please email contact@workdiary.me to report this issue`
       );
 
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 2500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
 
       if (originalOnError) {
         originalOnError(message, source, lineno, colno, error);
