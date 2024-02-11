@@ -51,7 +51,7 @@ chrome.action.onClicked.addListener(function () {
 chrome.windows.onRemoved.addListener(async function (windowId) {
   if (popupWindow && popupWindow.id === windowId) {
     popupWindow = undefined;
-    await chrome.storage.session.remove("action_creator_alarm_set");
+    await chrome.storage.session.remove("action_creator_alarm");
     setUpBackground();
   }
 });
@@ -89,7 +89,7 @@ async function setAlarm(user) {
         nextOccurrence.setDate(nextOccurrence.getDate() + 7);
       }
       console.log("background", nextOccurrence, day);
-      chrome.storage.session.set({ background: true });
+      chrome.storage.session.set({ background_alarm: true });
 
       chrome.alarms.create(`myAlarm_${day}`, {
         when: nextOccurrence.getTime(),
@@ -173,13 +173,13 @@ chrome.runtime.onInstalled.addListener(async () => {
   });
   chrome.alarms.onAlarm.addListener(async (alarm) => {
     const { user } = await chrome.storage.session.get(["user"]);
-    const { action_creator_alarm_set } = await chrome.storage.session.get([
-      "action_creator_alarm_set",
+    const { action_creator_alarm } = await chrome.storage.session.get([
+      "action_creator_alarm",
     ]);
     if (
       alarm.name.startsWith("myAlarm_") &&
       user?.alarm_status &&
-      !action_creator_alarm_set
+      !action_creator_alarm
     ) {
       // Check for alarms with day-specific names
       console.log("fire alarm - background.js", alarm.name);

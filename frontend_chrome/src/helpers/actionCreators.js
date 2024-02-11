@@ -630,8 +630,8 @@ export async function setAlarm(user) {
 
       console.log("actionCreator", nextOccurrence, day);
 
-      await chrome.storage.session.remove("background");
-      chrome.storage.session.set({ action_creator_alarm_set: true });
+      await chrome.storage.session.remove("background_alarm");
+      chrome.storage.session.set({ action_creator_alarm: true });
 
       chrome.alarms.create(`myAlarm_${day}`, {
         when: nextOccurrence.getTime(),
