@@ -89,6 +89,7 @@ async function setAlarm(user) {
         nextOccurrence.setDate(nextOccurrence.getDate() + 7);
       }
       console.log("background", nextOccurrence, day);
+      chrome.storage.session.set({ background: true });
 
       chrome.alarms.create(`myAlarm_${day}`, {
         when: nextOccurrence.getTime(),
@@ -168,7 +169,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     }
   });
   chrome.notifications.onClicked.addListener(() => {
-    togglePopup();
+    !popupWindow && togglePopup();
   });
   chrome.alarms.onAlarm.addListener(async (alarm) => {
     const { user } = await chrome.storage.session.get(["user"]);
@@ -185,7 +186,7 @@ chrome.runtime.onInstalled.addListener(async () => {
       // Trigger notification and reset alarm as before
       chrome.notifications.create({
         type: "basic",
-        iconUrl: "w_extension.png",
+        iconUrl: "./icon128.png",
         title: "Workdiary",
         message: `Reminder to write in your Workdiary!`,
         // Include sound property for the sound file

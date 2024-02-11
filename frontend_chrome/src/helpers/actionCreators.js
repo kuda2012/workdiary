@@ -576,13 +576,18 @@ export function changeOtherSettings(workdiary_token, alarmChange) {
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   const { user } = await chrome.storage.session.get(["user"]);
-  if (alarm.name.startsWith("myAlarm_") && user?.alarm_status) {
+  const { background } = await chrome.storage.session.get(["background"]);
+  if (alarm.name.startsWith("myAlarm_") && user?.alarm_status && !background) {
     // Check for alarms with day-specific names
     console.log("fire alarm - actionCreator", alarm.name);
     // Trigger notification and reset alarm as before
+    const darkModeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    );
+    const isDarkMode = darkModeMediaQuery.matches;
     chrome.notifications.create({
       type: "basic",
-      iconUrl: "w_extension.png",
+      iconUrl: isDarkMode ? "./white_books_icon128.png" : "./icon128.png",
       title: "Workdiary",
       message: `Reminder to write in your Workdiary!`,
       // Include sound property for the sound file
@@ -625,6 +630,7 @@ export async function setAlarm(user) {
 
       console.log("actionCreator", nextOccurrence, day);
 
+      await chrome.storage.session.remove("background");
       chrome.storage.session.set({ action_creator_alarm_set: true });
 
       chrome.alarms.create(`myAlarm_${day}`, {

@@ -25,11 +25,11 @@ const Alarm = () => {
   };
 
   useEffect(() => {
-    setAlarm(user);
     if (initialRender) {
       setInitialRender(false);
       return;
     }
+    setAlarm(user);
     setButtonText("Saved ✔");
   }, [user]);
 

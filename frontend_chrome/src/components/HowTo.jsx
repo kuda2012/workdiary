@@ -1,5 +1,5 @@
-import "../styles/HowTo.css";
 import ContactForm from "./ContactForm";
+import "../styles/HowTo.css";
 
 const HowTo = ({ closeHowToModal }) => {
   return (
@@ -24,8 +24,18 @@ const HowTo = ({ closeHowToModal }) => {
           data-bs-parent="#accordionExample"
         >
           <div class="accordion-body">
+            <iframe
+              id="demo-video"
+              width="550" // Adjust width and height as needed
+              height="400"
+              src={`https://www.youtube.com/embed/nRnAidy1qH4`}
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
             <ol>
-              <li>
+              {/* <li>
                 Record a voice note of how your work day went (or just type it
                 out)
               </li>
@@ -47,7 +57,7 @@ const HowTo = ({ closeHowToModal }) => {
                   </li>
                 </ul>
               </li>
-              <li>That's it! Run it back tomorrow 🤝</li>
+              <li>That's it! Run it back tomorrow 🤝</li> */}
             </ol>
           </div>
         </div>

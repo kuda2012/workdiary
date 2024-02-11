@@ -171,13 +171,12 @@ class User {
                     <li>Or, type it out: Whatever works best for you!</li>
                     <li>That's it. Easy huh?</li>
                   </ol>
-
                   <h4>Want a bit more? Here's how to supercharge your Workdiary experience:</h4>
                   <ol>
                     <li>Get notified: We'll remind you at 5pm (customizable!) to capture your day.</li>
                     <li>Voice or text: Share your thoughts, whichever way feels best.</li>
                     <li>Tag it: Add a quick label to categorize your entries.</li>
-                    <li>Save your tabs: Grab relevant browser tabs to bring back past contexts.</li>
+                    <li>Save your tabs: Grab relevant browser tabs to bring back past contexts someday in the future.</li>
                   </ol>
 
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>

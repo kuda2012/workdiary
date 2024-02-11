@@ -35,6 +35,17 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                   </a>{" "}
                   to download the chrome extension.
                 </li>
+                <li>Here's a demo:</li>
+                <iframe
+                  id="demo-video"
+                  width="550" // Adjust width and height as needed
+                  height="400"
+                  src={`https://www.youtube.com/embed/nRnAidy1qH4`}
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
               </ol>
             </div>
           </div>
