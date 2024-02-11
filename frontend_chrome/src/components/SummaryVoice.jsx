@@ -178,6 +178,11 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
       resetRecording();
     }
   }, [interpreting]);
+  useEffect(() => {
+    if (!user) {
+      resetRecording();
+    }
+  }, [user]);
   return (
     <div className="mt-5" id="summary-voice">
       <h4 className="mb-4" id="summary-voice-header">
