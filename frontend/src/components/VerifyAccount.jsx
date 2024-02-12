@@ -12,6 +12,7 @@ const VerifyAccount = ({}) => {
   useEffect(() => {
     async function fetchData() {
       try {
+        console.log("hello", verificationToken);
         const { data } = await axios.get(
           `${VITE_LOCAL_BACKEND_URL}/users/verify-account?token=${verificationToken}`
         );
@@ -28,7 +29,7 @@ const VerifyAccount = ({}) => {
       }
     }
     fetchData();
-  }, []);
+  });
   return (
     <>
       <h5 className="mt-2" id="verify-account">
