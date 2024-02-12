@@ -61,7 +61,7 @@ chrome.action.onClicked.addListener(function () {
 
 chrome.windows.onRemoved.addListener(async function (windowId) {
   console.log(popupWindow, windowId);
-  if ((popupWindow && popupWindow.id === windowId) || !popupWindow) {
+  if (popupWindow && popupWindow.id === windowId) {
     popupWindow = undefined;
     await chrome.storage.session.remove("action_creator_alarm");
     await setUpBackground();
