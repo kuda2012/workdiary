@@ -186,7 +186,6 @@ export function deleteAccount(workdiary_token) {
         })
         .then(({ data }) => {
           alert(data.message);
-          dispatch(resetApp("delete-account"));
           window.location.reload();
         });
     } catch (error) {

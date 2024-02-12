@@ -20,11 +20,10 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
   const handleDelete = (e) => {
     e.preventDefault();
     if (confirmation === "delete account") {
+      dispatch(resetApp("delete-account"));
       dispatch(deleteAccount(workdiaryToken));
       // dispatch(revokeAccessToken(googleAccessToken));
-      chrome.identity.clearAllCachedAuthTokens(function () {
-        dispatch(resetApp());
-      });
+      chrome.identity.clearAllCachedAuthTokens(function () {});
     } else {
       alert(`Must spell "delete account" correctly`);
     }

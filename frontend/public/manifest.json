@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Workdiary",
-  "description": "Base Level Extension",
+  "description": "Your diary for work",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmMKpGIyuIYhGd36fysoYB5tapYUhPQUtxrheUXDxvrMCUQJ/wOG73pYnhNg5e4vP6VhJ1QAtk+hUcp7BBAH5DpvWtFWkH6gJvsFro8cuxeAGBwYxvYDQNeeJ+KrHJzaYD89w77qEOR+fEapA2nNpmPMx8ZMgfCwveo8eYTe9+zu9dYIcC8K86Kywl32mTVC+WscnRRhYncvfhy+/vjJWhxcdH9WjNDVn2A9Sy22MrvyyEBGMMRD+SyvlbjDkxHt/Zcp7OLgJe4nPU2P03by4OUhBNoU5QgniyBvEAeFTNQJIe0+20lg1SPBWvKe/GL4NE1AxKNog21+MpGn1xFHN2QIDAQAB",
   "version": "1.0.1",
   "action": {
