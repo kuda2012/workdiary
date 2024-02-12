@@ -6,22 +6,21 @@ const config = {
   // Other configurations...
 };
 
-let popupWindow;
-
-function isPopupOpen() {
-  return popupWindow;
+async function isPopupOpen() {
+  const result = await chrome.storage.local.get(["popup_window"]);
+  return result?.popup_window;
 }
 
-function togglePopup() {
-  if (isPopupOpen()) {
+async function togglePopup() {
+  if (await isPopupOpen()) {
     closePopup();
   } else {
     openPopup();
   }
 }
 
-function openPopup() {
-  chrome.windows.getCurrent(null, function (currentWindow) {
+async function openPopup() {
+  chrome.windows.getCurrent(null, async function (currentWindow) {
     const screenWidth = currentWindow.width;
     const screenHeight = currentWindow.height;
 
@@ -30,7 +29,6 @@ function openPopup() {
 
     const left = Math.max(0, Math.floor((screenWidth - popupWidth) / 2));
     const top = Math.max(0, Math.floor((screenHeight - popupHeight + 95) / 2));
-
     chrome.windows.create(
       {
         url: "index.html", // Replace with your HTML file's path
@@ -41,28 +39,29 @@ function openPopup() {
         left: left,
       },
       function (window) {
-        popupWindow = window;
+        chrome.storage.local.set({ popup_window: window });
       }
     );
   });
 }
 
-function closePopup() {
-  if (popupWindow) {
-    chrome.windows.remove(popupWindow.id, function () {
-      popupWindow = undefined;
+async function closePopup() {
+  const result = await chrome.storage.local.get(["popup_window"]);
+  if (result?.popup_window) {
+    chrome.windows.remove(result?.popup_window.id, function () {
+      chrome.storage.local.remove("popup_window");
     });
   }
 }
 
-chrome.action.onClicked.addListener(function () {
-  togglePopup();
+chrome.action.onClicked.addListener(async function () {
+  return togglePopup();
 });
 
 chrome.windows.onRemoved.addListener(async function (windowId) {
-  console.log(popupWindow, windowId);
-  if (popupWindow && popupWindow.id === windowId) {
-    popupWindow = undefined;
+  const result = await chrome.storage.local.get(["popup_window"]);
+  if (result?.popup_window && result?.popup_window?.id === windowId) {
+    await chrome.storage.local.remove("popup_window");
     await chrome.storage.session.remove("action_creator_alarm");
     await setUpBackground();
   }
@@ -150,65 +149,63 @@ async function setUpBackground() {
   });
 }
 
-chrome.runtime.onInstalled.addListener(async () => {
-  setUpBackground();
-  chrome.tabs.onCreated.addListener(function (tab) {
-    // Send a message to alert the extension about the new tab
-    if (
-      tab.pendingUrl !==
-      "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
-    ) {
-      chrome.runtime.sendMessage({ type: "newTabOpened", tab: tab });
-    }
-  });
-  chrome.tabs.onRemoved.addListener(function (tab) {
-    // Send a message to alert the extension about the new tab
-    if (
-      tab.pendingUrl !==
-      "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
-    ) {
-      chrome.runtime.sendMessage({ type: "tabClosed", tab: tab });
-    }
-  });
-
-  chrome.windows.onFocusChanged.addListener(async (windowId) => {
-    const window = windowId !== -1 ? await chrome.windows.get(windowId) : null;
-    if (window && window?.type !== "popup") {
-      chrome.runtime.sendMessage({
-        type: "windowMoved",
-        windowId: windowId,
-      });
-    }
-  });
-
-  chrome.notifications.onClicked.addListener(() => {
-    !popupWindow && togglePopup();
-  });
-  const handleAlarm = async (alarm) => {
-    const { user } = await chrome.storage.session.get(["user"]);
-    const { action_creator_alarm } = await chrome.storage.session.get([
-      "action_creator_alarm",
-    ]);
-    console.log(alarm.name.startsWith("myAlarm_"), action_creator_alarm);
-
-    if (
-      alarm.name.startsWith("myAlarm_") &&
-      user?.alarm_status &&
-      !action_creator_alarm
-    ) {
-      // Check for alarms with day-specific names
-      console.log("fire alarm - background.js", alarm.name);
-      // Trigger notification and reset alarm as before
-      chrome.notifications.create({
-        type: "basic",
-        iconUrl: "./icon128.png",
-        title: "Workdiary",
-        message: `Reminder to write in your Workdiary!`,
-        // Include sound property for the sound file
-      });
-
-      await setAlarm(user);
-    }
-  };
-  chrome.alarms.onAlarm.addListener(handleAlarm);
+setUpBackground();
+chrome.tabs.onCreated.addListener(function (tab) {
+  // Send a message to alert the extension about the new tab
+  if (
+    tab.pendingUrl !==
+    "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
+  ) {
+    chrome.runtime.sendMessage({ type: "newTabOpened", tab: tab });
+  }
 });
+chrome.tabs.onRemoved.addListener(function (tab) {
+  // Send a message to alert the extension about the new tab
+  if (
+    tab.pendingUrl !==
+    "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
+  ) {
+    chrome.runtime.sendMessage({ type: "tabClosed", tab: tab });
+  }
+});
+
+chrome.windows.onFocusChanged.addListener(async (windowId) => {
+  const window = windowId !== -1 ? await chrome.windows.get(windowId) : null;
+  if (window && window?.type !== "popup") {
+    chrome.runtime.sendMessage({
+      type: "windowMoved",
+      windowId: windowId,
+    });
+  }
+});
+
+chrome.notifications.onClicked.addListener(async () => {
+  return isPopupOpen() && togglePopup();
+});
+const handleAlarm = async (alarm) => {
+  const { user } = await chrome.storage.session.get(["user"]);
+  const { action_creator_alarm } = await chrome.storage.session.get([
+    "action_creator_alarm",
+  ]);
+  if (
+    alarm.name.startsWith("myAlarm_") &&
+    user?.alarm_status &&
+    !action_creator_alarm
+  ) {
+    // Check for alarms with day-specific names
+    console.log("fire alarm - background.js", alarm.name);
+    // Trigger notification and reset alarm as before
+    chrome.notifications.create({
+      type: "basic",
+      iconUrl: "./icon128.png",
+      title: "Workdiary",
+      message: `Reminder to write in your Workdiary!`,
+      // Include sound property for the sound file
+    });
+
+    await setAlarm(user);
+  }
+};
+chrome.alarms.onAlarm.addListener(handleAlarm);
+
+// chrome.runtime.onInstalled.addListener(async () => {});
