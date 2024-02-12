@@ -12,11 +12,9 @@ const VerifyAccount = ({}) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log("hello", verificationToken);
         const { data } = await axios.get(
           `${VITE_LOCAL_BACKEND_URL}/users/verify-account?token=${verificationToken}`
         );
-        console.log(data);
         if (data.message) {
           setVerificationMessage(data.message);
         }
