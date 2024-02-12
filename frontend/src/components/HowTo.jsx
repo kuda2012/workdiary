@@ -37,7 +37,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                 className="mt-2"
                 width="550" // Adjust width and height as needed
                 height="400"
-                src={`https://www.youtube.com/embed/nRnAidy1qH4`}
+                src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

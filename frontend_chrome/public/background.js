@@ -29,7 +29,7 @@ function openPopup() {
     const popupHeight = 900;
 
     const left = Math.max(0, Math.floor((screenWidth - popupWidth) / 2));
-    const top = Math.max(0, Math.floor((screenHeight - popupHeight) / 2));
+    const top = Math.max(0, Math.floor((screenHeight - popupHeight + 95) / 2));
 
     chrome.windows.create(
       {
@@ -179,6 +179,7 @@ chrome.runtime.onInstalled.addListener(async () => {
       });
     }
   });
+
   chrome.notifications.onClicked.addListener(() => {
     !popupWindow && togglePopup();
   });
