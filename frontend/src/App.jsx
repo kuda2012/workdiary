@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Router from "./Router";
+import "./App.css";
 
 function useGlobalErrorHandler() {
   useEffect(() => {
