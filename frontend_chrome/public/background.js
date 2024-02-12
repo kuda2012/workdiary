@@ -63,7 +63,7 @@ chrome.windows.onRemoved.addListener(async function (windowId) {
   if (popupWindow && popupWindow.id === windowId) {
     popupWindow = undefined;
     await chrome.storage.session.remove("action_creator_alarm");
-    setUpBackground();
+    await setUpBackground();
   }
 });
 
@@ -188,6 +188,8 @@ chrome.runtime.onInstalled.addListener(async () => {
     const { action_creator_alarm } = await chrome.storage.session.get([
       "action_creator_alarm",
     ]);
+    console.log(alarm.name.startsWith("myAlarm_"), action_creator_alarm);
+
     if (
       alarm.name.startsWith("myAlarm_") &&
       user?.alarm_status &&
