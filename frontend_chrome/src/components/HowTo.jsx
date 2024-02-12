@@ -3,11 +3,11 @@ import "../styles/HowTo.css";
 
 const HowTo = ({ closeHowToModal }) => {
   return (
-    <div class="accordion" id="accordionExample">
-      <div class="accordion-item" id="accordion-top-item">
-        <h2 class="accordion-header" id="headingOne">
+    <div className="accordion" id="accordionExample">
+      <div className="accordion-item" id="accordion-top-item">
+        <h2 className="accordion-header" id="headingOne">
           <button
-            class="accordion-button"
+            className="accordion-button"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#collapseOne"
@@ -19,28 +19,33 @@ const HowTo = ({ closeHowToModal }) => {
         </h2>
         <div
           id="collapseOne"
-          class="accordion-collapse collapse show"
+          className="accordion-collapse collapse show"
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
-          <div class="accordion-body">
+          <div className="accordion-body">
             <iframe
               id="demo-video"
               width="550" // Adjust width and height as needed
-              height="400"
+              height="375"
               src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
             ></iframe>
+            <div className="mt-1">
+              <b>Note:</b> Your Computer's settings → Notifications → Turn on
+              your Notifications for Google Chrome so you can be reminded to
+              make an entry at the end of your workday!
+            </div>
           </div>
         </div>
       </div>
-      <div class="accordion-item" id="accordion-middle-item">
-        <h2 class="accordion-header" id="headingTwo">
+      <div className="accordion-item" id="accordion-middle-item">
+        <h2 className="accordion-header" id="headingTwo">
           <button
-            class="accordion-button collapsed"
+            className="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#collapseTwo"
@@ -52,11 +57,11 @@ const HowTo = ({ closeHowToModal }) => {
         </h2>
         <div
           id="collapseTwo"
-          class="accordion-collapse collapse"
+          className="accordion-collapse collapse"
           aria-labelledby="headingTwo"
           data-bs-parent="#accordionExample"
         >
-          <div class="accordion-body">
+          <div className="accordion-body">
             <ul>
               <li>
                 To recall what you did over the months so you can prepare for a
@@ -70,10 +75,10 @@ const HowTo = ({ closeHowToModal }) => {
           </div>
         </div>
       </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingThree">
+      <div className="accordion-item">
+        <h2 className="accordion-header" id="headingThree">
           <button
-            class="accordion-button collapsed"
+            className="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#collapseThree"
@@ -85,11 +90,11 @@ const HowTo = ({ closeHowToModal }) => {
         </h2>
         <div
           id="collapseThree"
-          class="accordion-collapse collapse"
+          className="accordion-collapse collapse"
           aria-labelledby="headingThree"
           data-bs-parent="#accordionExample"
         >
-          <div class="accordion-body">
+          <div className="accordion-body">
             <div className="row">
               <div className="col text-center">
                 Hi, My name is Kuda Mwakutuya. I made this app because I felt a
@@ -135,10 +140,10 @@ const HowTo = ({ closeHowToModal }) => {
           </div>
         </div>
       </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingFour">
+      <div className="accordion-item">
+        <h2 className="accordion-header" id="headingFour">
           <button
-            class="accordion-button collapsed"
+            className="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#collapseFour"
@@ -150,11 +155,11 @@ const HowTo = ({ closeHowToModal }) => {
         </h2>
         <div
           id="collapseFour"
-          class="accordion-collapse collapse"
+          className="accordion-collapse collapse"
           aria-labelledby="headingFour"
           data-bs-parent="#accordionExample"
         >
-          <div class="accordion-body">
+          <div className="accordion-body">
             <div className="row">
               <div className="col">
                 <ContactForm closeHowToModal={closeHowToModal} />
