@@ -60,7 +60,8 @@ chrome.action.onClicked.addListener(function () {
 });
 
 chrome.windows.onRemoved.addListener(async function (windowId) {
-  if (popupWindow && popupWindow.id === windowId) {
+  console.log(popupWindow, windowId);
+  if ((popupWindow && popupWindow.id === windowId) || !popupWindow) {
     popupWindow = undefined;
     await chrome.storage.session.remove("action_creator_alarm");
     await setUpBackground();
@@ -183,7 +184,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   chrome.notifications.onClicked.addListener(() => {
     !popupWindow && togglePopup();
   });
-  chrome.alarms.onAlarm.addListener(async (alarm) => {
+  const handleAlarm = async (alarm) => {
     const { user } = await chrome.storage.session.get(["user"]);
     const { action_creator_alarm } = await chrome.storage.session.get([
       "action_creator_alarm",
@@ -208,5 +209,6 @@ chrome.runtime.onInstalled.addListener(async () => {
 
       await setAlarm(user);
     }
-  });
+  };
+  chrome.alarms.onAlarm.addListener(handleAlarm);
 });
