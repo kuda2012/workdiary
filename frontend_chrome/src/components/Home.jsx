@@ -45,7 +45,7 @@ const Home = ({
   useEffect(() => {
     if (isDeleting) return;
     if (!date && !post && !user && workdiaryToken) {
-      // intial load of diary data
+      // initial load of diary data
       dispatch(getPost(workdiaryToken, moment().format("MM/DD/YYYY")));
       dispatch(getUserAccountInfo(workdiaryToken));
       dispatch(getPostsList(workdiaryToken, 1));

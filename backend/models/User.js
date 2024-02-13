@@ -160,24 +160,10 @@ class User {
       html: `<div>
                   <img src="cid:work_diary_image" alt="Workdiary Image" />
                   <p>Hi ${user.name},</p>
-                  <p>Welcome to Workdiary! We're thrilled to have you onboard and help you remember the awesome things you accomplish each day.</p>
-
-                  <h3>Here's how to use the app</h3>
-
-                  <h4>Simple Version:</h4>
-                  <ol>
-                    <li>Press record: Share a quick voice note about your day.</li>
-                    <li>Or, type it out: Whatever works best for you!</li>
-                    <li>That's it. Easy huh?</li>
-                  </ol>
-                  <h4>Want a bit more? Here's how to supercharge your Workdiary experience:</h4>
-                  <ol>
-                    <li>Get notified: We'll remind you at 5pm (customizable!) to capture your day.</li>
-                    <li>Voice or text: Share your thoughts, whichever way feels best.</li>
-                    <li>Tag it: Add a quick label to categorize your entries.</li>
-                    <li>Save your tabs: Grab relevant browser tabs to bring back past contexts someday in the future.</li>
-                  </ol>
-
+                  <p>Welcome to Workdiary! I am glad you have taken this step to gain control of how you remember your work. Work is how you provide for all of the other important things in life.
+                   Let this app be an avenue to gain a more concrete recap of what you've been up to, so you can form a richer narrative of your work endeavors and use this narrative 
+                  to propel you forward in job interviews, networking, or just anytime you get a chance to say your piece.
+                  </p>
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>
                   <p>The Workdiary Team</p>
                   <p>P.S. We're always building new features based on user feedback. Share your thoughts with us any time: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
