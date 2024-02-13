@@ -166,7 +166,12 @@ class User {
                   </p>
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>
                   <p>The Workdiary Team</p>
-                  <p>P.S. We're always building new features based on user feedback. Share your thoughts with us any time: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
+                  <p>P.S. Got any ideas or concerns? Share your thoughts with us any time: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
+                  <small>
+                        <a href="https://chromewebstore.google.com/">
+                            Workdiary App
+                        </a> 
+                    </small>
                 </div>`,
       attachments: [
         {
@@ -348,7 +353,7 @@ class User {
                       Your account is a Google one-click login. You cannot reset your password.
                       Just click the Google login button on the Login/Signup page to login!
                     </p>
-                    <small>Didn't request this? Just ignore</small>
+                    <small>Didn't request this? Just ignore.</small>
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/">
