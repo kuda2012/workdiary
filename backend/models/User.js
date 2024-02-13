@@ -205,9 +205,9 @@ class User {
         `,
         [user.id]
       );
-      return "Your account has been verified. You can now login into your account!";
+      return "Your account has been verified. You can now head back to the app and login into your account!";
     } else if (getUser?.verified) {
-      return "Your account has already been verified. You are free to login into your account!";
+      return "Your account has already been verified. You are free to head back to the app and login into your account!";
     } else {
       return "Our apologies. Please restart the sign up process.";
     }
