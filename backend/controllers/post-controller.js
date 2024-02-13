@@ -1,6 +1,7 @@
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
 const Tag = require("../models/Tag");
+const jwt = require("jsonwebtoken");
 const TranscribeLog = require("../models/TranscribeLog");
 const ExpressError = require("../expressError");
 const { decodeJwt } = require("../helpers/decodeJwt");
@@ -8,18 +9,23 @@ const { speechToText } = require("../helpers/speechToText");
 
 exports.create = async (req, res, next) => {
   try {
-    const { id } = decodeJwt(req.headers.authorization);
+    const { id, email } = decodeJwt(req.headers.authorization);
     let post = await Post.getPost(id, req.body.date);
     if (!post) {
       if (req.body.summary_voice && req.body.audio_duration <= 180) {
         const getLog = await TranscribeLog.getLog(id);
-        if (!getLog || getLog?.count < 100) {
+        if (!getLog || getLog?.count < 20) {
           const summaryText = await speechToText(req.body.summary_voice);
           req.body.summary_text = req.body.summary_text
             ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
             : `<p>${summaryText}</p>`;
           await TranscribeLog.create(id, summaryText);
         } else {
+          console.error(
+            id,
+            email,
+            "You have maxed out the amount of transcriptions you can do per day"
+          );
           throw new ExpressError(
             "You have maxed out the amount of transcriptions you can do per day",
             403
@@ -103,17 +109,22 @@ exports.search = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const { id } = decodeJwt(req.headers.authorization);
+    const { id, email } = decodeJwt(req.headers.authorization);
     const post = await Post.getPost(id, req.body.date);
     if (req.body.summary_voice && req.body.audio_duration < 180) {
       const getLog = await TranscribeLog.getLog(id);
-      if (!getLog || getLog?.count < 100) {
+      if (!getLog || getLog?.count < 20) {
         const summaryText = await speechToText(req.body.summary_voice);
         req.body.summary_text = req.body.summary_text
           ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
           : `<p>${summaryText}</p>`;
         await TranscribeLog.create(id, summaryText);
       } else {
+        console.error(
+          id,
+          email,
+          "You have maxed out the amount of transcriptions you can do per day"
+        );
         throw new ExpressError(
           "You have maxed out the amount of transcriptions you can do per day",
           403
