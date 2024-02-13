@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "../styles/ResetPassword.css";
-const { VITE_LOCAL_BACKEND_URL } = import.meta.env;
+const { VITE_BACKEND_URL } = import.meta.env;
 
 const ResetPassword = ({}) => {
   const INITIAL_STATE = {
@@ -40,7 +40,7 @@ const ResetPassword = ({}) => {
         return;
       } else if (formData.new_password === formData.new_password_copy) {
         const response = await axios.patch(
-          `${VITE_LOCAL_BACKEND_URL}/users/reset-password`,
+          `${VITE_BACKEND_URL}/users/reset-password`,
           {
             new_password: formData.new_password,
             new_password_copy: formData.new_password_copy,

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "../styles/VerifyAccount.css";
-const { VITE_LOCAL_BACKEND_URL } = import.meta.env;
+const { VITE_BACKEND_URL } = import.meta.env;
 
 const VerifyAccount = ({}) => {
   const [accountVerificationCalled, setAccountVerificationCalled] =
@@ -16,7 +16,7 @@ const VerifyAccount = ({}) => {
       try {
         if (!accountVerificationCalled) {
           const { data } = await axios.get(
-            `${VITE_LOCAL_BACKEND_URL}/users/verify-account?token=${verificationToken}`
+            `${VITE_BACKEND_URL}/users/verify-account?token=${verificationToken}`
           );
           setAccountVerificationCalled(true);
           if (data.message) {

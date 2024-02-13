@@ -1,4 +1,4 @@
-var { VITE_LOCAL_BACKEND_URL } = import.meta.env;
+let { VITE_BACKEND_URL } = import.meta.env;
 import axios from "axios";
 export function setGoogleAccessToken(google_access_token) {
   return {
@@ -10,7 +10,7 @@ export function isWorkdiaryTokenCurrent(workdiary_token) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/users/check-workdiary-token`,
+        `${VITE_BACKEND_URL}/users/check-workdiary-token`,
         { source: "actionCreator.js" },
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
@@ -32,7 +32,7 @@ export function loginOrSignupGoogle(googleAccessToken) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/users/login-signup-google`,
+        `${VITE_BACKEND_URL}/users/login-signup-google`,
         {
           google_access_token: googleAccessToken,
         }
@@ -66,12 +66,9 @@ export function revokeAccessToken(googleAccessToken) {
 export function login(formData) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/users/login`,
-        {
-          ...formData,
-        }
-      );
+      const { data } = await axios.post(`${VITE_BACKEND_URL}/users/login`, {
+        ...formData,
+      });
       dispatch(setWorkdiaryToken(data.workdiary_token));
       if (data.first_time_login) {
         dispatch(showHowToModal(data.first_time_login));
@@ -88,12 +85,9 @@ export function login(formData) {
 export function signup(formData) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/users/signup`,
-        {
-          ...formData,
-        }
-      );
+      const { data } = await axios.post(`${VITE_BACKEND_URL}/users/signup`, {
+        ...formData,
+      });
       alert(data.message);
       dispatch(loggingIn(false));
     } catch (error) {
@@ -107,7 +101,7 @@ export function changePassword(workdiary_token, formData) {
   return async function () {
     try {
       const { data } = await axios.patch(
-        `${VITE_LOCAL_BACKEND_URL}/users/change-password`,
+        `${VITE_BACKEND_URL}/users/change-password`,
         {
           ...formData,
         },
@@ -125,7 +119,7 @@ export function forgotPassword(formData) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/users/forgot-password`,
+        `${VITE_BACKEND_URL}/users/forgot-password`,
         {
           ...formData,
         }
@@ -142,7 +136,7 @@ export function searchDiary(workdiary_token, query, current_page = 1) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${VITE_LOCAL_BACKEND_URL}/posts/search?query=${query}&current_page=${current_page}`,
+        `${VITE_BACKEND_URL}/posts/search?query=${query}&current_page=${current_page}`,
         { headers: { Authorization: `Bearer ${workdiary_token}` } }
       );
       if (data.results.length === 0) {
@@ -162,7 +156,7 @@ export function getUserAccountInfo(workdiary_token) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${VITE_LOCAL_BACKEND_URL}/users/account-info`,
+        `${VITE_BACKEND_URL}/users/account-info`,
         { headers: { Authorization: `Bearer ${workdiary_token}` } }
       );
       if (data.user) {
@@ -181,7 +175,7 @@ export function deleteAccount(workdiary_token) {
   return async function (dispatch) {
     try {
       await axios
-        .delete(`${VITE_LOCAL_BACKEND_URL}/users/delete`, {
+        .delete(`${VITE_BACKEND_URL}/users/delete`, {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         })
         .then(({ data }) => {
@@ -198,7 +192,7 @@ export function deletePost(workdiary_token, date) {
   return async function (dispatch) {
     try {
       await axios
-        .delete(`${VITE_LOCAL_BACKEND_URL}/posts/delete?date=${date}`, {
+        .delete(`${VITE_BACKEND_URL}/posts/delete?date=${date}`, {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         })
         .then(({ data }) => {
@@ -217,7 +211,7 @@ export function getPost(workdiary_token, date) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${VITE_LOCAL_BACKEND_URL}/posts/get-post?date=${date}`,
+        `${VITE_BACKEND_URL}/posts/get-post?date=${date}`,
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
@@ -242,7 +236,7 @@ export function updatePost(
   return async function (dispatch) {
     try {
       const { data } = await axios.patch(
-        `${VITE_LOCAL_BACKEND_URL}/posts/update`,
+        `${VITE_BACKEND_URL}/posts/update`,
         {
           workdiary_token,
           date,
@@ -281,7 +275,7 @@ export function createPost(
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/posts/create`,
+        `${VITE_BACKEND_URL}/posts/create`,
         {
           workdiary_token,
           date,
@@ -313,7 +307,7 @@ export function getPostsList(workdiary_token, currentPage = 1) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${VITE_LOCAL_BACKEND_URL}/posts/list-all-posts?current_page=${currentPage}`,
+        `${VITE_BACKEND_URL}/posts/list-all-posts?current_page=${currentPage}`,
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
@@ -366,7 +360,7 @@ export function createTabs(workdiary_token, date, currentTabs) {
       const newTabs = await queryTabs(currentTabs);
       if (newTabs.length > 0) {
         const { data } = await axios.post(
-          `${VITE_LOCAL_BACKEND_URL}/tabs/create`,
+          `${VITE_BACKEND_URL}/tabs/create`,
           { workdiary_token, date, tabs: newTabs },
           {
             headers: { Authorization: `Bearer ${workdiary_token}` },
@@ -410,7 +404,7 @@ export function createTag(workdiary_token, date, tag) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/tags/create`,
+        `${VITE_BACKEND_URL}/tags/create`,
         { workdiary_token, date, tag },
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
@@ -428,7 +422,7 @@ export function deleteTag(workdiary_token, date, tag_id) {
   return async function (dispatch) {
     try {
       const { data } = await axios.delete(
-        `${VITE_LOCAL_BACKEND_URL}/tags/delete?date=${date}&tag_id=${tag_id}`,
+        `${VITE_BACKEND_URL}/tags/delete?date=${date}&tag_id=${tag_id}`,
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
@@ -466,7 +460,7 @@ export function bulkDeleteTabs(workdiary_token, date, tabs) {
     try {
       if (tabs) {
         const { data } = await axios.delete(
-          `${VITE_LOCAL_BACKEND_URL}/tabs/bulk-delete?date=${date}&tab_ids=${arrayToCSV(
+          `${VITE_BACKEND_URL}/tabs/bulk-delete?date=${date}&tab_ids=${arrayToCSV(
             tabs[0]?.tab_id !== undefined
               ? tabs.map((tab) => tab?.tab_id)
               : tabs
@@ -494,7 +488,7 @@ export function multiDeletePosts(workdiary_token, dates, currentDate) {
       const convertDatesArrToCsv = arrayToCSV(dates);
       if (dates) {
         const { data } = await axios.delete(
-          `${VITE_LOCAL_BACKEND_URL}/posts/multi-delete?dates=${convertDatesArrToCsv} `,
+          `${VITE_BACKEND_URL}/posts/multi-delete?dates=${convertDatesArrToCsv} `,
           {
             headers: { Authorization: `Bearer ${workdiary_token}` },
           }
@@ -516,7 +510,7 @@ export function deleteTab(workdiary_token, date, tab_id) {
   return async function (dispatch) {
     try {
       const { data } = await axios.delete(
-        `${VITE_LOCAL_BACKEND_URL}/tabs/delete?date=${date}&tab_id=${tab_id}`,
+        `${VITE_BACKEND_URL}/tabs/delete?date=${date}&tab_id=${tab_id}`,
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
@@ -537,7 +531,7 @@ export function changeAlarm(workdiary_token, alarmChange) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/users/change-alarm`,
+        `${VITE_BACKEND_URL}/users/change-alarm`,
         { ...alarmChange },
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
@@ -559,7 +553,7 @@ export function changeOtherSettings(workdiary_token, alarmChange) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(
-        `${VITE_LOCAL_BACKEND_URL}/users/other-settings`,
+        `${VITE_BACKEND_URL}/users/other-settings`,
         { ...alarmChange },
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },

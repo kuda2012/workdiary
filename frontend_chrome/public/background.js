@@ -1,8 +1,8 @@
 const config = {
   CLOUD_BACKEND_URL: "http://localhost:3000",
-  LOCAL_BACKEND_URL: "https://be-workdiary.onrender.com",
+  BACKEND_URL: "https://be-workdiary.onrender.com",
   // CLOUD_BACKEND_URL: "https://be-workdiary.onrender.com",
-  // LOCAL_BACKEND_URL: "http://localhost:3000",
+  // BACKEND_URL: "http://localhost:3000",
   // Other configurations...
 };
 
@@ -61,9 +61,9 @@ chrome.action.onClicked.addListener(async function () {
 chrome.windows.onRemoved.addListener(async function (windowId) {
   const result = await chrome.storage.local.get(["popup_window"]);
   if (result?.popup_window && result?.popup_window?.id === windowId) {
-    await chrome.storage.local.remove("popup_window");
-    await chrome.storage.session.remove("action_creator_alarm");
-    await setUpBackground();
+    chrome.storage.local.remove("popup_window");
+    chrome.storage.session.remove("action_creator_alarm");
+    setUpBackground();
   }
 });
 
@@ -112,7 +112,7 @@ async function setUpBackground() {
   async function isWorkdiaryTokenCurrent(workdiary_token) {
     try {
       const response = await fetch(
-        `${config.LOCAL_BACKEND_URL}/users/check-workdiary-token`,
+        `${config.BACKEND_URL}/users/check-workdiary-token`,
         {
           method: "POST",
           mode: "cors",
@@ -136,7 +136,7 @@ async function setUpBackground() {
         : null;
     let response = null;
     if (workdiaryToken) {
-      response = await fetch(`${config.LOCAL_BACKEND_URL}/users/account-info`, {
+      response = await fetch(`${config.BACKEND_URL}/users/account-info`, {
         method: "GET",
         headers: { Authorization: `Bearer ${workdiaryToken}` },
       });
@@ -207,5 +207,3 @@ const handleAlarm = async (alarm) => {
   }
 };
 chrome.alarms.onAlarm.addListener(handleAlarm);
-
-// chrome.runtime.onInstalled.addListener(async () => {});
