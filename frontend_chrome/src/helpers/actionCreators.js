@@ -1,4 +1,4 @@
-let { VITE_BACKEND_URL } = import.meta.env;
+var { VITE_BACKEND_URL } = import.meta.env;
 import axios from "axios";
 export function setGoogleAccessToken(google_access_token) {
   return {
