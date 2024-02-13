@@ -3,7 +3,7 @@ import { Input } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAccount,
-  resetApp,
+  isDeleting,
   revokeAccessToken,
 } from "../helpers/actionCreators";
 import ChangePassword from "./ChangePassword";
@@ -20,7 +20,7 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
   const handleDelete = (e) => {
     e.preventDefault();
     if (confirmation === "delete account") {
-      dispatch(resetApp("delete-account"));
+      dispatch(isDeleting(true));
       dispatch(deleteAccount(workdiaryToken));
       // dispatch(revokeAccessToken(googleAccessToken));
       chrome.identity.clearAllCachedAuthTokens(function () {});

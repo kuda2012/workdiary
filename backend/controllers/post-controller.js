@@ -1,7 +1,6 @@
 const Post = require("../models/Post");
 const Tab = require("../models/Tab");
 const Tag = require("../models/Tag");
-const jwt = require("jsonwebtoken");
 const TranscribeLog = require("../models/TranscribeLog");
 const ExpressError = require("../expressError");
 const { decodeJwt } = require("../helpers/decodeJwt");

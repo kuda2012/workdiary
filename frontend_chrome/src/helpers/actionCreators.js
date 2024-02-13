@@ -179,10 +179,13 @@ export function deleteAccount(workdiary_token) {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         })
         .then(({ data }) => {
+          dispatch(resetApp("delete-account"));
           alert(data.message);
           window.location.reload();
+          dispatch(isDeleting(false));
         });
     } catch (error) {
+      dispatch(isDeleting(false));
       alert(error?.response?.data?.message || error?.message);
       console.log(error);
     }
@@ -738,5 +741,12 @@ export function setShowAllPosts(show_all_posts) {
   return {
     type: "SET_SHOW_ALL_POSTS",
     show_all_posts,
+  };
+}
+
+export function isDeleting(deleting) {
+  return {
+    type: "IS_DELETING",
+    deleting,
   };
 }

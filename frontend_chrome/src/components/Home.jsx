@@ -33,6 +33,9 @@ const Home = ({
   const showAllPosts = useSelector((state) => state.show_all_posts);
   const postsList = useSelector((state) => state?.posts_list);
   const searchResults = useSelector((state) => state.search_results);
+  const isDeleting = useSelector((state) => {
+    state.is_deleting;
+  });
 
   const [isHowToModalOpen, setIsHowToModalOpen] = useState(false);
   const openHowToModal = () => setIsHowToModalOpen(true);
@@ -40,6 +43,7 @@ const Home = ({
 
   const dispatch = useDispatch();
   useEffect(() => {
+    if (isDeleting) return;
     if (!date && !post && !user && workdiaryToken) {
       // intial load of diary data
       dispatch(getPost(workdiaryToken, moment().format("MM/DD/YYYY")));

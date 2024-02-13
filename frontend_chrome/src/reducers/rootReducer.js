@@ -72,6 +72,8 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, initial_load: !state.initial_load };
     case "LOGGING_IN":
       return { ...state, logging_in: action.logging_in };
+    case "IS_DELETING":
+      return { ...state, is_deleting: action.deleting };
     case "HALF_RESET":
       return {
         ...INITIAL_STATE,
