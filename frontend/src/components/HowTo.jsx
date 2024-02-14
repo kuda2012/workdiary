@@ -28,7 +28,10 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
             <div className="accordion-body text-center">
               You can't use the app in the browser (at least for now). Please
               click{" "}
-              <a href="https://twitter.com/kuda2012_" target="_blank">
+              <a
+                href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp"
+                target="_blank"
+              >
                 here
               </a>{" "}
               to download the chrome extension.

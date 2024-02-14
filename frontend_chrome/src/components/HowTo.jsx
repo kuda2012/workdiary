@@ -102,7 +102,7 @@ const HowTo = ({ closeHowToModal }) => {
                   href="https://www.buymeacoffee.com/kudamwakutuya"
                   target="_blank"
                 >
-                  <img src="coffee.png" alt="Social Media 2" />
+                  <img src="coffee.png" alt="Social Media 3" />
                   Buy me a coffee
                 </a>
               </div>

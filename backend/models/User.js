@@ -116,7 +116,7 @@ class User {
                     <small>Didn't request this? Just ignore.</small>
                     <div>
                     <small>
-                        <a href="https://chromewebstore.google.com/">
+                        <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
                             Get the app
                         </a> 
                     </small>
@@ -173,7 +173,7 @@ class User {
                   <p>The Workdiary Team</p>
                   <p>P.S. Got any ideas or concerns? Share your thoughts with us any time: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
                   <small>
-                        <a href="https://chromewebstore.google.com/">
+                        <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
                             Workdiary App
                         </a> 
                     </small>
@@ -361,7 +361,7 @@ class User {
                     <small>Didn't request this? Just ignore.</small>
                     <div>
                     <small>
-                        <a href="https://chromewebstore.google.com/">
+                        <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
                             Get the app
                         </a> 
                     </small>
@@ -390,7 +390,7 @@ class User {
                     <small>Didn't request this? Just ignore.</small>
                     <div>
                     <small>
-                        <a href="https://chromewebstore.google.com/">
+                        <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
                             Get the app
                         </a> 
                     </small>
