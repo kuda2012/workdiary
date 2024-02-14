@@ -256,7 +256,7 @@ class User {
           `UPDATE users
                         SET password=$1
                         where email=$2`,
-          [newPassword, email]
+          [newPassword, email.toLowerCase()]
         );
         return "Password has been changed";
       } else {
@@ -310,7 +310,7 @@ class User {
         `UPDATE users
             SET password=$1
             where email=$2`,
-        [newPassword, email]
+        [newPassword, email.toLowerCase()]
       );
       await db.query(
         `INSERT INTO invalid_tokens (user_id, token)
@@ -324,7 +324,7 @@ class User {
   }
 
   static async forgotPassword(body) {
-    const { email } = body;
+    const email = body.email.toLowerCase();
     const user = await this.getUser(null, email);
 
     if (user) {
@@ -433,7 +433,7 @@ class User {
       subject: `From Contact form: ${body.subject}`,
       html: `<div>
                 <p><strong>Name:</strong> ${body.name}</p>
-                <p><strong>Sender's Email:</strong> ${body.email}</p>
+                <p><strong>Sender's Email:</strong> ${body.email.toLowerCase()}</p>
                 <p><strong>Message:</strong> ${body.message}</p>
             </div>`,
     };
@@ -490,7 +490,7 @@ class User {
     const getUser = await db.oneOrNone(
       `SELECT id, email, name, alarm_status, alarm_time, alarm_days, sound_effects, auth_provider, verified, created_at FROM users
        WHERE id = $1 OR email = $2`,
-      [id, email]
+      [id, email.toLowerCase()]
     );
     return getUser;
   }

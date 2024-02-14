@@ -5,11 +5,12 @@ import { ThreeDots } from "react-loader-spinner";
 import {
   loggingIn as loggingInFunction,
   login,
+  setIsSignup,
   signup,
 } from "../helpers/actionCreators";
 import "../styles/LoginOrSignup.css";
 
-const LoginOrSignup = ({ setIsSignup, isSignup, setIsForgotPassword }) => {
+const LoginOrSignup = ({ setIsForgotPassword }) => {
   const dispatch = useDispatch();
   const INITIAL_STATE = {
     email: "",
@@ -21,6 +22,7 @@ const LoginOrSignup = ({ setIsSignup, isSignup, setIsForgotPassword }) => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [loadingDotsActive, setloadingDotsActive] = useState(false);
   const loggingInVar = useSelector((state) => state.logging_in);
+  const isSignup = useSelector((state) => state.is_signup);
   const toggleShowPassword1 = () => {
     setShowPassword1((password) => !password);
   };
@@ -52,14 +54,13 @@ const LoginOrSignup = ({ setIsSignup, isSignup, setIsForgotPassword }) => {
         setloadingDotsActive(true);
         dispatch(isSignup ? signup(formData) : login(formData));
         dispatch(loggingInFunction(true));
-        setIsSignup(false);
         setFormData(INITIAL_STATE);
       }
     } catch (error) {
       setloadingDotsActive(false);
       dispatch(loggingInFunction(false));
       setFormData(INITIAL_STATE);
-      setIsSignup(true);
+      dispatch(setIsSignup(true));
       console.error(error);
     }
   };

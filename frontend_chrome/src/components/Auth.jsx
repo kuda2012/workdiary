@@ -3,9 +3,12 @@ import GoogleLoginOrSignupButton from "./GoogleLoginOrSignupButton";
 import LoginOrSignup from "./LoginOrSignup";
 import ForgotPassword from "./ForgotPassword";
 import "../styles/Auth.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsSignup } from "../helpers/actionCreators";
 
 const Auth = () => {
-  const [isSignup, setIsSignup] = useState(true);
+  const dispatch = useDispatch();
+  const isSignup = useSelector((state) => state.is_signup);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   useEffect(() => {
@@ -13,9 +16,9 @@ const Auth = () => {
       try {
         const result = await chrome.storage.local.get(["repeat_user"]);
         if (result.repeat_user) {
-          setIsSignup(false);
+          dispatch(setIsSignup(false));
         } else {
-          setIsSignup(true);
+          dispatch(setIsSignup(true));
         }
       } catch (error) {
         console.error("Error fetching data from chrome storage:", error);
@@ -24,6 +27,8 @@ const Auth = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {}, [isSignup]);
   return (
     <div className="container">
       <div className="row flex-column align-items-center">
@@ -33,15 +38,13 @@ const Auth = () => {
         {!isForgotPassword && (
           <>
             <div className="col-6 mt-3">
-              <GoogleLoginOrSignupButton isSignup={isSignup} />
+              <GoogleLoginOrSignupButton />
             </div>
             <div className="col mt-5 mb-4">
               <h5 className="text-center">Or</h5>
             </div>
             <div className="col">
               <LoginOrSignup
-                setIsSignup={setIsSignup}
-                isSignup={isSignup}
                 isForgotPassword={isForgotPassword}
                 setIsForgotPassword={setIsForgotPassword}
               />
@@ -49,7 +52,9 @@ const Auth = () => {
             <div className="col mt-3 text-center">
               <span
                 id="span-auth-toggler"
-                onClick={() => setIsSignup(!isSignup)}
+                onClick={() => {
+                  dispatch(setIsSignup(!isSignup));
+                }}
               >
                 {isSignup
                   ? `Already have an account? `

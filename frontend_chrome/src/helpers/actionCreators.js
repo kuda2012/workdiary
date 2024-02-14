@@ -89,6 +89,7 @@ export function signup(formData) {
         ...formData,
       });
       alert(data.message);
+      dispatch(setIsSignup(false));
       dispatch(loggingIn(false));
     } catch (error) {
       dispatch(resetApp());
@@ -748,5 +749,12 @@ export function isDeleting(deleting) {
   return {
     type: "IS_DELETING",
     deleting,
+  };
+}
+
+export function setIsSignup(is_signup) {
+  return {
+    type: "IS_SIGNUP",
+    is_signup,
   };
 }

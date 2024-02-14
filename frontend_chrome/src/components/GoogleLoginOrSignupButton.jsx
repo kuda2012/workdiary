@@ -8,8 +8,9 @@ import {
 } from "../helpers/actionCreators";
 import "../styles/LoginOrSignup.css";
 
-const GoogleLoginOrSignupButton = ({ isSignup }) => {
+const GoogleLoginOrSignupButton = () => {
   const dispatch = useDispatch();
+  const isSignup = useSelector((state) => state.is_signup);
   const loggingInVar = useSelector((state) => state.logging_in);
   const [loginButtonActive, setloginButtonActive] = useState(false);
 
