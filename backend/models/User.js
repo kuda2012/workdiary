@@ -113,7 +113,7 @@ class User {
                         Click here</a>
                          to verify your account
                     </p>
-                    <small>Didn't request this? Just ignore</small>
+                    <small>Didn't request this? Just ignore.</small>
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/">
@@ -160,9 +160,14 @@ class User {
       html: `<div>
                   <img src="cid:work_diary_image" alt="Workdiary Image" />
                   <p>Hi ${user.name},</p>
-                  <p>Welcome to Workdiary! I am glad you have taken this step to gain control of how you remember your work. Work is how you provide for all of the other important things in life.
-                   Let this app be an avenue to gain a more concrete recap of what you've been up to, so you can form a richer narrative of your work endeavors and use this narrative 
-                  to propel you forward in job interviews, networking, or just anytime you get a chance to say your piece.
+                  <p>
+                    Welcome to Workdiary! I am glad you have taken this step to gain
+                    control of how you remember your work. Work is how you provide for
+                    all of the other important things in life. Let this app be an
+                    avenue to create a more concrete recap of what you've been up to,
+                    so you can form a richer narrative of your work endeavors and use
+                    this narrative to propel you forward in job interviews,
+                    networking, or just anytime you get a chance to say your piece.
                   </p>
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>
                   <p>The Workdiary Team</p>
@@ -382,7 +387,7 @@ class User {
                         Click here</a>
                          to reset your password. You have 30 mins until it expires.
                     </p>
-                    <small>Didn't request this? Just ignore</small>
+                    <small>Didn't request this? Just ignore.</small>
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/">

@@ -16,9 +16,8 @@ const Tabs = () => {
   const tabs = useSelector((state) => state.post?.tabs);
   const date = useSelector((state) => state.date);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
-
-  const [windows, setWindows] = useState(null);
   const dispatch = useDispatch();
+  const [windows, setWindows] = useState(null);
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
   const [tabsSelected, setTabsSelected] = useState(new Map());
   const [currentTabCount, setCurrentTabsCount] = useState(0);
@@ -58,27 +57,19 @@ const Tabs = () => {
       }
     };
     fetchWindows();
-    const handleMessage = async (message) => {
-      if (message.type === "newTabOpened" || message.type === "tabClosed") {
-        // Perform actions in useEffect when a new tab is opened
-        setCurrentTabsCount(Array.from(await chrome.tabs.query({})).length);
-        // Add your logic here based on the newly opened tab
-      } else if (message.type === "windowMoved") {
-        // recalculate who is window1 and window2
-        fetchWindows();
-      }
-    };
     const getCurrentTabsCount = async () => {
       setCurrentTabsCount(Array.from(await chrome.tabs.query({})).length);
     };
     getCurrentTabsCount();
-    // Adding event listener for messages from the background script
-    chrome.runtime.onMessage.addListener(handleMessage);
-
-    // Clean up the event listener on component unmount
-
+    chrome.windows.onFocusChanged.addListener(fetchWindows);
+    chrome.windows.onBoundsChanged.addListener(fetchWindows);
+    chrome.windows.onRemoved.addListener(fetchWindows);
+    chrome.tabs.onCreated.addListener(getCurrentTabsCount);
+    chrome.tabs.onRemoved.addListener(getCurrentTabsCount);
     return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
+      chrome.windows.onRemoved.removeListener(fetchWindows);
+      chrome.tabs.onCreated.removeListener(getCurrentTabsCount);
+      chrome.tabs.onRemoved.removeListener(getCurrentTabsCount);
     };
   }, []);
 

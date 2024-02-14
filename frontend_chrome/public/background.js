@@ -150,34 +150,6 @@ async function setUpBackground() {
 }
 
 setUpBackground();
-chrome.tabs.onCreated.addListener(function (tab) {
-  // Send a message to alert the extension about the new tab
-  if (
-    tab.pendingUrl !==
-    "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
-  ) {
-    chrome.runtime.sendMessage({ type: "newTabOpened", tab: tab });
-  }
-});
-chrome.tabs.onRemoved.addListener(function (tab) {
-  // Send a message to alert the extension about the new tab
-  if (
-    tab.pendingUrl !==
-    "chrome-extension://lbjmgndoajjfcodenfoicgenhjphacmp/index.html"
-  ) {
-    chrome.runtime.sendMessage({ type: "tabClosed", tab: tab });
-  }
-});
-
-chrome.windows.onFocusChanged.addListener(async (windowId) => {
-  const window = windowId !== -1 ? await chrome.windows.get(windowId) : null;
-  if (window && window?.type !== "popup") {
-    chrome.runtime.sendMessage({
-      type: "windowMoved",
-      windowId: windowId,
-    });
-  }
-});
 
 chrome.notifications.onClicked.addListener(async () => {
   return isPopupOpen() && togglePopup();

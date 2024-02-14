@@ -47,39 +47,6 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
           </div>
         </div>
         <div className="accordion-item">
-          <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
-            <button
-              className="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#panelsStayOpen-collapseTwo"
-              aria-expanded="false"
-              aria-controls="panelsStayOpen-collapseTwo"
-            >
-              <h5>Why use this app?</h5>
-            </button>
-          </h2>
-          <div
-            id="panelsStayOpen-collapseTwo"
-            className="accordion-collapse collapse"
-            aria-labelledby="panelsStayOpen-headingTwo"
-            data-bs-parent="#accordionExample"
-          >
-            <div className="accordion-body">
-              <ul>
-                <li>
-                  To recall what you did over the months so you can prepare for
-                  a performance review (or plan your exit accordingly ;)
-                </li>
-                <li>
-                  To pick up where you left off in solving an old problem/bug
-                  (So make sure to save your relevant tabs to a given work day!)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="accordion-item">
           <h2 className="accordion-header" id="panelsStayOpen-headingThree">
             <button
               className="accordion-button collapsed"
@@ -89,7 +56,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               aria-expanded="false"
               aria-controls="panelsStayOpen-collapseThree"
             >
-              <h5>Who are we?</h5>
+              <h5>Okay..but why use this?</h5>
             </button>
           </h2>
           <div
@@ -101,19 +68,21 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
             <div className="accordion-body">
               <div className="row">
                 <div className="col text-center">
-                  Hi, My name is Kuda Mwakutuya. I made this app because I felt
-                  a sense of dis-ease about how many months could go by at work
-                  with little hard proof of what I've been up to this whole
-                  time. This app gives you that security to say "Okay, I have
-                  been working hard. Look at what I was involved in each day."
-                  Use it to prepare for your performance reviews. If you've been
-                  pulling in your tabs each day, use it to hop back into a old
-                  problem you were solving. Ultimately, use it to give yourself
-                  peace of mind that you've not just been lollygagging at work
-                  all day. Many people have personal diaries...you spend most of
-                  your waking hours working...Why wouldn't it be good to have a
-                  Workdiary then? Of course it would be. Let me know how it
-                  goes. ✌
+                  Hi, My name is Kuda. I made this app because I felt sense of
+                  unease about how many months could go by at work with little
+                  hard proof of what I've been up to this whole time. This app
+                  gives you that security to say "Okay, I have been working
+                  hard. Look at what I was involved in each day." And not only
+                  that, you can use this hard proof to form a personal narrative
+                  about your worklife. Your work is your sustenance. Let this
+                  app be the tool you use the form a richer narrative about what
+                  you do for a living. Wallah! You are now an equipped
+                  storyteller. Use this work-story in job interviews, networking
+                  events, basically anytime you want to tell people who you are
+                  and what you do. Many people have personal diaries...you spend
+                  most of your waking hours working...Why wouldn't it be good to
+                  have a Workdiary then? Of course it would be. Let me know how
+                  it goes ✌
                 </div>
               </div>
               <div className="row justify-content-around mt-2">
@@ -155,7 +124,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               aria-expanded="false"
               aria-controls="collapseFour"
             >
-              <h5>Contact</h5>
+              <h5>Contact Us</h5>
             </button>
           </h2>
           <div
@@ -199,7 +168,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                 <div className="col" id="privacy-policy">
                   <h2>Privacy Policy of Workdiary</h2>
 
-                  <p>The owner operates the Workdiary.me chrome extension</p>
+                  <p>The owner operates the Workdiary.me Chrome Extension</p>
 
                   <p>
                     This page is used to inform website visitors regarding our
@@ -215,13 +184,6 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                     for providing and improving the app. We will not use or
                     share your information with anyone except as described in
                     this Privacy Policy.
-                  </p>
-
-                  <p>
-                    The terms used in this Privacy Policy have the same meanings
-                    as in our Terms and Conditions, which is accessible at
-                    Workdiary.me, unless otherwise defined in this Privacy
-                    Policy.
                   </p>
 
                   <h2>Information Collection and Use</h2>
@@ -244,23 +206,6 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                     version, pages of our app that you visit, the time and date
                     of your visit, the time spent on those pages, and other
                     statistics.
-                  </p>
-
-                  <h2>Cookies</h2>
-
-                  <p>
-                    Cookies are files with small amount of data that is commonly
-                    used an anonymous unique identifier. These are sent to your
-                    browser from the website that you visit and are stored on
-                    your computer's hard drive.
-                  </p>
-
-                  <p>
-                    Our website uses these "cookies" to collection information
-                    and to improve our app. You have the option to either accept
-                    or refuse these cookies, and know when a cookie is being
-                    sent to your computer. If you choose to refuse our cookies,
-                    you may not be able to use some portions of our app.
                   </p>
 
                   <h2>App Providers</h2>
@@ -288,12 +233,13 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                   <h2>Security</h2>
 
                   <p>
-                    We value your trust in providing us your Personal
-                    Information, thus we are striving to use commercially
-                    acceptable means of protecting it. But remember that no
-                    method of transmission over the internet, or method of
-                    electronic storage is 100% secure and reliable, and we
-                    cannot guarantee its absolute security.
+                    We value your trust in providing us with your Personal
+                    Information, and we are committed to using commercially
+                    acceptable means to protect it. However, it's important to
+                    note that no method of transmission over the internet or
+                    electronic storage is 100% secure and reliable. While we
+                    strive to maintain the highest standards of security, we
+                    cannot guarantee the absolute security of your data.
                   </p>
 
                   <h2>Children's Privacy</h2>
@@ -306,7 +252,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                     immediately delete this from our servers. If you are a
                     parent or guardian and you are aware that your child has
                     provided us with personal information, please contact us so
-                    that we will be able to do necessary actions.
+                    that we will be able to complete the necessary actions.
                   </p>
 
                   <h2>Changes to This Privacy Policy</h2>
@@ -323,7 +269,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
 
                   <p>
                     If you have any questions or suggestions about our Privacy
-                    Policy, do not hesitate to contact us.{" "}
+                    Policy do not hesitate to contact us:{" "}
                     <a href="mailto:contact@workdiary.me">
                       Contact@workdiary.me
                     </a>
