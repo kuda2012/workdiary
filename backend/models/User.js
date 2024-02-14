@@ -37,7 +37,7 @@ class User {
     const newUser = await db.query(
       `INSERT INTO users (id, email, password, name, auth_provider)
        VALUES ($1, $2, $3, $4, $5) RETURNING id, email, name, auth_provider, verified`,
-      [uuid(), email.toLowerCase(), hashedPassword, name, "username_password"]
+      [uuid(), email?.toLowerCase(), hashedPassword, name, "username_password"]
     );
     this.sendWelcomeEmail(newUser[0]);
     return newUser[0];
@@ -50,7 +50,7 @@ class User {
 
     const getUserPassword = await db.oneOrNone(
       `SELECT email, password from users WHERE email =$1`,
-      [email.toLowerCase()]
+      [email?.toLowerCase()]
     );
     if (getUserPassword) {
       const passwordCorrect = await bcrypt.compare(
@@ -221,7 +221,7 @@ class User {
     const { password } = body;
     const { auth_provider } = await db.oneOrNone(
       `SELECT auth_provider from users WHERE email=$1`,
-      [email.toLowerCase()]
+      [email?.toLowerCase()]
     );
     if (auth_provider === "google") {
       throw new ExpressError(
@@ -244,7 +244,7 @@ class User {
     );
     const getUserPassword = await db.oneOrNone(
       `SELECT password from users WHERE email =$1`,
-      [email.toLowerCase()]
+      [email?.toLowerCase()]
     );
     if (getUserPassword) {
       const passwordCorrect = await bcrypt.compare(
@@ -256,7 +256,7 @@ class User {
           `UPDATE users
                         SET password=$1
                         where email=$2`,
-          [newPassword, email.toLowerCase()]
+          [newPassword, email?.toLowerCase()]
         );
         return "Password has been changed";
       } else {
@@ -273,7 +273,7 @@ class User {
   static async resetPassword(body, user_id, email, token) {
     const { auth_provider } = await db.oneOrNone(
       `SELECT auth_provider from users WHERE email =$1`,
-      [email.toLowerCase()]
+      [email?.toLowerCase()]
     );
     if (auth_provider === "google") {
       throw new ExpressError(
@@ -310,7 +310,7 @@ class User {
         `UPDATE users
             SET password=$1
             where email=$2`,
-        [newPassword, email.toLowerCase()]
+        [newPassword, email?.toLowerCase()]
       );
       await db.query(
         `INSERT INTO invalid_tokens (user_id, token)
@@ -324,7 +324,7 @@ class User {
   }
 
   static async forgotPassword(body) {
-    const email = body.email.toLowerCase();
+    const email = body.email?.toLowerCase();
     const user = await this.getUser(null, email);
 
     if (user) {
@@ -433,7 +433,7 @@ class User {
       subject: `From Contact form: ${body.subject}`,
       html: `<div>
                 <p><strong>Name:</strong> ${body.name}</p>
-                <p><strong>Sender's Email:</strong> ${body.email.toLowerCase()}</p>
+                <p><strong>Sender's Email:</strong> ${body.email?.toLowerCase()}</p>
                 <p><strong>Message:</strong> ${body.message}</p>
             </div>`,
     };
@@ -490,7 +490,7 @@ class User {
     const getUser = await db.oneOrNone(
       `SELECT id, email, name, alarm_status, alarm_time, alarm_days, sound_effects, auth_provider, verified, created_at FROM users
        WHERE id = $1 OR email = $2`,
-      [id, email.toLowerCase()]
+      [id, email?.toLowerCase()]
     );
     return getUser;
   }
