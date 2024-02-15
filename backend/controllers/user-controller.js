@@ -47,9 +47,9 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
         !getUser?.verified &&
         moment
           .duration(moment().diff(moment(getUser?.created_at)))
-          .asMinutes()) > 20
+          .asMinutes()) > 30
     ) {
-      // Delete user if you are trying to create the same account within the last 20 mins since
+      // Delete user if you are trying to create the same account within the last 30 mins since
       // creating an account but have not verified it yet
       await User.delete(getUser.id);
       userDeleted = true;
