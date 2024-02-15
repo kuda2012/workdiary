@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
 const jsonschema = require("jsonschema");
 const userSchema = require("../schema/userSchema.json");
 const resetPasswordSchema = require("../schema/resetPasswordSchema.json");
@@ -61,7 +62,7 @@ async function verifyAccountVerificationToken(req, res, next) {
     return next();
   } catch (error) {
     if (error.message === "jwt expired") {
-      const getUser = User.getUser(jwt.decode(req.query.token).id);
+      const getUser = await User.getUser(jwt.decode(req.query.token).id);
       if (
         (getUser &&
           !getUser?.verified &&
