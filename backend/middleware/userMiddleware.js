@@ -67,7 +67,7 @@ async function verifyAccountVerificationToken(req, res, next) {
           !getUser?.verified &&
           moment
             .duration(moment().diff(moment(getUser?.created_at)))
-            .asMinutes()) > 30
+            .asMinutes()) > 1
       ) {
         // Delete user if you are trying to create the same account within the last 30 mins since
         // creating an account but have not verified it yet
