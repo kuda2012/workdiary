@@ -46,6 +46,16 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
           />
         }
       />
+      <Route
+        isValidUrl={true}
+        element={
+          <Home
+            isHowToModalOpen={isHowToModalOpen}
+            openHowToModal={openHowToModal}
+            closeHowToModal={closeHowToModal}
+          />
+        }
+      />
     </Routes>
   );
 };
