@@ -12,7 +12,6 @@ const ChangePassword = ({ closeAccountStuffModal }) => {
   };
   const dispatch = useDispatch();
   const workdiaryToken = useSelector((state) => state.workdiary_token);
-  const user = useSelector((state) => state.user);
   const [formData, setFormData] = useState(INITIAL_STATE);
   const handleChange = (e) => {
     const { name, value } = e.target;

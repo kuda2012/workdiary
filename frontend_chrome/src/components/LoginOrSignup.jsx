@@ -36,6 +36,12 @@ const LoginOrSignup = ({ setIsForgotPassword }) => {
     setFormData(INITIAL_STATE);
   }, [isSignup]);
 
+  useEffect(() => {
+    if (showPassword1) {
+      toggleShowPassword1();
+    }
+  }, [isSignup]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((data) => ({ ...data, [name]: value }));
@@ -55,6 +61,9 @@ const LoginOrSignup = ({ setIsForgotPassword }) => {
         dispatch(isSignup ? signup(formData) : login(formData));
         !isSignup && dispatch(setIsSignup(false));
         dispatch(loggingInFunction(true));
+        if (showPassword1) {
+          toggleShowPassword1();
+        }
         setFormData(INITIAL_STATE);
       }
     } catch (error) {

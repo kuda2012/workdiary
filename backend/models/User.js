@@ -71,14 +71,14 @@ class User {
         }
       } else {
         throw new ExpressError(
-          "The email and password combination you have entered do not match any of our records. Please try again.",
+          "The email and password combination you have entered do not match our records. Please try again.",
           400
         );
       }
     } else {
       // No user was found from getUserPassword
       throw new ExpressError(
-        "The email and password combination you have entered do not match any of our records. Please try again.",
+        "The email and password combination you have entered do not match our records. Please try again.",
         400
       );
     }
