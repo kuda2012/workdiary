@@ -160,7 +160,7 @@ class User {
       html: `<div>
                   <img src="cid:work_diary_image" alt="Workdiary Image" />
                   <p>Hi ${user.name},</p>
-                  <p>
+                   <p style="max-width: 600px;">
                     Welcome to Workdiary! I am glad you have taken this step to gain
                     control of how you remember your work. Work is how you provide for
                     all of the other important things in life. Let this app be an

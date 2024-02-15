@@ -72,7 +72,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               <div className="row">
                 <div className="col text-center">
                   Hi, My name is Kuda. I made this app because I felt sense of
-                  unease about how many months could go by at work with little
+                  unease about how many months could go by at work without much
                   hard proof of what I've been up to this whole time. This app
                   gives you that security to say "Okay, I have been working
                   hard. Look at what I was involved in each day." And not only
