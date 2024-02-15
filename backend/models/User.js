@@ -164,14 +164,14 @@ class User {
                     Welcome to Workdiary! I am glad you have taken this step to gain
                     control of how you remember your work. Work is how you provide for
                     all of the other important things in life. Let this app be an
-                    avenue to create a more concrete recap of what you've been up to,
+                    avenue to create a concrete recap of what you've been up to,
                     so you can form a richer mental narrative of your work endeavors
                     that will make you more interesting during job interviews,
-                    networking event, or just anytime you get a chance to say your piece.
+                    networking events, or just anytime you get a chance to say your piece.
                   </p>
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>
                   <p>The Workdiary Team</p>
-                  <p>P.S. Got any ideas or concerns? Share your thoughts with us any time: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
+                  <p>P.S. Share your thoughts or concerns with us any time at: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
                   <small>
                         <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
                             Workdiary App
