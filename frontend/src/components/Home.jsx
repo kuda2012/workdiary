@@ -4,7 +4,12 @@ import HowToModal from "./HowToModal";
 import { useEffect, useState } from "react";
 import VerifyAccount from "./VerifyAccount";
 
-const Home = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
+const Home = ({
+  isHowToModalOpen,
+  openHowToModal,
+  closeHowToModal,
+  isValidUrl,
+}) => {
   const [openToPrivacyPolicy, setOpenToPrivacyPolicy] = useState(false);
   useEffect(() => {
     if (window.location.pathname === "/" && !isHowToModalOpen) {
@@ -29,7 +34,7 @@ const Home = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
             />
           </HowToModal>
         )}
-        {window.location.pathname === "/" && (
+        {(window.location.pathname === "/" || !isValidUrl) && (
           <h5 className="mt-2">Welcome! Click "about" to learn more :)</h5>
         )}
         {window.location.pathname === "/reset-password" && <ResetPassword />}
