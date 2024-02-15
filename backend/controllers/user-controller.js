@@ -14,7 +14,7 @@ exports.signup = async (req, res, next) => {
         !getUser?.verified &&
         moment
           .duration(moment().diff(moment(getUser?.created_at)))
-          .asMinutes()) > 1
+          .asMinutes()) > 30
     ) {
       // Delete user if you are trying to create the same account within the last 20 mins since
       // creating an account but have not verified it yet

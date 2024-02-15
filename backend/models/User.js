@@ -98,7 +98,7 @@ class User {
       { id: user.id, email: user.email },
       VERIFY_ACCOUNT_SECRET_KEY,
       {
-        expiresIn: "1m",
+        expiresIn: "30m",
       }
     );
     // Email options
