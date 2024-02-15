@@ -165,9 +165,9 @@ class User {
                     control of how you remember your work. Work is how you provide for
                     all of the other important things in life. Let this app be an
                     avenue to create a more concrete recap of what you've been up to,
-                    so you can form a richer narrative of your work endeavors and use
-                    this narrative to propel you forward in job interviews,
-                    networking, or just anytime you get a chance to say your piece.
+                    so you can form a richer mental narrative of your work endeavors
+                    that will make you more interesting during job interviews,
+                    networking event, or just anytime you get a chance to say your piece.
                   </p>
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>
                   <p>The Workdiary Team</p>
@@ -264,7 +264,7 @@ class User {
       }
     } else {
       throw new ExpressError(
-        "User does not exist or you may have used Google sign-in to create account. If you used Google sign-in you cannot change your password",
+        "User does not exist or you may have used Google sign-in to create an account. If you used Google sign-in, please use that to sign-in.",
         404
       );
     }
