@@ -62,6 +62,7 @@ async function verifyAccountVerificationToken(req, res, next) {
   } catch (error) {
     if (error.message === "jwt expired") {
       const getUser = User.getUser(jwt.decode(token).id);
+      console.log(getUser);
       if (
         (getUser &&
           !getUser?.verified &&
@@ -69,6 +70,7 @@ async function verifyAccountVerificationToken(req, res, next) {
             .duration(moment().diff(moment(getUser?.created_at)))
             .asMinutes()) > 30
       ) {
+        console.log("hey");
         // Delete user if you are trying to create the same account within the last 30 mins since
         // creating an account but have not verified it yet
         await User.delete(getUser.id);
