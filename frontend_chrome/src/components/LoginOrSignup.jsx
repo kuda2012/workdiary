@@ -53,6 +53,7 @@ const LoginOrSignup = ({ setIsForgotPassword }) => {
       if (!loadingDotsActive && !loggingInVar) {
         setloadingDotsActive(true);
         dispatch(isSignup ? signup(formData) : login(formData));
+        !isSignup && dispatch(setIsSignup(false));
         dispatch(loggingInFunction(true));
         setFormData(INITIAL_STATE);
       }

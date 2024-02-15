@@ -76,6 +76,7 @@ export function login(formData) {
       dispatch(loggingIn(false));
     } catch (error) {
       dispatch(resetApp());
+      dispatch(setIsSignup(false));
       alert(error?.response?.data?.message || error?.message);
       console.log(error);
     }
@@ -89,7 +90,6 @@ export function signup(formData) {
         ...formData,
       });
       alert(data.message);
-      dispatch(setIsSignup(false));
       dispatch(loggingIn(false));
     } catch (error) {
       dispatch(resetApp());
