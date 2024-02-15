@@ -12,3 +12,8 @@ nav {
   font-size: 1.5rem;
   text-transform: none;
 }
+
+#brand-link:hover {
+  color: black !important;
+  cursor: pointer;
+}

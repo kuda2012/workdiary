@@ -10,9 +10,7 @@ import "../styles/Navbar.css";
 const NavBar = ({ openHowToModal }) => {
   return (
     <ReactNavBar color="light" className="navbar-expand-lg">
-      <NavbarBrand className="nav-brand" to="/">
-        Workdiary
-      </NavbarBrand>
+      <NavbarBrand className="nav-brand">Workdiary</NavbarBrand>
       <Nav className="me-auto">
         <NavItem className="nav-item">
           <NavLink
