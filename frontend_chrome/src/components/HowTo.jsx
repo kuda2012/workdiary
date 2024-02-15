@@ -70,8 +70,7 @@ const HowTo = ({ closeHowToModal }) => {
                 security to say "Okay, I have been working hard. Look at what I
                 was involved in each day." Think about it. Work is how you
                 provide for all of the other important things in life. Let this
-                app be an avenue to create a concrete recap of what you've been
-                up to, so you can form a richer mental narrative of your work
+                app be an avenue to form a richer mental narrative of your work
                 endeavors that will make you more interesting during job
                 interviews, networking events, or just anytime you get a chance
                 to say your piece. Many people have personal diaries...you spend
