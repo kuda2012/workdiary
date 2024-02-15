@@ -47,7 +47,8 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
         }
       />
       <Route
-        isValidUrl={true}
+        path="*"
+        isValidUrl={false}
         element={
           <Home
             isHowToModalOpen={isHowToModalOpen}
