@@ -20,7 +20,7 @@ const NavBar = ({ openAuthModal, openAllPostsModal }) => {
     <>
       <ReactNavBar color="light" className="navbar-expand-lg">
         <NavbarBrand className="nav-brand">
-          <NavLink to="#" className="nav-link" id="brand-link">
+          <NavLink to="#" className="nav-link">
             Workdiary
           </NavLink>
         </NavbarBrand>
