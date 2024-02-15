@@ -74,16 +74,16 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                   Hi, I made this app because I felt sense of unease about how
                   many months could go by at work without much hard proof of
                   what I've been up to this whole time. This app gives you that
-                  security to say "Okay, I have been working hard. Look at what
-                  I was involved in each day." Think about it. Work is how you
-                  provide for all of the other important things in life. Let
-                  this app be an avenue to form a richer mental narrative of
-                  your work endeavors that will make you more interesting during
-                  job interviews, networking events, or just anytime you get a
-                  chance to say your piece. Many people have personal
-                  diaries...you spend most of your waking hours working...Why
-                  wouldn't it be good idea to have a Workdiary then? Of course
-                  it would be. Let me know how it goes ✌
+                  security to look back and say "Okay, I have been working hard.
+                  Look at what I was involved in each day." I mean, think about
+                  it. Work is how you provide for all of the other important
+                  things in life. Let this app be an avenue to form a richer
+                  mental narrative of your work endeavors that will make you
+                  more interesting during job interviews, networking events, or
+                  just anytime you get a chance to say your piece. Many people
+                  have personal diaries...you spend most of your waking hours
+                  working...Why wouldn't it be good idea to have a Workdiary
+                  then? Of course it would be. Let me know how it goes ✌
                 </div>
               </div>
               <div className="row justify-content-around mt-2">
