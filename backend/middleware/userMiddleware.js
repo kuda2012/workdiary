@@ -3,6 +3,7 @@ const jsonschema = require("jsonschema");
 const userSchema = require("../schema/userSchema.json");
 const resetPasswordSchema = require("../schema/resetPasswordSchema.json");
 const changePasswordSchema = require("../schema/changePasswordSchema.json");
+const User = require("../models/User");
 const rateLimit = require("express-rate-limit");
 const ExpressError = require("../expressError");
 let {
@@ -54,14 +55,26 @@ function tokenIsCurrent(req, res, next) {
   }
 }
 
-function verifyAccountVerificationToken(req, res, next) {
+async function verifyAccountVerificationToken(req, res, next) {
   try {
     jwt.verify(req.query.token, VERIFY_ACCOUNT_SECRET_KEY);
     return next();
   } catch (error) {
     if (error.message === "jwt expired") {
+      const getUser = User.getUser(jwt.decode(token).id);
+      if (
+        (getUser &&
+          !getUser?.verified &&
+          moment
+            .duration(moment().diff(moment(getUser?.created_at)))
+            .asMinutes()) > 30
+      ) {
+        // Delete user if you are trying to create the same account within the last 30 mins since
+        // creating an account but have not verified it yet
+        await User.delete(getUser.id);
+      }
       error.message =
-        "Your verification link has expired. Please return to the app and attempt to login to have another one sent to you!";
+        "Your verification link has expired. Please return to the app and create another account.";
     }
     if (error.message === "invalid token") {
       error.message = "Your token is invalid";
@@ -79,7 +92,7 @@ function resetPasswordToken(req, res, next) {
   } catch (error) {
     if (error.message === "jwt expired") {
       error.message =
-        "Your verification link has expired. Please return to the app and attempt to login to have another one sent to you!";
+        "Your verification link has expired. Please return to the app and request another password reset link.";
     }
     if (error.message === "invalid token") {
       error.message = "Your token is invalid";

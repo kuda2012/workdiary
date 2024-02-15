@@ -14,7 +14,7 @@ exports.signup = async (req, res, next) => {
         !getUser?.verified &&
         moment
           .duration(moment().diff(moment(getUser?.created_at)))
-          .asMinutes()) > 20
+          .asMinutes()) > 30
     ) {
       // Delete user if you are trying to create the same account within the last 20 mins since
       // creating an account but have not verified it yet
@@ -27,7 +27,7 @@ exports.signup = async (req, res, next) => {
       res.json({ message });
     } else {
       throw new ExpressError(
-        "This email is already taken. Please use a different one",
+        "This email is already taken. Please use a different one.",
         409
       );
     }
@@ -60,7 +60,7 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
       first_time_login = true;
     } else if (getUser && getUser.auth_provider !== "google") {
       throw new ExpressError(
-        "A user already exists for this email. Please sign in by entering your username and password",
+        "A user already exists for this email. Please sign in by entering your username and password.",
         400
       );
     }

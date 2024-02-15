@@ -49,7 +49,7 @@ class User {
     }
 
     const getUserPassword = await db.oneOrNone(
-      `SELECT email, password from users WHERE email =$1`,
+      `SELECT email, password from users WHERE email=$1`,
       [email?.toLowerCase()]
     );
     if (getUserPassword) {
@@ -98,7 +98,7 @@ class User {
       { id: user.id, email: user.email },
       VERIFY_ACCOUNT_SECRET_KEY,
       {
-        expiresIn: "1m",
+        expiresIn: "30m",
       }
     );
     // Email options
