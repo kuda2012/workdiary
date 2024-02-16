@@ -6,9 +6,9 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
     <Routes>
       <Route
         path="/reset-password"
-        isValidUrl={true}
         element={
           <Home
+            isValidUrl={true}
             isHowToModalOpen={isHowToModalOpen}
             closeHowToModal={closeHowToModal}
           />
@@ -16,9 +16,9 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
       />
       <Route
         path="/verify-account"
-        isValidUrl={true}
         element={
           <Home
+            isValidUrl={true}
             isHowToModalOpen={isHowToModalOpen}
             closeHowToModal={closeHowToModal}
           />
@@ -26,9 +26,9 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
       />
       <Route
         path="/privacy-policy"
-        isValidUrl={true}
         element={
           <Home
+            isValidUrl={true}
             openHowToModal={openHowToModal}
             isHowToModalOpen={isHowToModalOpen}
             closeHowToModal={closeHowToModal}
@@ -37,9 +37,9 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
       />
       <Route
         path="/"
-        isValidUrl={true}
         element={
           <Home
+            isValidUrl={true}
             isHowToModalOpen={isHowToModalOpen}
             openHowToModal={openHowToModal}
             closeHowToModal={closeHowToModal}
@@ -48,9 +48,9 @@ const Router = ({ isHowToModalOpen, openHowToModal, closeHowToModal }) => {
       />
       <Route
         path="*"
-        isValidUrl={false}
         element={
           <Home
+            isValidUrl={false}
             isHowToModalOpen={isHowToModalOpen}
             openHowToModal={openHowToModal}
             closeHowToModal={closeHowToModal}
