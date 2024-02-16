@@ -17,8 +17,6 @@ const Auth = () => {
         const result = await chrome.storage.local.get(["repeat_user"]);
         if (result.repeat_user) {
           dispatch(setIsSignup(false));
-        } else {
-          dispatch(setIsSignup(true));
         }
       } catch (error) {
         console.error("Error fetching data from chrome storage:", error);

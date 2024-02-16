@@ -91,6 +91,7 @@ export function signup(formData) {
       });
       alert(data.message);
       dispatch(loggingIn(false));
+      dispatch(setIsSignup(false));
     } catch (error) {
       dispatch(resetApp());
       alert(error?.response?.data?.message || error?.message);
