@@ -5,7 +5,6 @@ const ExpressError = require("./expressError");
 const { rateLimit } = require("express-rate-limit");
 const { tokenIsCurrent } = require("./middleware/userMiddleware");
 const { databaseJob } = require("./helpers/databaseJob");
-const User = require("./models/User");
 const app = express();
 app.set("trust proxy", 1);
 const limiter = rateLimit({
@@ -36,8 +35,8 @@ app.use("/posts", postRoutes);
 app.use("/tabs", tabRoutes);
 app.use("/tags", tagRoutes);
 app.post("/jobs", tokenIsCurrent, async (req, res, next) => {
-  // const response = await User.databaseJob();
-  res.status(200).send("this works");
+  const response = await databaseJob();
+  res.status(200).send(response);
 });
 
 app.use(function (req, res, next) {
