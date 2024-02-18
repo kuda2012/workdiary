@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import validator from "validator";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { ThreeDots } from "react-loader-spinner";
@@ -56,6 +57,9 @@ const LoginOrSignup = ({ setIsForgotPassword }) => {
         );
         return;
       }
+      if (!validator.isEmail(formData.email)) {
+        return "Email must be a valid format, ex: name@yahoo.com";
+      }
       if (!loadingDotsActive && !loggingInVar) {
         setloadingDotsActive(true);
         dispatch(isSignup ? signup(formData) : login(formData));
@@ -83,7 +87,7 @@ const LoginOrSignup = ({ setIsForgotPassword }) => {
                 <input
                   required={true}
                   autocomplete={isSignup ? "off" : "on"}
-                  type="text"
+                  type="email"
                   id="email"
                   placeholder="Email"
                   className="form-control"
