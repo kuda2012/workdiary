@@ -3,7 +3,7 @@ var cors = require("cors");
 const bodyParser = require("body-parser");
 const ExpressError = require("./expressError");
 const { rateLimit } = require("express-rate-limit");
-const { tokenIsCurrent } = require("./middleware/userMiddleware");
+const { jobsTokenIsCurrent } = require("./middleware/userMiddleware");
 const { databaseJob } = require("./helpers/databaseJob");
 const app = express();
 app.set("trust proxy", 1);
@@ -34,7 +34,7 @@ app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/tabs", tabRoutes);
 app.use("/tags", tagRoutes);
-app.post("/jobs", tokenIsCurrent, async (req, res, next) => {
+app.post("/jobs", jobsTokenIsCurrent, async (req, res, next) => {
   const response = await databaseJob();
   res.status(200).send(response);
 });

@@ -56,6 +56,23 @@ function tokenIsCurrent(req, res, next) {
   }
 }
 
+function jobsTokenIsCurrent(req, res, next) {
+  try {
+    const { authorization } = req.headers;
+    jwt.verify(authorization.substring(7), JOBS_SECRET_KEY);
+    return next();
+  } catch (error) {
+    if (error.message === "jwt expired") {
+      error.message = "Your token has expired";
+    }
+    if (error.message === "invalid token") {
+      error.message = "Your token is invalid";
+    }
+    error.status = 403;
+    next(error);
+  }
+}
+
 async function verifyAccountVerificationToken(req, res, next) {
   try {
     jwt.verify(req.query.token, VERIFY_ACCOUNT_SECRET_KEY);
@@ -150,6 +167,7 @@ function changePasswordValidated(req, res, next) {
 
 module.exports = {
   tokenIsCurrent,
+  jobsTokenIsCurrent,
   userIsValidatedSignup,
   changePasswordValidated,
   resetPasswordValidated,
