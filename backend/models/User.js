@@ -83,6 +83,13 @@ class User {
       );
     }
   }
+  static async databaseJob() {
+    console.log("corny", db);
+    await db.query(`DELETE FROM users
+                  WHERE verified = false
+                  AND created_at < current_timestamp - interval '1 day'`);
+    return "Job is done!";
+  }
 
   static async sendEmailVerification(user) {
     const transporter = nodemailer.createTransport({
