@@ -11,6 +11,7 @@ let {
   VERIFY_ACCOUNT_SECRET_KEY,
   GENERAL_SECRET_KEY,
   RESET_PASSWORD_SECRET_KEY,
+  JOBS_SECRET_KEY,
 } = require("../config");
 
 const forgotPasswordRateLimiter = rateLimit({
