@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const ExpressError = require("./expressError");
 const { rateLimit } = require("express-rate-limit");
 const { tokenIsCurrent } = require("./middleware/userMiddleware");
+const { databaseJob } = require("./helpers/databaseJob");
 const app = express();
 app.set("trust proxy", 1);
 const limiter = rateLimit({
@@ -28,7 +29,6 @@ const userRoutes = require("./routes/user-routes");
 const postRoutes = require("./routes/post-routes");
 const tabRoutes = require("./routes/tab-routes");
 const tagRoutes = require("./routes/tag-routes");
-const { databaseJob } = require("./helpers/databaseJob");
 
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
