@@ -41,7 +41,7 @@ const resetPasswordRateLimiter = rateLimit({
 
 function tokenIsCurrent(req, res, next) {
   try {
-    console.log("headers", req.headers);
+    console.log("hello", req);
     const { authorization } = req.headers;
     jwt.verify(authorization.substring(7), GENERAL_SECRET_KEY);
     return next();
