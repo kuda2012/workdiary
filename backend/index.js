@@ -34,7 +34,10 @@ app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/tabs", tabRoutes);
 app.use("/tags", tagRoutes);
-app.post("/jobs", tokenIsCurrent, databaseJob);
+app.post("/jobs", tokenIsCurrent, async (req, res, next) => {
+  const response = await databaseJob();
+  res.status(200).send(response);
+});
 
 app.use(function (req, res, next) {
   const err = new Error("Not Found");
