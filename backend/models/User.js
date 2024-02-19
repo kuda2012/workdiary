@@ -49,7 +49,7 @@ class User {
     }
 
     const getUserPassword = await db.oneOrNone(
-      `SELECT email, password from users WHERE email=$1`,
+      `SELECT email, password from users WHERE email=$1 AND password IS NOT NULL`,
       [email?.toLowerCase()]
     );
     if (getUserPassword) {
