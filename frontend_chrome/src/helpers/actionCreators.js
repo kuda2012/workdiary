@@ -44,6 +44,8 @@ export function loginOrSignupGoogle(googleAccessToken) {
       dispatch(loggingIn(false));
     } catch (error) {
       dispatch(resetApp());
+      await chrome.identity.clearAllCachedAuthTokens();
+      dispatch(revokeAccessToken(googleAccessToken));
       alert(error?.response?.data?.message || error?.message);
       console.log(error);
     }

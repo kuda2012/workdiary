@@ -28,7 +28,6 @@ const GoogleLoginOrSignupButton = () => {
           if (!loginButtonActive && !loggingInVar) {
             setloginButtonActive(true);
             dispatch(loggingInFunction(true));
-            await chrome.identity.clearAllCachedAuthTokens();
             const authTokenResult = await chrome.identity.getAuthToken({
               interactive: true,
             });

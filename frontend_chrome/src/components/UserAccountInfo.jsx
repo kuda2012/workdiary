@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { Input } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteAccount,
-  isDeleting,
-  revokeAccessToken,
-} from "../helpers/actionCreators";
+import { deleteAccount, isDeleting } from "../helpers/actionCreators";
 import ChangePassword from "./ChangePassword";
 import "../styles/UserAccountInfo.css";
 
@@ -14,7 +10,6 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
   const user = useSelector((state) => state.user);
   const allPostDates = useSelector((state) => state?.all_post_dates);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
-  const googleAccessToken = useSelector((state) => state.google_access_token);
   const [confirmation, setConfirmation] = useState("");
 
   const handleDelete = (e) => {
@@ -22,7 +17,6 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
     if (confirmation === "delete account") {
       dispatch(isDeleting(true));
       dispatch(deleteAccount(workdiaryToken));
-      // dispatch(revokeAccessToken(googleAccessToken));
       chrome.identity.clearAllCachedAuthTokens(function () {});
     } else {
       alert(`Must spell "delete account" correctly`);
