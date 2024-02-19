@@ -43,7 +43,6 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                 height={isMobile ? "auto" : "400"}
                 src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
                 title="YouTube video player"
-                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
