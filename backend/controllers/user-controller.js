@@ -60,7 +60,7 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
       first_time_login = true;
     } else if (getUser && getUser.auth_provider !== "google") {
       throw new ExpressError(
-        "A user already exists for this email. Please sign in by entering your username and password.",
+        `A user already exists for the email: ${getUser.email}. Please sign in by entering your username and password.`,
         400
       );
     }
