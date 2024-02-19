@@ -165,7 +165,7 @@ class User {
                     control of how you remember your work. Work is how you provide for
                     all of the other important things in life. Let this app be an avenue
                     to form a richer mental narrative of your work endeavors that will 
-                    make you more  you more interesting during job interviews,
+                    make you more interesting during job interviews,
                     networking events, or just anytime you get a chance to say your piece.
                   </p>
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>
