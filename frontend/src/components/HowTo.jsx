@@ -272,7 +272,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                     If you have any questions or suggestions about our Privacy
                     Policy do not hesitate to contact us:{" "}
                     <a href="mailto:contact@workdiary.me">
-                      Contact@workdiary.me
+                      contact@workdiary.me
                     </a>
                   </p>
                 </div>

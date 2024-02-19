@@ -16,6 +16,9 @@ nav {
   text-transform: none;
   cursor: pointer;
 }
+.nav-brand:hover {
+  color: #646cff !important;
+}
 
 .nav-brand-move-right {
   position: relative;

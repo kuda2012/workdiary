@@ -5,13 +5,16 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import { NavLink as RRNavLink } from "react-router-dom";
 import "../styles/Navbar.css";
 
 const NavBar = ({ openHowToModal }) => {
   const isMobile = window.innerWidth <= 768;
   return (
     <ReactNavBar color="light" className="navbar-expand-lg">
-      <NavbarBrand className="nav-brand">Workdiary</NavbarBrand>
+      <NavbarBrand className="nav-brand" tag={RRNavLink} to="/">
+        Workdiary
+      </NavbarBrand>
       <Nav className="me-auto">
         {!isMobile && (
           <NavItem className="nav-item">

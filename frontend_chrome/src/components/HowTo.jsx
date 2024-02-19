@@ -261,7 +261,7 @@ const HowTo = ({ closeHowToModal }) => {
                 <p>
                   If you have any questions about our Privacy Policy do not
                   hesitate to contact us:{" "}
-                  <a href="mailto:contact@workdiary.me">Contact@workdiary.me</a>
+                  <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>
                 </p>
               </div>
             </div>

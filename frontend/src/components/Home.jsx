@@ -36,9 +36,12 @@ const Home = ({
           </HowToModal>
         )}
 
-        {!isMobile && (window.location.pathname === "/" || !isValidUrl) && (
-          <h5 className="mt-2">Welcome! Click "about" to learn more :)</h5>
-        )}
+        {!isMobile &&
+          (window.location.pathname === "/" ||
+            window.location.pathname === "/privacy-policy" ||
+            !isValidUrl) && (
+            <h5 className="mt-2">Welcome! Click "about" to learn more :)</h5>
+          )}
 
         {isMobile && (window.location.pathname === "/" || !isValidUrl) && (
           <div>

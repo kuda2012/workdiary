@@ -326,7 +326,7 @@ class User {
     const email = body.email?.toLowerCase();
     const user = await this.getUser(null, email);
 
-    if (user) {
+    if (user?.verified) {
       const transporter = nodemailer.createTransport({
         host: "smtppro.zoho.com",
         port: 587,
