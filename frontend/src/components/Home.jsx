@@ -34,7 +34,9 @@ const Home = ({
             />
           </HowToModal>
         )}
-        {(window.location.pathname === "/" || !isValidUrl) && (
+        {(window.location.pathname === "/" ||
+          window.location.pathname === "/privacy-policy" ||
+          !isValidUrl) && (
           <h5 className="mt-2">Welcome! Click "about" to learn more :)</h5>
         )}
         {window.location.pathname === "/reset-password" && <ResetPassword />}

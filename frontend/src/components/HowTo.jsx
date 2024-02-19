@@ -1,6 +1,7 @@
 import "../styles/HowTo.css";
 import ContactForm from "./ContactForm";
 const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
+  const isMobile = window.innerWidth <= 768;
   return (
     <div className="container">
       <div className="accordion" id="accordionExample">
@@ -38,13 +39,13 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               <iframe
                 id="demo-video"
                 className="mt-2"
-                width="550" // Adjust width and height as needed
-                height="400"
+                width="100%" // Adjust width and height as needed
+                height={isMobile ? "auto" : "400"}
                 src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
                 title="YouTube video player"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
             </div>
           </div>
