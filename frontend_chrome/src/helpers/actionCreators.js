@@ -44,6 +44,9 @@ export function loginOrSignupGoogle(googleAccessToken) {
       dispatch(loggingIn(false));
     } catch (error) {
       dispatch(resetApp());
+      if (error?.response?.data?.message.includes("already exists")) {
+        dispatch(setIsSignup(false));
+      }
       await chrome.identity.clearAllCachedAuthTokens();
       dispatch(revokeAccessToken(googleAccessToken));
       alert(error?.response?.data?.message || error?.message);
