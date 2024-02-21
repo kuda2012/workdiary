@@ -6,8 +6,13 @@
   overflow-y: auto;
   max-height: 500px;
 }
+
 #demo-video {
   position: relative;
   /* width: 100%; */
   /* height: auto; */
+}
+
+.accordion-button {
+  background-color: white !important;
 }

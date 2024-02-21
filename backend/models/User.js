@@ -162,15 +162,16 @@ class User {
                   <p>Hi ${user.name},</p>
                    <p style="max-width: 600px;">
                     Welcome to Workdiary! I am glad you have taken this step to gain
-                    control of how you remember your work. Work is how you provide for
-                    all of the other important things in life. Let this app be an avenue
+                    control of how you remember your work. Given that work is such a fundamental
+                    aspect of our lives, I believe it's in our best interests to stay on top of 
+                    what we tell ourselves about it. Let this app be an avenue for you
                     to form a richer mental narrative of your work endeavors that will 
                     make you more interesting during job interviews,
-                    networking events, or just anytime you get a chance to say your piece.
+                    networking events, or anytime you get a chance to say your piece.
                   </p>
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>
                   <p>The Workdiary Team</p>
-                  <p>P.S. Share your thoughts or concerns with us any time at: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>!</p>
+                  <p>P.S. Share your thoughts or concerns with us any time at: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a></p>
                   <small>
                         <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
                             Workdiary App

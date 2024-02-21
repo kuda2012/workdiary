@@ -45,6 +45,12 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
+              {/* <div className="mt-1">
+                <b class="stronger-bold">Note: </b> <br></br>
+                Go to your Computer's settings <span>→</span> Notifications{" "}
+                <span>→</span> Turn on your Notifications for Google Chrome so
+                you can be reminded to make an entry at the end of your workday!
+              </div> */}
             </div>
           </div>
         </div>
@@ -70,19 +76,24 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
             <div className="accordion-body">
               <div className="row">
                 <div className="col text-center">
-                  Hi, I made this app because I felt sense of unease about how
-                  many months could go by at work without much hard proof of
-                  what I've been up to this whole time. This app gives you that
-                  security to look back and say "Okay, I have been working hard.
-                  Look at what I was involved in each day." I mean, think about
-                  it. Work is how you provide for all of the other important
-                  things in life. Let this app be an avenue to form a richer
+                  Hey there, I made this app because I felt sense of unease
+                  about how many months could go by at work without much to
+                  account for what I've been up to the whole time. Then, when it
+                  would come time to apply for new jobs, I would sit there
+                  racking my brain trying to remember everything I accomplished
+                  on the job, how I felt about this line of employment, etc. It
+                  just felt like Work was one big black box that I would show up
+                  to, participate in, and then leave from without any solid
+                  proof that anything meaningful had happened. Given that work
+                  is such a fundamental aspect of our lives, I believe it's in
+                  our best interest to stay on top of what we tell ourselves
+                  about it. Let this app be an avenue for you to form a richer
                   mental narrative of your work endeavors that will make you
                   more interesting during job interviews, networking events, or
-                  just anytime you get a chance to say your piece. Many people
-                  have personal diaries...you spend most of your waking hours
+                  anytime you get a chance to say your piece. Many people have
+                  personal diaries...you spend most of your waking hours
                   working...Why wouldn't it be good idea to have a Workdiary
-                  then? Of course it would be. Let me know how it goes ✌
+                  then? Of course it would be. Let me know how it goes. Peace ✌
                 </div>
               </div>
               <div className="row justify-content-around mt-2">
@@ -106,7 +117,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                     href="https://www.buymeacoffee.com/kudamwakutuya"
                     target="_blank"
                   >
-                    <img src="coffee.png" alt="Social Media 2" />
+                    <img src="coffee.png" alt="Social Media 3" />
                     Buy me a coffee
                   </a>
                 </div>

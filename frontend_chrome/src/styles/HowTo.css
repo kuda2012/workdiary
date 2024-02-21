@@ -11,3 +11,11 @@
   position: relative;
   right: 17px;
 }
+
+.accordion-button {
+  background-color: white !important;
+}
+
+.stronger-bold {
+  font-weight: 800;
+}

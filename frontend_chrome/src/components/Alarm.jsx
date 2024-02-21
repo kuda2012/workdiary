@@ -34,16 +34,27 @@ const Alarm = () => {
   }, [user]);
 
   const handleDayCheckboxChange = (changedDay) => {
+    let atLeastOneDayActive = false;
     let updatedAlarmDays = alarmDays?.map((day) => {
       if (changedDay.day === day.day) {
+        if (!day.value && !atLeastOneDayActive) {
+          atLeastOneDayActive = true;
+        }
         return { day: changedDay.day, value: !day.value };
       } else {
+        if (day.value && !atLeastOneDayActive) {
+          atLeastOneDayActive = true;
+        }
         return day;
       }
     });
     dispatch(
       changeAlarm(workdiaryToken, {
         alarm_days: updatedAlarmDays,
+        alarm_status:
+          user.alarm_status && !atLeastOneDayActive
+            ? !user.alarm_status
+            : user.alarm_status,
       })
     );
     setButtonText("Save");
