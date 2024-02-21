@@ -27,7 +27,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
             data-bs-parent="#accordionExample"
           >
             <div className="accordion-body text-center">
-              You can't use the app in the browser (at least for now). Click{" "}
+              You can't use the app from our website (at least for now). Click{" "}
               <a
                 href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp"
                 target="_blank"
