@@ -164,9 +164,9 @@ class User {
                     Welcome to Workdiary! I am glad you have taken this step to gain
                     control of how you remember your work. Given that work is such a fundamental
                     aspect of our lives, I believe it's in our best interests to stay on top of 
-                    what we tell ourselves about it. Let this app be an avenue for you
-                    to form a richer mental narrative of your work endeavors that will 
-                    make you more interesting during job interviews,
+                    what we tell ourselves about it. Let this app be a platform for you
+                    to develop a richer mental narrative of your work endeavors that will 
+                    make you more compelling during job interviews,
                     networking events, or anytime you get a chance to say your piece.
                   </p>
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>

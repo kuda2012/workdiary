@@ -87,10 +87,10 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                   proof that anything meaningful had happened. Given that work
                   is such a fundamental aspect of our lives, I believe it's in
                   our best interest to stay on top of what we tell ourselves
-                  about it. Let this app be an avenue for you to form a richer
-                  mental narrative of your work endeavors that will make you
-                  more interesting during job interviews, networking events, or
-                  anytime you get a chance to say your piece. Many people have
+                  about it. Let this app be a platform for you to develop a
+                  richer mental narrative of your work endeavors that will make
+                  you more compelling during job interviews, networking events,
+                  or anytime you get a chance to say your piece. Many people have
                   personal diaries...you spend most of your waking hours
                   working...Why wouldn't it be good idea to have a Workdiary
                   then? Of course it would be. Let me know how it goes. Peace ✌
