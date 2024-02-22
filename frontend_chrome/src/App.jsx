@@ -14,7 +14,7 @@ function useGlobalErrorHandler() {
       // Optionally log the error to an error reporting service
       console.error(message, source, lineno, colno, error);
       alert(
-        `Error: ${message}. Please email contact@workdiary.me to report this issue`
+        `Error: ${message}. Please email contact@workdiary.me to report this issue.`
       );
 
       setTimeout(() => {

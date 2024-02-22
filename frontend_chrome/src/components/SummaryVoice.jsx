@@ -184,7 +184,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
     }
   }, [user]);
   return (
-    <div className="mt-5" id="summary-voice">
+    <div className="mt-4" id="summary-voice">
       <h4 className="mb-4" id="summary-voice-header">
         {user
           ? `Hey, ${user.name}. Tell us. How was work today?`
