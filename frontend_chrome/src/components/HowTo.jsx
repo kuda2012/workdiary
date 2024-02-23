@@ -1,7 +1,11 @@
 import ContactForm from "./ContactForm";
 import "../styles/HowTo.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setStartTour } from "../helpers/actionCreators";
 
 const HowTo = ({ closeHowToModal }) => {
+  const dispatch = useDispatch();
+  const workdiaryToken = useSelector((state) => state.workdiary_token);
   return (
     <div className="accordion" id="accordionExample">
       <div className="accordion-item" id="accordion-top-item">
@@ -19,23 +23,36 @@ const HowTo = ({ closeHowToModal }) => {
         </h2>
         <div
           id="collapseOne"
-          className="accordion-collapse collapse show"
+          className="accordion-collapse collapse show text-center"
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
-            <iframe
-              id="demo-video"
-              width="550" // Adjust width and height as needed
-              height="375"
-              src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            {workdiaryToken ? (
+              <button
+                className="btn btn-success"
+                onClick={() => {
+                  closeHowToModal();
+                  dispatch(setStartTour(true));
+                }}
+              >
+                Start Tour
+              </button>
+            ) : (
+              <iframe
+                id="demo-video"
+                width="550" // Adjust width and height as needed
+                height="375"
+                src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            )}
             <div className="mt-1 text-center">
-              <b class="stronger-bold">Note: </b> <br></br>
+              <b class="stronger-bold">Note: </b>
+              {/* <br></br> */}
               Go to your Computer's settings <span>→</span> Notifications{" "}
               <span>→</span> Turn on your Notifications for Google Chrome so you
               can be reminded to make an entry at the end of your workday!

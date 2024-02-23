@@ -190,7 +190,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
           ? `Hey, ${user.name}. Tell us. How was work today?`
           : "Hey, first_name. Tell us. How was work today?"}
       </h4>
-      <div id="summary-voice-media-button">
+      <div id="summary-voice-media-buttons" className="second-step">
         {!isFinalized && (
           <button
             className={`${isRecording && "is-recording"}`}
@@ -271,25 +271,24 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
         >
           <img src="/trash.png" title="Reset"></img>
         </button>
-
-        {!isFinalized && (
-          <div
-            id={audioDuration >= 160 && `recording-duration-too-long`}
-            className="m-3 recording-duration"
+      </div>
+      {!isFinalized && (
+        <div
+          id={audioDuration >= 160 && `recording-duration-too-long`}
+          className="m-3 recording-duration"
+        >
+          <b>{audioDuration >= 160 && "(180s max) : "}</b>
+          <b
+            id={
+              isRecording && audioDuration < 160 && `recording-duration-green`
+            }
           >
-            <b>{audioDuration >= 160 && "(180s max) : "}</b>
-            <b
-              id={
-                isRecording && audioDuration < 160 && `recording-duration-green`
-              }
-            >
-              Duration: {audioDuration}s
-            </b>
-          </div>
-        )}
-        <div className="mt-3 mb-3">
-          <audio controls ref={audioRef} />
+            Duration: {audioDuration}s
+          </b>
         </div>
+      )}
+      <div className="mt-3 mb-3">
+        <audio controls ref={audioRef} />
       </div>
     </div>
   );

@@ -1,9 +1,14 @@
 #summary-voice {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #summary-voice-media-buttons {
   position: relative;
+  display: inline-block;
   /* right: 15px; */
 }
 .send {

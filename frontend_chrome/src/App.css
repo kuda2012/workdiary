@@ -36,3 +36,51 @@
   color: #646cff;
   text-decoration: underline;
 }
+
+.__spotlight_0 {
+  position: absolute !important;
+  top: 126px !important;
+  left: 316px !important;
+}
+
+.__spotlight_1 {
+  position: absolute !important;
+  top: 222px !important;
+  left: 252px !important;
+}
+
+.__spotlight_2 {
+  position: absolute !important;
+  top: 445px !important;
+  left: 720px !important;
+}
+
+.__spotlight_3 {
+  position: absolute !important;
+  top: 60px !important;
+  left: 642px !important;
+}
+
+.__floater_0 {
+  position: absolute !important;
+  top: -35px !important;
+  left: -69px !important;
+}
+
+.__floater_1 {
+  position: absolute !important;
+  top: -50px !important;
+  left: -78px !important;
+}
+
+.__floater_2 {
+  position: absolute !important;
+  top: -85px !important;
+  left: -140px !important;
+}
+
+.__floater_3 {
+  position: absolute !important;
+  top: -13px !important;
+  left: -129px !important;
+}

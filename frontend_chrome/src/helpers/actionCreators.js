@@ -764,3 +764,9 @@ export function setIsSignup(is_signup) {
     is_signup,
   };
 }
+export function setStartTour(start_tour) {
+  return {
+    type: "START_TOUR",
+    start_tour,
+  };
+}
