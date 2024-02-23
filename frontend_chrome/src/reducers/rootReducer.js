@@ -82,7 +82,6 @@ function rootReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         start_tour: action.start_tour,
-        first_time_login: false,
       };
     case "HALF_RESET":
       return {
