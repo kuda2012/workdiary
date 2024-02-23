@@ -99,12 +99,6 @@ function App() {
     // Add more steps as needed
   ];
 
-  useEffect(() => {
-    if (first_time_login) {
-      dispatch(setStartTour(true));
-    }
-  }, [first_time_login]);
-
   const handleStepChange = (step) => {
     if (step.index === 0 && step.lifecycle === "tooltip") {
       const getSpotlight = document.querySelector(".react-joyride__spotlight");
