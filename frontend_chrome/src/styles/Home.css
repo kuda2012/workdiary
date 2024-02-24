@@ -63,3 +63,8 @@
   cursor: pointer;
   user-select: none;
 }
+
+#calendar-arrow:hover,
+#reset-calendar:hover {
+  transform: scale(1.1);
+}

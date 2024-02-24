@@ -579,8 +579,14 @@ export function changeOtherSettings(workdiary_token, alarmChange) {
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   const { user } = await chrome.storage.session.get(["user"]);
-  const { background } = await chrome.storage.session.get(["background"]);
-  if (alarm.name.startsWith("myAlarm_") && user?.alarm_status && !background) {
+  const { background_alarm } = await chrome.storage.session.get([
+    "background_alarm",
+  ]);
+  if (
+    alarm.name.startsWith("myAlarm_") &&
+    user?.alarm_status &&
+    !background_alarm
+  ) {
     // Check for alarms with day-specific names
     console.log("fire alarm - actionCreator", alarm.name);
     // Trigger notification and reset alarm as before
@@ -595,6 +601,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
       message: `Reminder to write in your Workdiary!`,
       // Include sound property for the sound file
     });
+
     await setAlarm(user);
   }
 });

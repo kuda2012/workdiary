@@ -152,7 +152,12 @@ async function setUpBackground() {
 setUpBackground();
 
 chrome.notifications.onClicked.addListener(async () => {
-  return isPopupOpen() && togglePopup();
+  if (await isPopupOpen()) {
+    const { popup_window } = await chrome.storage.local.get(["popup_window"]);
+    chrome.windows.update(popup_window.id, { focused: true });
+    return;
+  }
+  return openPopup();
 });
 const handleAlarm = async (alarm) => {
   const { user } = await chrome.storage.session.get(["user"]);
