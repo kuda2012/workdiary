@@ -184,7 +184,6 @@ const CustomDatePickerInput = ({
   return (
     <input
       id="custom-date-picker-input"
-      className="first-step"
       type="text"
       value={value}
       onClick={() => {

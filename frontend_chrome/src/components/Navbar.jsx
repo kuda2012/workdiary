@@ -44,7 +44,7 @@ const NavBar = ({ openAuthModal, openAllPostsModal }) => {
             <>
               <NavItem className="nav-item">
                 <NavLink
-                  className="nav-link fourth-step"
+                  className="nav-link"
                   onClick={(e) => {
                     e.preventDefault();
                     openAllPostsModal();

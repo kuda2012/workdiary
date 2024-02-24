@@ -99,11 +99,7 @@ const MiddleRowMain = () => {
         </>
       </div>
       <div className="col-1 d-flex align-items-center justify-content-end px-0">
-        <button
-          id="tabs-home"
-          className="third-step"
-          onClick={() => openTabsModal()}
-        >
+        <button id="tabs-home" onClick={() => openTabsModal()}>
           <span>Tab Vault</span>
         </button>
         {isTabsModalOpen && (

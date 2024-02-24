@@ -7,7 +7,6 @@ const INITIAL_STATE = {
   query: "",
   show_all_posts: true,
   is_signup: true,
-  start_tour: false,
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
@@ -78,12 +77,6 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, is_deleting: action.deleting };
     case "IS_SIGNUP":
       return { ...state, is_signup: action.is_signup };
-    case "START_TOUR":
-      return {
-        ...state,
-        start_tour: action.start_tour,
-        first_time_login: false,
-      };
     case "HALF_RESET":
       return {
         ...INITIAL_STATE,
