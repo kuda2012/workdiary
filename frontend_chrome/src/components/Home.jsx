@@ -4,7 +4,6 @@ import {
   getPost,
   getPostsList,
   getUserAccountInfo,
-  showHowToModal,
 } from "../helpers/actionCreators";
 import moment from "moment";
 import Auth from "./Auth";
@@ -28,7 +27,6 @@ const Home = ({
   const user = useSelector((state) => state?.user);
   const post = useSelector((state) => state.post);
   const date = useSelector((state) => state.date);
-  const first_time_login = useSelector((state) => state.first_time_login);
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const showAllPosts = useSelector((state) => state.show_all_posts);
   const postsList = useSelector((state) => state?.posts_list);
@@ -54,13 +52,6 @@ const Home = ({
       dispatch(getPostsList(workdiaryToken, 1));
     }
   }, [post, date, user, workdiaryToken]);
-
-  useEffect(() => {
-    if (first_time_login) {
-      openHowToModal();
-      dispatch(showHowToModal(false));
-    }
-  }, [first_time_login]);
 
   return (
     <div
