@@ -16,7 +16,9 @@ const Alarm = () => {
 
   const handleSwitchToggle = () => {
     setButtonText("Save");
-    dispatch(changeAlarm(workdiaryToken, { alarm_status: !user.alarm_status }));
+    dispatch(
+      changeAlarm(workdiaryToken, { alarm_status: !user?.alarm_status })
+    );
   };
 
   const handleTimeChange = (event) => {
@@ -52,9 +54,9 @@ const Alarm = () => {
       changeAlarm(workdiaryToken, {
         alarm_days: updatedAlarmDays,
         alarm_status:
-          user.alarm_status && !atLeastOneDayActive
-            ? !user.alarm_status
-            : user.alarm_status,
+          user?.alarm_status && !atLeastOneDayActive
+            ? !user?.alarm_status
+            : user?.alarm_status,
       })
     );
     setButtonText("Save");
@@ -85,14 +87,14 @@ const Alarm = () => {
         <div class="btn-group" role="group" aria-label="Toggle Switch">
           <ButtonGroup>
             <Button
-              color={user.alarm_status ? "success" : "secondary"}
-              onClick={() => handleSwitchToggle(user.alarm_status)}
+              color={user?.alarm_status ? "success" : "secondary"}
+              onClick={() => handleSwitchToggle(user?.alarm_status)}
             >
               On
             </Button>
             <Button
-              color={user.alarm_status ? "secondary" : "danger"}
-              onClick={() => handleSwitchToggle(user.alarm_status)}
+              color={user?.alarm_status ? "secondary" : "danger"}
+              onClick={() => handleSwitchToggle(user?.alarm_status)}
             >
               Off
             </Button>

@@ -23,8 +23,13 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
 
   const startRecording = async () => {
     try {
+      const { current_microphone_device_id } = await chrome.storage.local.get(
+        "current_microphone_device_id"
+      );
       audioStreamRef.current = await navigator.mediaDevices.getUserMedia({
-        audio: true,
+        audio: {
+          deviceId: current_microphone_device_id,
+        },
       });
       const audioStream = audioStreamRef.current;
 

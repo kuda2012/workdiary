@@ -1,6 +1,7 @@
 import { ButtonGroup, Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { changeOtherSettings } from "../helpers/actionCreators";
+import ChooseMicrophone from "./chooseMicrophone";
 
 const OtherSettings = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const OtherSettings = () => {
         aria-expanded="false"
       >
         <img src="/settings-dark-1.png"></img>
-        <div>Settings</div>
+        <div>Sound settings</div>
       </button>
       <div
         id="other-settings-dropdown-menu"
@@ -36,23 +37,49 @@ const OtherSettings = () => {
       >
         {user && (
           <div class="accordion" id="accordionExample">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingOne">
+                <button
+                  className="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="false"
+                  aria-controls="collapseOne"
+                >
+                  Choose Microphone
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                className="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div className="accordion-body">
+                  <div className="row">
+                    <ChooseMicrophone />
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="accordion-item">
-              <h2 class="accordion-header" id="headingOne">
+              <h2 class="accordion-header" id="headingTwo">
                 <button
                   class="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
+                  data-bs-target="#collapseTwo"
                   aria-expanded="true"
-                  aria-controls="collapseOne"
+                  aria-controls="collapseTwo"
                 >
                   Sound effects
                 </button>
               </h2>
               <div
-                id="collapseOne"
-                class="accordion-collapse collapse show"
-                aria-labelledby="headingOne"
+                id="collapseTwo"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingTwo"
                 data-bs-parent="#accordionExample"
               >
                 <div class="accordion-body">

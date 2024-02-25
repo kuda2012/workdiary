@@ -69,7 +69,7 @@ chrome.windows.onRemoved.addListener(async function (windowId) {
 
 async function setAlarm(user) {
   await chrome.alarms.clearAll();
-  if (!user.alarm_status) return;
+  if (!user?.alarm_status) return;
 
   const DAYS_OF_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
   // Get the current day's index

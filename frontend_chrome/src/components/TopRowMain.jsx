@@ -42,7 +42,7 @@ const TopRowMain = ({ isHowToModalOpen, closeHowToModal, openHowToModal }) => {
           className="top-row-buttons"
           onClick={() => openAccountStuffModal()}
         >
-          <img src="/user_information.png"></img>
+          <img src="/settings_2.png"></img>
         </button>
         {isAccountStuffModalOpen && workdiaryToken && (
           <AccountStuffModal

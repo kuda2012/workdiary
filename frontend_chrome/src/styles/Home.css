@@ -62,6 +62,7 @@
   height: 20px;
   cursor: pointer;
   user-select: none;
+  font-size: 102%;
 }
 
 #calendar-arrow:hover,
