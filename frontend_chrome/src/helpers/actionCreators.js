@@ -313,17 +313,23 @@ export function createPost(
   };
 }
 
-export function getPostsList(workdiary_token, currentPage = 1) {
+export function getPostsList(
+  workdiary_token,
+  currentPage = 1,
+  isChronological = false
+) {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
-        `${VITE_BACKEND_URL}/posts/list-all-posts?current_page=${currentPage}`,
+        `${VITE_BACKEND_URL}/posts/list-all-posts?current_page=${currentPage}&is_chronological=${isChronological}`,
         {
           headers: { Authorization: `Bearer ${workdiary_token}` },
         }
       );
       if (data?.posts_list?.length > 0) {
-        dispatch(setPostsList(data.posts_list, data.pagination));
+        dispatch(
+          setPostsList(data.posts_list, data.pagination, data.is_chronological)
+        );
       } else if (data?.posts_list?.length === 0) {
         dispatch(setPostsList(null, data.pagination));
       }
@@ -705,11 +711,12 @@ export function setPost(post) {
   };
 }
 
-export function setPostsList(posts_list, pagination) {
+export function setPostsList(posts_list, pagination, is_chronological = false) {
   return {
     type: "SET_POSTS_LIST",
     posts_list,
     pagination,
+    is_chronological,
   };
 }
 

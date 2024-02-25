@@ -68,7 +68,7 @@ class Post {
     return allPostDates.map((date) => date.date);
   }
 
-  static async listAllPosts(user_id, currentPage = 1) {
+  static async listAllPosts(user_id, currentPage = 1, is_chronological) {
     function shortenSummaryText(entry) {
       // 1. Remove HTML tags:
       const textWithoutTags = entry?.replace(/<[^>]+>/g, "");
@@ -92,7 +92,7 @@ class Post {
     const response = await knex("posts")
       .select("date", "summary_text as entry")
       .where("user_id", user_id)
-      .orderBy("date", "desc")
+      .orderBy("date", is_chronological ? "asc" : "desc")
       .paginate({
         perPage: pageSize,
         currentPage: Number(currentPage),
@@ -106,7 +106,7 @@ class Post {
       };
     });
 
-    return { posts, pagination: response.pagination };
+    return { posts, pagination: response.pagination, is_chronological };
   }
 
   static async delete(post_id) {

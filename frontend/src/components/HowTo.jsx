@@ -40,7 +40,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                 className="mt-2"
                 width="100%" // Adjust width and height as needed
                 height={isMobile ? "auto" : "400"}
-                src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
+                src={`https://www.youtube.com/embed/teX2z_hCRIY`}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

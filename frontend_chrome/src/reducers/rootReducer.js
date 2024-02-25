@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   query: "",
   show_all_posts: true,
   is_signup: true,
+  is_chronological: false,
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
@@ -39,6 +40,7 @@ function rootReducer(state = INITIAL_STATE, action) {
         ...state,
         posts_list: action.posts_list,
         pagination: action.pagination,
+        is_chronological: action.is_chronological,
       };
     case "SET_SEARCH_RESULTS":
       return {

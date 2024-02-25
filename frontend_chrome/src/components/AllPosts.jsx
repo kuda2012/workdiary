@@ -32,6 +32,21 @@ const AllPosts = ({ closeAllPostsModal }) => {
   return (
     <div className="container mt-2">
       <div className="row">
+        <button
+          onClick={() =>
+            dispatch(
+              getPostsList(
+                workdiaryToken,
+                1,
+                postsList.is_chronological ? false : true
+              )
+            )
+          }
+        >
+          {postsList.is_chronological ? "Date order 🔽" : "Date order 🔼"}
+        </button>
+      </div>
+      <div className="row">
         <div className="col-12">
           <ul id="posts-list">
             {postsList &&

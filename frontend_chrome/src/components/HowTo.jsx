@@ -28,7 +28,7 @@ const HowTo = ({ closeHowToModal }) => {
               id="demo-video"
               width="550" // Adjust width and height as needed
               height="375"
-              src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
+              src={`https://www.youtube.com/embed/teX2z_hCRIY`}
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
