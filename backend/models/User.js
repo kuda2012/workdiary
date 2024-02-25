@@ -178,7 +178,7 @@ class User {
                         <li>
                           Pin the Workdiary Icon to your toolbar for optimal access
                         </li>
-                          <img src="cid:pin_instruction_image" alt="Pin instructions"></img>
+                          <img style="margin-left: 18px;"  src="cid:pin_instruction_image" alt="Pin instructions"></img>
                         <li>
                           Go to your Computer's settings <span>→</span> Notifications 
                           <span>→</span><br></br>
