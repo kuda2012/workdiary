@@ -327,6 +327,7 @@ export function getPostsList(
         }
       );
       if (data?.posts_list?.length > 0) {
+        console.log(data);
         dispatch(
           setPostsList(data.posts_list, data.pagination, data.is_chronological)
         );

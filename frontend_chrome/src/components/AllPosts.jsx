@@ -13,6 +13,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const postsList = useSelector((state) => state?.posts_list);
   const pagination = useSelector((state) => state?.pagination);
+  const isChronological = useState((state) => state?.is_chronological);
   const date = useSelector((state) => state.date);
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
   const [postsSelected, setPostsSelected] = useState(new Set());
@@ -29,22 +30,18 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const startIndex =
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
-  console.log(postsList);
+  console.log(isChronological);
   return (
     <div className="container mt-2">
       <div className="row">
         <button
           onClick={() =>
             dispatch(
-              getPostsList(
-                workdiaryToken,
-                1,
-                postsList.is_chronological ? false : true
-              )
+              getPostsList(workdiaryToken, 1, isChronological ? false : true)
             )
           }
         >
-          {postsList.is_chronological ? "Date order 🔽" : "Date order 🔼"}
+          {isChronological ? "Date order 🔽" : "Date order 🔼"}
         </button>
       </div>
       <div className="row">

@@ -75,7 +75,7 @@ exports.getPost = async (req, res, next) => {
 exports.listAllPosts = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
-    const { is_chronological } = req.query;
+    const is_chronological = JSON.parse(req.query.is_chronological);
     const postsList = await Post.listAllPosts(
       id,
       Number(req.query.current_page || 1),
