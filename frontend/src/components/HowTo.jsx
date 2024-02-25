@@ -45,12 +45,6 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen={true}
               ></iframe>
-              {/* <div className="mt-1">
-                <b class="stronger-bold">Note: </b> <br></br>
-                Go to your Computer's settings <span>→</span> Notifications{" "}
-                <span>→</span> Turn on your Notifications for Google Chrome so
-                you can be reminded to make an entry at the end of your workday!
-              </div> */}
             </div>
           </div>
         </div>

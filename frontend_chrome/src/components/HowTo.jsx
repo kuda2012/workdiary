@@ -23,14 +23,12 @@ const HowTo = ({ closeHowToModal }) => {
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
-          <div className="accordion-body">
-            <h4 id="tour-title">
+          <div className="accordion-body p-0" id="accordion-body-tour-video">
+            <h5 id="tour-title" className="my-1 p-0">
               Very helpful tour. Open in fullscreen to see best.
-            </h4>
+            </h5>
             <iframe
               id="demo-video"
-              width="550" // Adjust width and height as needed
-              height="375"
               src={`https://www.youtube.com/embed/inx3tP8Zv4k`}
               title="YouTube video player"
               frameborder="0"
@@ -38,10 +36,19 @@ const HowTo = ({ closeHowToModal }) => {
               allowFullScreen={true}
             ></iframe>
             <div className="mt-1 text-center">
-              <b class="stronger-bold">Note: </b> <br></br>
-              Go to your Computer's settings <span>→</span> Notifications{" "}
-              <span>→</span> Turn on your Notifications for Google Chrome so you
-              can be reminded to make an entry at the end of your workday!
+              <b class="stronger-bold">Important Notes: </b> <br></br>
+              <ul>
+                <li className="shrink-text-accordion-body">
+                  Pin the Workdiary Icon to your toolbar for optimal access
+                  <img src="./pin_instruction.png" alt="Pin instructions"></img>
+                </li>
+                <li className="shrink-text-accordion-body">
+                  Go to your Computer's settings <span>→</span> Notifications{" "}
+                  <span>→</span> Ensure your Notifications for Google Chrome are
+                  on you can be reminded to make an entry at the end of your
+                  workday!
+                </li>
+              </ul>
             </div>
           </div>
         </div>
