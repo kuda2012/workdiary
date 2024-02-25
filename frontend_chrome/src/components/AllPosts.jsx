@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "reactstrap";
 import moment from "moment";
 import {
   getPost,
@@ -13,7 +14,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const postsList = useSelector((state) => state?.posts_list);
   const pagination = useSelector((state) => state?.pagination);
-  const isChronological = useState((state) => state?.is_chronological);
+  const isChronological = useSelector((state) => state?.is_chronological);
   const date = useSelector((state) => state.date);
   const [allBoxesSelected, setAllBoxesSelected] = useState(false);
   const [postsSelected, setPostsSelected] = useState(new Set());
@@ -26,27 +27,33 @@ const AllPosts = ({ closeAllPostsModal }) => {
   function getNumbersBetween(min, max) {
     return [...Array(max - min + 1)].map((_, i) => min + i);
   }
-
   const startIndex =
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
-  console.log(isChronological);
   return (
-    <div className="container mt-2">
-      <div className="row">
-        <button
-          onClick={() =>
-            dispatch(
-              getPostsList(workdiaryToken, 1, isChronological ? false : true)
-            )
-          }
-        >
-          {isChronological ? "Date order 🔽" : "Date order 🔼"}
-        </button>
-      </div>
+    <div className="container">
       <div className="row">
         <div className="col-12">
           <ul id="posts-list">
+            <div className="row mb-1">
+              <div className="col-12 d-flex justify-content-end">
+                <button
+                  className="btn btn-secondary"
+                  id="posts-date-order-button"
+                  onClick={() =>
+                    dispatch(
+                      getPostsList(
+                        workdiaryToken,
+                        1,
+                        isChronological ? false : true
+                      )
+                    )
+                  }
+                >
+                  {isChronological ? "Date order 🔼" : "Date order 🔽"}
+                </button>
+              </div>
+            </div>
             {postsList &&
               postsList.map((post) => (
                 <li className="posts-list-li">
@@ -138,7 +145,8 @@ const AllPosts = ({ closeAllPostsModal }) => {
                             multiDeletePosts(
                               workdiaryToken,
                               Array.from(postsSelected),
-                              date
+                              date,
+                              isChronological
                             )
                           );
                           setPostsSelected(new Set());

@@ -327,7 +327,6 @@ export function getPostsList(
         }
       );
       if (data?.posts_list?.length > 0) {
-        console.log(data);
         dispatch(
           setPostsList(data.posts_list, data.pagination, data.is_chronological)
         );
@@ -499,20 +498,31 @@ export function bulkDeleteTabs(workdiary_token, date, tabs) {
   };
 }
 
-export function multiDeletePosts(workdiary_token, dates, currentDate) {
+export function multiDeletePosts(
+  workdiary_token,
+  dates,
+  currentDate,
+  isChronological = false
+) {
   return async function (dispatch) {
     try {
       const convertDatesArrToCsv = arrayToCSV(dates);
       if (dates) {
         const { data } = await axios.delete(
-          `${VITE_BACKEND_URL}/posts/multi-delete?dates=${convertDatesArrToCsv} `,
+          `${VITE_BACKEND_URL}/posts/multi-delete?dates=${convertDatesArrToCsv}&is_chronological=${isChronological}`,
           {
             headers: { Authorization: `Bearer ${workdiary_token}` },
           }
         );
         await dispatch(getPost(workdiary_token, currentDate));
         if (data?.posts_list?.length > 0) {
-          dispatch(setPostsList(data.posts_list, data.pagination));
+          dispatch(
+            setPostsList(
+              data.posts_list,
+              data.pagination,
+              data.is_chronological
+            )
+          );
         } else if (data?.posts_list?.length === 0) {
           dispatch(setPostsList(null, data.pagination));
         }

@@ -102,20 +102,12 @@ class Post {
         currentPage: Number(currentPage),
         isLengthAware: true,
       });
-    console.log(
-      "hello",
-      `is_chronological : ${is_chronological}`,
-      response[0],
-      response[response.length - 1]
-    );
-
     const posts = response.data.map((post) => {
       return {
         date: post.date,
         entry: post.entry && shortenSummaryText(post.entry),
       };
     });
-
     return { posts, pagination: response.pagination, is_chronological };
   }
 

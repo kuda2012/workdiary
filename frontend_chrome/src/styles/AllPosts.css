@@ -20,6 +20,12 @@
   font-size: small;
 }
 
+#posts-date-order-button:hover {
+  border-color: #646cff;
+}
+#posts-date-order-button {
+  border: thin solid transparent; /* Set transparent border by default */
+}
 #has-only-tabs-or-tags {
   color: rgb(177, 177, 177);
 }
