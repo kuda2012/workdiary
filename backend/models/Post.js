@@ -68,7 +68,11 @@ class Post {
     return allPostDates.map((date) => date.date);
   }
 
-  static async listAllPosts(user_id, currentPage = 1, is_chronological) {
+  static async listAllPosts(
+    user_id,
+    currentPage = 1,
+    is_chronological = false
+  ) {
     function shortenSummaryText(entry) {
       // 1. Remove HTML tags:
       const textWithoutTags = entry?.replace(/<[^>]+>/g, "");
@@ -98,6 +102,7 @@ class Post {
         currentPage: Number(currentPage),
         isLengthAware: true,
       });
+    console.log("hello", is_chronological, response);
 
     const posts = response.data.map((post) => {
       return {

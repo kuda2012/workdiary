@@ -29,6 +29,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
   const startIndex =
     pagination.currentPage <= 2 ? 1 : Math.max(1, pagination.currentPage - 2);
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
+  console.log(postsList);
   return (
     <div className="container mt-2">
       <div className="row">
