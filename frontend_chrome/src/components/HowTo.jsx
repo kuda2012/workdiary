@@ -24,6 +24,9 @@ const HowTo = ({ closeHowToModal }) => {
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
+            <h4 id="tour-title">
+              Very helpful tour. Open in fullscreen to see best.
+            </h4>
             <iframe
               id="demo-video"
               width="550" // Adjust width and height as needed
@@ -32,7 +35,7 @@ const HowTo = ({ closeHowToModal }) => {
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen={true}
             ></iframe>
             <div className="mt-1 text-center">
               <b class="stronger-bold">Note: </b> <br></br>

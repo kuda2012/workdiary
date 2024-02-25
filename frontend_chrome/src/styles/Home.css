@@ -54,6 +54,7 @@
   height: 20px;
   cursor: pointer;
   user-select: none;
+  font-size: 99%;
 }
 
 #reset-calendar {
@@ -62,7 +63,7 @@
   height: 20px;
   cursor: pointer;
   user-select: none;
-  font-size: 102%;
+  font-size: 100%;
 }
 
 #calendar-arrow:hover,

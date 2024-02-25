@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import {
   getPost,
@@ -36,9 +37,9 @@ const AllPosts = ({ closeAllPostsModal }) => {
         <div className="col-12">
           <ul id="posts-list">
             <div className="row mb-1">
-              <div className="col-12 d-flex justify-content-end">
+              <div className="col d-flex justify-content-center">
                 <button
-                  className="btn btn-secondary"
+                  className="btn btn-secondary p-1"
                   id="posts-date-order-button"
                   onClick={() =>
                     dispatch(
@@ -50,7 +51,16 @@ const AllPosts = ({ closeAllPostsModal }) => {
                     )
                   }
                 >
-                  {isChronological ? "Date order 🔼" : "Date order 🔽"}
+                  {/* {isChronological ? `Date order 🔼` : "Date order 🔽"} */}
+                  {isChronological ? (
+                    <>
+                      Date order <FontAwesomeIcon icon={faCaretUp} />
+                    </>
+                  ) : (
+                    <>
+                      Date order <FontAwesomeIcon icon={faCaretDown} />
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -138,7 +148,7 @@ const AllPosts = ({ closeAllPostsModal }) => {
                       </label>
                     </div>{" "}
                     <button
-                      className="btn btn-primary mt-2"
+                      className="btn btn-primary mt-2 p-2"
                       onClick={() => {
                         if (postsSelected.size > 0) {
                           dispatch(

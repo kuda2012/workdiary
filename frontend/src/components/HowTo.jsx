@@ -43,7 +43,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
                 src={`https://www.youtube.com/embed/teX2z_hCRIY`}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
+                allowFullScreen={true}
               ></iframe>
               {/* <div className="mt-1">
                 <b class="stronger-bold">Note: </b> <br></br>

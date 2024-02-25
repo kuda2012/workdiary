@@ -1,7 +1,3 @@
-.accordion-item {
-  border-radius: 8px !important;
-}
-
 #privacy-policy {
   overflow-y: auto;
   max-height: 500px;
@@ -10,6 +6,14 @@
 #demo-video {
   position: relative;
   right: 17px;
+}
+#tour-title {
+  text-transform: none;
+  text-align: center;
+}
+
+.accordion-item {
+  border-radius: 8px !important;
 }
 
 .accordion-button {

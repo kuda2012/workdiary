@@ -14,17 +14,20 @@
 #select-all-posts-input {
   position: relative;
   left: 6px;
+  top: 2px;
 }
 
 #select-all-posts-label {
-  font-size: small;
+  font-size: 15px;
+  color: black;
 }
 
 #posts-date-order-button:hover {
   border-color: #646cff;
 }
 #posts-date-order-button {
-  border: thin solid transparent; /* Set transparent border by default */
+  border: thin solid transparent;
+  text-transform: none;
 }
 #has-only-tabs-or-tags {
   color: rgb(177, 177, 177);
