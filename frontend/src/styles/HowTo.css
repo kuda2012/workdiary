@@ -5,8 +5,8 @@
 
 #demo-video {
   position: relative;
-  /* width: 100%; */
-  /* height: auto; */
+  width: 100%; /* Set the width of the container */
+  padding-bottom: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */
 }
 
 #tour-title {
