@@ -58,7 +58,7 @@ const Home = ({
               className="mt-2"
               width="100%" // Adjust width and height as needed
               height="250"
-              src={`https://www.youtube.com/embed/EEvQ04kS4Hk`}
+              src={`https://www.youtube.com/embed/inx3tP8Zv4k`}
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
