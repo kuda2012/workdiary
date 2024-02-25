@@ -177,11 +177,14 @@ class User {
                       <ul>
                         <li>
                           Pin the Workdiary Icon to your toolbar for optimal access
+                        </li>
+                        <li>
                           <img src="cid:pin_instruction_image" alt="Pin instructions"></img>
                         </li>
                         <li>
-                          Go to your Computer's settings <span>→</span> Notifications{" "}
-                          <span>→</span> Turn on your Notifications for Google Chrome so
+                          Go to your Computer's settings <span>→</span> Notifications 
+                          <span>→</span><br></br>
+                           Turn on your Notifications for Google Chrome so
                           you can be reminded to make an entry at the end of your
                           workday!
                         </li>
