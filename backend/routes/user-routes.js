@@ -10,6 +10,7 @@ const {
   userIsValidatedSignup,
   changePasswordValidated,
   resetPasswordValidated,
+  sendDownloadLinkRateLimiter,
 } = require("../middleware/userMiddleware");
 
 router.get("/account-info", tokenIsCurrent, UserController.getAccountInfo);
@@ -29,6 +30,11 @@ router.post("/signup", userIsValidatedSignup, UserController.signup);
 router.post("/change-alarm", tokenIsCurrent, UserController.changeAlarm);
 router.post("/other-settings", tokenIsCurrent, UserController.otherSettings);
 router.post("/contact-us", UserController.contactUs);
+router.post(
+  "/send-download-link",
+  sendDownloadLinkRateLimiter,
+  UserController.sendDownloadLink
+);
 router.post(
   "/forgot-password",
   forgotPasswordRateLimiter,

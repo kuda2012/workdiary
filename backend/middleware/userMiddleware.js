@@ -29,7 +29,20 @@ const forgotPasswordRateLimiter = rateLimit({
 
 const resetPasswordRateLimiter = rateLimit({
   windowMs: 60 * 15 * 1000, // 15 min
-  limit: 5, // limit each IP to 100 requests per windowMs
+  limit: 5, // limit each IP to 5 requests per windowMs
+  message: "Too many requests from this IP.",
+  handler: (req, res, next, options) => {
+    try {
+      return next(new ExpressError(options.message, 429));
+    } catch (error) {
+      next(error);
+    }
+  },
+});
+
+const sendDownloadLinkRateLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000 * 24, // 1 day
+  limit: 3, // limit each IP to 3 requests per windowMs
   message: "Too many requests from this IP.",
   handler: (req, res, next, options) => {
     try {
@@ -174,6 +187,7 @@ module.exports = {
   resetPasswordValidated,
   forgotPasswordRateLimiter,
   resetPasswordRateLimiter,
+  sendDownloadLinkRateLimiter,
   verifyAccountVerificationToken,
   resetPasswordToken,
 };

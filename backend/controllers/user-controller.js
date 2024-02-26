@@ -146,6 +146,17 @@ exports.forgotPassword = async (req, res, next) => {
   }
 };
 
+exports.sendDownloadLink = async (req, res, next) => {
+  try {
+    let message = await User.sendDownloadLink(req.body.email);
+    res.json({
+      message,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.changeAlarm = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);

@@ -124,8 +124,8 @@ class User {
                 </div>`,
       attachments: [
         {
-          filename: "work_diary_0.png",
-          path: "./work_diary_0.png",
+          filename: "Workdiary_clipart.png",
+          path: "./Workdiary_clipart.png",
           cid: "work_diary_image", // Same as the src cid in the img tag
         },
       ],
@@ -196,8 +196,8 @@ class User {
                 </div>`,
       attachments: [
         {
-          filename: "work_diary_0.png",
-          path: "./work_diary_0.png",
+          filename: "Workdiary_clipart.png",
+          path: "./Workdiary_clipart.png",
           cid: "work_diary_image", // Same as the src cid in the img tag
         },
         {
@@ -213,10 +213,57 @@ class User {
       if (error) {
         console.error("Error sending welcome email:", error);
       } else {
-        console.log("Welcome email sent:", info.response);
+        console.log("Welcome email sent", info.response);
       }
     });
     return;
+  }
+
+  static async sendDownloadLink(user) {
+    const transporter = nodemailer.createTransport({
+      host: "smtppro.zoho.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "no-reply@workdiary.me", // Your Zoho Mail email address
+        pass: ZOHO_EMAIL_PASSWORD, // Your Zoho Mail password or app-specific password
+      },
+    });
+
+    const mailOptions = {
+      from: "no-reply@workdiary.me",
+      to: user.email,
+      subject: "Workdiary: Installation link",
+      html: `<div>
+                  <img src="cid:work_diary_logo" alt="Workdiary Image" />
+                  <p>Hi,</p>
+                   <p style="max-width: 600px;">
+                   A link was requested to get the Workdiary app, here it is:
+                   <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
+                            Workdiary
+                   </a>
+                  </p>
+                  <p>The Workdiary Team</p>
+                  <small>Didn't request this? Just ignore.</small>
+                </div>`,
+      attachments: [
+        {
+          filename: "Workdiary_logo.png",
+          path: "./Workdiary_logo.png",
+          cid: "Workdiary_logo", // Same as the src cid in the img tag
+        },
+      ],
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending install link", error);
+      } else {
+        console.log("Install link sent", info.response);
+      }
+    });
+    return "An installation link has been sent to the provided email.";
   }
 
   static async verifyAccount(token) {
@@ -390,8 +437,8 @@ class User {
                 </div>`,
               attachments: [
                 {
-                  filename: "work_diary_0.png",
-                  path: "./work_diary_0.png",
+                  filename: "Workdiary_clipart.png",
+                  path: "./Workdiary_clipart.png",
                   cid: "work_diary_image", // Same as the src cid in the img tag
                 },
               ],
@@ -419,8 +466,8 @@ class User {
                 </div>`,
               attachments: [
                 {
-                  filename: "work_diary_0.png",
-                  path: "./work_diary_0.png",
+                  filename: "Workdiary_clipart.png",
+                  path: "./Workdiary_clipart.png",
                   cid: "work_diary_image", // Same as the src cid in the img tag
                 },
               ],

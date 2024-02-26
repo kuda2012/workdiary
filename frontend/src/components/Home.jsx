@@ -3,6 +3,7 @@ import HowTo from "./HowTo";
 import HowToModal from "./HowToModal";
 import { useEffect, useState } from "react";
 import VerifyAccount from "./VerifyAccount";
+import SendDownloadLink from "./SendDownloadLink";
 
 const Home = ({
   isHowToModalOpen,
@@ -51,8 +52,10 @@ const Home = ({
             >
               Workdiary
             </a>{" "}
-            is only available for desktop as an extension on the Chrome Web
-            Store, but you can check out its demo below.
+            is only available for desktop, but enter your email and we'll send
+            you the installation link so you can use it next time you're on a
+            desktop.
+            <SendDownloadLink />
             <iframe
               className="mt-2"
               width="100%" // Adjust width and height as needed
