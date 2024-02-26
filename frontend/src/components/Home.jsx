@@ -55,7 +55,7 @@ const Home = ({
             Store, but you can check out its demo below.
             <iframe
               className="mt-2"
-              width="90%" // Adjust width and height as needed
+              width="100%" // Adjust width and height as needed
               height="250"
               src={`https://www.youtube.com/embed/inx3tP8Zv4k`}
               title="YouTube video player"
