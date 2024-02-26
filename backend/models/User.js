@@ -219,7 +219,7 @@ class User {
     return;
   }
 
-  static async sendDownloadLink(user) {
+  static async sendDownloadLink(email) {
     const transporter = nodemailer.createTransport({
       host: "smtppro.zoho.com",
       port: 587,
@@ -232,7 +232,7 @@ class User {
 
     const mailOptions = {
       from: "no-reply@workdiary.me",
-      to: user.email,
+      to: email,
       subject: "Workdiary: Installation link",
       html: `<div>
                   <img src="cid:work_diary_logo" alt="Workdiary Image" />
