@@ -8,6 +8,8 @@ const SendDownloadLink = () => {
     email: "",
   };
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const [linkSent, setLinkSet] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +23,8 @@ const SendDownloadLink = () => {
         `${VITE_BACKEND_URL}/users/send-download-link`,
         { ...formData }
       );
-      alert(response?.data?.message);
+      setLinkSet(true);
+      setMessage(response?.data?.message);
       setFormData(INITIAL_STATE);
     } catch (error) {
       setFormData(INITIAL_STATE);
@@ -29,27 +32,33 @@ const SendDownloadLink = () => {
     }
   };
 
-  const { name, email, subject, message } = formData;
+  const { email } = formData;
 
   return (
     <>
-      <form name="send-download-link" className="mt-3" onSubmit={handleSubmit}>
-        {/* <div className="signup-form-items form-group"> */}
-        <label htmlFor="email">Email:</label>
-        <input
-          className="form-control"
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-          required
-          title="Enter a valid email address"
-        />
-        <Button color="primary" className="mt-3">
-          Submit
-        </Button>
-        {/* </div> */}
-      </form>
+      {!linkSent ? (
+        <form
+          name="send-download-link"
+          className="mt-3"
+          onSubmit={handleSubmit}
+        >
+          <label htmlFor="email">Email:</label>
+          <input
+            className="form-control"
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+            required
+            title="Enter a valid email address"
+          />
+          <Button color="primary" className="mt-3">
+            Submit
+          </Button>
+        </form>
+      ) : (
+        <div>{message}</div>
+      )}
     </>
   );
 };

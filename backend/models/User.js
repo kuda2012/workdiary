@@ -235,10 +235,10 @@ class User {
       to: email,
       subject: "Workdiary: Installation link",
       html: `<div>
-                  <img src="cid:work_diary_logo" alt="Workdiary Image" />
-                  <p>Hi,</p>
+                  <img src="cid:Workdiary_logo" alt="Workdiary Image" />
+                  <p>Greetings,</p>
                    <p style="max-width: 600px;">
-                   A link was requested to get the Workdiary app, here it is:
+                   Here is the requested link to install the app:
                    <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
                             Workdiary
                    </a>

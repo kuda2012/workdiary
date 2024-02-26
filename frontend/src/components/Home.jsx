@@ -53,8 +53,7 @@ const Home = ({
               Workdiary
             </a>{" "}
             is only available for desktop, but enter your email and we'll send
-            you the installation link so you can use it next time you're on a
-            desktop.
+            you a link so you can use it next time you're on a desktop.
             <SendDownloadLink />
             <iframe
               className="mt-2"
