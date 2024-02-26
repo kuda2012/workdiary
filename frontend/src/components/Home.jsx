@@ -54,7 +54,6 @@ const Home = ({
             is only available for desktop as an extension on the Chrome Web
             Store, but you can check out its demo below.
             <iframe
-              id="demo-video"
               className="mt-2"
               width="100%" // Adjust width and height as needed
               height="250"
