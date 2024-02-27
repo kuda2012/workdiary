@@ -49,24 +49,17 @@ const Home = ({
 
         {isMobile && (window.location.pathname === "/" || !isValidUrl) && (
           <div>
-            <a
-              href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp"
-              target="_blank"
-            >
-              Workdiary
-            </a>{" "}
-            is only available for desktop, but enter your email and we'll send
-            you a link so you can use it next time you're at your computer.
+            <div className="mt-2 mb-2">
+              <a
+                href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp"
+                target="_blank"
+              >
+                Workdiary
+              </a>{" "}
+              is only available for desktop, but enter your email and we'll send
+              you a link so you can use it next time you're at your computer.
+            </div>
             <SendDownloadLink />
-            <iframe
-              className="mt-2"
-              width="100%" // Adjust width and height as needed
-              height="250"
-              src={`https://www.youtube.com/embed/VD8XPD7ldHs`}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
           </div>
         )}
         {window.location.pathname === "/reset-password" && <ResetPassword />}

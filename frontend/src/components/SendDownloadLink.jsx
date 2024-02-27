@@ -38,22 +38,19 @@ const SendDownloadLink = () => {
   return (
     <>
       {!linkSent ? (
-        <form
-          name="send-download-link"
-          className="mt-3"
-          onSubmit={handleSubmit}
-        >
-          <label htmlFor="email">Email:</label>
+        <form name="send-download-link" onSubmit={handleSubmit}>
+          {/* <label htmlFor="email">Email:</label> */}
           <input
             className="form-control"
             type="email"
             name="email"
+            placeholder="Email"
             value={email}
             onChange={handleChange}
             required
             title="Enter a valid email address"
           />
-          <Button color="primary" className="mt-3">
+          <Button color="primary" className="mt-2">
             Submit
           </Button>
         </form>
