@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import GoogleLoginOrSignupButton from "./GoogleLoginOrSignupButton";
 import LoginOrSignup from "./LoginOrSignup";
 import ForgotPassword from "./ForgotPassword";
-import "../styles/Auth.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsSignup } from "../helpers/actionCreators";
+import "../styles/Auth.css";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const Auth = () => {
     <div className="container">
       <div className="row flex-column align-items-center">
         <div className="col-6 mb-5 mt-5">
-          <img id="login-logo" src="work_diary_0.png" />
+          <img id="login-logo" src="Workdiary_logo.png" />
         </div>
         {!isForgotPassword && (
           <>

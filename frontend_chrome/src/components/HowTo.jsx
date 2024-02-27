@@ -36,7 +36,7 @@ const HowTo = ({ closeHowToModal }) => {
               allowFullScreen={true}
             ></iframe>
             <div className="mt-1 text-center">
-              <b class="stronger-bold">Important Notes: </b> <br></br>
+              <b class="stronger-bold">Checklist: </b> <br></br>
               <ul>
                 <li className="shrink-text-accordion-body">
                   Pin the Workdiary Icon to your toolbar for optimal access

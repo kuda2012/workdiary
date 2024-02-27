@@ -1,3 +1,7 @@
+#nav-item-about {
+  position: relative;
+  right: 70px;
+}
 nav {
   border-radius: 8px !important;
 }

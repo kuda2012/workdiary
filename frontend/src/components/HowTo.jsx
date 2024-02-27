@@ -1,5 +1,5 @@
-import "../styles/HowTo.css";
 import ContactForm from "./ContactForm";
+import "../styles/HowTo.css";
 const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
   const isMobile = window.innerWidth <= 768;
   return (
@@ -15,7 +15,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               aria-expanded="true"
               aria-controls="panelsStayOpen-collapseOne"
             >
-              <h5>How to use the app</h5>
+              <h5>Getting the app</h5>
             </button>
           </h2>
           <div
@@ -34,7 +34,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               >
                 here
               </a>{" "}
-              to download the chrome extension.
+              to install the chrome extension.
               <iframe
                 id="demo-video"
                 className="mt-2"

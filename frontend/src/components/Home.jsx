@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
 import ResetPassword from "./ResetPassword";
 import HowTo from "./HowTo";
 import HowToModal from "./HowToModal";
-import { useEffect, useState } from "react";
 import VerifyAccount from "./VerifyAccount";
 import SendDownloadLink from "./SendDownloadLink";
+import "../styles/Home.css";
 
 const Home = ({
   isHowToModalOpen,
@@ -41,7 +42,9 @@ const Home = ({
           (window.location.pathname === "/" ||
             window.location.pathname === "/privacy-policy" ||
             !isValidUrl) && (
-            <h5 className="mt-2">Welcome! Click "about" to learn more :)</h5>
+            <h4 id="welcome-header" className="mt-2">
+              Welcome! Click the icon to learn more.
+            </h4>
           )}
 
         {isMobile && (window.location.pathname === "/" || !isValidUrl) && (
@@ -53,7 +56,7 @@ const Home = ({
               Workdiary
             </a>{" "}
             is only available for desktop, but enter your email and we'll send
-            you a link so you can use it next time you're on a desktop.
+            you a link so you can use it next time you're at your computer.
             <SendDownloadLink />
             <iframe
               className="mt-2"

@@ -124,8 +124,8 @@ class User {
                 </div>`,
       attachments: [
         {
-          filename: "Workdiary_clipart.png",
-          path: "./Workdiary_clipart.png",
+          filename: "Workdiary_logo.png",
+          path: "./Workdiary_logo.png",
           cid: "work_diary_image", // Same as the src cid in the img tag
         },
       ],
@@ -173,7 +173,7 @@ class User {
                   <p>The Workdiary Team</p>
                   <p>P.S. Share your thoughts or concerns with us any time at: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a></p>
                   <div className="mt-1 text-center">
-                      <b class="stronger-bold">Important Notes: </b> <br></br>
+                      <b>Checklist: </b> <br></br>
                       <ul>
                         <li>
                           Pin the Workdiary Icon to your toolbar for optimal access
@@ -196,8 +196,8 @@ class User {
                 </div>`,
       attachments: [
         {
-          filename: "Workdiary_clipart.png",
-          path: "./Workdiary_clipart.png",
+          filename: "Workdiary_logo.png",
+          path: "./Workdiary_logo.png",
           cid: "work_diary_image", // Same as the src cid in the img tag
         },
         {
@@ -437,8 +437,8 @@ class User {
                 </div>`,
               attachments: [
                 {
-                  filename: "Workdiary_clipart.png",
-                  path: "./Workdiary_clipart.png",
+                  filename: "Workdiary_logo.png",
+                  path: "./Workdiary_logo.png",
                   cid: "work_diary_image", // Same as the src cid in the img tag
                 },
               ],
@@ -466,8 +466,8 @@ class User {
                 </div>`,
               attachments: [
                 {
-                  filename: "Workdiary_clipart.png",
-                  path: "./Workdiary_clipart.png",
+                  filename: "Workdiary_logo.png",
+                  path: "./Workdiary_logo.png",
                   cid: "work_diary_image", // Same as the src cid in the img tag
                 },
               ],

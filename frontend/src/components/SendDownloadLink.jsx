@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "reactstrap";
-import axios from "axios";
 const { VITE_BACKEND_URL } = import.meta.env;
+import axios from "axios";
+import "../styles/SendDownloadLink.css";
 
 const SendDownloadLink = () => {
   const INITIAL_STATE = {
@@ -57,7 +58,12 @@ const SendDownloadLink = () => {
           </Button>
         </form>
       ) : (
-        <div>{message}</div>
+        <div
+          className="my-3 text-success"
+          id="send-download-link-response-message"
+        >
+          <b>{message}</b>
+        </div>
       )}
     </>
   );

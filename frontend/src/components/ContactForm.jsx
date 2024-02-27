@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "reactstrap";
-import axios from "axios";
 const { VITE_BACKEND_URL } = import.meta.env;
+import axios from "axios";
 
 const ContactForm = ({ closeHowToModal }) => {
   const INITIAL_STATE = {
