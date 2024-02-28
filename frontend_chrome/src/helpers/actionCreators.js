@@ -612,7 +612,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     const isDarkMode = darkModeMediaQuery.matches;
     chrome.notifications.create({
       type: "basic",
-      iconUrl: isDarkMode ? "./white_books_icon128.png" : "./icon128.png",
+      iconUrl: isDarkMode ? "./white_books_icon128.png" : "./icons/icon128.png",
       title: "Workdiary",
       message: `Reminder to write in your Workdiary!`,
       // Include sound property for the sound file

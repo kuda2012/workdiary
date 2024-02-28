@@ -1,8 +1,8 @@
 const config = {
-  // CLOUD_BACKEND_URL: "http://localhost:3000",
-  // BACKEND_URL: "https://be-workdiary.onrender.com",
-  CLOUD_BACKEND_URL: "https://be-workdiary.onrender.com",
-  BACKEND_URL: "http://localhost:3000",
+  CLOUD_BACKEND_URL: "http://localhost:3000",
+  BACKEND_URL: "https://be-workdiary.onrender.com",
+  // CLOUD_BACKEND_URL: "https://be-workdiary.onrender.com",
+  // BACKEND_URL: "http://localhost:3000",
   // Other configurations...
 };
 
@@ -174,7 +174,7 @@ const handleAlarm = async (alarm) => {
     // Trigger notification and reset alarm as before
     chrome.notifications.create({
       type: "basic",
-      iconUrl: "./icon128.png",
+      iconUrl: "./icons/icon128.png",
       title: "Workdiary",
       message: `Reminder to write in your Workdiary!`,
       // Include sound property for the sound file
