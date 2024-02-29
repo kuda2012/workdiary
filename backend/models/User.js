@@ -162,7 +162,7 @@ class User {
                   <p>Hi ${user.name},</p>
                    <p style="max-width: 600px;">
                     Welcome to Workdiary! I am glad you have taken this step to gain more
-                    control of how you remember your work. Given that work is such a fundamental
+                    control of how you choose to remember your work. Given that work is such a fundamental
                     aspect of our lives, I believe it's in our best interests to stay on top of 
                     what we tell ourselves about it. Let this app be a platform for you
                     to develop a richer mental narrative of your work endeavors that will 
