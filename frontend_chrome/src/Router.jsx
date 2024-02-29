@@ -12,7 +12,6 @@ const Router = ({
     <Routes>
       <Route
         path={"/index.html"}
-        // path={location.pathname === "/index.html" ? "/index.html" : "/"}
         element={
           <Home
             isAuthModalOpen={isAuthModalOpen}

@@ -43,7 +43,7 @@ const ContactForm = ({ closeHowToModal }) => {
           here or send an email to{" "}
           <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>
           <form name="contact-email-form" onSubmit={handleSubmit}>
-            <div className="signup-form-items form-group">
+            <div className="form-group">
               <label htmlFor="name">Name:</label>
               <input
                 required={true}
@@ -54,7 +54,7 @@ const ContactForm = ({ closeHowToModal }) => {
                 className="form-control"
               />
             </div>
-            <div className="signup-form-items form-group">
+            <div className="form-group">
               <label htmlFor="email">Email:</label>
               <input
                 className="form-control"
@@ -66,7 +66,7 @@ const ContactForm = ({ closeHowToModal }) => {
                 title="Enter a valid email address"
               />
             </div>
-            <div className="signup-form-items form-group">
+            <div className="form-group">
               <label htmlFor="subject">Subject:</label>
               <input
                 className="form-control"
@@ -77,7 +77,7 @@ const ContactForm = ({ closeHowToModal }) => {
                 name="subject"
               />
             </div>
-            <div className="signup-form-items form-group">
+            <div className="form-group">
               <label htmlFor="message">Message:</label>
               <textarea
                 className="form-control"

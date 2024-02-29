@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import { Autosave } from "react-autosave";
 import { useDispatch, useSelector } from "react-redux";
 import ReactQuill from "react-quill";
+import moment from "moment";
 import CustomToolBar from "./CustomToolbar";
 import "react-quill/dist/quill.snow.css";
 import "../styles/SummaryTextArea.css";

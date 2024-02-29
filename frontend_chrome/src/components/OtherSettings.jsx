@@ -1,7 +1,7 @@
 import { ButtonGroup, Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { changeOtherSettings } from "../helpers/actionCreators";
-import ChooseMicrophone from "./chooseMicrophone";
+import ChooseMicrophone from "./ChooseMicrophone";
 
 const OtherSettings = () => {
   const dispatch = useDispatch();

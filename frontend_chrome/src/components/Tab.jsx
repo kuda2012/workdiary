@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import "../styles/Tab.css";
 import { useSelector } from "react-redux";
+import "../styles/Tab.css";
 const Tab = ({
   tab,
   onTabDelete,

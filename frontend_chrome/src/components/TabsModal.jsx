@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
-import "../styles/TabsModal.css"; // You can create your own CSS for styling
 import { useDispatch, useSelector } from "react-redux";
 import { clearScrollTo } from "../helpers/actionCreators";
+import "../styles/TabsModal.css"; // You can create your own CSS for styling
 
 const TabsModal = ({ isTabsModalOpen, closeTabsModal, children }) => {
   if (!isTabsModalOpen) return null;

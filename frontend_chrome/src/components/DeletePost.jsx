@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "reactstrap";
 import {
   clearScrollTo,
   clearSearchResults,
   deletePost,
   getPostsList,
 } from "../helpers/actionCreators";
-import { Button } from "reactstrap";
 
 const DeletePost = ({ closeDeletePostModal }) => {
   const date = useSelector((state) => state.date);

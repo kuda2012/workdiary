@@ -71,12 +71,12 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               <div className="row">
                 <div className="col text-center">
                   Hey there, I made this app because I felt sense of unease
-                  about how many months could go by at work without much to
-                  account for what I had been up to the whole time. Then, when
-                  it would come time to apply for new jobs, I would sit there
-                  racking my brain trying to remember everything I had
+                  about how many months could go by at work without much
+                  evidence that I had done much at all the whole time. Then,
+                  when it would come time to apply for new jobs, I would sit
+                  there racking my brain trying to remember everything I had
                   accomplished on the job, how I felt about this line of
-                  employment, etc. It just felt like Work was one big black box
+                  employment, etc. It just felt like work was one big black box
                   that I would show up to, participate in, and then leave from
                   without any solid proof that anything meaningful had happened
                   day to day. Given that work is such a fundamental aspect of

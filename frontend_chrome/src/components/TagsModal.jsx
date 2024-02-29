@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
-import "../styles/TagsModal.css"; // You can create your own CSS for styling
 import { useDispatch, useSelector } from "react-redux";
 import { clearScrollTo } from "../helpers/actionCreators";
+import "../styles/TagsModal.css"; // You can create your own CSS for styling
 
 const TagsModal = ({ isTagsModalOpen, closeTagsModal, children }) => {
   if (!isTagsModalOpen) return null;
