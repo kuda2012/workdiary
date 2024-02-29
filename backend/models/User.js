@@ -172,22 +172,6 @@ class User {
                   <p>Have a fantastic day, and enjoy using Workdiary!</p>
                   <p>The Workdiary Team</p>
                   <p>P.S. Share your thoughts or concerns with us any time at: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a></p>
-                  <div className="mt-1 text-center">
-                      <b>Checklist: </b> <br></br>
-                      <ul>
-                        <li>
-                          Pin the Workdiary Icon to your toolbar for optimal access
-                        </li>
-                          <img style="margin-left: 18px;"  src="cid:pin_instruction_image" alt="Pin instructions"></img>
-                        <li>
-                          Go to your Computer's settings <span>→</span> Notifications 
-                          <span>→</span><br></br>
-                           Turn on your Notifications for Google Chrome so
-                          you can be reminded to make an entry at the end of your
-                          workday!
-                        </li>
-                      </ul>
-                  </div>
                   <small>
                         <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
                             Workdiary App
