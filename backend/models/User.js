@@ -184,11 +184,6 @@ class User {
           path: "./Workdiary_logo.png",
           cid: "work_diary_image", // Same as the src cid in the img tag
         },
-        {
-          filename: "pin_instruction.png",
-          path: "./pin_instruction.png",
-          cid: "pin_instruction_image", // Same as the src cid in the img tag
-        },
       ],
     };
 
