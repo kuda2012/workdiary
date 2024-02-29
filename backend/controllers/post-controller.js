@@ -179,7 +179,7 @@ exports.delete = async (req, res, next) => {
     if (post) await Post.delete(post.id);
     const allPostDates = await Post.getAllPostDates(id);
     res.send({
-      message: `Your post for ${req.query.date} has been deleted`,
+      message: `Your post for ${req.query.date} has been deleted.`,
       all_post_dates: [...allPostDates],
     });
   } catch (error) {

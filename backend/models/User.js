@@ -174,7 +174,7 @@ class User {
                   <p>P.S. Share your thoughts or concerns with us any time at: <a href="mailto:contact@workdiary.me">contact@workdiary.me</a></p>
                   <small>
                         <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
-                            Workdiary App
+                            Workdiary
                         </a> 
                     </small>
                 </div>`,

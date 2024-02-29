@@ -242,7 +242,7 @@ exports.delete = async (req, res, next) => {
     if (doesUserExist) {
       await User.delete(id);
     }
-    res.send({ message: "Your account has been deleted!" });
+    res.send({ message: "Your account has been deleted." });
   } catch (error) {
     next(error);
   }
