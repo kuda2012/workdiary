@@ -1,11 +1,13 @@
 import ContactForm from "./ContactForm";
+import { useSelector } from "react-redux";
 import "../styles/HowTo.css";
 
 const HowTo = ({ closeHowToModal }) => {
+  const first_time_login = useSelector((state) => state.first_time_login);
   return (
     <div className="accordion" id="accordionExample">
-      <div className="accordion-item" id="accordion-top-item">
-        <h2 className="accordion-header" id="headingOne">
+      <div className="accordion-item">
+        <h2 className="accordion-header">
           <button
             className="accordion-button"
             type="button"
@@ -23,10 +25,10 @@ const HowTo = ({ closeHowToModal }) => {
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
-          <div className="accordion-body p-0" id="accordion-body-tour-video">
-            <h5 id="tour-title" className="my-1 p-0">
+          <div className="accordion-body" id="accordion-body-tour-video">
+            <h4 id="tour-title">
               Very helpful tour. Open in fullscreen to see best.
-            </h5>
+            </h4>
             <iframe
               id="demo-video"
               src={`https://www.youtube.com/embed/VD8XPD7ldHs`}
@@ -35,21 +37,6 @@ const HowTo = ({ closeHowToModal }) => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen={true}
             ></iframe>
-            <div className="mt-1 text-center">
-              <b class="stronger-bold">Checklist: </b> <br></br>
-              <ul>
-                <li className="shrink-text-accordion-body">
-                  Pin the Workdiary Icon to your toolbar for optimal access
-                  <img src="./pin_instruction.png" alt="Pin instructions"></img>
-                </li>
-                <li className="shrink-text-accordion-body">
-                  Go to your Computer's settings <span>→</span> Notifications{" "}
-                  <span>→</span> Ensure your Notifications for Google Chrome are
-                  on you can be reminded to make an entry at the end of your
-                  workday!
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
@@ -63,13 +50,56 @@ const HowTo = ({ closeHowToModal }) => {
             aria-expanded="false"
             aria-controls="collapseTwo"
           >
-            <h5>Okay...but why use this?</h5>
+            <h5 className={`${first_time_login && "text-success"}`}>
+              Checklist
+            </h5>
           </button>
         </h2>
         <div
           id="collapseTwo"
           className="accordion-collapse collapse"
           aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample"
+        >
+          <div className="accordion-body">
+            <div className="text-center">
+              <ul>
+                <li className="my-1">
+                  Pin the Workdiary Icon to your toolbar for optimal access
+                  <img src="./pin_instruction.png" alt="Pin instructions"></img>
+                </li>
+                <li className="my-1">
+                  Go to your Computer's settings <span>→</span> Notifications{" "}
+                  <span>→</span> Ensure your Notifications for Google Chrome are
+                  on you can be reminded to make an entry at the end of your
+                  workday!
+                </li>
+                <li className="my-1">
+                  Experiencing technical difficulties? Reach out to us at:{" "}
+                  <a href="mailto:contact@workdiary.me">contact@workdiary.me</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="accordion-item">
+        <h2 className="accordion-header" id="headingThree">
+          <button
+            className="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseThree"
+            aria-expanded="false"
+            aria-controls="collapseThree"
+          >
+            <h5>Okay...but why use this?</h5>
+          </button>
+        </h2>
+        <div
+          id="collapseThree"
+          className="accordion-collapse collapse"
+          aria-labelledby="headingThree"
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
@@ -125,22 +155,22 @@ const HowTo = ({ closeHowToModal }) => {
         </div>
       </div>
       <div className="accordion-item">
-        <h2 className="accordion-header" id="headingThree">
+        <h2 className="accordion-header" id="headingFour">
           <button
             className="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#collapseThree"
+            data-bs-target="#collapseFour"
             aria-expanded="false"
-            aria-controls="collapseThree"
+            aria-controls="collapseFour"
           >
             <h5>Contact Us</h5>
           </button>
         </h2>
         <div
-          id="collapseThree"
+          id="collapseFour"
           className="accordion-collapse collapse"
-          aria-labelledby="headingThree"
+          aria-labelledby="headingFour"
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
@@ -153,22 +183,22 @@ const HowTo = ({ closeHowToModal }) => {
         </div>
       </div>
       <div className="accordion-item">
-        <h2 className="accordion-header" id="headingFour">
+        <h2 className="accordion-header" id="headingFive">
           <button
             className="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#collapseFour"
+            data-bs-target="#collapseFive"
             aria-expanded="false"
-            aria-controls="collapseFour"
+            aria-controls="collapseFive"
           >
             <h5>Privacy Policy</h5>
           </button>
         </h2>
         <div
-          id="collapseFour"
+          id="collapseFive"
           className="accordion-collapse collapse"
-          aria-labelledby="headingFour"
+          aria-labelledby="headingFive"
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">

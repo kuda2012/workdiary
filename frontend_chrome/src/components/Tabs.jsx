@@ -102,9 +102,9 @@ const Tabs = () => {
         </div>
         <div className="row mt-2 justify-content-around align-items-center">
           <div className="col-6">
-            <div class="dropdown">
+            <div className="dropdown">
               <button
-                class="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-info py-4 px-3"
+                className="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-info py-4 px-3"
                 type="button"
                 id="drop-down-menu-button1"
                 data-bs-toggle="dropdown"
@@ -113,12 +113,12 @@ const Tabs = () => {
                 Open selected in...
               </button>
               <ul
-                class="dropdown-menu dropdown-menu-dark"
+                className="dropdown-menu dropdown-menu-dark"
                 aria-labelledby="drop-down-menu-button1"
               >
                 <li>
                   <a
-                    class="dropdown-item"
+                    className="dropdown-item"
                     href="#"
                     onClick={() => {
                       dispatch(openTabs(Array.from(tabsSelected.values())));
@@ -131,7 +131,7 @@ const Tabs = () => {
                   windows.map((window, i) => (
                     <li>
                       <a
-                        class="dropdown-item"
+                        className="dropdown-item"
                         href="#"
                         onClick={() => {
                           dispatch(

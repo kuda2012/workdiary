@@ -43,11 +43,11 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
         aria-labelledby="user-info-dropdown-button"
       >
         {user && (
-          <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingOne">
+          <div className="accordion" id="accordionExample">
+            <div className="accordion-item" id="accordion-top-item">
+              <h2 className="accordion-header" id="headingOne">
                 <button
-                  class="accordion-button"
+                  className="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#collapseOne"
@@ -59,11 +59,11 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
               </h2>
               <div
                 id="collapseOne"
-                class="accordion-collapse collapse show"
+                className="accordion-collapse collapse show"
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
-                <div class="accordion-body">
+                <div className="accordion-body">
                   <div>
                     <strong>Name:</strong> {user.name}
                   </div>
@@ -80,10 +80,10 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
               </div>
             </div>
             {user?.auth_provider !== "google" && (
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
+              <div className="accordion-item">
+                <h2 className="accordion-header" id="headingTwo">
                   <button
-                    class="accordion-button collapsed"
+                    className="accordion-button collapsed"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo"
@@ -95,11 +95,11 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
                 </h2>
                 <div
                   id="collapseTwo"
-                  class="accordion-collapse collapse"
+                  className="accordion-collapse collapse"
                   aria-labelledby="headingTwo"
                   data-bs-parent="#accordionExample"
                 >
-                  <div class="accordion-body">
+                  <div className="accordion-body">
                     <ChangePassword
                       closeAccountStuffModal={closeAccountStuffModal}
                     />
@@ -107,10 +107,10 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
                 </div>
               </div>
             )}
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingThree">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingThree">
                 <button
-                  class="accordion-button collapsed"
+                  className="accordion-button collapsed"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#collapseThree"
@@ -122,11 +122,11 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
               </h2>
               <div
                 id="collapseThree"
-                class="accordion-collapse collapse"
+                className="accordion-collapse collapse"
                 aria-labelledby="headingThree"
                 data-bs-parent="#accordionExample"
               >
-                <div class="accordion-body">
+                <div className="accordion-body">
                   <form name="delete-account-form" onSubmit={handleDelete}>
                     <p>
                       We are sorry to see you go. If this is the truly the end,

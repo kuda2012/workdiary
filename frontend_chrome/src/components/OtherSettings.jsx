@@ -36,7 +36,7 @@ const OtherSettings = () => {
         aria-labelledby="other-settings-dropdown-button"
       >
         {user && (
-          <div class="accordion" id="accordionExample">
+          <div className="accordion" id="accordionExample">
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingOne">
                 <button
@@ -63,10 +63,10 @@ const OtherSettings = () => {
                 </div>
               </div>
             </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingTwo">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingTwo">
                 <button
-                  class="accordion-button collapsed"
+                  className="accordion-button collapsed"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#collapseTwo"
@@ -78,13 +78,13 @@ const OtherSettings = () => {
               </h2>
               <div
                 id="collapseTwo"
-                class="accordion-collapse collapse"
+                className="accordion-collapse collapse"
                 aria-labelledby="headingTwo"
                 data-bs-parent="#accordionExample"
               >
-                <div class="accordion-body">
+                <div className="accordion-body">
                   <div
-                    class="btn-group"
+                    className="btn-group"
                     role="group"
                     aria-label="Toggle Switch"
                   >

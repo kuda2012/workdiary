@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import "../styles/DeletePostModal.css"; // You can create your own CSS for styling
+import "../styles/DeletePostModal.css";
 
 const DeletePostModal = ({
   isDeletePostModalOpen,

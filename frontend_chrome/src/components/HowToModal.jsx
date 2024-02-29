@@ -1,11 +1,18 @@
 import ReactDOM from "react-dom";
-import "../styles/HowToModal.css"; // You can create your own CSS for styling
+import { useDispatch, useSelector } from "react-redux";
+import { showHowToModal } from "../helpers/actionCreators";
+import "../styles/HowToModal.css";
 
 const HowToModal = ({ isHowToModalOpen, closeHowToModal, children }) => {
+  const dispatch = useDispatch();
+  const first_time_login = useSelector((state) => state.first_time_login);
   if (!isHowToModalOpen) return null;
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       closeHowToModal();
+      if (first_time_login) {
+        dispatch(showHowToModal(false));
+      }
     }
   };
   return isHowToModalOpen

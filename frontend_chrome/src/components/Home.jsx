@@ -58,7 +58,6 @@ const Home = ({
   useEffect(() => {
     if (first_time_login) {
       openHowToModal();
-      dispatch(showHowToModal(false));
     }
   }, [first_time_login]);
 

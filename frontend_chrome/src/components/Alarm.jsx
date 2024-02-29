@@ -84,7 +84,7 @@ const Alarm = () => {
         aria-labelledby="alarm-dropdown"
       >
         <div className="my-2">Set this for the end of your work day!</div>
-        <div class="btn-group" role="group" aria-label="Toggle Switch">
+        <div className="btn-group" role="group" aria-label="Toggle Switch">
           <ButtonGroup>
             <Button
               color={user?.alarm_status ? "success" : "secondary"}
