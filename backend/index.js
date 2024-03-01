@@ -6,7 +6,6 @@ const { rateLimit } = require("express-rate-limit");
 const { jobsTokenIsCurrent } = require("./middleware/userMiddleware");
 const { deleteUnverifiedUsers24hrs } = require("./helpers/databaseJobs");
 const app = express();
-app.set("trust proxy", 1);
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 8, // limit each IP to 200 requests per windowMs
@@ -39,6 +38,18 @@ const userRoutes = require("./routes/user-routes");
 const postRoutes = require("./routes/post-routes");
 const tabRoutes = require("./routes/tab-routes");
 const tagRoutes = require("./routes/tag-routes");
+
+app.use((req, res, next) => {
+  // Get the IP address from the request object
+  const ip = req.ip;
+  const device = req.headers["user-agent"];
+
+  // Log the IP address
+  console.log(`Request from IP: ${ip}, Device: ${device}`);
+
+  // Pass the request to the next middleware
+  next();
+});
 
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
