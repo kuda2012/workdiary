@@ -73,10 +73,10 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
+    // Logging the login
+    // Query the logins table, if there are no previous logins with matching user_id and email, return "first_time_login : true"
     let token = await User.getLoggedIn(req.body);
-    // log the login
-    // tell query the logins table, if there are no previous logins with matching user_id and email, return "first_time_login : true"
-    let first_time_login;
+    let first_time_login = false;
     let { id, email, name } = jwt.decode(token);
     let logins = await db.query(
       `SELECT * from user_logins

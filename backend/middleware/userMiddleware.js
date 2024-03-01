@@ -19,6 +19,13 @@ const forgotPasswordRateLimiter = rateLimit({
   limit: 4, // limit each IP to 4 requests per day
   message: "Too many requests from this IP.",
   handler: (req, res, next, options) => {
+    console.log(
+      `User rate limited: ForgotPassword, Endpoint: ${req.path}, IP address: ${
+        req.ip
+      }, Device: ${req.headers["user-agent"]}, Time: ${moment().format(
+        "DD-MM-YYY HH:mm:ss"
+      )} `
+    );
     try {
       return next(new ExpressError(options.message, 429));
     } catch (error) {
@@ -32,6 +39,13 @@ const resetPasswordRateLimiter = rateLimit({
   limit: 5, // limit each IP to 5 requests per windowMs
   message: "Too many requests from this IP.",
   handler: (req, res, next, options) => {
+    console.log(
+      `User rate limited: ResetPassword, Endpoint: ${req.path}, IP address: ${
+        req.ip
+      }, Device: ${req.headers["user-agent"]}, Time: ${moment().format(
+        "DD-MM-YYY HH:mm:ss"
+      )} `
+    );
     try {
       return next(new ExpressError(options.message, 429));
     } catch (error) {
@@ -45,6 +59,13 @@ const sendDownloadLinkRateLimiter = rateLimit({
   limit: 3, // limit each IP to 3 requests per windowMs
   message: "Too many requests from this IP.",
   handler: (req, res, next, options) => {
+    console.log(
+      `User rate limited: SendDownloadLink, Endpoint: ${
+        req.path
+      }, IP address: ${req.ip}, Device: ${
+        req.headers["user-agent"]
+      }, Time: ${moment().format("DD-MM-YYY HH:mm:ss")} `
+    );
     try {
       return next(new ExpressError(options.message, 429));
     } catch (error) {

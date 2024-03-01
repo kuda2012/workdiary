@@ -4,15 +4,25 @@ const bodyParser = require("body-parser");
 const ExpressError = require("./expressError");
 const { rateLimit } = require("express-rate-limit");
 const { jobsTokenIsCurrent } = require("./middleware/userMiddleware");
-const { databaseJob } = require("./helpers/databaseJob");
+const { deleteUnverifiedUsers24hrs } = require("./helpers/databaseJobs");
 const app = express();
 app.set("trust proxy", 1);
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 400, // limit each IP to 200 requests per windowMs
+  max: 8, // limit each IP to 200 requests per windowMs
   message: "Too many requests from this IP.",
   handler: (req, res, next, options) => {
     try {
+      const { id, name, email } = decodeJwt(req.headers.authorization);
+      console.log(
+        `User rate limited: General App, Endpoint: ${
+          req.path
+        }, User ID: ${id}, Name: ${name}, Email: ${email}, IP address: ${
+          req.ip
+        }, Device: ${req.headers["user-agent"]}, Time: ${moment().format(
+          "DD-MM-YYY HH:mm:ss"
+        )} `
+      );
       return next(new ExpressError(options.message, 429));
     } catch (error) {
       next(error);
@@ -35,7 +45,7 @@ app.use("/posts", postRoutes);
 app.use("/tabs", tabRoutes);
 app.use("/tags", tagRoutes);
 app.post("/jobs", jobsTokenIsCurrent, async (req, res, next) => {
-  const response = await databaseJob();
+  const response = await deleteUnverifiedUsers24hrs();
   res.status(200).send(response);
 });
 
