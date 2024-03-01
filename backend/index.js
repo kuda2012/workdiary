@@ -12,6 +12,14 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 8, // limit each IP to 200 requests per windowMs
   message: "Too many requests from this IP.",
+  keyGenerator: function (req) {
+    const { id } = decodeJwt(req.headers.authorization);
+    if (id) {
+      return id;
+    } else {
+      req.ip;
+    }
+  },
   handler: (req, res, next, options) => {
     try {
       const { id, name, email } = decodeJwt(req.headers.authorization);

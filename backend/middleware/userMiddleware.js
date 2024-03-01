@@ -18,6 +18,14 @@ const forgotPasswordRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000 * 24, // 24 hours
   limit: 4, // limit each IP to 4 requests per day
   message: "Too many requests from this IP.",
+  keyGenerator: function (req) {
+    const { id } = decodeJwt(req.headers.authorization);
+    if (id) {
+      return id;
+    } else {
+      req.ip;
+    }
+  },
   handler: (req, res, next, options) => {
     console.log(
       `User rate limited: ForgotPassword, Endpoint: ${req.path}, IP address: ${
@@ -38,6 +46,14 @@ const resetPasswordRateLimiter = rateLimit({
   windowMs: 60 * 15 * 1000, // 15 min
   limit: 5, // limit each IP to 5 requests per windowMs
   message: "Too many requests from this IP.",
+  keyGenerator: function (req) {
+    const { id } = decodeJwt(req.headers.authorization);
+    if (id) {
+      return id;
+    } else {
+      req.ip;
+    }
+  },
   handler: (req, res, next, options) => {
     console.log(
       `User rate limited: ResetPassword, Endpoint: ${req.path}, IP address: ${
@@ -58,6 +74,14 @@ const sendDownloadLinkRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000 * 24, // 1 day
   limit: 3, // limit each IP to 3 requests per windowMs
   message: "Too many requests from this IP.",
+  keyGenerator: function (req) {
+    const { id } = decodeJwt(req.headers.authorization);
+    if (id) {
+      return id;
+    } else {
+      req.ip;
+    }
+  },
   handler: (req, res, next, options) => {
     console.log(
       `User rate limited: SendDownloadLink, Endpoint: ${
