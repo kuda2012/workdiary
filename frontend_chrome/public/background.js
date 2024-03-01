@@ -38,7 +38,7 @@ async function openPopup() {
         top: top,
         left: left,
       },
-      function (window) {
+      async function (window) {
         chrome.storage.local.set({ popup_window: window });
       }
     );
@@ -48,7 +48,7 @@ async function openPopup() {
 async function closePopup() {
   const result = await chrome.storage.local.get(["popup_window"]);
   if (result?.popup_window) {
-    chrome.windows.remove(result?.popup_window.id, function () {
+    chrome.windows.remove(result?.popup_window.id, async function () {
       chrome.storage.local.remove("popup_window");
     });
   }
