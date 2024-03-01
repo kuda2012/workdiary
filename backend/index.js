@@ -6,6 +6,8 @@ const { rateLimit } = require("express-rate-limit");
 const { jobsTokenIsCurrent } = require("./middleware/userMiddleware");
 const { deleteUnverifiedUsers24hrs } = require("./helpers/databaseJobs");
 const app = express();
+app.set("trust proxy", 1);
+app.get("/ip", (request, response) => response.send(request.ip));
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 8, // limit each IP to 200 requests per windowMs
