@@ -15,6 +15,7 @@ const limiter = rateLimit({
   message: "Too many requests from this IP.",
   keyGenerator: function (req) {
     const { id } = decodeJwt(req.headers.authorization);
+    console.log("user id", id);
     if (id) {
       return id;
     } else {
