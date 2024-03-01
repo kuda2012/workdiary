@@ -13,6 +13,7 @@ let {
   RESET_PASSWORD_SECRET_KEY,
   JOBS_SECRET_KEY,
 } = require("../config");
+const { decodeJwt } = require("../helpers/decodeJwt");
 
 const forgotPasswordRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000 * 24, // 24 hours

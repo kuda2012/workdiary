@@ -5,6 +5,7 @@ const ExpressError = require("./expressError");
 const { rateLimit } = require("express-rate-limit");
 const { jobsTokenIsCurrent } = require("./middleware/userMiddleware");
 const { deleteUnverifiedUsers24hrs } = require("./helpers/databaseJobs");
+const { decodeJwt } = require("./helpers/decodeJwt");
 const app = express();
 app.set("trust proxy", 1);
 app.get("/ip", (request, response) => response.send(request.ip));
