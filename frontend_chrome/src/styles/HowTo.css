@@ -20,6 +20,10 @@
   align-items: center; /* Center horizontally */
 }
 
+#checklist-header {
+  color: #ff8f00;
+}
+
 .shrink-text-accordion-body {
   font-size: 12px;
 }

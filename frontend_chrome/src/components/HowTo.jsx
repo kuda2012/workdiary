@@ -50,9 +50,7 @@ const HowTo = ({ closeHowToModal }) => {
             aria-expanded="false"
             aria-controls="collapseTwo"
           >
-            <h5 className={`${first_time_login && "text-success"}`}>
-              Checklist
-            </h5>
+            <h5 id={`${first_time_login && "checklist-header"}`}>Checklist</h5>
           </button>
         </h2>
         <div
