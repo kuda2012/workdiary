@@ -4,7 +4,7 @@ import {
   getPost,
   getPostsList,
   getUserAccountInfo,
-  showHowToModal,
+  setAlarm,
 } from "../helpers/actionCreators";
 import moment from "moment";
 import Auth from "./Auth";
@@ -41,6 +41,13 @@ const Home = ({
   const openHowToModal = () => setIsHowToModalOpen(true);
   const closeHowToModal = () => setIsHowToModalOpen(false);
 
+  useEffect(() => {
+    if (first_time_login) {
+      openHowToModal();
+      setAlarm(user);
+    }
+  }, [user]);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (isDeleting) return;
@@ -54,12 +61,6 @@ const Home = ({
       dispatch(getPostsList(workdiaryToken, 1));
     }
   }, [post, date, user, workdiaryToken]);
-
-  useEffect(() => {
-    if (first_time_login) {
-      openHowToModal();
-    }
-  }, [first_time_login]);
 
   return (
     <div

@@ -128,12 +128,9 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
               >
                 <div className="accordion-body">
                   <form name="delete-account-form" onSubmit={handleDelete}>
-                    <p>
+                    <p className="text-center">
                       We are sorry to see you go. If this is the truly the end,
-                      we hope to see you again in the future.{" "}
-                      {user.auth_provider === "google" &&
-                        ` Deleting this account will only
-                      delete your Workdiary account, not your Google account.`}
+                      we hope to see you again in the future.
                     </p>
                     <Input
                       type="text"

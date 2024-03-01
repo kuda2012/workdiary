@@ -606,10 +606,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     // Check for alarms with day-specific names
     console.log("fire alarm - actionCreator", alarm.name);
     // Trigger notification and reset alarm as before
-    const darkModeMediaQuery = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    );
-    const isDarkMode = darkModeMediaQuery.matches;
     chrome.notifications.create({
       type: "basic",
       iconUrl: "./icons/icon128.png",
