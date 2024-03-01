@@ -14,21 +14,21 @@ const limiter = rateLimit({
   max: 8, // limit each IP to 200 requests per windowMs
   message: "Too many requests from this IP.",
   keyGenerator: function (req) {
-    const { id } = decodeJwt(req.headers.authorization);
-    console.log("user id", id);
-    if (id) {
-      return id;
+    const user = decodeJwt(req.headers.authorization);
+    console.log("user id", user?.id);
+    if (user?.id) {
+      return user?.id;
     } else {
       req.ip;
     }
   },
   handler: (req, res, next, options) => {
     try {
-      const { id, name, email } = decodeJwt(req.headers.authorization);
+      const user = decodeJwt(req.headers.authorization);
       console.log(
-        `User rate limited: General App, Endpoint: ${
-          req.path
-        }, User ID: ${id}, Name: ${name}, Email: ${email}, IP address: ${
+        `User rate limited: General App, Endpoint: ${req.path}, User ID: ${
+          user?.id
+        }, Name: ${user?.name}, Email: ${user?.email}, IP address: ${
           req.ip
         }, Device: ${req.headers["user-agent"]}, Time: ${moment().format(
           "DD-MM-YYY HH:mm:ss"

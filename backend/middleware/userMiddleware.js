@@ -20,9 +20,9 @@ const forgotPasswordRateLimiter = rateLimit({
   limit: 4, // limit each IP to 4 requests per day
   message: "Too many requests from this IP.",
   keyGenerator: function (req) {
-    const { id } = decodeJwt(req.headers.authorization);
-    if (id) {
-      return id;
+    const user = decodeJwt(req.headers.authorization);
+    if (user?.id) {
+      return user?.id;
     } else {
       req.ip;
     }
@@ -48,9 +48,9 @@ const resetPasswordRateLimiter = rateLimit({
   limit: 5, // limit each IP to 5 requests per windowMs
   message: "Too many requests from this IP.",
   keyGenerator: function (req) {
-    const { id } = decodeJwt(req.headers.authorization);
-    if (id) {
-      return id;
+    const user = decodeJwt(req.headers.authorization);
+    if (user?.id) {
+      return user?.id;
     } else {
       req.ip;
     }
@@ -76,9 +76,9 @@ const sendDownloadLinkRateLimiter = rateLimit({
   limit: 3, // limit each IP to 3 requests per windowMs
   message: "Too many requests from this IP.",
   keyGenerator: function (req) {
-    const { id } = decodeJwt(req.headers.authorization);
-    if (id) {
-      return id;
+    const user = decodeJwt(req.headers.authorization);
+    if (user?.id) {
+      return user?.id;
     } else {
       req.ip;
     }
