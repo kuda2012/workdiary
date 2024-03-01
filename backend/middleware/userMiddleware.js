@@ -32,7 +32,7 @@ const forgotPasswordRateLimiter = rateLimit({
       `User rate limited: ForgotPassword, Endpoint: ${req.path}, IP address: ${
         req.ip
       }, Device: ${req.headers["user-agent"]}, Time: ${moment().format(
-        "DD-MM-YYY HH:mm:ss"
+        "DD-MM-YYYY HH:mm:ss"
       )} `
     );
     try {
@@ -60,7 +60,7 @@ const resetPasswordRateLimiter = rateLimit({
       `User rate limited: ResetPassword, Endpoint: ${req.path}, IP address: ${
         req.ip
       }, Device: ${req.headers["user-agent"]}, Time: ${moment().format(
-        "DD-MM-YYY HH:mm:ss"
+        "DD-MM-YYYY HH:mm:ss"
       )} `
     );
     try {
@@ -73,7 +73,7 @@ const resetPasswordRateLimiter = rateLimit({
 
 const sendDownloadLinkRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000 * 24, // 1 day
-  limit: 3, // limit each IP to 3 requests per windowMs
+  limit: 5, // limit each IP to 5 requests per windowMs
   message: "Too many requests from this IP.",
   keyGenerator: function (req) {
     const user = decodeJwt(req.headers.authorization);
@@ -89,7 +89,7 @@ const sendDownloadLinkRateLimiter = rateLimit({
         req.path
       }, IP address: ${req.ip}, Device: ${
         req.headers["user-agent"]
-      }, Time: ${moment().format("DD-MM-YYY HH:mm:ss")} `
+      }, Time: ${moment().format("DD-MM-YYYY HH:mm:ss")} `
     );
     try {
       return next(new ExpressError(options.message, 429));

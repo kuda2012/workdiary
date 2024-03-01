@@ -10,14 +10,12 @@ const { decodeJwt } = require("./helpers/decodeJwt");
 const app = express();
 app.use(cors());
 app.set("trust proxy", 1);
-app.get("/ip", (request, response) => response.send(request.ip));
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 8, // limit each IP to 200 requests per windowMs
+  max: 300, // limit each IP to 200 requests per windowMs
   message: "Too many requests from this IP.",
   keyGenerator: function (req) {
     const user = decodeJwt(req.headers.authorization);
-    console.log("user id", user?.id);
     if (user?.id) {
       return user?.id;
     } else {
@@ -33,7 +31,7 @@ const limiter = rateLimit({
         }, Name: ${user?.name}, Email: ${user?.email}, IP address: ${
           req.ip
         }, Device: ${req.headers["user-agent"]}, Time: ${moment().format(
-          "DD-MM-YYY HH:mm:ss"
+          "DD-MM-YYYY HH:mm:ss"
         )} `
       );
       return next(new ExpressError(options.message, 429));
@@ -45,25 +43,12 @@ const limiter = rateLimit({
 
 // Apply the rate limiter to all requests
 app.use(limiter);
-app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: false }));
 const userRoutes = require("./routes/user-routes");
 const postRoutes = require("./routes/post-routes");
 const tabRoutes = require("./routes/tab-routes");
 const tagRoutes = require("./routes/tag-routes");
-
-app.use((req, res, next) => {
-  // Get the IP address from the request object
-  const ip = req.ip;
-  const device = req.headers["user-agent"];
-
-  // Log the IP address
-  console.log(`Request from IP: ${ip}, Device: ${device}`);
-
-  // Pass the request to the next middleware
-  next();
-});
 
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
