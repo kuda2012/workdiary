@@ -167,7 +167,7 @@ export function getUserAccountInfo(workdiary_token) {
         { headers: { Authorization: `Bearer ${workdiary_token}` } }
       );
       if (data.user) {
-        chrome.storage.session.set({ user: data.user });
+        chrome.storage.local.set({ user: data.user });
       }
 
       dispatch(setUserAccountInfo(data.user));
@@ -594,7 +594,7 @@ export function changeOtherSettings(workdiary_token, alarmChange) {
   };
 }
 chrome.alarms.onAlarm.addListener(async (alarm) => {
-  const { user } = await chrome.storage.session.get(["user"]);
+  const { user } = await chrome.storage.local.get(["user"]);
   const { background_alarm } = await chrome.storage.session.get([
     "background_alarm",
   ]);

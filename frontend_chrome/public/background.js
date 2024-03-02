@@ -129,24 +129,24 @@ async function setUpBackground() {
       console.log(error);
     }
   }
-  await chrome.storage.local.get(["workdiary_token"]).then(async (result) => {
-    const workdiaryToken =
-      result?.workdiary_token && typeof result?.workdiary_token === "string"
-        ? await isWorkdiaryTokenCurrent(result.workdiary_token)
-        : null;
-    let response = null;
-    if (workdiaryToken) {
-      response = await fetch(`${config.BACKEND_URL}/users/account-info`, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${workdiaryToken}` },
-      });
-      const { user } = response ? await response.json() : null;
-      if (user) {
-        chrome.storage.session.set({ user });
-        await setAlarm(user);
-      }
+  let { workdiary_token } = await chrome.storage.local.get(["workdiary_token"]);
+  workdiary_token =
+    workdiary_token && typeof workdiary_token === "string"
+      ? await isWorkdiaryTokenCurrent(workdiary_token)
+      : null;
+  let response = null;
+  if (workdiary_token) {
+    response = await fetch(`${config.BACKEND_URL}/users/account-info`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${workdiary_token}` },
+    });
+    const { user } = response ? await response.json() : null;
+    console.log("user should be added to session", user);
+    if (user) {
+      await chrome.storage.local.set({ user });
+      await setAlarm(user);
     }
-  });
+  }
 }
 
 setUpBackground();
@@ -160,7 +160,7 @@ chrome.notifications.onClicked.addListener(async () => {
   return openPopup();
 });
 const handleAlarm = async (alarm) => {
-  const { user } = await chrome.storage.session.get(["user"]);
+  const { user } = await chrome.storage.local.get(["user"]);
   const { action_creator_alarm } = await chrome.storage.session.get([
     "action_creator_alarm",
   ]);

@@ -89,6 +89,7 @@ function rootReducer(state = INITIAL_STATE, action) {
     case "FULL_RESET":
       localStorage.removeItem("workdiary_token");
       chrome.storage.local.remove("workdiary_token");
+      chrome.storage.local.remove("user");
       chrome.storage.session.clear();
       if (action.delete_account) {
         chrome.storage.local.clear();
