@@ -141,7 +141,6 @@ async function setUpBackground() {
       headers: { Authorization: `Bearer ${workdiary_token}` },
     });
     const { user } = response ? await response.json() : null;
-    console.log("user should be added to session", user);
     if (user) {
       await chrome.storage.local.set({ user });
       await setAlarm(user);
