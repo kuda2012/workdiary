@@ -69,7 +69,7 @@ const HowTo = ({ closeHowToModal }) => {
                 <li className="my-1">
                   Go to your Computer's settings <span>→</span> Notifications{" "}
                   <span>→</span> Ensure your Notifications for Google Chrome are
-                  on you can be reminded to make an entry at the end of your
+                  on so you can be reminded to make an entry at the end of your
                   workday!
                 </li>
                 <li className="my-1">
@@ -105,22 +105,22 @@ const HowTo = ({ closeHowToModal }) => {
               <div className="col text-center">
                 Hey there, I made this app because I felt sense of unease about
                 how many months could go by at work without much evidence that I
-                had done much at all the whole time. Then, when it would come
-                time to apply for new jobs, I would sit there racking my brain
-                trying to remember everything I had accomplished on the job, how
-                I felt about this line of employment, etc. It just felt like
-                work was one big black box that I would show up to, participate
-                in, and then leave from without any solid proof that anything
-                meaningful had happened day to day. Given that work is such a
-                fundamental aspect of our lives, I believe it's in our best
-                interest to stay on top of what we tell ourselves about it. Let
-                this app be a platform for you to develop a richer mental
-                narrative of your work endeavors that will make you more
-                compelling during job interviews, networking events, or anytime
-                you get a chance to say your piece. Many people have personal
-                diaries...you spend most of your waking hours working...Why
-                wouldn't it be good idea to have a Workdiary then? Of course it
-                would be. Let me know how it goes. Peace ✌
+                had done much the whole time. Then, when it would come time to
+                apply for new jobs, I would sit there racking my brain trying to
+                remember everything I had accomplished on the job, how I felt
+                about this line of employment, etc. It just felt like work was
+                one big black box that I would show up to, participate in, and
+                then leave from without any solid proof that anything meaningful
+                had happened day to day. Given that work is such a fundamental
+                aspect of our lives, I believe it's in our best interest to stay
+                on top of what we tell ourselves about it. Let this app be a
+                platform for you to develop a richer mental narrative of your
+                work endeavors that will make you more compelling during job
+                interviews, networking events, or anytime you get a chance to
+                say your piece. Many people have personal diaries...you spend
+                most of your waking hours working...Why wouldn't it be good idea
+                to have a Workdiary then? Of course it would be. Let me know how
+                it goes. Peace ✌
               </div>
             </div>
             <div className="row justify-content-around mt-2">
