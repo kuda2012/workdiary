@@ -117,7 +117,7 @@ class User {
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
-                            Get the app
+                            Workdiary
                         </a> 
                     </small>
                     </div>
@@ -307,7 +307,7 @@ class User {
                         where email=$2`,
           [newPassword, email?.toLowerCase()]
         );
-        return "Password has been changed";
+        return "Password has been successfully changed.";
       } else {
         throw new ExpressError("Incorrect Current Password", 400);
       }
@@ -366,7 +366,7 @@ class User {
           VALUES ($1, $2)`,
         [user_id, token]
       );
-      return "Password has been changed";
+      return "Password has been sucessfully changed.";
     } else {
       throw new ExpressError("Issue with resetting password", 400);
     }
@@ -411,7 +411,7 @@ class User {
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
-                            Get the app
+                            Workdiary
                         </a> 
                     </small>
                     </div>
@@ -440,7 +440,7 @@ class User {
                     <div>
                     <small>
                         <a href="https://chromewebstore.google.com/detail/workdiary/lbjmgndoajjfcodenfoicgenhjphacmp">
-                            Get the app
+                            Workdiary
                         </a> 
                     </small>
                     </div>
