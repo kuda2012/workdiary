@@ -159,7 +159,7 @@ class User {
       subject: "Welcome to Workdiary!",
       html: `<div>
                   <img src="cid:work_diary_image" alt="Workdiary Image" />
-                  <div style="postion: relative, left: 15px;">
+                  <div style="position: relative; left: 15px;">
                   <p>Hi ${user.name},</p>
                    <p style="max-width: 600px;">
                     Welcome to Workdiary! I am glad you have taken this step to gain more
