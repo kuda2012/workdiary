@@ -7,7 +7,7 @@ const config = {
 };
 
 async function isPopupOpen() {
-  const result = await chrome.storage.local.get(["popup_window"]);
+  const result = await chrome.storage.session.get("popup_window");
   return result?.popup_window;
 }
 
@@ -39,17 +39,17 @@ async function openPopup() {
         left: left,
       },
       async function (window) {
-        chrome.storage.local.set({ popup_window: window });
+        chrome.storage.session.set({ popup_window: window });
       }
     );
   });
 }
 
 async function closePopup() {
-  const result = await chrome.storage.local.get(["popup_window"]);
+  const result = await chrome.storage.session.get("popup_window");
   if (result?.popup_window) {
     chrome.windows.remove(result?.popup_window.id, async function () {
-      chrome.storage.local.remove("popup_window");
+      chrome.storage.session.remove("popup_window");
     });
   }
 }
@@ -59,9 +59,9 @@ chrome.action.onClicked.addListener(async function () {
 });
 
 chrome.windows.onRemoved.addListener(async function (windowId) {
-  const result = await chrome.storage.local.get(["popup_window"]);
+  const result = await chrome.storage.session.get("popup_window");
   if (result?.popup_window && result?.popup_window?.id === windowId) {
-    chrome.storage.local.remove("popup_window");
+    chrome.storage.session.remove("popup_window");
     chrome.storage.session.remove("action_creator_alarm");
     setUpBackground();
   }
@@ -129,7 +129,7 @@ async function setUpBackground() {
       console.log(error);
     }
   }
-  let { workdiary_token } = await chrome.storage.local.get(["workdiary_token"]);
+  let { workdiary_token } = await chrome.storage.local.get("workdiary_token");
   workdiary_token =
     workdiary_token && typeof workdiary_token === "string"
       ? await isWorkdiaryTokenCurrent(workdiary_token)
@@ -152,17 +152,17 @@ setUpBackground();
 
 chrome.notifications.onClicked.addListener(async () => {
   if (await isPopupOpen()) {
-    const { popup_window } = await chrome.storage.local.get(["popup_window"]);
+    const { popup_window } = await chrome.storage.session.get("popup_window");
     chrome.windows.update(popup_window.id, { focused: true });
     return;
   }
   return openPopup();
 });
 const handleAlarm = async (alarm) => {
-  const { user } = await chrome.storage.local.get(["user"]);
-  const { action_creator_alarm } = await chrome.storage.session.get([
-    "action_creator_alarm",
-  ]);
+  const { user } = await chrome.storage.local.get("user");
+  const { action_creator_alarm } = await chrome.storage.session.get(
+    "action_creator_alarm"
+  );
   if (
     alarm.name.startsWith("myAlarm_") &&
     user?.alarm_status &&

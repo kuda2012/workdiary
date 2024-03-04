@@ -14,7 +14,7 @@ const Auth = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await chrome.storage.local.get(["repeat_user"]);
+        const result = await chrome.storage.local.get("repeat_user");
         if (result.repeat_user) {
           dispatch(setIsSignup(false));
         }

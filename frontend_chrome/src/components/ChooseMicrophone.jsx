@@ -34,7 +34,7 @@ const ChooseMicrophone = () => {
           audioDevices.filter((device) => device.deviceId.length >= 64)
         );
         const { current_microphone_device_id } = await chrome.storage.local.get(
-          ["current_microphone_device_id"]
+          "current_microphone_device_id"
         );
         for (let i = 0; i < audioDevices.length; i++) {
           if (

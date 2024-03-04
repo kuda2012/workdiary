@@ -594,10 +594,10 @@ export function changeOtherSettings(workdiary_token, alarmChange) {
   };
 }
 chrome.alarms.onAlarm.addListener(async (alarm) => {
-  const { user } = await chrome.storage.local.get(["user"]);
-  const { background_alarm } = await chrome.storage.session.get([
-    "background_alarm",
-  ]);
+  const { user } = await chrome.storage.local.get("user");
+  const { background_alarm } = await chrome.storage.session.get(
+    "background_alarm"
+  );
   if (
     alarm.name.startsWith("myAlarm_") &&
     user?.alarm_status &&
