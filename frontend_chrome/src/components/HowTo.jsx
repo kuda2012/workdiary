@@ -1,9 +1,50 @@
+import { useEffect, useState } from "react";
 import ContactForm from "./ContactForm";
-import { useSelector } from "react-redux";
 import "../styles/HowTo.css";
 
 const HowTo = ({ closeHowToModal }) => {
-  const first_time_login = useSelector((state) => state.first_time_login);
+  const [iconPinnedChecked, seticonPinnedChecked] = useState(false);
+
+  const [notificationsChecked, setNotificationsChecked] = useState(false);
+
+  // Function to handle checkbox change
+  const handleCheckboxChangeNotifications = async () => {
+    // Update local state
+    setNotificationsChecked((prevChecked) => !prevChecked);
+
+    // Update Chrome storage
+    await chrome.storage.local.set({
+      notifications_checked: !notificationsChecked,
+    });
+  };
+  const handleCheckboxChangeIconPinned = async () => {
+    // Update local state
+    seticonPinnedChecked((prevChecked) => !prevChecked);
+
+    // Update Chrome storage
+    await chrome.storage.local.set({
+      icon_pinned_checked: !iconPinnedChecked,
+    });
+  };
+
+  useEffect(() => {
+    // Fetch initial state from Chrome storage when component mounts
+    const fetchData = async () => {
+      const { notifications_checked, icon_pinned_checked } =
+        await chrome.storage.local.get([
+          "notifications_checked",
+          "icon_pinned_checked",
+        ]);
+      // Set initial state only if it's not already set
+      if (notifications_checked !== undefined) {
+        setNotificationsChecked(notifications_checked);
+      }
+      if (icon_pinned_checked !== undefined) {
+        seticonPinnedChecked(icon_pinned_checked);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className="accordion" id="accordionExample">
       <div className="accordion-item">
@@ -27,7 +68,7 @@ const HowTo = ({ closeHowToModal }) => {
         >
           <div className="accordion-body" id="accordion-body-tour-video">
             <h4 id="tour-title">
-              Very helpful tour. Open in fullscreen to see best.
+              Very helpful tutorial. Open in fullscreen to see best.
             </h4>
             <iframe
               id="demo-video"
@@ -50,7 +91,15 @@ const HowTo = ({ closeHowToModal }) => {
             aria-expanded="false"
             aria-controls="collapseTwo"
           >
-            <h5 id={`${first_time_login && "checklist-header"}`}>Checklist</h5>
+            <h5
+              className={`${
+                !notificationsChecked || !iconPinnedChecked
+                  ? "checklist-warning"
+                  : "text-success"
+              }`}
+            >
+              Checklist
+            </h5>
           </button>
         </h2>
         <div
@@ -60,17 +109,57 @@ const HowTo = ({ closeHowToModal }) => {
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
-            <div className="text-center">
+            <div>
               <ul>
                 <li className="my-1">
-                  Pin the Workdiary Icon to your toolbar for optimal access
+                  Pin the Workdiary Icon to your toolbar for optimal access{" "}
+                  <input
+                    className="checklist-checkbox-0 form-check-input"
+                    type="checkbox"
+                    checked={iconPinnedChecked}
+                    onChange={handleCheckboxChangeIconPinned}
+                  />
                   <img src="./pin_instruction.png" alt="Pin instructions"></img>
                 </li>
                 <li className="my-1">
+                  <b className={`${notificationsChecked && "text-success"}`}>
+                    Warning:{" "}
+                  </b>
                   Go to your Computer's settings <span>→</span> Notifications{" "}
-                  <span>→</span> Ensure your Notifications for Google Chrome are
-                  on so you can be reminded to make an entry at the end of your
-                  workday!
+                  <br></br>
+                  <span>→</span>{" "}
+                  <b id="bold-checklist-notifications-on">
+                    Ensure your Notifications for Google Chrome are on.{" "}
+                    <input
+                      className="checklist-checkbox-1 form-check-input"
+                      type="checkbox"
+                      checked={notificationsChecked}
+                      onChange={handleCheckboxChangeNotifications}
+                    />
+                  </b>{" "}
+                  <br></br>
+                  If you do not turn them on, the app will not be able to notify
+                  you to make an entry.
+                  <ul>
+                    <li>
+                      Tutorial video:{" "}
+                      <a
+                        href="https://youtube.com/clip/UgkxowcXeK640G_AtTe0lUSH-VJJelJhgHRy?si=6Y2L41q13PlLfQK1"
+                        target="_blank"
+                      >
+                        Mac
+                      </a>
+                    </li>
+                    <li>
+                      Tutorial video:{" "}
+                      <a
+                        href="https://youtu.be/hMjaYJUgSbI?si=bcahkzbSo_5U-IcA&t=46"
+                        target="_blank"
+                      >
+                        Windows
+                      </a>
+                    </li>
+                  </ul>
                 </li>
                 <li className="my-1">
                   Experiencing technical difficulties? Reach out to us at:{" "}

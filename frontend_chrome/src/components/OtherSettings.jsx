@@ -1,19 +1,26 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { ButtonGroup, Button } from "reactstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { changeOtherSettings } from "../helpers/actionCreators";
 import ChooseMicrophone from "./ChooseMicrophone";
 
 const OtherSettings = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const workdiaryToken = useSelector((state) => state.workdiary_token);
+  const [soundEffects, setSoundEffects] = useState(false);
 
-  const handleSwitchToggle = () => {
-    dispatch(
-      changeOtherSettings(workdiaryToken, {
-        sound_effects: !user.sound_effects,
-      })
-    );
+  useEffect(() => {
+    // Fetch initial state from Chrome storage when component mounts
+    const fetchData = async () => {
+      const { sound_effects } = await chrome.storage.local.get("sound_effects");
+      setSoundEffects(sound_effects);
+    };
+    fetchData();
+  }, []);
+  const handleSwitchToggle = async () => {
+    // Toggle sound effects
+    const newSoundEffects = !soundEffects;
+    setSoundEffects(newSoundEffects);
+    // Update Chrome storage
+    await chrome.storage.local.set({ sound_effects: newSoundEffects });
   };
 
   return (
@@ -90,14 +97,14 @@ const OtherSettings = () => {
                   >
                     <ButtonGroup>
                       <Button
-                        color={user.sound_effects ? "success" : "secondary"}
-                        onClick={() => handleSwitchToggle(user.sound_effects)}
+                        color={soundEffects ? "success" : "secondary"}
+                        onClick={() => handleSwitchToggle(soundEffects)}
                       >
                         On
                       </Button>
                       <Button
-                        color={user.sound_effects ? "secondary" : "danger"}
-                        onClick={() => handleSwitchToggle(user.sound_effects)}
+                        color={soundEffects ? "secondary" : "danger"}
+                        onClick={() => handleSwitchToggle(soundEffects)}
                       >
                         Off
                       </Button>

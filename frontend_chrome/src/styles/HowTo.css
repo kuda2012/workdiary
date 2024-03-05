@@ -20,8 +20,27 @@
   align-items: center; /* Center horizontally */
 }
 
-#checklist-header {
-  color: #ff8f00;
+#bold-checklist-notifications-on {
+  font-weight: 700;
+}
+
+.checklist-warning {
+  color: orangered;
+}
+
+.checklist-success {
+  color: green;
+}
+.checklist-checkbox-0 {
+  position: relative;
+  left: 3px;
+  top: 1px;
+}
+
+.checklist-checkbox-1 {
+  position: relative;
+  left: 1px;
+  top: 0px;
 }
 
 .shrink-text-accordion-body {
