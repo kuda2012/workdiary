@@ -122,7 +122,13 @@ const HowTo = ({ closeHowToModal }) => {
                   <img src="./pin_instruction.png" alt="Pin instructions"></img>
                 </li>
                 <li className="my-1">
-                  <b className={`${notificationsChecked && "text-success"}`}>
+                  <b
+                    className={`${
+                      !notificationsChecked && 
+                        ? "checklist-warning"
+                        : "text-success"
+                    }`}
+                  >
                     Warning:{" "}
                   </b>
                   Go to your Computer's settings <span>→</span> Notifications{" "}
