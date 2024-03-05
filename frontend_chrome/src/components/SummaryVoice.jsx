@@ -32,7 +32,6 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
 
     const handleStorageChange = (changes, area) => {
       if (area === "local" && changes.sound_effects) {
-        console.log(changes, area);
         setSoundEffects(changes.sound_effects.newValue);
       }
     };
@@ -44,6 +43,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
       chrome.storage.onChanged.removeListener(handleStorageChange);
     };
   }, []);
+
   const startRecording = async () => {
     try {
       const { current_microphone_device_id } = await chrome.storage.local.get(
