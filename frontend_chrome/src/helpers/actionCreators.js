@@ -576,23 +576,7 @@ export function changeAlarm(workdiary_token, alarmChange) {
     }
   };
 }
-export function changeOtherSettings(workdiary_token, alarmChange) {
-  return async function (dispatch) {
-    try {
-      const { data } = await axios.post(
-        `${VITE_BACKEND_URL}/users/other-settings`,
-        { ...alarmChange },
-        {
-          headers: { Authorization: `Bearer ${workdiary_token}` },
-        }
-      );
-      dispatch(setUserAccountInfo(data.user));
-    } catch (error) {
-      alert(error?.response?.data?.message || error?.message);
-      console.log(error);
-    }
-  };
-}
+
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   const { user } = await chrome.storage.local.get("user");
   const { background_alarm } = await chrome.storage.session.get(

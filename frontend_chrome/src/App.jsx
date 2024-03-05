@@ -36,9 +36,22 @@ function App() {
   useGlobalErrorHandler();
   const workdiaryToken = useSelector((state) => state.workdiary_token);
   const dispatch = useDispatch();
-  if (!workdiaryToken && localStorage.getItem("workdiary_token")) {
-    dispatch(isWorkdiaryTokenCurrent(localStorage.getItem("workdiary_token")));
-  }
+  useEffect(() => {
+    const fetchToken = async () => {
+      // Retrieve the workdiary_token from Chrome local storage
+      const storedToken = await new Promise((resolve) => {
+        chrome.storage.local.get("workdiary_token", (result) => {
+          resolve(result.workdiary_token);
+        });
+      });
+      // Dispatch action to set workdiary_token if it exists
+      if (storedToken) {
+        dispatch(isWorkdiaryTokenCurrent(storedToken));
+      }
+    };
+
+    fetchToken();
+  }, []);
 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(
     !workdiaryToken ? true : false

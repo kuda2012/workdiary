@@ -15,7 +15,6 @@ function rootReducer(state = INITIAL_STATE, action) {
     case "SET_GOOGLE_ACCESS_TOKEN":
       return { ...state, google_access_token: action.google_access_token };
     case "SET_WORKDIARY_TOKEN":
-      localStorage.setItem("workdiary_token", action.workdiary_token);
       chrome.storage.local.set({
         workdiary_token: action.workdiary_token,
         repeat_user: true,
@@ -87,7 +86,6 @@ function rootReducer(state = INITIAL_STATE, action) {
         show_all_posts: true,
       };
     case "FULL_RESET":
-      localStorage.removeItem("workdiary_token");
       chrome.storage.local.remove("workdiary_token");
       chrome.storage.local.remove("user");
       chrome.storage.session.clear();

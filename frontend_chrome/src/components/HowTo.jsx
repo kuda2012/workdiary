@@ -124,7 +124,7 @@ const HowTo = ({ closeHowToModal }) => {
                 <li className="my-1">
                   <b
                     className={`${
-                      !notificationsChecked && 
+                      !notificationsChecked
                         ? "checklist-warning"
                         : "text-success"
                     }`}

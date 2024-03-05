@@ -13,6 +13,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
   const [isPaused, setIsPaused] = useState(false);
   const [playbackPaused, setPlaybackPaused] = useState(true);
   const [audioDuration, setAudioDuration] = useState(0);
+  const [soundEffects, setSoundEffects] = useState(false);
   const audioChunks = useRef([]);
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
@@ -21,6 +22,28 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
   const audioUrlRef = useRef(null);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    // Fetch initial state from Chrome storage when component mounts
+    const fetchData = async () => {
+      const { sound_effects } = await chrome.storage.local.get("sound_effects");
+      setSoundEffects(sound_effects);
+    };
+    fetchData();
+
+    const handleStorageChange = (changes, area) => {
+      if (area === "local" && changes.sound_effects) {
+        console.log(changes, area);
+        setSoundEffects(changes.sound_effects.newValue);
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    // Cleanup: remove listener when component unmounts
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
+  }, []);
   const startRecording = async () => {
     try {
       const { current_microphone_device_id } = await chrome.storage.local.get(
@@ -53,7 +76,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
         });
       };
 
-      if (user.sound_effects) {
+      if (soundEffects) {
         const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
         audio.volume = 0.25; // Get the URL to your sound fil
         audio.play();
@@ -76,7 +99,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
 
   const pauseRecording = () => {
     if (mediaRecorderRef.current && !isPaused) {
-      if (user.sound_effects) {
+      if (soundEffects) {
         const audio = new Audio(chrome.runtime.getURL("stop_sound.mp3"));
         audio.volume = 0.25; // Get the URL to your sound fil
         audio.play();
@@ -103,7 +126,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
 
   const resumeRecording = () => {
     if (mediaRecorderRef.current && isPaused) {
-      if (user.sound_effects) {
+      if (soundEffects) {
         const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
         audio.volume = 1; // Get the URL to your sound fil
         audio.play();
@@ -129,7 +152,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
 
   const resetRecording = (clickedToReset) => {
     // Reset all the state variables and audio playback
-    if (clickedToReset && user.sound_effects) {
+    if (clickedToReset && soundEffects) {
       const audio = new Audio(chrome.runtime.getURL("trash.mp3"));
       audio.volume = 0.25;
       audio.play();
