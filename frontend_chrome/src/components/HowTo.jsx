@@ -132,8 +132,8 @@ const HowTo = ({ closeHowToModal }) => {
                     Warning:{" "}
                   </b>
                   Go to your Computer's settings <span>→</span> Notifications{" "}
-                  <br></br>
-                  <span>→</span>{" "}
+                  {/* <br></br> */}
+                  <span>→</span>{"  "}
                   <b id="bold-checklist-notifications-on">
                     Ensure your Notifications for Google Chrome are on.{" "}
                     <input

@@ -22,6 +22,8 @@
 
 #bold-checklist-notifications-on {
   font-weight: 700;
+  position: relative;
+  left: 16px;
 }
 
 .checklist-warning {
@@ -34,12 +36,12 @@
 .checklist-checkbox-0 {
   position: relative;
   left: 3px;
-  top: 1px;
+  top: 0px;
 }
 
 .checklist-checkbox-1 {
   position: relative;
-  left: 1px;
+  left: 4px;
   top: 0px;
 }
 
