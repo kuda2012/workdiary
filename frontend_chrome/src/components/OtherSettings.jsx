@@ -80,7 +80,7 @@ const OtherSettings = () => {
                   aria-expanded="false"
                   aria-controls="collapseTwo"
                 >
-                  Recorder button sounds
+                  Media buttons: <br></br> Sound effects
                 </button>
               </h2>
               <div
