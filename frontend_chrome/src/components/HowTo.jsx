@@ -72,7 +72,7 @@ const HowTo = ({ closeHowToModal }) => {
             </h4>
             <iframe
               id="demo-video"
-              src={`https://www.youtube.com/embed/VD8XPD7ldHs`}
+              src={`https://www.youtube.com/embed/VD8XPD7ldHs?vq=hd1080`}
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
