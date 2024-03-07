@@ -70,7 +70,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
             <div className="accordion-body">
               <div className="row">
                 <div className="col text-center">
-                  Hey there, I made this app because I felt sense of unease
+                  Hey there, I made this app because I felt a sense of unease
                   about how many months could go by at work without much
                   evidence that I had done much the whole time. Then, when it
                   would come time to apply for new jobs, I would sit there
@@ -142,7 +142,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
             <div className="accordion-body">
               <div className="row">
                 <div className="col">
-                  <ContactForm closeHowToModal={closeHowToModal} />
+                  <ContactForm />
                 </div>
               </div>
             </div>

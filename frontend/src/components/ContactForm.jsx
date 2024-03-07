@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 const { VITE_BACKEND_URL } = import.meta.env;
 import axios from "axios";
 
-const ContactForm = ({ closeHowToModal }) => {
+const ContactForm = () => {
   const INITIAL_STATE = {
     name: "",
     email: "",
@@ -25,7 +25,6 @@ const ContactForm = ({ closeHowToModal }) => {
         { ...formData }
       );
       alert(response?.data?.message);
-      closeHowToModal();
       setFormData(INITIAL_STATE);
     } catch (error) {
       setFormData(INITIAL_STATE);

@@ -134,7 +134,7 @@ const LoginOrSignup = ({ setIsForgotPassword }) => {
                   </button>
                 </div>
                 <Button color="primary" className="signup-submit mt-2">
-                  {isSignup ? "Sign up" : "Login"}
+                  {isSignup ? "Create account" : "Login"}
                 </Button>
               </div>
               {!isSignup && (

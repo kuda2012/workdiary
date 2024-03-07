@@ -22,8 +22,26 @@
 
 #bold-checklist-notifications-on {
   font-weight: 700;
+  /* position: relative;
+  left: 16px; */
+}
+
+#checklist-settings-icon {
   position: relative;
-  left: 16px;
+  left: 5px;
+  bottom: 3px;
+}
+
+#checklist-notifications-icon {
+  position: relative;
+  left: 7px;
+  bottom: 1px;
+}
+
+#checklist-chrome-icon {
+  position: relative;
+  left: -1px;
+  bottom: 2px;
 }
 
 .checklist-warning {
@@ -42,7 +60,7 @@
 .checklist-checkbox-1 {
   position: relative;
   left: 4px;
-  top: 0px;
+  bottom: 1px;
 }
 
 .shrink-text-accordion-body {
