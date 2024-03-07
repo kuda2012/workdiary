@@ -46,11 +46,14 @@ const GoogleLoginOrSignupButton = () => {
       }}
     >
       {!loginButtonActive && (
-        <img id="google-login-img" src="/Google.png"></img>
+        <img
+          id={isSignup ? "google-signup-img" : "google-login-img"}
+          src="/Google.png"
+        ></img>
       )}
-      <span id="google-login-span">
+      <span id={isSignup ? "google-signup-span" : "google-login-span"}>
         {!loginButtonActive ? (
-          `${isSignup ? "Sign up" : "Login"} with Google `
+          `${isSignup ? "Get started" : "Login"} with Google `
         ) : (
           <div
             id="three-dots-container"

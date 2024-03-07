@@ -39,6 +39,16 @@
   right: 40px;
 }
 
+#google-signup-span {
+  position: relative;
+  right: 4px;
+}
+
+#google-signup-img {
+  position: relative;
+  right: 20px;
+}
+
 #google-login-img {
   position: relative;
   right: 50px;
