@@ -103,7 +103,7 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
     const lastUpdatedTime = moment(lastUpdated);
     const differenceInSeconds = currentTime.diff(lastUpdatedTime, "seconds");
 
-    if (differenceInSeconds < 5 && !lastUpdated) {
+    if (differenceInSeconds < 5 && lastUpdated) {
       setButtonText("Saved ✔");
     }
   }, [lastUpdated]);
