@@ -171,10 +171,14 @@ const handleAlarm = async (alarm) => {
   const { action_creator_alarm } = await chrome.storage.session.get(
     "action_creator_alarm"
   );
+
+  const currentTimestamp = Date.now();
+
   if (
     alarm.name.startsWith("myAlarm_") &&
     user?.alarm_status &&
-    !action_creator_alarm
+    !action_creator_alarm &&
+    Math.abs(alarm.scheduledTime - currentTimestamp) < 60 * 1000
   ) {
     // Check for alarms with day-specific names
     console.log("fire alarm - background.js", alarm.name);
