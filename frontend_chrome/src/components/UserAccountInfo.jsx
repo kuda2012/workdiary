@@ -65,7 +65,7 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
               >
                 <div className="accordion-body">
                   <div>
-                    <strong>Name:</strong> {user.name}
+                    <strong>Display name:</strong> {user.name}
                   </div>
                   <div>
                     <strong>Email:</strong> {user.email}
