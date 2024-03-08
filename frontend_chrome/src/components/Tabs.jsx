@@ -175,7 +175,7 @@ const Tabs = () => {
         <div className="row">
           <div className="col-12 m-3">
             <span>
-              Tab count: {tabs?.length} <small>(Duplicates unallowed)</small>
+              Tab count: {tabs?.length} <small>(Duplicates excluded)</small>
             </span>
           </div>
         </div>
@@ -214,7 +214,7 @@ const Tabs = () => {
           {tabs &&
             tabs.map((tab, index) => {
               return (
-                <div key={index} className="row">
+                <div key={index} className="row my-1">
                   <Tab
                     scrollToTab={scrollToTab}
                     tab={tab}

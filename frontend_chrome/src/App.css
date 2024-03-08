@@ -15,8 +15,10 @@
 #refresh-page {
   cursor: pointer;
   position: relative;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
+  display: inline-block;
+  width: 101px;
 }
 
 #logout {

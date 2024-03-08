@@ -106,7 +106,7 @@ function App() {
                   id="refresh-page"
                   onClick={() => window.location.reload()}
                 >
-                  Refresh
+                  Refresh page
                 </span>
               </div>
               {workdiaryToken && (

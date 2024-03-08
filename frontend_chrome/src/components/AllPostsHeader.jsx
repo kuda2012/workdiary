@@ -50,7 +50,7 @@ const AllPostsHeader = () => {
   );
 
   return (
-    <div className="container">
+    <div id="all-posts-header" className="container">
       <div className="row justify-content-between">
         <div className="col-2">
           {searchResults ? <h5>Your Everything</h5> : <h5>Your Entries</h5>}

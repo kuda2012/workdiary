@@ -3,8 +3,16 @@
   list-style-type: none;
 }
 
+#all-posts-header {
+  height: 37px;
+}
+
 #all-posts-search {
   width: 235px;
+}
+#all-posts-search::placeholder {
+  position: relative;
+  left: 24px;
 }
 
 #all-posts-search-reset {

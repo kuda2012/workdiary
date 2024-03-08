@@ -98,6 +98,16 @@ const SummaryTextArea = ({ dispatchCreateOrUpdatePost, openTagsModal }) => {
     }
   }, [localSummaryText]);
 
+  useEffect(() => {
+    const currentTime = moment();
+    const lastUpdatedTime = moment(lastUpdated);
+    const differenceInSeconds = currentTime.diff(lastUpdatedTime, "seconds");
+
+    if (differenceInSeconds < 5 && !lastUpdated) {
+      setButtonText("Saved ✔");
+    }
+  }, [lastUpdated]);
+
   const now = moment();
   return (
     <div id="summary-text-container">
