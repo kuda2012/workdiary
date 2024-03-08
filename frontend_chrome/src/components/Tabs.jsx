@@ -173,7 +173,7 @@ const Tabs = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-12 m-3">
+          <div className="col-12 text-center mt-4 mb-1">
             <span>
               Tab count: {tabs?.length} <small>(Duplicates excluded)</small>
             </span>

@@ -77,9 +77,9 @@ const MiddleRowMain = () => {
   }, [clickedSearchResult, isTabsModalOpen]);
   const popoverContent = (
     <Popover id="popover-content-tabs-modal">
-      Pull in your browser tabs. Delete the ones that aren't relative to
-      narrative of today's work. Come back in the future and you can use these
-      tabs to restart an old problem.
+      Pull in your browser tabs. Delete the ones that aren't applicable to what
+      you're working on. Come back in the future and you can use these tabs to
+      resume an old problem.
     </Popover>
   );
   return (
