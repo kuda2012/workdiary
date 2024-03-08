@@ -12,6 +12,14 @@ async function isPopupOpen() {
 }
 
 async function togglePopup() {
+  const { popup_window } = await chrome.storage.session.get("popup_window");
+  if (popup_window) {
+    const currentWindow = await chrome.windows.get(popup_window?.id);
+    if (currentWindow?.state === "minimized") {
+      await chrome.windows.update(popup_window.id, { focused: true });
+      return;
+    }
+  }
   if (await isPopupOpen()) {
     closePopup();
   } else {
