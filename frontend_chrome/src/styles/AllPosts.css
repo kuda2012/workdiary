@@ -12,11 +12,16 @@
 }
 #all-posts-search::placeholder {
   position: relative;
-  left: 24px;
+  text-align: center;
+  font-size: 15px;
 }
 
 #all-posts-search-reset {
   cursor: pointer;
+}
+
+#all-posts-search-reset:hover {
+  transform: scale(1.1);
 }
 
 #select-all-posts-input {

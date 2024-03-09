@@ -142,10 +142,10 @@ const UserAccountInfo = ({ closeAccountStuffModal }) => {
                       <div className="row">
                         <div className="col-12 d-flex justify-content-between px-0 mt-2">
                           <button
-                            className="btn btn-danger"
+                            className="btn btn-success"
                             onClick={handleDelete}
                           >
-                            Delete
+                            Confirm
                           </button>
                           <button
                             className="btn btn-primary"
