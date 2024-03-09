@@ -64,6 +64,19 @@ exports.loginOrSignupGoogle = async (req, res, next) => {
         400
       );
     }
+    await db.query(
+      `INSERT INTO user_logins (user_id, email, login_time, first_name, full_name, file_source, ip_address, user_agent)
+       VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, $6, $7)`,
+      [
+        getUser.id,
+        getUser.email,
+        getUser.first_name,
+        getUser.full_name,
+        req.body.source,
+        req.ip,
+        req.headers["user-agent"],
+      ]
+    );
     const token = await User.generateWorkdiaryAccessToken(getUser);
     res.send({ workdiary_token: token, first_time_login });
   } catch (error) {
