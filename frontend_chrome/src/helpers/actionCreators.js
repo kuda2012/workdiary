@@ -72,6 +72,7 @@ export function login(formData) {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(`${VITE_BACKEND_URL}/users/login`, {
+        source: "actionCreator.js",
         ...formData,
       });
       dispatch(setWorkdiaryToken(data.workdiary_token));
