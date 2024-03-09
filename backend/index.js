@@ -28,7 +28,7 @@ const limiter = rateLimit({
       console.log(
         `User rate limited: General App, Endpoint: ${req.path}, User ID: ${
           user?.id
-        }, Name: ${user?.name}, Email: ${user?.email}, IP address: ${
+        }, Full name: ${user?.full_name}, Email: ${user?.email}, IP address: ${
           req.ip
         }, Device: ${req.headers["user-agent"]}, Time: ${moment().format(
           "DD-MM-YYYY HH:mm:ss"

@@ -13,20 +13,28 @@ const {
   FRONTEND_URL,
 } = require("../config");
 const { BCRYPT_HASH_ROUNDS } = require("../config");
+const { getFirstName } = require("../helpers/getFirstName");
 
 class User {
   static async createGoogleUser(payload) {
     const getUser = await db.query(
-      `INSERT INTO users (id, email, name, auth_provider, verified, time_verified)
-       VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id, email, name, auth_provider, verified`,
-      [uuid(), payload.email, payload.name, "google", true]
+      `INSERT INTO users (id, email, first_name, full_name, auth_provider, verified, time_verified)
+       VALUES ($1, $2, $3, $4, $5, $6, CURRENT_TIMESTAMP) RETURNING id, email, first_name, full_name, auth_provider, verified`,
+      [
+        uuid(),
+        payload.email,
+        payload.first_name,
+        payload.full_name,
+        "google",
+        true,
+      ]
     );
     this.sendWelcomeEmail(getUser[0]);
     return getUser[0];
   }
 
   static async create(body) {
-    const { email, password, name } = body;
+    const { email, password, full_name } = body;
     if (password.length < 8 || password.length > 25) {
       throw new ExpressError(
         "Password length must be at least 8 characters but not longer than 25",
@@ -35,9 +43,16 @@ class User {
     }
     const hashedPassword = await bcrypt.hash(password, BCRYPT_HASH_ROUNDS);
     const newUser = await db.query(
-      `INSERT INTO users (id, email, password, name, auth_provider)
-       VALUES ($1, $2, $3, $4, $5) RETURNING id, email, name, auth_provider, verified`,
-      [uuid(), email?.toLowerCase(), hashedPassword, name, "username_password"]
+      `INSERT INTO users (id, email, password, first_name, full_name, auth_provider)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, email, first_name, full_name, auth_provider, verified`,
+      [
+        uuid(),
+        email?.toLowerCase(),
+        hashedPassword,
+        getFirstName(full_name),
+        full_name,
+        "username_password",
+      ]
     );
     this.sendWelcomeEmail(newUser[0]);
     return newUser[0];
@@ -62,8 +77,9 @@ class User {
         if (result.verified) {
           return this.generateWorkdiaryAccessToken({
             id: result.id,
-            name: result.name,
             email: result.email,
+            first_name: result.first_name,
+            full_name: result.full_name,
           });
         } else {
           const response = await this.sendEmailVerification(result);
@@ -160,7 +176,7 @@ class User {
       html: `<div>
                   <img src="cid:work_diary_image" alt="Workdiary Image" />
                   <div style="position: relative; left: 15px;">
-                  <p>Hi ${user.name},</p>
+                  <p>Hi ${user.first_name},</p>
                    <p style="max-width: 600px;">
                     Welcome to Workdiary! I am glad you have taken this step to gain more
                     control of how you choose to remember your work. Given that work is such a fundamental
@@ -525,7 +541,7 @@ class User {
     }
     queryText = queryText.slice(0, -1);
     queryValues.push(user_id);
-    queryText += ` WHERE id = $${queryValues.length} returning id, email, name, alarm_status, alarm_time, alarm_days, auth_provider, verified`;
+    queryText += ` WHERE id = $${queryValues.length} returning id, email, first_name, full_name, alarm_status, alarm_time, alarm_days, auth_provider, verified`;
     const result = await db.query(queryText, queryValues);
     return {
       ...result[0],
@@ -533,7 +549,7 @@ class User {
   }
   static async getUser(id, email) {
     const getUser = await db.oneOrNone(
-      `SELECT id, email, name, alarm_status, alarm_time, alarm_days, auth_provider, verified, created_at FROM users
+      `SELECT id, email, first_name, full_name, alarm_status, alarm_time, alarm_days, auth_provider, verified, created_at FROM users
        WHERE id = $1 OR email = $2`,
       [id, email?.toLowerCase()]
     );
@@ -548,7 +564,8 @@ class User {
     const getInfo = await axios.get(
       `https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses&access_token=${google_access_token}`
     );
-    data.name = getInfo.data.names[0].givenName;
+    data.full_name = getInfo.data.names[0].displayName;
+    data.first_name = getInfo.data.names[0].givenName;
     return data;
   }
 
@@ -557,7 +574,8 @@ class User {
       {
         id: payload.id,
         email: payload.email,
-        name: payload.name,
+        first_name: payload.first_name,
+        full_name: payload.full_name,
       },
       GENERAL_SECRET_KEY,
       {

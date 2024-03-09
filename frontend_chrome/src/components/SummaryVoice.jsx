@@ -211,11 +211,12 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
       resetRecording();
     }
   }, [user]);
+
   return (
     <div className="mt-4" id="summary-voice">
       <h4 className="mb-4" id="summary-voice-header">
         {user
-          ? `Hey, ${user.name}. Tell us. How was work today?`
+          ? `Hey, ${user.first_name}. Tell us. How was work today?`
           : "Hey, first_name. Tell us. How was work today?"}
       </h4>
       <div id="summary-voice-media-button">

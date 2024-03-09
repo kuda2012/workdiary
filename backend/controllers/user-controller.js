@@ -77,7 +77,7 @@ exports.login = async (req, res, next) => {
     // Query the logins table, if there are no previous logins with matching user_id and email, return "first_time_login : true"
     let token = await User.getLoggedIn(req.body);
     let first_time_login = false;
-    let { id, email, name } = jwt.decode(token);
+    let { id, email, first_name, full_name } = jwt.decode(token);
     let logins = await db.query(
       `SELECT * from user_logins
       WHERE user_id=$1 AND email=$2`,
@@ -87,9 +87,17 @@ exports.login = async (req, res, next) => {
       first_time_login = true;
     }
     await db.query(
-      `INSERT INTO user_logins (user_id, email, name, login_time, file_source, ip_address, user_agent)
-       VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4, $5, $6)`,
-      [id, email, name, req.body.source, req.ip, req.headers["user-agent"]]
+      `INSERT INTO user_logins (user_id, email, login_time, first_name, full_name, file_source, ip_address, user_agent)
+       VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, $6, $7)`,
+      [
+        id,
+        email,
+        first_name,
+        full_name,
+        req.body.source,
+        req.ip,
+        req.headers["user-agent"],
+      ]
     );
     res.json({ workdiary_token: token, first_time_login });
   } catch (error) {
@@ -177,12 +185,13 @@ exports.checkedToken = async (req, res, next) => {
     const userExists = await User.getUser(userInfo.id);
     if (userExists?.verified) {
       await db.query(
-        `INSERT INTO user_logins (user_id, email, name, login_time, file_source, ip_address, user_agent)
-       VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4, $5, $6)`,
+        `INSERT INTO user_logins (user_id, email, login_time, first_name, full_name, file_source, ip_address, user_agent)
+       VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, $6, $7)`,
         [
           userExists.id,
           userExists.email,
-          userExists.name,
+          userExists.first_name,
+          userExists.full_name,
           req.body.source,
           req.ip,
           req.headers["user-agent"],

@@ -9,10 +9,10 @@
     {
       "email": "user@gmail.com",
       "password": "hotdog32",
-      "name": "John Boatwright"
+      "full_name": "John Boatwright"
     }
   ],
-  "required": ["email", "password", "name"],
+  "required": ["email", "password", "full_name"],
   "properties": {
     "email": {
       "$id": "#/properties/email",
@@ -34,11 +34,13 @@
       "maxLength": 25,
       "examples": ["hotdog32"]
     },
-    "name": {
-      "$id": "#/properties/name",
+    "full_name": {
+      "$id": "#/properties/full_name",
       "type": "string",
-      "title": "The name schema",
+      "title": "The full nameschema",
       "description": "An explanation about the purpose of this instance.",
+      "minLength": 1,
+      "maxLength": 70,
       "default": "",
       "examples": ["John Boatwright"]
     }

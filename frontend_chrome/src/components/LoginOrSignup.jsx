@@ -17,7 +17,7 @@ const LoginOrSignup = ({ setIsForgotPassword }) => {
     email: "",
     password: "",
     password_copy: "",
-    name: "",
+    full_name: "",
   };
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [showPassword1, setShowPassword1] = useState(false);
@@ -103,11 +103,11 @@ const LoginOrSignup = ({ setIsForgotPassword }) => {
                     required={true}
                     type="text"
                     placeholder="Full Name"
-                    id="name"
-                    name="name"
+                    id="full_name"
+                    name="full_name"
                     className="form-control"
                     onChange={handleChange}
-                    value={formData.name}
+                    value={formData.full_name}
                   />
                 </div>
               )}
