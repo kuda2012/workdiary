@@ -102,12 +102,14 @@ function App() {
           <div className="container-fluid">
             <div className="row justify-content-between">
               <div className="col-1">
-                <span
-                  id="refresh-page"
-                  onClick={() => window.location.reload()}
-                >
-                  Refresh page
-                </span>
+                {workdiaryToken && (
+                  <span
+                    id="refresh-page"
+                    onClick={() => window.location.reload()}
+                  >
+                    Refresh page
+                  </span>
+                )}
               </div>
               {workdiaryToken && (
                 <div className="col-1">

@@ -70,10 +70,6 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
         const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
         audioUrlRef.current = URL.createObjectURL(audioBlob);
         audioRef.current.src = audioUrlRef.current;
-
-        audioRef.current.addEventListener("ended", () => {
-          setPlaybackPaused(true);
-        });
       };
 
       if (soundEffects) {
@@ -166,6 +162,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
     setIsRecording(false);
     setIsFinalized(false);
     setIsPaused(false);
+    setPlaybackPaused(true);
   };
 
   const sendAudioToBackend = () => {

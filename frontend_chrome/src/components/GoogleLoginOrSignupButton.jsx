@@ -60,7 +60,11 @@ const GoogleLoginOrSignupButton = () => {
             className="container d-flex justify-content-center align-items-center"
           >
             <div className="row">
-              <div className="col">
+              <div
+                className={`col ${
+                  isSignup ? "three-dots-signup" : "three-dots-login"
+                }`}
+              >
                 <ThreeDots
                   height="24px"
                   width="35px"

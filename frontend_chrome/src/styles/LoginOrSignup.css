@@ -33,6 +33,16 @@
   color: #007bff;
 }
 
+.three-dots-signup {
+  position: relative;
+  right: 6px;
+}
+
+.three-dots-login {
+  position: relative;
+  left: 2px;
+}
+
 #google-login-button {
   width: 300px;
   position: relative;
