@@ -568,7 +568,7 @@ export function changeAlarm(workdiary_token, alarmChange) {
       );
 
       if (data.user) {
-        chrome.storage.session.set({ user: data.user });
+        chrome.storage.local.set({ user: data.user });
       }
 
       dispatch(setUserAccountInfo(data.user));
@@ -607,6 +607,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 export async function setAlarm(user) {
   await chrome.alarms.clearAll();
   if (!user?.alarm_status) return;
+
+  const DAYS_OF_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
   // Get the current day's index
   const currentDayIndex = DAYS_OF_WEEK.indexOf(
@@ -647,7 +649,6 @@ export async function setAlarm(user) {
     }
   }
 }
-const DAYS_OF_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
 export function setWorkdiaryToken(workdiary_token) {
   return {

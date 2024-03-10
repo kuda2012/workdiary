@@ -38,7 +38,7 @@ const SearchPostsResults = ({ closeAllPostsModal }) => {
   const endIndex = Math.min(pagination.lastPage, startIndex + 3);
 
   return (
-    <div className="container">
+    <div className="container mt-2">
       <div className="row flex-column align-items-center">
         <div className="col-12">
           <ul id="posts-list">
