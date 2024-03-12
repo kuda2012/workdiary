@@ -178,6 +178,19 @@ exports.sendDownloadLink = async (req, res, next) => {
   }
 };
 
+exports.otherSettings = async (req, res, next) => {
+  try {
+    const { id } = decodeJwt(req.headers.authorization);
+    let user = await User.getUser(id);
+    if (user) {
+      user = await User.update(req.body, id);
+    }
+    res.send({ user: { ...user } });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.changeAlarm = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);

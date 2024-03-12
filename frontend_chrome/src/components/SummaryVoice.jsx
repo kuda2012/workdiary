@@ -76,7 +76,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
         });
       };
 
-      if (soundEffects) {
+      if (user.sound_effects) {
         const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
         audio.volume = 0.25; // Get the URL to your sound fil
         audio.play();
@@ -99,7 +99,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
 
   const pauseRecording = () => {
     if (mediaRecorderRef.current && !isPaused) {
-      if (soundEffects) {
+      if (user.sound_effects) {
         const audio = new Audio(chrome.runtime.getURL("stop_sound.mp3"));
         audio.volume = 0.25; // Get the URL to your sound fil
         audio.play();
@@ -126,7 +126,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
 
   const resumeRecording = () => {
     if (mediaRecorderRef.current && isPaused) {
-      if (soundEffects) {
+      if (user.sound_effects) {
         const audio = new Audio(chrome.runtime.getURL("start_sound.mp3"));
         audio.volume = 1; // Get the URL to your sound fil
         audio.play();
@@ -153,7 +153,7 @@ const SummaryVoice = ({ summaryText, dispatchCreateOrUpdatePost }) => {
 
   const resetRecording = (clickedToReset) => {
     // Reset all the state variables and audio playback
-    if (clickedToReset && soundEffects) {
+    if (clickedToReset && user.sound_effects) {
       const audio = new Audio(chrome.runtime.getURL("trash.mp3"));
       audio.volume = 0.25;
       audio.play();

@@ -535,6 +535,24 @@ export function multiDeletePosts(
     }
   };
 }
+
+export function changeOtherSettings(workdiary_token, alarmChange) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.post(
+        `${VITE_BACKEND_URL}/users/other-settings`,
+        { ...alarmChange },
+        {
+          headers: { Authorization: `Bearer ${workdiary_token}` },
+        }
+      );
+      dispatch(setUserAccountInfo(data.user));
+    } catch (error) {
+      alert(error?.response?.data?.message || error?.message);
+      console.log(error);
+    }
+  };
+}
 export function deleteTab(workdiary_token, date, tab_id) {
   return async function (dispatch) {
     try {
