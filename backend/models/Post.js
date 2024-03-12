@@ -129,7 +129,7 @@ class Post {
       });
 
       // Return a success message or other response if needed
-      return "success";
+      return "Your post(s) have been deleted.";
     } catch (error) {
       throw error;
     }

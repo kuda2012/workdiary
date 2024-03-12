@@ -515,6 +515,9 @@ export function multiDeletePosts(
             headers: { Authorization: `Bearer ${workdiary_token}` },
           }
         );
+        if (data.message) {
+          alert(data.message);
+        }
         await dispatch(getPost(workdiary_token, currentDate));
         if (data?.posts_list?.length > 0) {
           dispatch(

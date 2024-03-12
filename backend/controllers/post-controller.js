@@ -191,7 +191,7 @@ exports.multiDelete = async (req, res, next) => {
   try {
     const { id } = decodeJwt(req.headers.authorization);
     const is_chronological = JSON.parse(req.query.is_chronological);
-    await Post.multiDelete(id, req.query.dates);
+    const message = await Post.multiDelete(id, req.query.dates);
     const postsList = await Post.listAllPosts(id, 1, is_chronological);
     const allPostDates = await Post.getAllPostDates(id);
     res.send({
@@ -199,6 +199,7 @@ exports.multiDelete = async (req, res, next) => {
       posts_list: [...postsList.posts],
       pagination: postsList.pagination,
       is_chronological: postsList.is_chronological,
+      message,
     });
   } catch (error) {
     next(error);
