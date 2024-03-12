@@ -59,6 +59,15 @@
   background-color: rgb(240, 240, 240);
 }
 
+#no-entries-div {
+  height: 500px;
+}
+
+#no-entries-header {
+  position: relative;
+  top: 15px;
+}
+
 .posts-list-anchor-tags {
   word-wrap: break-word;
   text-decoration: none; /* Remove default underline */

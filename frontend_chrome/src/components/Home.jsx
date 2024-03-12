@@ -89,11 +89,13 @@ const Home = ({
           closeAllPostsModal={closeAllPostsModal}
         >
           <AllPostsHeader closeAllPostsModal={closeAllPostsModal} />
-          {showAllPosts
-            ? postsList && <AllPosts closeAllPostsModal={closeAllPostsModal} />
-            : searchResults && (
-                <SearchPostsResults closeAllPostsModal={closeAllPostsModal} />
-              )}
+          {showAllPosts ? (
+            <AllPosts closeAllPostsModal={closeAllPostsModal} />
+          ) : (
+            searchResults && (
+              <SearchPostsResults closeAllPostsModal={closeAllPostsModal} />
+            )
+          )}
         </AllPostsModal>
       )}
       <MainContainer
