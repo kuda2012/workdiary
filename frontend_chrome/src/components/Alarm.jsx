@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, ButtonGroup } from "reactstrap";
 import { Autosave } from "react-autosave";
 import { useDispatch, useSelector } from "react-redux";
 import { changeAlarm, setAlarm } from "../helpers/actionCreators";
+import isEqual from "lodash/isEqual";
 import "../styles/Alarm.css";
+
+function useDeepCompareEffect(callback, dependencies) {
+  const dependenciesRef = useRef(null);
+  useEffect(() => {
+    if (!isEqual(dependenciesRef.current, dependencies)) {
+      callback();
+    }
+    dependenciesRef.current = dependencies;
+  }, [dependencies]);
+}
 
 const Alarm = () => {
   const dispatch = useDispatch();
@@ -26,14 +37,14 @@ const Alarm = () => {
     setSelectedTime(event.target.value);
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (initialRender) {
       setInitialRender(false);
       return;
     }
     setAlarm(user);
     setButtonText("Saved ✔");
-  }, [user]);
+  }, [user.alarm_days, user.alarm_time, user.alarm_status]);
 
   const handleDayCheckboxChange = (changedDay) => {
     let atLeastOneDayActive = false;
