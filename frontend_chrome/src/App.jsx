@@ -117,9 +117,7 @@ function App() {
                     id="logout"
                     onClick={(e) => {
                       e.preventDefault();
-                      chrome.identity.clearAllCachedAuthTokens(function () {
-                        dispatch(resetApp());
-                      });
+                      dispatch(resetApp());
                     }}
                   >
                     Logout

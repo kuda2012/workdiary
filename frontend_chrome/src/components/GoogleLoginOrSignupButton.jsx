@@ -29,12 +29,6 @@ const GoogleLoginOrSignupButton = () => {
           if (!loginButtonActive && !loggingInVar) {
             setloginButtonActive(true);
             dispatch(loggingInFunction(true));
-            // const authTokenResult = await chrome.identity.getAuthToken({
-            //   interactive: true,
-            // });
-            // if (authTokenResult.token) {
-            //   dispatch(setGoogleAccessToken(authTokenResult.token));
-            // }
             const redirectUri = chrome.identity.getRedirectURL();
             const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${VITE_GOOGLE_WEB_APP_CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(
               redirectUri

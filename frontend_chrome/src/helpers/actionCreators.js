@@ -48,7 +48,6 @@ export function loginOrSignupGoogle(googleAccessToken) {
       if (error?.response?.data?.message.includes("already exists")) {
         dispatch(setIsSignup(false));
       }
-      await chrome.identity.clearAllCachedAuthTokens();
       dispatch(revokeAccessToken(googleAccessToken));
       alert(error?.response?.data?.message || error?.message);
       console.log(error);
