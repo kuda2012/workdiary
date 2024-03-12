@@ -7,6 +7,7 @@ import {
   setGoogleAccessToken,
 } from "../helpers/actionCreators";
 import "../styles/LoginOrSignup.css";
+const { VITE_GOOGLE_WEB_APP_CLIENT_ID } = import.meta.env;
 
 const GoogleLoginOrSignupButton = () => {
   const dispatch = useDispatch();
@@ -28,11 +29,26 @@ const GoogleLoginOrSignupButton = () => {
           if (!loginButtonActive && !loggingInVar) {
             setloginButtonActive(true);
             dispatch(loggingInFunction(true));
-            const authTokenResult = await chrome.identity.getAuthToken({
+            // const authTokenResult = await chrome.identity.getAuthToken({
+            //   interactive: true,
+            // });
+            // if (authTokenResult.token) {
+            //   dispatch(setGoogleAccessToken(authTokenResult.token));
+            // }
+            const redirectUri = chrome.identity.getRedirectURL();
+            const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${VITE_GOOGLE_WEB_APP_CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(
+              redirectUri
+            )}&scope=${encodeURIComponent(["email", "profile"].join(" "))}`;
+            const responseUrl = await chrome.identity.launchWebAuthFlow({
+              url: authUrl,
               interactive: true,
             });
-            if (authTokenResult.token) {
-              dispatch(setGoogleAccessToken(authTokenResult.token));
+            const params = new URLSearchParams(
+              new URL(responseUrl).hash.slice(1)
+            );
+            const accessToken = params.get("access_token");
+            if (accessToken) {
+              dispatch(setGoogleAccessToken(accessToken));
             }
           } else if (loginButtonActive && loggingInVar) {
             setloginButtonActive(false);
