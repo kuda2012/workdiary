@@ -1,10 +1,10 @@
 const { db } = require("../db");
 class TranscribeLog {
-  static async create(user_id, transcription) {
+  static async create(user_id, transcription, duration) {
     const createdLog = await db.query(
-      `INSERT INTO transcribe_log (user_id, transcription)
-       VALUES ($1, $2) RETURNING *`,
-      [user_id, transcription]
+      `INSERT INTO transcribe_log (user_id, transcription, duration)
+       VALUES ($1, $2, $3) RETURNING *`,
+      [user_id, transcription, duration]
     );
     return createdLog[0];
   }

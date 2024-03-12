@@ -18,7 +18,7 @@ exports.create = async (req, res, next) => {
           req.body.summary_text = req.body.summary_text
             ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
             : `<p>${summaryText}</p>`;
-          await TranscribeLog.create(id, summaryText);
+          await TranscribeLog.create(id, summaryText, req.body.audio_duration);
         } else {
           console.error(
             id,
@@ -120,7 +120,7 @@ exports.update = async (req, res, next) => {
         req.body.summary_text = req.body.summary_text
           ? req.body.summary_text.concat(`<p>${summaryText}</p>`)
           : `<p>${summaryText}</p>`;
-        await TranscribeLog.create(id, summaryText);
+        await TranscribeLog.create(id, summaryText, req.body.audio_duration);
       } else {
         console.error(
           id,
