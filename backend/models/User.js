@@ -230,7 +230,7 @@ class User {
     const mailOptions = {
       from: "no-reply@workdiary.me",
       to: email,
-      subject: "Workdiary: Installation link",
+      subject: "Workdiary: Install link",
       html: `<div>
                   <img src="cid:Workdiary_logo" alt="Workdiary Image" />
                   <p>Greetings,</p>
