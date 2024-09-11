@@ -93,7 +93,7 @@ const HowTo = ({ closeHowToModal, openToPrivacyPolicy }) => {
               </div>
               <div className="row justify-content-around mt-2">
                 <div className="col-auto">
-                  <a href="https://twitter.com/kuda2012_" target="_blank">
+                  <a href="https://twitter.com/syncretismftw" target="_blank">
                     <img src="x.png" alt="Social Media 1" />
                     My X/Twitter
                   </a>
