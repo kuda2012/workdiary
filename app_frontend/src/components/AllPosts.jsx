@@ -28,9 +28,14 @@ const AllPosts = ({ closeAllPostsModal }) => {
   function getNumbersBetween(min, max) {
     return [...Array(max - min + 1)].map((_, i) => min + i);
   }
-  const startIndex =
-    pagination?.currentPage <= 2 ? 1 : Math.max(1, pagination?.currentPage - 2);
-  const endIndex = Math.min(pagination?.lastPage, startIndex + 3);
+
+  const currentPage = isNaN(pagination?.currentPage)
+    ? 1
+    : pagination.currentPage;
+  const lastPage = isNaN(pagination?.lastPage) ? 1 : pagination.lastPage;
+
+  const startIndex = currentPage <= 2 ? 1 : Math.max(1, currentPage - 2);
+  const endIndex = Math.min(lastPage, startIndex + 3);
   return (
     <div className="container">
       <div className="row">
